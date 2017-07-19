@@ -1,2 +1,2 @@
-django
-requirements
+django==1.11
+requests=2.18
