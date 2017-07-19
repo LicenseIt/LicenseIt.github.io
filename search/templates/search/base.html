@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <!--<link rel="stylesheet" href="{% static 'common/style.css' %}">-->
+</head>
+<body>
+<main>
+    <header>
+        <span>
+            {% if user.is_authenticated %}
+            hello {{ user }}: <a href="{% url 'my_account' %}">my account</a>
+            {% else %}
+            hello there <a href="{% url 'login' %}">login</a> <a href="{% url 'signup_page' %}">sign up</a>
+            {% endif %}
+        </span>
+    </header>
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

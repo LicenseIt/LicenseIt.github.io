@@ -1,0 +1,44 @@
+{% extends 'search/base.html' %}
+{% block content %}
+    <form action="{% url 'search_page' %}" method="post">{% csrf_token %}
+        <input class="search" name="search" value="" required placeholder="search..." />
+        <button>search</button>
+    </form>
+    <div>
+        <p>number of results: {{ num_of_results }}</p>
+        <ol>
+        {% for result in results %}
+            <li>{% if result.artwork_100 %}
+                <img src="{{ result.artwork_100 }}" alt="artwork for {{ result.name }}">
+                {% endif %}
+                {% if result.artwork_60 and not result.artwork_100 %}
+                <img src="{{ result.artwork_60 }}" alt="artwork for {{ result.name}}">
+                {% endif %}
+                <apan>
+                    w: track, k: {{ result.kind }}, artist name: {{ result.artist }},
+                    name: {{ result.name }}, ttm: {{ result.get_time }}, release date: {{ result.release_date }}
+                    {% if result.description %}
+                    <p>{{ result.description }}</p>
+                    {% endif %}
+                    <a href="{% url 'order' result.id %}">order</a>
+                </apan>
+            </li>
+        {% endfor %}
+        </ol>
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if results.has_previous %}
+            <a href="?page={{ results.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ results.number }} of {{ results.paginator.num_pages }}.
+        </span>
+
+        {% if results.has_next %}
+            <a href="?page={{ results.next_page_number }}">next</a>
+        {% endif %}
+        </span>
+    </div>
+{% endblock %}

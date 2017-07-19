@@ -1,0 +1,21 @@
+{% extends 'search/base.html' %}
+{% block content %}
+    <form action="{% url 'signup_page' %}" method="post">{% csrf_token %}
+        {% if error %}
+        <span>{{ error }}</span>
+        {% endif %}
+        <div>
+            <label for="email">email</label>
+            <input id="email" type="text" name="email" value="" required placeholder="your email" />
+        </div>
+        <div>
+            <label for="password">password</label>
+            <input id="password" type="password" name="password" value="" required >
+        </div>
+        <div>
+            <label for="password1">password again</label>
+            <input id="password1" type="password" name="password1" value="" required >
+        </div>
+        <button>login</button>
+    </form>
+{% endblock %}
