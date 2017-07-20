@@ -242,7 +242,7 @@
 ===================================== -->
 <div id="shop" class="bg-light pt25">
     <div class="container">
-
+    {% if results %}
         <div class="row mt20 animated" data-animation="fadeInDown" data-animation-delay="100">
             {% for result in results %}
             <!-- Item START
@@ -340,7 +340,7 @@
                     </ul>
                 </div>
             </div>
-
+        {% endif %}
         </div>
 
         <!-- Nwxt pages End
