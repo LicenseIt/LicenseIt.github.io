@@ -108,5 +108,18 @@ class ResultsView(View):
             page_results = paginator.page(1)
         except EmptyPage:
             page_results = paginator.page(paginator.num_pages)
-        context = {'results': page_results, 'num_of_results': results.count()}
+        current_page = page_results.number
+        prev_prev = current_page - 2 if current_page > 2 else None
+        prev = current_page - 1 if page_results.has_previous() else None
+        next_next = current_page + 2 if current_page + 2 <= paginator.num_pages else None
+        _next = current_page + 1 if page_results.has_next() else None
+        context = {
+            'results': page_results,
+            'num_of_results': results.count(),
+            'prev_prev': prev_prev,
+            'prev': prev,
+            'current': current_page,
+            '_next': _next,
+            'next_next': next_next
+        }
         return render(request, 'search/results.html', context=context)
