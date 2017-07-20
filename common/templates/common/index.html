@@ -122,10 +122,10 @@
                 </li>
                 <li class="dropdown megamenu-fw has-dropdown-menu">
                     {% if user.is_authenticated %}
-                    <a href="{% url 'my_account' %}" class="dropdown-toggle color-dark">
+                        <a href="{% url 'my_account' %}" class="dropdown-toggle color-dark">
                         {{ user.email }}
                     {% else %}
-                    <a href="{% url 'home' %}" class="dropdown-toggle color-dark">
+                        <a href="" data-toggle="modal" data-target="#myModal" class="dropdown-toggle color-dark">
                         sign in
                     {% endif %}
                     </a>
@@ -156,14 +156,16 @@
                     </h1>
 
                     <div class="col-md-8 col-md-offset-2">
-                        <form action="{% url 'search_page' %}" method="post" class="form-horizontal" style="display: flex;">
+                        <form action="{% url 'search_page' %}" method="post" class="form-horizontal"
+                              style="display: flex;">
                             {% csrf_token %}
                             <label class="sr-only" for="inputHelpBlock">Input with help text</label>
                             <input type="text" name="search" class="form-control input-sqaure input-lg text-center"
                                    aria-describedby="helpBlock" placeholder="search by artist, band etc."> <span>&nbsp&nbsp</span>
                             <button type="submit" class="button button-pasific button-lg hover-ripple-out animated"
-                               data-animation="fadeInUp" data-animation-delay="1200"
-                                    style="float:right; display: inline-flex;">Search</button>
+                                    data-animation="fadeInUp" data-animation-delay="1200"
+                                    style="float:right; display: inline-flex;">Search
+                            </button>
 
                         </form>
 
@@ -223,6 +225,52 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content bg-grad-bora">
+            <div class="modal-header" style="border: none;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title color-light text-center mt10 color-dark font-montserrat text-capitalize">SIGN
+                    IN</h3>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'login' %}" method="post" name="contact">
+                    {% csrf_token %}
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <input type="text" class="input-md input-rounded form-control" placeholder="username"
+                                   name="username" maxlength="100" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <input type="password" class="input-md input-rounded form-control" placeholder="password"
+                                   name="password" maxlength="100" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 mt10 text-center mb20">
+                        <button type="submit" class="button-3d button-md button-block button-pink hover-ripple-out">
+                            Login
+                        </button>
+                    </div>
+
+                    <div class="col-sm-12 text-center p5"><a href="#" class="color-light">Sign in with Google</a></div>
+                    <div class="col-sm-12 text-center p5"><a href="#" class="color-light">Sign in with Facebook</a>
+                    </div>
+                    <div class="col-sm-12 text-center p15"><a href="#" class="color-dark">Forgot Password?</a></div>
+
+                </form>
+            </div>
+            <div class="modal-footer" style="border: none;">
+
+            </div>
+        </div>
     </div>
 </div>
 
