@@ -1,44 +1,443 @@
-{% extends 'search/base.html' %}
-{% block content %}
-    <form action="{% url 'search_page' %}" method="post">{% csrf_token %}
-        <input class="search" name="search" value="" required placeholder="search..." />
-        <button>search</button>
-    </form>
-    <div>
-        <p>number of results: {{ num_of_results }}</p>
-        <ol>
-        {% for result in results %}
-            <li>{% if result.artwork_100 %}
-                <img src="{{ result.artwork_100 }}" alt="artwork for {{ result.name }}">
-                {% endif %}
-                {% if result.artwork_60 and not result.artwork_100 %}
-                <img src="{{ result.artwork_60 }}" alt="artwork for {{ result.name}}">
-                {% endif %}
-                <apan>
-                    w: track, k: {{ result.kind }}, artist name: {{ result.artist }},
-                    name: {{ result.name }}, ttm: {{ result.get_time }}, release date: {{ result.release_date }}
-                    {% if result.description %}
-                    <p>{{ result.description }}</p>
+{#{% extends 'search/base.html' %}#}
+{% load staticfiles %}
+{#{% block content %}#}
+{#    <form action="{% url 'search_page' %}" method="post">{% csrf_token %}#}
+{#        <input class="search" name="search" value="" required placeholder="search..."/>#}
+{#        <button>search</button>#}
+{#    </form>#}
+{#    <div>#}
+{#        <p>number of results: {{ num_of_results }}</p>#}
+{#        <ol>#}
+{#            {% for result in results %}#}
+{#                <li>{% if result.artwork_100 %}#}
+{#                    <img src="{{ result.artwork_100 }}" alt="artwork for {{ result.name }}">#}
+{#                {% endif %}#}
+{#                    {% if result.artwork_60 and not result.artwork_100 %}#}
+{#                        <img src="{{ result.artwork_60 }}" alt="artwork for {{ result.name }}">#}
+{#                    {% endif %}#}
+{#                    <apan>#}
+{#                        w: track, k: {{ result.kind }}, artist name: {{ result.artist }},#}
+{#                        name: {{ result.name }}, ttm: {{ result.get_time }}, release date: {{ result.release_date }}#}
+{#                        {% if result.description %}#}
+{#                            <p>{{ result.description }}</p>#}
+{#                        {% endif %}#}
+{#                        <a href="{% url 'order' result.id %}">order</a>#}
+{#                    </apan>#}
+{#                </li>#}
+{#            {% endfor %}#}
+{#        </ol>#}
+{#    </div>#}
+{#    <div class="pagination">#}
+{#        <span class="step-links">#}
+{#            {% if results.has_previous %}#}
+{#                <a href="?page={{ results.previous_page_number }}">previous</a>#}
+{#            {% endif %}#}
+{##}
+{#            <span class="current">#}
+{#            Page {{ results.number }} of {{ results.paginator.num_pages }}.#}
+{#        </span>#}
+{##}
+{#            {% if results.has_next %}#}
+{#                <a href="?page={{ results.next_page_number }}">next</a>#}
+{#            {% endif %}#}
+{#        </span>#}
+{#    </div>#}
+{#{% endblock %}#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>License It | licence music for any purpose</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta charset="utf-8">
+    <meta name="author" content="Harry Boo">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="{% static 'common/assets/img/favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'common/assets/img/apple-touch-icon.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'common/assets/img/apple-touch-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'common/assets/img/apple-touch-icon-114x114.png' %}">
+
+    <!-- Load Core CSS
+    =====================================-->
+    <link rel="stylesheet" href="{% static 'common/assets/css/core/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'common/assets/css/core/animate.min.css' %}">
+
+    <!-- Load Main CSS
+    =====================================-->
+    <link rel="stylesheet" href="{% static 'common/assets/css/main/main.css' %}">
+    <link rel="stylesheet" href="{% static 'common/assets/css/main/setting.css' %}">
+    <link rel="stylesheet" href="{% static 'common/assets/css/main/hover.css' %}">
+
+    <link rel="stylesheet" href="{% static 'common/assets/css/range-slider/ion.rangeSlider.css' %}">
+    <link rel="stylesheet" href="{% static 'common/assets/css/range-slider/ion.rangeSlider.skinFlat.css' %}">
+
+    <!-- Load Magnific Popup CSS
+    =====================================-->
+    <link rel="stylesheet" href="{% static 'common/assets/css/magnific/magic.min.css' %}">
+    <link rel="stylesheet" href="{% static 'common/assets/css/magnific/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'common/assets/css/magnific/magnific-popup-zoom-gallery.css' %}">
+
+    <!-- Load OWL Carousel CSS
+    =====================================-->
+    <link rel="stylesheet" href="{% static 'common/assets/css/owl-carousel/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'common/assets/css/owl-carousel/owl.theme.css' %}">
+    <link rel="stylesheet" href="{% static 'common/assets/css/owl-carousel/owl.transitions.css' %}">
+
+    <!-- Load Color CSS - Please uncomment to apply the color.
+        =====================================
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/blue.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/brown.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/cyan.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/dark.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/green.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/orange.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/purple.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/pink.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/red.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/yellow.css' %}">-->
+    <link rel="stylesheet" href="{% static 'common/assets/css/color/pasific.css' %}">
+
+    <!-- Load Fontbase Icons - Please Uncomment to use linea icons
+        =====================================
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-arrows-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-basic-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-basic-elaboration-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-ecommerce-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-music-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-software-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-weather-10.css' %}">-->
+    <link rel="stylesheet" href="{% static 'common/assets/css/icon/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'common/assets/css/icon/et-line-font.css' %}">
+
+    <!-- Load JS
+    HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+    WARNING: Respond.js doesn't work if you view the page via file://
+    =====================================-->
+
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+</head>
+<body id="topPage" data-spy="scroll" data-target=".navbar" data-offset="100">
+
+<!-- Page Loader
+===================================== -->
+<div id="pageloader">
+    <div class="loader-item">
+        <img src="{% static 'common/assets/img/other/puff.svg' %}" alt="page loader">
+    </div>
+</div>
+
+<a href="#page-top" class="go-to-top">
+    <i class="fa fa-long-arrow-up"></i>
+</a>
+
+
+<!-- Navigation Area
+===================================== -->
+<nav class="navbar navbar-pasific navbar-mp navbar-standart megamenu navbar-fixed-top"
+     style="border-bottom:1px solid #fff;">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="{% url 'home' %}">
+                <img src="{% static 'common/assets/img/logo/logo-default.png' %}" alt="logo" href="{% url 'home' %}">
+                License It
+            </a>
+        </div>
+
+        <div class="navbar-collapse collapse navbar-main-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
+                                                                      class="dropdown-toggle color-dark">Home </a></li>
+                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
+                                                                      class="dropdown-toggle color-dark">How it
+                    works </a></li>
+                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'search_page' %}"
+                                                                      class="dropdown-toggle color-dark">Search </a>
+                </li>
+                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
+                                                                      class="dropdown-toggle color-dark">Contact Us</a>
+                </li>
+                <li class="dropdown megamenu-fw has-dropdown-menu">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'my_account' %}" class="dropdown-toggle color-dark">
+                        {{ user.email }}
+                    {% else %}
+                    <a href="{% url 'home' %}" class="dropdown-toggle color-dark">
+                        sign in
                     {% endif %}
-                    <a href="{% url 'order' result.id %}">order</a>
-                </apan>
-            </li>
-        {% endfor %}
-        </ol>
-    </div>
-    <div class="pagination">
-        <span class="step-links">
-            {% if results.has_previous %}
-            <a href="?page={{ results.previous_page_number }}">previous</a>
-        {% endif %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+</nav>
 
-        <span class="current">
-            Page {{ results.number }} of {{ results.paginator.num_pages }}.
-        </span>
 
-        {% if results.has_next %}
-            <a href="?page={{ results.next_page_number }}">next</a>
-        {% endif %}
-        </span>
+<!-- Search Modal Dialog Box
+===================================== -->
+<div id="searchModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-gray">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5 class="modal-title text-center"><i class="fa fa-search fa-fw"></i> Search here</h5>
+            </div>
+            <div class="modal-body">
+                <form action="#" class="inline-form">
+                    <input type="text" class="modal-search-input" autofocus>
+                </form>
+            </div>
+            <div class="modal-footer bg-gray">
+                <span class="text-center"><a href="#" class="color-dark">Advanced Search</a></span>
+            </div>
+        </div>
+
     </div>
-{% endblock %}
+</div>
+
+
+<!-- Subheader Area
+===================================== -->
+<header class="bg-grad-day-tripper mt70">
+
+    <div class="container">
+        <div class="row mt20 mb30">
+            <div class="col-md-6 text-left">
+                <h3 class="color-light text-uppercase animated" data-animation="fadeInUp" data-animation-delay="100">
+                    Music licensing
+                    <small class="color-light alpha7">Best products</small>
+                </h3>
+            </div>
+
+            <div class="col-md-6 pt25">
+                <form class="form-inline text-right">
+                    <div class="form-group">
+                        <label class="sr-only">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Search">
+                    </div>
+                    <button type="submit" class="button button-sm button-green mt5 hover-icon-pulse">Search <i
+                            class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</header>
+
+
+<!-- Shop Area
+===================================== -->
+<div id="shop" class="bg-light pt25">
+    <div class="container">
+
+        <div class="row mt20 animated" data-animation="fadeInDown" data-animation-delay="100">
+            {% for result in results %}
+            <!-- Item START
+            ======================== -->
+            <div class="row bb-dashed-1 pt00 pb25">
+
+                <!-- Item Image
+                ======================== -->
+                <div class="col-md-3 col-sm-4 col-xs-4">
+                    <div class="shop-item-container-in">
+
+                        <img src="{{ result.artwork_100 }}" alt="image for {{ result.name }}"
+                             class="img-responsive center-block shop-item-img-list-view">
+                    </div>
+                </div>
+
+                <!-- Item Summary
+                ======================== -->
+                <div class="col-md-3 col-sm-4 col-xs-4">
+                    <h3>{{ result.name }}</h3>
+                    <h4>{{ result.artist }}</h4>
+                    <p class="mt20">
+                        <button class="button-o button-xs button-square button-pasific"> Catagory</button>
+                    </p>
+
+                    <div class="shop-item-review mt10 pt10 bt-dotted-1">
+                        Relaese date: {{ result.release_date }}<span> &nbsp </span>
+                        Time:
+                    </div>
+                </div>
+
+                <!-- Item Soundwave
+                ======================== -->
+                <div class="col-md-3 col-sm-2 col-xs-0 hidden-xs hidden-sm">
+                    <img src="{% static 'common/assets/img/shop/wave.png' %}" alt="shop item"
+                         class="img-responsive center-block shop-item-img-list-view">
+
+                </div>
+
+                <!-- Item Price
+                ======================== -->
+                <div class="col-md-3 col-sm-4 col-xs-4 text-center">
+
+
+                    <a class="button button-md button-pasific hover-icon-wobble-horizontal mt25">License<i
+                            class="fa fa-file-text-o"></i></a> <br>
+                    <a class="button-o button-sm button-dark mt25 hover-sweep-to-left">Play<i
+                            class="fa fa-play"></i></a>
+                </div>
+
+            </div>
+
+            <!-- Item END
+             ======================== -->
+            {% endfor %}
+
+            <!-- Next pages
+                         ======================== -->
+
+            <div class="row mt50 mb25 animated" data-animation="fadeInUp" data-animation-delay="700">
+                <div class="col-md-12 text-center">
+                    <ul class="pagination pagination-pasific">
+
+{#            {% if results.has_previous %}#}
+{#                <a href="?page={{ results.previous_page_number }}">previous</a>#}
+{#            {% endif %}#}
+{##}
+{#            <span class="current">#}
+{#            Page {{ results.number }} of {{ results.paginator.num_pages }}.#}
+{#        </span>#}
+{##}
+{#            {% if results.has_next %}#}
+{#                <a href="?page={{ results.next_page_number }}">next</a>#}
+{#            {% endif %}#}
+
+                        {% if results.has_previous %}
+                        <li><a href="?page=1"><i class="fa fa-angle-double-left"></i> First</a></li>
+                        <li><a href="?page={{ results.previous_page_number }}"><i class="fa fa-angle-left"></i> Prev</a></li>
+                        {% endif %}
+                        <li><a href="#">1</a></li>
+                        {% if results.has_previous %}
+                        <li><a href="?page={{ results.previous_page_number }}">{{ results.previous_page_number }}</a></li>
+                        {% endif %}
+                        <li class="active"><a href="#">{{ results.number }}</a></li>
+                        {% if results.has_next %}
+                        <li><a href="{{ results.next_page_number }}">{{ results.next_page_number }}</a></li>
+                        {% endif %}
+                        {% if results.has_next.has_next %}
+                        <li><a href="?page={{ results.next_page_number.next_page_number }}">5</a></li>
+                        {% endif %}
+                        {% if results.has_next %}
+                        <li><a href="?page={{ results.next_page_number }}">Next <i class="fa fa-angle-right"></i></a></li>
+                        <li><a href="?page={{ results.paginator.num_pages}}">Last <i class="fa fa-angle-double-right"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Nwxt pages End
+       ======================== -->
+
+
+        <!-- Shopping Method
+        ===================================== -->
+    </div>
+</div>
+</div>
+<div id="shop-info" class="bg-grad-stellar">
+    <div class="container">
+        <div class="row pt50 pb30">
+
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="content-box content-box-center">
+                    <span class="icon-linegraph color-light"></span>
+                    <h5 class="color-light">Online Tracking</h5>
+                    <p class="color-light alpha7">Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel
+                        dolor.</p>
+
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="content-box content-box-center">
+                    <span class="icon-speedometer color-light"></span>
+                    <h5 class="color-light">Fast Delivery</h5>
+                    <p class="color-light alpha7">Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel
+                        dolor.</p>
+
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="content-box content-box-center">
+                    <span class="icon-refresh color-light"></span>
+                    <h5 class="color-light">Moneyback Guaranteed</h5>
+                    <p class="color-light alpha7">Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel
+                        dolor.</p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- footer Area
+  ===================================== -->
+
+<footer>
+    <div class="container-fluid pt20">
+        <div class="container">
+            <div class="row">
+
+                <!-- copyright start -->
+                <div class="col-md-6 col-sm-6 col-xs-6 pull-left">
+                    <p>Copyright &copy;2016 <a href="#">License It</a>. All rights reserved.</p>
+                </div>
+                <!-- copyright end -->
+
+                <!-- footer bottom start -->
+                <div class="col-md-6 col-sm-6 col-xs-6 pull-right">
+                    <p class="text-right">
+
+                        <a href="#" class="mr20">Term of Use</a>
+
+                    </p>
+                </div>
+</footer>
+<!-- footer bottom end -->
+
+
+<!-- JQuery Core
+=====================================-->
+<script src="{% static 'common/assets/js/core/jquery.min.js' %}"></script>
+<script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
+
+<!-- Magnific Popup
+=====================================-->
+<script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
+
+<!-- JQuery Main
+=====================================-->
+<script src="{% static 'common/assets/js/main/jquery.appear.js' %}"></script>
+<script src="{% static 'common/assets/js/main/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'common/assets/js/main/parallax.min.js' %}"></script>
+<script src="{% static 'common/assets/js/main/jquery.countTo.js' %}"></script>
+<script src="{% static 'common/assets/js/main/owl.carousel.min.js' %}"></script>
+<script src="{% static 'common/assets/js/main/jquery.sticky.js' %}"></script>
+<script src="{% static 'common/assets/js/main/ion.rangeSlider.min.js' %}"></script>
+<script src="{% static 'common/assets/js/main/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'common/assets/js/main/main.js' %}"></script>
+
+</body>
+</html>

@@ -25,7 +25,7 @@ SECRET_KEY = '8)di#-4k7i_$%vh*qndob49_id@lua+q0x17%^0ofqpw891#y2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['45.79.64.198']
+ALLOWED_HOSTS = ['45.79.64.198', 'localhost']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'search',
     'accounts',
     'orders',
+    'common',
 ]
 
 MIDDLEWARE = [
