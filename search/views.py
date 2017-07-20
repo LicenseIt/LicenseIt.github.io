@@ -22,7 +22,7 @@ class SearchView(View):
         :param request:
         :return:
         '''
-        return render(request, 'search/search.html')
+        return render(request, 'search/results.html')
 
     def post(self, request, *args, **kwargs):
         '''

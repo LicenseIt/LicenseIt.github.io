@@ -220,10 +220,11 @@
             </div>
 
             <div class="col-md-6 pt25">
-                <form class="form-inline text-right">
+                <form method="post" action="{% url 'search_page' %}" class="form-inline text-right">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label class="sr-only">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Search">
+                        <input type="text" name="search" class="form-control" id="exampleInputEmail3" placeholder="Search">
                     </div>
                     <button type="submit" class="button button-sm button-green mt5 hover-icon-pulse">Search <i
                             class="fa fa-search"></i></button>
