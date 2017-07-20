@@ -120,8 +120,7 @@
                 <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
                                                                       class="dropdown-toggle color-light">Contact Us</a>
                 </li>
-                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
-                                                                      class="dropdown-toggle color-light">
+                <li class="dropdown megamenu-fw has-dropdown-menu">
                     {% if user.is_authenticated %}
                     <a href="{% url 'my_account' %}" class="dropdown-toggle color-dark">
                         {{ user.email }}
@@ -130,8 +129,6 @@
                         sign in
                     {% endif %}
                     </a>
-
-                </a>
                 </li>
             </ul>
 
