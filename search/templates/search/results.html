@@ -265,7 +265,7 @@
                     <h3>{{ result.name }}</h3>
                     <h4>{{ result.artist }}</h4>
                     <p class="mt20">
-                        <button class="button-o button-xs button-square button-pasific"> Catagory</button>
+                        <button class="button-o button-xs button-square button-pasific">{{ result.genre_category }}</button>
                     </p>
 
                     <div class="shop-item-review mt10 pt10 bt-dotted-1">
@@ -287,7 +287,7 @@
                 <div class="col-md-3 col-sm-4 col-xs-4 text-center">
 
 
-                    <a class="button button-md button-pasific hover-icon-wobble-horizontal mt25">License<i
+                    <a href="{% url 'order' result.id %}" class="button button-md button-pasific hover-icon-wobble-horizontal mt25">License<i
                             class="fa fa-file-text-o"></i></a> <br>
                     <a class="button-o button-sm button-dark mt25 hover-sweep-to-left">Play<i
                             class="fa fa-play"></i></a>
