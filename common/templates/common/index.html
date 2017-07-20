@@ -121,7 +121,17 @@
                                                                       class="dropdown-toggle color-light">Contact Us</a>
                 </li>
                 <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
-                                                                      class="dropdown-toggle color-light">Sign In </a>
+                                                                      class="dropdown-toggle color-light">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'my_account' %}" class="dropdown-toggle color-dark">
+                        {{ user.email }}
+                    {% else %}
+                    <a href="{% url 'home' %}" class="dropdown-toggle color-dark">
+                        sign in
+                    {% endif %}
+                    </a>
+
+                </a>
                 </li>
             </ul>
 
