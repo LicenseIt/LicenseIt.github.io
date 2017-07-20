@@ -156,13 +156,14 @@
                     </h1>
 
                     <div class="col-md-8 col-md-offset-2">
-                        <form class="form-horizontal" style="display: flex;">
+                        <form action="{% url 'search_page' %}" method="post" class="form-horizontal" style="display: flex;">
+                            {% csrf_token %}
                             <label class="sr-only" for="inputHelpBlock">Input with help text</label>
-                            <input type="text" class="form-control input-sqaure input-lg text-center"
+                            <input type="text" name="search" class="form-control input-sqaure input-lg text-center"
                                    aria-describedby="helpBlock" placeholder="search by artist, band etc."> <span>&nbsp&nbsp</span>
-                            <a class="button button-pasific button-lg hover-ripple-out animated"
+                            <button type="submit" class="button button-pasific button-lg hover-ripple-out animated"
                                data-animation="fadeInUp" data-animation-delay="1200"
-                               style="float:right; display: inline-flex;">Search</a>
+                                    style="float:right; display: inline-flex;">Search</button>
 
                         </form>
 
