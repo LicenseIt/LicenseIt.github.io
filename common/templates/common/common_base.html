@@ -232,7 +232,7 @@
                             <li><a href="{% url 'home' %}">Home</a></li>
                             <li><a href="{% url 'about' %}">About</a></li>
                             <li><a href="{% url 'how_it_works' %}">How it works</a></li>
-                            <li><a href="team.html">Team LiceneIt</a></li>
+                            <li><a href="{% url 'team' %}">Team LiceneIt</a></li>
                         </ul>
                     </div>
                     <!-- footer menu one end -->
@@ -328,7 +328,7 @@
         <script src="{% static 'common/assets/js/progress-bar/circle-progress-main.js' %}"></script>
     {% endif %}
 
-    {% if url == 'home' or url == 'about' %}
+    {% if url == 'home' or url == 'about' or url == 'team' %}
         <!-- Progress Bars
         =====================================-->
         <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar.js' %}"></script>
