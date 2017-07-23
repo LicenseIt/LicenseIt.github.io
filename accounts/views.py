@@ -21,7 +21,7 @@ class LoginView(View):
 
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('search_page'))
+            return HttpResponseRedirect(reverse('search'))
         else:
             return render(request, 'accounts/login.html', context={'error': 'username or password is wrong'})
 
