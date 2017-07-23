@@ -70,6 +70,9 @@
         <link rel="stylesheet" href="{% static 'common/assets/css/icon/font-awesome.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/icon/et-line-font.css' %}">
 
+        {% if url == 'results' %}
+            <link rel="stylesheet" href="{% static 'common/assets/css/loading.css' %}">
+        {% endif %}
         <!-- Load JS
         HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
         WARNING: Respond.js doesn't work if you view the page via file://
@@ -83,13 +86,15 @@
     </head>
     <body id="topPage" data-spy="scroll" data-target=".navbar" data-offset="100">
 
-    <!-- Page Loader
-    ===================================== -->
-    <div id="pageloader">
-        <div class="loader-item">
-            <img src="{% static 'common/assets/img/other/puff.svg' %}" alt="page loader">
+    {% if url != 'results' %}
+        <!-- Page Loader
+        ===================================== -->
+        <div id="pageloader">
+            <div class="loader-item">
+                <img src="{% static 'common/assets/img/other/puff.svg' %}" alt="page loader">
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <a href="#page-top" class="go-to-top">
         <i class="fa fa-long-arrow-up"></i>
@@ -302,6 +307,31 @@
     </div>
     <!-- footer end -->
 
+    {% if url == 'results' %}
+        <div id="page">
+        <div id="phrase_box">
+            <svg width="100%" height="100%">
+                <defs>
+                    <mask id="mask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+                        <linearGradient id="linearGradient" gradientUnits="objectBoundingBox" x2="0" y2="1">
+                            <stop stop-color="white" stop-opacity="0" offset="0%"/>
+                            <stop stop-color="white" stop-opacity="1" offset="30%"/>
+                            <stop stop-color="white" stop-opacity="1" offset="70%"/>
+                            <stop stop-color="white" stop-opacity="0" offset="100%"/>
+                        </linearGradient>
+                        <rect width="100%" height="100%" fill="url(#linearGradient)"/>
+                    </mask>
+                </defs>
+                <g width="100%" height="100%" style="mask: url(#mask);">
+                    <g id="phrases"></g>
+                </g>
+            </svg>
+        </div>
+        <div id="footer-page">
+            <div><img src="{% static 'common/assets/img/logo2.png' %}" width="10%"></div>
+        </div>
+        <script src="{% static 'common/assets/js/loading.js' %}"></script>
+    {% endif %}
 
     <!-- JQuery Core
     =====================================-->
@@ -309,10 +339,10 @@
     <script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
 
     {% if url != 'pricing' %}
-    <!-- Magnific Popup
-    =====================================-->
-    <script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
-    <script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
+        <!-- Magnific Popup
+        =====================================-->
+        <script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
     {% endif %}
 
     {% if url == 'home' %}

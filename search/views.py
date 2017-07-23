@@ -125,7 +125,7 @@ class ResultsView(View):
             'current': current_page,
             'next': _next,
             'next_next': next_next,
-            'url': 'search',
+            'url': 'results',
             'num_pages': paginator.num_pages
         }
         return render(request, 'search/results.html', context=context)
