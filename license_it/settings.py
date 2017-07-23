@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'faq',
     'pricing',
     'team',
+    'terms',
     'common',
     'home'
 ]

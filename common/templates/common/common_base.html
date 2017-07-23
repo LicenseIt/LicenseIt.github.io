@@ -289,7 +289,7 @@
                     <!-- footer bottom start -->
                     <div class="col-md-6 col-sm-6 col-xs-6 pull-right">
                         <p class="text-right">
-                            <a href="terms.html" class="mr20">Terms of Use</a>
+                            <a href="{% url 'terms' %}" class="mr20">Terms of Use</a>
 
 
                         </p>
@@ -328,7 +328,7 @@
         <script src="{% static 'common/assets/js/progress-bar/circle-progress-main.js' %}"></script>
     {% endif %}
 
-    {% if url == 'home' or url == 'about' or url == 'team' %}
+    {% if url == 'home' or url == 'about' or url == 'team' or url == 'terms' %}
         <!-- Progress Bars
         =====================================-->
         <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar.js' %}"></script>

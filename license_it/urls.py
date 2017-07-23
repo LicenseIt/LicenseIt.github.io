@@ -24,6 +24,7 @@ from contact.views import ContactUs
 from faq.views import Faq
 from pricing.views import Pricing
 from team.views import Team
+from terms.views import Terms
 
 urlpatterns = [
     url('^admin/', admin.site.urls),
@@ -36,5 +37,6 @@ urlpatterns = [
     url('^faq/', Faq.as_view(), name='faq'),
     url('^pricing/', Pricing.as_view(), name='pricing'),
     url('^team/', Team.as_view(), name='team'),
+    url('^terms/', Terms.as_view(), name='terms'),
     url('', include('home.urls')),
 ]
