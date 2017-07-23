@@ -2,6 +2,7 @@ import requests
 import json
 import time
 import logging
+from itertools import chain
 
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -22,7 +23,7 @@ class SearchView(View):
         :param request:
         :return:
         '''
-        return render(request, 'search/results.html')
+        return render(request, 'search/results.html', context={'url': 'search'})
 
     def post(self, request, *args, **kwargs):
         '''
@@ -100,6 +101,9 @@ class SearchView(View):
 class ResultsView(View):
     def get(self, request, pk, *args, **kwargs):
         results = Track.objects.filter(search=pk)
+        results_count = len(results)
+        if results_count < 11:
+            results = list(chain(results, Track.objects.all()[:10]))
         paginator = Paginator(results, 10)
         page = request.GET.get('page')
         try:
@@ -115,11 +119,13 @@ class ResultsView(View):
         _next = current_page + 1 if page_results.has_next() else None
         context = {
             'results': page_results,
-            'num_of_results': results.count(),
+            'num_of_results': len(results),
             'prev_prev': prev_prev,
             'prev': prev,
             'current': current_page,
-            '_next': _next,
-            'next_next': next_next
+            'next': _next,
+            'next_next': next_next,
+            'url': 'search',
+            'num_pages': paginator.num_pages
         }
         return render(request, 'search/results.html', context=context)

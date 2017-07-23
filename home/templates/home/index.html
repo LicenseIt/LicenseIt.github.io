@@ -1,7 +1,7 @@
+{% extends 'common/common_base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% block head %}
+    <head>
     <title>License It | licence music for any purpose</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -42,28 +42,28 @@
     <link rel="stylesheet" href="{% static 'common/assets/css/owl-carousel/owl.transitions.css' %}">
 
     <!-- Load Color CSS - Please uncomment to apply the color.
-    =====================================
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/blue.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/brown.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/cyan.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/dark.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/green.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/orange.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/purple.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/pink.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/red.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/yellow.css' %}">-->
+        =====================================
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/blue.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/brown.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/cyan.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/dark.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/green.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/orange.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/purple.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/pink.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/red.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/yellow.css' %}">-->
     <link rel="stylesheet" href="{% static 'common/assets/css/color/pasific.css' %}">
 
     <!-- Load Fontbase Icons - Please Uncomment to use linea icons
-    =====================================
-    <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-arrows-10.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-basic-10.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-basic-elaboration-10.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-ecommerce-10.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-music-10.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-software-10.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-weather-10.css' %}">-->
+        =====================================
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-arrows-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-basic-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-basic-elaboration-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-ecommerce-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-music-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-software-10.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-weather-10.css' %}">-->
     <link rel="stylesheet" href="{% static 'common/assets/css/icon/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'common/assets/css/icon/et-line-font.css' %}">
 
@@ -101,7 +101,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="{% url 'home' %}">
+            <a class="navbar-brand page-scroll" href="index.html">
                 <img src="{% static 'common/assets/img/logo/logo-default.png' %}" alt="logo" href="{% url 'home' %}">
                 License It
             </a>
@@ -111,25 +111,65 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
                                                                       class="dropdown-toggle color-light">Home </a></li>
-                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
+                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="how-works.html"
                                                                       class="dropdown-toggle color-light">How it
                     works </a></li>
-                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'search_page' %}"
-                                                                      class="dropdown-toggle color-light">Search </a>
+                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'search' %}"
+                                                                      class="dropdown-toggle color-light">Search</a>
                 </li>
-                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
+
+
+                <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle color-light">Sign in </a>
+                    <ul class="dropdown-menu has-submenu" role="menu">
+                        <li>
+                            <div class="row p15">
+                                <div class="col-md-12">
+                                    Login via
+                                    <div class="social-buttons pb5">
+                                        <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+                                        <a href="#" class="btn btn-tw"><i class="fa fa-google"></i> Google</a>
+                                    </div>
+                                    or
+                                    <form class="form mt5" role="form" method="post" action="{% url 'login' %}"
+                                          accept-charset="UTF-8" id="login-nav">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                                            <input type="email" name="username" class="form-control"
+                                                   id="exampleInputEmail2" placeholder="Email address" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputPassword2">Password</label>
+                                            <input type="password" name="password" class="form-control"
+                                                   id="exampleInputPassword2" placeholder="Password" required>
+                                            <div class="help-block text-right"><a href="forgot_password">Forget the
+                                                password ?</a></div>
+                                        </div>
+                                        <div class="form-group mt10">
+                                            <button type="submit"
+                                                    class="button btn-block button-rounded button-success hover-ripple-out">
+                                                Sign in
+                                            </button>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> keep me logged-in
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="bottom text-center mt5 font-size-normal">
+                                    New here ? <a href="#"><b>Join Us</b></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="contact.html"
                                                                       class="dropdown-toggle color-light">Contact Us</a>
                 </li>
-                <li class="dropdown megamenu-fw has-dropdown-menu">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'my_account' %}" class="dropdown-toggle color-dark">
-                        {{ user.email }}
-                    {% else %}
-                        <a href="" data-toggle="modal" data-target="#myModal" class="dropdown-toggle color-dark">
-                        sign in
-                    {% endif %}
-                    </a>
-                </li>
+
+
             </ul>
 
 
@@ -137,8 +177,10 @@
     </div>
 </nav>
 
+{% endblock %}
 
-<!-- Intro Area
+{% block content %}
+    <!-- Intro Area
 ===================================== -->
 <header class="intro pt100 pb100 parallax-window" data-parallax="scroll" data-speed="0.5"
         data-image-src="{% static 'common/assets/img/bg/music1.jpg' %}">
@@ -156,13 +198,13 @@
                     </h1>
 
                     <div class="col-md-8 col-md-offset-2">
-                        <form action="{% url 'search_page' %}" method="post" class="form-horizontal"
-                              style="display: flex;">
+                        <form action="{% url 'search' %}" method="post" class="form-horizontal" style="display: flex;"
+                              ;>
                             {% csrf_token %}
                             <label class="sr-only" for="inputHelpBlock">Input with help text</label>
                             <input type="text" name="search" class="form-control input-sqaure input-lg text-center"
                                    aria-describedby="helpBlock" placeholder="search by artist, band etc."> <span>&nbsp&nbsp</span>
-                            <button type="submit" class="button button-pasific button-lg hover-ripple-out animated"
+                            <button class="button button-pasific button-lg hover-ripple-out animated"
                                     data-animation="fadeInUp" data-animation-delay="1200"
                                     style="float:right; display: inline-flex;">Search
                             </button>
@@ -216,8 +258,9 @@
                 <h5 class="modal-title text-center"><i class="fa fa-search fa-fw"></i> Search here</h5>
             </div>
             <div class="modal-body">
-                <form action="#" class="inline-form">
-                    <input type="text" class="modal-search-input" autofocus>
+                <form action="{% url 'search' %}" method="post" class="inline-form">
+                    {% csrf_token %}
+                    <input type="text" name="search" class="modal-search-input" autofocus>
                 </form>
             </div>
             <div class="modal-footer bg-gray">
@@ -228,56 +271,10 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content bg-grad-bora">
-            <div class="modal-header" style="border: none;">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title color-light text-center mt10 color-dark font-montserrat text-capitalize">SIGN
-                    IN</h3>
-            </div>
-            <div class="modal-body">
-                <form action="{% url 'login' %}" method="post" name="contact">
-                    {% csrf_token %}
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <input type="text" class="input-md input-rounded form-control" placeholder="username"
-                                   name="username" maxlength="100" required>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <input type="password" class="input-md input-rounded form-control" placeholder="password"
-                                   name="password" maxlength="100" required>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12 mt10 text-center mb20">
-                        <button type="submit" class="button-3d button-md button-block button-pink hover-ripple-out">
-                            Login
-                        </button>
-                    </div>
-
-                    <div class="col-sm-12 text-center p5"><a href="#" class="color-light">Sign in with Google</a></div>
-                    <div class="col-sm-12 text-center p5"><a href="#" class="color-light">Sign in with Facebook</a>
-                    </div>
-                    <div class="col-sm-12 text-center p15"><a href="#" class="color-dark">Forgot Password?</a></div>
-
-                </form>
-            </div>
-            <div class="modal-footer" style="border: none;">
-
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <!-- Welcome Area
 ===================================== -->
-<div id="howworks" id="welcome" class="pt75">
+<div id="howworks" class="pt75">
     <div class="container">
         <div class="row">
 
@@ -357,7 +354,7 @@
 </div>
 
 <div id="solution" class="container-fluid bg-dark2 pt50 pb50"
-     style="background: url({% static 'common/assets/img/bg/bg-parallax-4.jpg' %}) 100% 50% no-repeat;">
+     style="background: url(assets/img/bg/bg-parallax-4.jpg) 100% 50% no-repeat;">
     <div class="container">
 
         <div class="row">
@@ -534,7 +531,6 @@
     </div>
 
 </div>
-</div>
 
 <!-- Contact Us Area
 =====================================-->
@@ -554,7 +550,7 @@
         </div>
 
         <div class="row mt50">
-            <form name="contactform" id="contactForm" method="post" action="common/assets/php/send.php">
+            <form name="contactform" id="contactForm" method="post" action="{% static 'common/assets/php/send.php' %}">
 
                 <!-- sender name start -->
                 <div class="col-md-3 col-sm-3 col-xs-6">
@@ -668,69 +664,4 @@
         </div>
     </div>
 </div>
-
-
-<!-- footer Area
-===================================== -->
-
-<footer>
-    <div class="container-fluid pt20">
-        <div class="container">
-            <div class="row">
-
-                <!-- copyright start -->
-                <div class="col-md-6 col-sm-6 col-xs-6 pull-left">
-                    <p>Copyright &copy;2016 <a href="{% url 'home' %}">License It</a>. All rights reserved.</p>
-                </div>
-                <!-- copyright end -->
-
-                <!-- footer bottom start -->
-                <div class="col-md-6 col-sm-6 col-xs-6 pull-right">
-                    <p class="text-right">
-
-                        <a href="#" class="mr20">Term of Use</a>
-
-                    </p>
-                </div>
-</footer>
-<!-- footer bottom end -->
-
-</div><!-- row end -->
-</div><!-- container end -->
-</div><!-- container-fluid end -->
-</div><!-- footer end -->
-
-
-<!-- JQuery Core
-=====================================-->
-<script src="{% static 'common/assets/js/core/jquery.min.js' %}"></script>
-<script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
-
-<!-- Magnific Popup
-=====================================-->
-<script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
-<script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
-
-<!-- Progress Bars
-=====================================-->
-<script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar.js' %}"></script>
-<script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar-main.js' %}"></script>
-
-<!-- Typed
-=====================================-->
-<script src="{% static 'common/assets/js/typed/typed.min.js' %}"></script>
-
-<!-- JQuery Main
-=====================================-->
-<script src="{% static 'common/assets/js/main/jquery.appear.js' %}"></script>
-<script src="{% static 'common/assets/js/main/isotope.pkgd.min.js' %}"></script>
-<script src="{% static 'common/assets/js/main/parallax.min.js' %}"></script>
-<script src="{% static 'common/assets/js/main/jquery.countTo.js' %}"></script>
-<script src="{% static 'common/assets/js/main/owl.carousel.min.js' %}"></script>
-<script src="{% static 'common/assets/js/main/jquery.sticky.js' %}"></script>
-<script src="{% static 'common/assets/js/main/ion.rangeSlider.min.js' %}"></script>
-<script src="{% static 'common/assets/js/main/imagesloaded.pkgd.min.js' %}"></script>
-<script src="{% static 'common/assets/js/main/main.js' %}"></script>
-
-</body>
-</html>
+{% endblock %}

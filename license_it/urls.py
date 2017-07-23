@@ -23,5 +23,5 @@ urlpatterns = [
     url('^search/', include('search.urls')),
     url('^accounts/', include('accounts.urls')),
     url('^order/', include('orders.urls')),
-    url('', include('common.urls')),
+    url('', include('home.urls')),
 ]
