@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'about',
     'how_it_works',
     'contact',
+    'faq',
     'common',
     'home'
 ]
