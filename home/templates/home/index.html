@@ -132,6 +132,7 @@
                                     or
                                     <form class="form mt5" role="form" method="post" action="{% url 'login' %}"
                                           accept-charset="UTF-8" id="login-nav">
+                                        {% csrf_token %}
                                         <div class="form-group">
                                             <label class="sr-only" for="exampleInputEmail2">Email address</label>
                                             <input type="email" name="username" class="form-control"
