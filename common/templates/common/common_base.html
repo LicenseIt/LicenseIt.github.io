@@ -321,7 +321,13 @@
         <script src="{% static 'common/assets/js/typed/typed.min.js' %}"></script>
     {% endif %}
 
-    {% if url == 'home' or url == 'about' or url == 'works' %}
+    {% if url == 'works' %}
+        <!-- Progress Bars
+        =====================================-->
+        <script src="{% static 'common/assets/js/progress-bar/circle-progress.js' %}"></script>
+        <script src="{% static 'common/assets/js/progress-bar/circle-progress-main.js' %}"></script>
+    {% endif %}
+    {% if url == 'home' or url == 'about' %}
         <!-- Progress Bars
         =====================================-->
         <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar.js' %}"></script>
