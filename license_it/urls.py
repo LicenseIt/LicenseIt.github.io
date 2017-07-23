@@ -20,13 +20,15 @@ from django.conf.urls import include
 
 from about.views import AboutView
 from how_it_works.views import HowItWorks
+from contact.views import ContactUs
 
 urlpatterns = [
     url('^admin/', admin.site.urls),
     url('^search/', include('search.urls')),
     url('^accounts/', include('accounts.urls')),
     url('^order/', include('orders.urls')),
-    url('^about', AboutView.as_view(), name='about'),
-    url('^how_it_works', HowItWorks.as_view(), name='how_it_works'),
+    url('^about/', AboutView.as_view(), name='about'),
+    url('^how_it_works/', HowItWorks.as_view(), name='how_it_works'),
+    url('^contact/', ContactUs.as_view(), name='contact_us'),
     url('', include('home.urls')),
 ]

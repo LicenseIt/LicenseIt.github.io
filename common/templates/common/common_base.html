@@ -172,7 +172,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown megamenu-fw has-dropdown-menu"><a href="contact.html"
+                    <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
                                                                           class="dropdown-toggle color-dark">Contact
                         Us</a></li>
 
@@ -256,7 +256,7 @@
                             <li><a href="faq.html">FAQs</a></li>
 
 
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
                         </ul>
                     </div>
                     <!-- footer menu three end -->
@@ -308,12 +308,10 @@
     <script src="{% static 'common/assets/js/core/jquery.min.js' %}"></script>
     <script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
 
-    {% if url == 'home' or url == 'search' or url == 'about' or url == 'works' %}
-        <!-- Magnific Popup
-        =====================================-->
-        <script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
-        <script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
-    {% endif %}
+    <!-- Magnific Popup
+    =====================================-->
+    <script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
 
     {% if url == 'home' %}
         <!-- Typed
@@ -321,12 +319,13 @@
         <script src="{% static 'common/assets/js/typed/typed.min.js' %}"></script>
     {% endif %}
 
-    {% if url == 'works' %}
+    {% if url == 'works' or url == 'contact' %}
         <!-- Progress Bars
         =====================================-->
         <script src="{% static 'common/assets/js/progress-bar/circle-progress.js' %}"></script>
         <script src="{% static 'common/assets/js/progress-bar/circle-progress-main.js' %}"></script>
     {% endif %}
+
     {% if url == 'home' or url == 'about' %}
         <!-- Progress Bars
         =====================================-->
