@@ -242,7 +242,7 @@
                         <h6 class="font-montserrat text-uppercase color-dark">Learn more</h6>
                         <ul class="no-icon-list">
 
-                            <li><a href="pricing.html">Pricing</a></li>
+                            <li><a href="{% url 'pricing' %}">Pricing</a></li>
                             <li><a href="{% url 'how_it_works' %}">Licensing</a></li>
 
                         </ul>
@@ -308,10 +308,12 @@
     <script src="{% static 'common/assets/js/core/jquery.min.js' %}"></script>
     <script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
 
+    {% if url != 'pricing' %}
     <!-- Magnific Popup
     =====================================-->
     <script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
     <script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
+    {% endif %}
 
     {% if url == 'home' %}
         <!-- Typed

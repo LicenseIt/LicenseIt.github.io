@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'how_it_works',
     'contact',
     'faq',
+    'pricing',
     'common',
     'home'
 ]

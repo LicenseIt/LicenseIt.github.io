@@ -22,6 +22,7 @@ from about.views import AboutView
 from how_it_works.views import HowItWorks
 from contact.views import ContactUs
 from faq.views import Faq
+from pricing.views import Pricing
 
 urlpatterns = [
     url('^admin/', admin.site.urls),
@@ -32,5 +33,6 @@ urlpatterns = [
     url('^how_it_works/', HowItWorks.as_view(), name='how_it_works'),
     url('^contact/', ContactUs.as_view(), name='contact_us'),
     url('^faq/', Faq.as_view(), name='faq'),
+    url('^pricing/', Pricing.as_view(), name='pricing'),
     url('', include('home.urls')),
 ]
