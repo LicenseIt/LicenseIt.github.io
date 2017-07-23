@@ -117,7 +117,7 @@
                     <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
                                                                           class="dropdown-toggle color-dark">Home </a>
                     </li>
-                    <li class="dropdown megamenu-fw has-dropdown-menu"><a href="how-works.html"
+                    <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'how_it_works' %}"
                                                                           class="dropdown-toggle color-dark">How it
                         works </a></li>
                     <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'search' %}"
@@ -205,6 +205,7 @@
 
         </div>
     </div>
+    <span id="page-top"></span>
 {% endblock %}
 {% block content %}
 {% endblock %}
@@ -229,8 +230,8 @@
                         <h6 class="font-montserrat text-uppercase color-dark">Menu</h6>
                         <ul class="no-icon-list">
                             <li><a href="{% url 'home' %}">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="how-works.html">How it works</a></li>
+                            <li><a href="{% url 'about' %}">About</a></li>
+                            <li><a href="{% url 'how_it_works' %}">How it works</a></li>
                             <li><a href="team.html">Team LiceneIt</a></li>
                         </ul>
                     </div>
@@ -242,7 +243,7 @@
                         <ul class="no-icon-list">
 
                             <li><a href="pricing.html">Pricing</a></li>
-                            <li><a href="how-works.html">Licensing</a></li>
+                            <li><a href="{% url 'how_it_works' %}">Licensing</a></li>
 
                         </ul>
                     </div>
@@ -307,7 +308,7 @@
     <script src="{% static 'common/assets/js/core/jquery.min.js' %}"></script>
     <script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
 
-    {% if url == 'home' or 'search' %}
+    {% if url == 'home' or url == 'search' or url == 'about' or url == 'works' %}
         <!-- Magnific Popup
         =====================================-->
         <script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
@@ -315,15 +316,18 @@
     {% endif %}
 
     {% if url == 'home' %}
-        <!-- Progress Bars
-        =====================================-->
-        <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar.js' %}"></script>
-        <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar-main.js' %}"></script>
-
         <!-- Typed
         =====================================-->
         <script src="{% static 'common/assets/js/typed/typed.min.js' %}"></script>
     {% endif %}
+
+    {% if url == 'home' or url == 'about' or url == 'works' %}
+        <!-- Progress Bars
+        =====================================-->
+        <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar.js' %}"></script>
+        <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar-main.js' %}"></script>
+    {% endif %}
+
     <!-- JQuery Main
     =====================================-->
     <script src="{% static 'common/assets/js/main/jquery.appear.js' %}"></script>
@@ -336,6 +340,13 @@
     <script src="{% static 'common/assets/js/main/imagesloaded.pkgd.min.js' %}"></script>
     <script src="{% static 'common/assets/js/main/main.js' %}"></script>
 
+    {% if url == 'works' %}
+        <!-- Google Map
+        =====================================-->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script src="{% static 'common/assets/js/main/googlemap.js' %}"></script>
+
+    {% endif %}
     </body>
     </html>
 {% endblock %}

@@ -18,10 +18,15 @@ from django.contrib import admin
 from django.conf.urls import include
 # from django.contrib.auth.decorators import login_required, permission_required
 
+from about.views import AboutView
+from how_it_works.views import HowItWorks
+
 urlpatterns = [
     url('^admin/', admin.site.urls),
     url('^search/', include('search.urls')),
     url('^accounts/', include('accounts.urls')),
     url('^order/', include('orders.urls')),
+    url('^about', AboutView.as_view(), name='about'),
+    url('^how_it_works', HowItWorks.as_view(), name='how_it_works'),
     url('', include('home.urls')),
 ]
