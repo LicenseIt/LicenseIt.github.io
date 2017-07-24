@@ -550,14 +550,20 @@
             </div>
         </div>
 
+        <div class="row">
+            {% if form.errors %}
+                {% for error in form.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
         <div class="row mt50">
-            <form name="contactform" id="contactForm" method="post" action="{% static 'common/assets/php/send.php' %}">
-
+            <form name="contactform" id="contactForm" method="post" action="{% url 'contact_us' %}">
+                {% csrf_token %}
                 <!-- sender name start -->
                 <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="form-group">
-                        <input type="text" name="senderName" id="senderName" class="input-md input-rounded form-control"
-                               placeholder="fullname" maxlength="100" required>
+                        {{ form.full_name }}
                     </div>
                 </div>
                 <!-- sender name end -->
@@ -565,16 +571,14 @@
                 <!-- sender email start -->
                 <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="form-group">
-                        <input type="email" name="senderEmail" id="senderEmail"
-                               class="input-md input-rounded form-control" placeholder="email address" maxlength="100"
-                               required>
+                        {{ form.email }}
                     </div>
                 </div>
                 <!-- sender email end -->
 
 
                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                    <textarea class="form-control" name="message" id="message" rows="7" required></textarea>
+                    {{ form.text }}
                     <button type="submit" name="sendMessage" id="sendMessage"
                             class="button-3d button-md button-pasific hover-ripple-out mt20 center-block">Send Message
                     </button>

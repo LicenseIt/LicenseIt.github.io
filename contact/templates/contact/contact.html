@@ -1,6 +1,73 @@
 {% extends 'common/common_base.html' %}
 {% load staticfiles %}
 {% block content %}
+    <!-- Contact Us Area
+=====================================-->
+<div id="contact" class="pt75 pb75 bt-solid-1">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center">
+                    Get In Touch With Us.
+                    <small class="heading-desc text-lowercase">
+                        Please feel free to say anything here. Our staff will reply as soon as possible. Anything!
+                    </small>
+                    <small class="heading heading-solid center-block"></small>
+                </h3>
+            </div>
+        </div>
+
+        <div class="row">
+            {% if form.errors %}
+                {% for error in form.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="row mt50">
+            <form name="contactform" id="contactForm" method="post" action="{% url 'contact_us' %}">
+                {% csrf_token %}
+                <!-- sender name start -->
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <div class="form-group">
+                        {{ form.full_name }}
+                    </div>
+                </div>
+                <!-- sender name end -->
+
+                <!-- sender email start -->
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <div class="form-group">
+                        {{ form.email }}
+                    </div>
+                </div>
+                <!-- sender email end -->
+
+
+                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                    {{ form.text }}
+                    <button type="submit" name="sendMessage" id="sendMessage"
+                            class="button-3d button-md button-pasific hover-ripple-out mt20 center-block">Send Message
+                    </button>
+                </div>
+
+                <div id="sendingMessage" class="statusMessage sending-message"><p>Sending your message. Please
+                    wait...</p></div>
+                <div id="successMessage" class="statusMessage success-message"><p>Thanks for sending your message! We'll
+                    get back to you shortly.</p></div>
+                <div id="failureMessage" class="statusMessage failure-message"><p>There was a problem sending your
+                    message. Please try again.</p></div>
+                <div id="incompleteMessage" class="statusMessage"><p>Please complete all the fields in the form before
+                    sending.</p></div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
     <!-- Intro Area
 ===================================== -->
     <header class="pt100 pb100 parallax-window-2" data-parallax="scroll" data-speed="0.5"
