@@ -1,85 +1,81 @@
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
-from django.db import models
+from django import forms
+from .models import Order, OrderAdvertising, OrderIndie
+from .models import OrderProgram, OrderWedding, ProjectType
 
 
-class ProjectType(models.Model):
-    name = models.CharField(max_length=200)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+class OrderForm(forms.ModelForm):
+    SENT = 'sent'
+    DONE = 'done'
+    ATTENTION = 'attention'
 
-    def __str__(self):
-        return self.name
-
-
-class OrderIndie(models.Model):
-    DISTRIBUTION_CHOICES = (
-        (
-            'web', (
-                ('youtube', 'youtube'),
-                ('vimeo', 'vimeo'),
-                ('vine', 'vine'),
-                ('facebook', 'facebook'),
-                ('web_other', 'other')
-            )
-        ),
-        (
-            'externally', (
-                ('festival', 'film festival entry'),
-                ('conf', 'conferences'),
-                ('no-theater', 'non-theateratically distributed viewing'),
-                ('events', 'events'),
-                ('tradeshow', 'trade shows'),
-                ('ex_other', 'other')
-            )
-        ),
-        ('broadcast', 'broadcast media'),
-        ('theaters', 'theaters'),
-        ('other', 'other')
+    ORDER_CHOICES = (
+        (SENT, 'Sent'),
+        (ATTENTION, 'Attention'),
+        (DONE, 'Done'),
     )
 
-    film_length = models.CharField(max_length=100)
-    distribution = models.CharField(max_length=100, choices=DISTRIBUTION_CHOICES)
-    number_of_viewers = models.IntegerField()
-    openning_closing = models.BooleanField(default=False)
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    FEATURED = 'fg'
+    BACKGROUND = 'bg'
 
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.order.production_name + ', ' + self.film_length
-
-
-class OrderProgram(models.Model):
-    DISTRIBUTION_CHOICES = (
-        (
-            'web', (
-                ('site', 'site/sites'),
-                ('games', 'games'),
-                ('web_other', 'other')
-            )
-        ),
-        ('mobile', 'mobile'),
-        ('desktop', 'desktop'),
-        ('console', 'game consoles'),
-        ('internal', 'internally'),
-        ('external', 'externally'),
-        ('other', 'other')
+    FEATURED_BACKGROUND_CHOICES = (
+        (FEATURED, 'featured'),
+        (BACKGROUND, 'background')
     )
 
-    distribution = models.CharField(max_length=100, choices=DISTRIBUTION_CHOICES)
-    number_of_viewers = models.IntegerField()
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    TRAILER_FULL_CHOICES = (
+        ('trailer', 'trailer'),
+        ('full', 'full movie'),
+        ('both', 'both')
+    )
 
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    project_type = forms.ModelChoiceField(
+        queryset=ProjectType.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}))
+    featured_background = forms.CharField(
+        widget=forms.Select(
+            choices=FEATURED_BACKGROUND_CHOICES,
+            attrs={'class': 'form-control'}))
+    trailer_full = forms.CharField(
+        widget=forms.Select(
+            choices=TRAILER_FULL_CHOICES,
+            attrs={'class': 'form-control'}))
 
-    def __str__(self):
-        return 'program: ' + self.order.production_name + ', ' + str(self.number_of_viewers)
+    class Meta:
+        model = Order
+        fields = '__all__'
+        # exclude = ['user', 'state']
+        widgets = {
+            'song_title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'the song title',
+            }),
+            'performer_name': forms.TextInput(attrs={
+                'class': "form-control",
+                'placeholder': "the performer name",
+            }),
+            'song_version': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'song version'
+            }),
+            'production_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'production name'
+            }),
+            'project_release_date': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'project release date'
+            }),
+            'synopsis': forms.Textarea(attrs={
+                'class': 'form-control',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+            }),
+        }
 
 
-class OrderAdvertising(models.Model):
+class OrderAdvertiseForm(forms.ModelForm):
     DISTRIBUTION_CHOICES = (
         (
             'web', (
@@ -110,18 +106,91 @@ class OrderAdvertising(models.Model):
         ('other', 'other')
     )
 
-    distribution = models.CharField(max_length=100, choices=DISTRIBUTION_CHOICES)
-    number_of_viewers = models.IntegerField()
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    distribution = forms.SelectMultiple(choices=DISTRIBUTION_CHOICES,
+                                        attrs={'class': 'form-control'})
 
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    class Meta:
+        model = OrderAdvertising
+        fields = '__all__'
+        widgets = {
+            'number_of_viewers': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
 
-    def __str__(self):
-        return 'advertisement: ' + self.order.production_name + ', ' + str(self.number_of_viewers)
+
+class OrderIndieForm(forms.ModelForm):
+    DISTRIBUTION_CHOICES = (
+        (
+            'web', (
+                ('youtube', 'youtube'),
+                ('vimeo', 'vimeo'),
+                ('vine', 'vine'),
+                ('facebook', 'facebook'),
+                ('web_other', 'other')
+            )
+        ),
+        (
+            'externally', (
+                ('festival', 'film festival entry'),
+                ('conf', 'conferences'),
+                ('no-theater', 'non-theateratically distributed viewing'),
+                ('events', 'events'),
+                ('tradeshow', 'trade shows'),
+                ('ex_other', 'other')
+            )
+        ),
+        ('broadcast', 'broadcast media'),
+        ('theaters', 'theaters'),
+        ('other', 'other')
+    )
+
+    distribution = forms.ChoiceField(
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'}),
+        choices=DISTRIBUTION_CHOICES)
+
+    class Meta:
+        model = OrderIndie
+        fields = '__all__'
+        widgets = {
+            'film_length': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'number_of_viewers': forms.TextInput(attrs={'class': 'form-control'}),
+            'openning_closing': forms.CheckboxInput(attrs={'class': 'form-control'}),
+        }
 
 
-class OrderWedding(models.Model):
+class OrderProgramForm(forms.ModelForm):
+    DISTRIBUTION_CHOICES = (
+        (
+            'web', (
+                ('site', 'site/sites'),
+                ('games', 'games'),
+                ('web_other', 'other')
+            )
+        ),
+        ('mobile', 'mobile'),
+        ('desktop', 'desktop'),
+        ('console', 'game consoles'),
+        ('internal', 'internally'),
+        ('external', 'externally'),
+        ('other', 'other')
+    )
+
+    distribution = forms.MultipleChoiceField(
+        choices=DISTRIBUTION_CHOICES,
+        widget=forms.SelectMultiple(attrs={'class': 'form-input'}))
+
+    class Meta:
+        model = OrderProgram
+        fields = '__all__'
+        widgets = {
+            'number_of_viewers': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+class OrderWeddingForm(forms.ModelForm):
     BUDGET_CHOICES = (
         ('low', '0-$50K'),
         ('medium', '$50K-$250K'),
@@ -381,68 +450,16 @@ class OrderWedding(models.Model):
         ('ZW', 'Zimbabwe')
     )
 
-    number_uses = models.IntegerField()
-    budget = models.CharField(max_length=20, choices=BUDGET_CHOICES)
-    territory = models.CharField(max_length=2, choices=TERRITORIES_CHOICES)
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    budget = forms.MultipleChoiceField(
+        choices=BUDGET_CHOICES,
+        widget=forms.SelectMultiple(attrs={'class': 'form-input'}))
+    territories = forms.MultipleChoiceField(
+        choices=TERRITORIES_CHOICES,
+        widget=forms.SelectMultiple(attrs={'class': 'form-input'}))
 
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return 'wedding: ' + self.order.production_name + ', ' + str(self.number_uses)
-
-
-class Order(models.Model):
-    SENT = 'sent'
-    DONE = 'done'
-    ATTENTION = 'attention'
-
-    ORDER_CHOICES = (
-        (SENT, 'Sent'),
-        (ATTENTION, 'Attention'),
-        (DONE, 'Done'),
-    )
-
-    FEATURED = 'fg'
-    BACKGROUND = 'bg'
-
-    FEATURED_BACKGROUND_CHOICES = (
-        (FEATURED, 'featured'),
-        (BACKGROUND, 'background')
-    )
-
-    TRAILER_FULL_CHOICES = (
-        ('trailer', 'trailer'),
-        ('full', 'full movie'),
-        ('both', 'both')
-    )
-
-    user = models.ForeignKey(User,
-                             on_delete=models.SET_NULL,
-                             null=True,
-                             blank=True)
-    state = models.CharField(max_length=20,
-                             choices=ORDER_CHOICES,
-                             default=SENT)
-
-    song_title = models.CharField(max_length=200)
-    performer_name = models.CharField(max_length=200)
-    # num_of_uses = models.PositiveIntegerField()
-
-    song_version = models.CharField(max_length=200)
-    featured_background = models.CharField(max_length=20, choices=FEATURED_BACKGROUND_CHOICES)
-
-    production_name = models.CharField(max_length=300)
-    synopsis = models.TextField()
-    description = models.TextField()
-
-    trailer_full = models.CharField(max_length=20, choices=TRAILER_FULL_CHOICES)
-    project_release_date = models.DateField()
-    project_type = models.ForeignKey(ProjectType, related_name='general_order')
-
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.production_name + ': ' + self.song_title
+    class Meta:
+        model = OrderWedding
+        fields = '__all__'
+        widgets = {
+            'number_uses': forms.TextInput(attrs={'class': 'form-control'})
+        }

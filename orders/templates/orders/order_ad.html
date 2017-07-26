@@ -1,0 +1,25 @@
+{% extends 'common/common_base.html' %}
+{% block content %}
+    <div class="container">
+    <br><br><br><br><br>
+        <form action="{% url 'order_ad' pk order %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                {{ form.errors }}
+            </div>
+            <div class="form-group">
+                <label for="id_distribution">distribution</label>
+                {{ form.distribution }}
+            </div>
+            <div class="form-group">
+                <label for="id_number_of_viewers">approximate number of viewers</label>
+                {{ form.number_of_viewers }}
+            </div>
+            <input type="hidden" name="order" value="{{ order }}">
+            <div class="row">
+                <button type="submit" class="btn btn-success">submit</button>
+                <button type="reset" class="btn btn-warning">reset</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
