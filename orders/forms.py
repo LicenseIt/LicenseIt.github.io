@@ -43,8 +43,7 @@ class OrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = '__all__'
-        # exclude = ['user', 'state']
+        exclude = ['user', 'state']
         widgets = {
             'song_title': forms.TextInput(attrs={
                 'class': 'form-control',
