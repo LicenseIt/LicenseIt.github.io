@@ -30,14 +30,9 @@ class OrderView(View):
     def post(self, request, pk):
         form = OrderForm(request.POST)
         if form.is_valid():
-            urls = {
-                'programming': 'order_program',
-                'wedding': 'order_wedding',
-                'indie movie': 'order_indie',
-                'advertising': 'order_ad'
-            }
+            urls = dict()
             order_id = form.save()
-            return HttpResponseRedirect(reverse(urls[order_id.project_type], args=[int(pk), order_id.id]))
+            return HttpResponseRedirect(reverse(order_id.project_type.slug, args=[int(pk), order_id.id]))
 
         return render(request,
                       'orders/order.html',
