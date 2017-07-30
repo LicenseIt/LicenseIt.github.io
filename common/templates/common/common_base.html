@@ -56,7 +56,11 @@
         <link rel="stylesheet" href="{% static 'common/assets/css/color/pink.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/color/red.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/color/yellow.css' %}">-->
+    {% if url != 'client_dash' %}
         <link rel="stylesheet" href="{% static 'common/assets/css/color/pasific.css' %}">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'common/assets/css/color/blue.css' %}">
+    {% endif %}
 
         <!-- Load Fontbase Icons - Please Uncomment to use linea icons
         =====================================
@@ -333,57 +337,57 @@
         <script src="{% static 'common/assets/js/loading.js' %}"></script>
     {% endif %}
 
-    <!-- JQuery Core
+<!-- JQuery Core
+=====================================-->
+<script src="{% static 'common/assets/js/core/jquery.min.js' %}"></script>
+<script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
+
+{% if url != 'pricing' %}
+    <!-- Magnific Popup
     =====================================-->
-    <script src="{% static 'common/assets/js/core/jquery.min.js' %}"></script>
-    <script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
+    <script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
+{% endif %}
 
-    {% if url != 'pricing' %}
-        <!-- Magnific Popup
-        =====================================-->
-        <script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
-        <script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
-    {% endif %}
-
-    {% if url == 'home' %}
-        <!-- Typed
-        =====================================-->
-        <script src="{% static 'common/assets/js/typed/typed.min.js' %}"></script>
-    {% endif %}
-
-    {% if url == 'works' or url == 'contact' %}
-        <!-- Progress Bars
-        =====================================-->
-        <script src="{% static 'common/assets/js/progress-bar/circle-progress.js' %}"></script>
-        <script src="{% static 'common/assets/js/progress-bar/circle-progress-main.js' %}"></script>
-    {% endif %}
-
-    {% if url == 'home' or url == 'about' or url == 'team' or url == 'terms' %}
-        <!-- Progress Bars
-        =====================================-->
-        <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar.js' %}"></script>
-        <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar-main.js' %}"></script>
-    {% endif %}
-
-    <!-- JQuery Main
+{% if url == 'home' %}
+    <!-- Typed
     =====================================-->
-    <script src="{% static 'common/assets/js/main/jquery.appear.js' %}"></script>
-    <script src="{% static 'common/assets/js/main/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static 'common/assets/js/main/parallax.min.js' %}"></script>
-    <script src="{% static 'common/assets/js/main/jquery.countTo.js' %}"></script>
-    <script src="{% static 'common/assets/js/main/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'common/assets/js/main/jquery.sticky.js' %}"></script>
-    <script src="{% static 'common/assets/js/main/ion.rangeSlider.min.js' %}"></script>
-    <script src="{% static 'common/assets/js/main/imagesloaded.pkgd.min.js' %}"></script>
-    <script src="{% static 'common/assets/js/main/main.js' %}"></script>
+    <script src="{% static 'common/assets/js/typed/typed.min.js' %}"></script>
+{% endif %}
 
-    {% if url == 'works' %}
-        <!-- Google Map
-        =====================================-->
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-        <script src="{% static 'common/assets/js/main/googlemap.js' %}"></script>
+{% if url == 'works' or url == 'contact' %}
+    <!-- Progress Bars
+    =====================================-->
+    <script src="{% static 'common/assets/js/progress-bar/circle-progress.js' %}"></script>
+    <script src="{% static 'common/assets/js/progress-bar/circle-progress-main.js' %}"></script>
+{% endif %}
 
-    {% endif %}
+{% if url == 'home' or url == 'about' or url == 'team' or url == 'terms' %}
+    <!-- Progress Bars
+    =====================================-->
+    <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar.js' %}"></script>
+    <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar-main.js' %}"></script>
+{% endif %}
+
+<!-- JQuery Main
+=====================================-->
+<script src="{% static 'common/assets/js/main/jquery.appear.js' %}"></script>
+<script src="{% static 'common/assets/js/main/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'common/assets/js/main/parallax.min.js' %}"></script>
+<script src="{% static 'common/assets/js/main/jquery.countTo.js' %}"></script>
+<script src="{% static 'common/assets/js/main/owl.carousel.min.js' %}"></script>
+<script src="{% static 'common/assets/js/main/jquery.sticky.js' %}"></script>
+<script src="{% static 'common/assets/js/main/ion.rangeSlider.min.js' %}"></script>
+<script src="{% static 'common/assets/js/main/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'common/assets/js/main/main.js' %}"></script>
+
+{% if url == 'works' %}
+    <!-- Google Map
+    =====================================-->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="{% static 'common/assets/js/main/googlemap.js' %}"></script>
+
+{% endif %}
     </body>
     </html>
 {% endblock %}

@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from search.models import Search, Track, Collection, Artist
-from .models import Order, OrderAdvertising, OrderIndie, OrderProgram, OrderWedding
+from .models import Order #, OrderAdvertising, OrderIndie, OrderProgram, OrderWedding
 from .forms import *
 
 
@@ -30,7 +30,6 @@ class OrderView(View):
     def post(self, request, pk):
         form = OrderForm(request.POST)
         if form.is_valid():
-            urls = dict()
             order_id = form.save()
             return HttpResponseRedirect(reverse(order_id.project_type.slug, args=[int(pk), order_id.id]))
 
@@ -57,61 +56,55 @@ class OrderIndieView(View):
                       )
 
 
-class OrderAdView(View):
-    def get(self, request, pk, order_id):
-        form = OrderAdvertiseForm()
-        return render(request,
-                      'orders/order_ad.html',
-                      context={'form': form, 'pk': pk, 'order': order_id})
-
-    def post(self, request, pk, order_id):
-        form = OrderAdvertiseForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('home'))
-        return render(request,
-                      'orders/order_ad.html',
-                      context={'form': form, 'pk': pk, 'order': order_id}
-                      )
-
-
-class OrderProgramView(View):
-    def get(self, request, pk, order_id):
-        form = OrderProgramForm()
-        return render(request,
-                      'orders/order_program.html',
-                      context={'form': form, 'pk': pk, 'order': order_id})
-
-    def post(self, request, pk, order_id):
-        form = OrderProgramForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('home'))
-        return render(request,
-                      'orders/order_program.html',
-                      context={'form': form, 'pk': pk, 'order': order_id}
-                      )
-
-
-class OrderWeddingView(View):
-    def get(self, request, pk, order_id):
-        form = OrderWeddingForm()
-        return render(request,
-                      'orders/order_wedding.html',
-                      context={'form': form, 'pk': pk, 'order': order_id})
-
-    def post(self, request, pk, order_id):
-        form = OrderWeddingForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('home'))
-        return render(request,
-                      'orders/order_wedding.html',
-                      context={'form': form, 'pk': pk, 'order': order_id}
-                      )
-
-
-class OrderListView(View):
-    def get(self, request):
-        order_list = []
-        return render(request, 'orders/order_list.html', {'order_list': order_list})
+# class OrderAdView(View):
+#     def get(self, request, pk, order_id):
+#         form = OrderAdvertiseForm()
+#         return render(request,
+#                       'orders/order_ad.html',
+#                       context={'form': form, 'pk': pk, 'order': order_id})
+#
+#     def post(self, request, pk, order_id):
+#         form = OrderAdvertiseForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse('home'))
+#         return render(request,
+#                       'orders/order_ad.html',
+#                       context={'form': form, 'pk': pk, 'order': order_id}
+#                       )
+#
+#
+# class OrderProgramView(View):
+#     def get(self, request, pk, order_id):
+#         form = OrderProgramForm()
+#         return render(request,
+#                       'orders/order_program.html',
+#                       context={'form': form, 'pk': pk, 'order': order_id})
+#
+#     def post(self, request, pk, order_id):
+#         form = OrderProgramForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse('home'))
+#         return render(request,
+#                       'orders/order_program.html',
+#                       context={'form': form, 'pk': pk, 'order': order_id}
+#                       )
+#
+#
+# class OrderWeddingView(View):
+#     def get(self, request, pk, order_id):
+#         form = OrderWeddingForm()
+#         return render(request,
+#                       'orders/order_wedding.html',
+#                       context={'form': form, 'pk': pk, 'order': order_id})
+#
+#     def post(self, request, pk, order_id):
+#         form = OrderWeddingForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse('home'))
+#         return render(request,
+#                       'orders/order_wedding.html',
+#                       context={'form': form, 'pk': pk, 'order': order_id}
+#                       )

@@ -3,134 +3,106 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-class ProjectType(models.Model):
-    name = models.CharField(max_length=200)
-    slug = models.SlugField()
+class Base(models.Model):
+    '''
+    base class for all models of orders
+    '''
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class ProjectType(Base):
+    '''
+    type of project the user is working on
+    '''
+    name = models.CharField(max_length=200)
+    # the url name of the type to work with on the back end
+    slug = models.SlugField()
 
     def __str__(self):
         return self.name
 
 
-class OrderIndie(models.Model):
-    DISTRIBUTION_CHOICES = (
-        (
-            'web', (
-                ('youtube', 'youtube'),
-                ('vimeo', 'vimeo'),
-                ('vine', 'vine'),
-                ('facebook', 'facebook'),
-                ('web_other', 'other')
-            )
-        ),
-        (
-            'externally', (
-                ('festival', 'film festival entry'),
-                ('conf', 'conferences'),
-                ('no-theater', 'non-theateratically distributed viewing'),
-                ('events', 'events'),
-                ('tradeshow', 'trade shows'),
-                ('ex_other', 'other')
-            )
-        ),
-        ('broadcast', 'broadcast media'),
-        ('theaters', 'theaters'),
-        ('other', 'other')
-    )
-
-    film_length = models.CharField(max_length=100)
-    distribution = models.CharField(max_length=100, choices=DISTRIBUTION_CHOICES)
-    number_of_viewers = models.IntegerField()
-    openning_closing = models.BooleanField(default=False)
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
-
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+class DistributionBase(Base):
+    '''
+    
+    '''
+    name = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.order.production_name + ', ' + self.film_length
+        return self.name
+
+    class Meta:
+        abstract = True
 
 
-class OrderProgram(models.Model):
-    DISTRIBUTION_CHOICES = (
-        (
-            'web', (
-                ('site', 'site/sites'),
-                ('games', 'games'),
-                ('web_other', 'other')
-            )
-        ),
-        ('mobile', 'mobile'),
-        ('desktop', 'desktop'),
-        ('console', 'game consoles'),
-        ('internal', 'internally'),
-        ('external', 'externally'),
-        ('other', 'other')
-    )
-
-    distribution = models.CharField(max_length=100, choices=DISTRIBUTION_CHOICES)
-    number_of_viewers = models.IntegerField()
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
-
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+class EntriesBase(Base):
+    '''
+    the entries on each of the categories
+    '''
+    name = models.CharField(max_length=50)
 
     def __str__(self):
-        return 'program: ' + self.order.production_name + ', ' + str(self.number_of_viewers)
+        return self.name
+
+    class Meta:
+        abstract = True
 
 
-class OrderAdvertising(models.Model):
-    DISTRIBUTION_CHOICES = (
-        (
-            'web', (
-                ('youtube', 'youtube'),
-                ('vimeo', 'vimeo'),
-                ('vine', 'vine'),
-                ('facebook', 'facebook'),
-                ('web_other', 'other')
-            )
-        ),
-        ('tv', 'tv'),
-        ('podcast', 'podcast'),
-        ('theaters', 'theaters'),
-        ('mobile', 'mobile'),
-        ('radio', 'radio'),
-        ('console', 'game consoles'),
-        ('internal', 'internally'),
-        (
-            'external', (
-                ('festival', 'film festival entry'),
-                ('conf', 'conferences'),
-                ('no-theater', 'non-theateratically distributed viewing'),
-                ('events', 'events'),
-                ('tradeshow', 'trade shows'),
-                ('ex_other', 'other')
-            )
-        ),
-        ('other', 'other')
-    )
+class WebEntries(EntriesBase):
+    pass
 
-    distribution = models.CharField(max_length=100, choices=DISTRIBUTION_CHOICES)
-    number_of_viewers = models.IntegerField()
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
 
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+class ExternalEntries(EntriesBase):
+    pass
+
+
+class OrderDistributionIndie(DistributionBase):
+    pass
+
+
+class OrderDistributionProgramming(DistributionBase):
+    pass
+
+
+class WebDistribution(Base):
+    distribute_on = models.ManyToManyField(WebEntries, related_name='dist_web')
+    youtube_id = models.IntegerField(null=True, blank=True)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_dist_web')
 
     def __str__(self):
-        return 'advertisement: ' + self.order.production_name + ', ' + str(self.number_of_viewers)
+        return self.distribute_on.name
 
 
-class OrderWedding(models.Model):
-    BUDGET_CHOICES = (
-        ('low', '0-$50K'),
-        ('medium', '$50K-$250K'),
-        ('high', '$250K-$500K'),
-        ('very', '$500K+')
-    )
+class ExternalDistribution(Base):
+    name = models.ManyToManyField(ExternalEntries, related_name='ext_dist')
+    num_people = models.IntegerField()
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)
 
-    TERRITORIES_CHOICES = (
+    def __str__(self):
+        return self.name
+
+
+class TvDistribution(Base):
+    tv_program = models.BooleanField()
+    tv_trailer = models.BooleanField()
+
+    def __str__(self):
+        return 'program: ' + str(self.tv_program) + 'trailer: ' + str(self.tv_trailer)
+
+
+class OrderProjectDetailsBase(Base):
+    COUNTRIES_CHOICES = [
+        ('EA', 'All countries'),
+        ('A1', 'Asia'),
+        ('EU', 'Europe'),
+        ('NT', 'North America'),
+        ('SU', 'South America'),
+        ('A5', 'Australia'),
+        ('A3', 'Africa'),
         ('AW', 'Aruba'),
         ('AF', 'Afghanistan'),
         ('AO', 'Angola'),
@@ -380,21 +352,215 @@ class OrderWedding(models.Model):
         ('ZA', 'South Africa'),
         ('ZM', 'Zambia'),
         ('ZW', 'Zimbabwe')
-    )
+    ]
 
-    number_uses = models.IntegerField()
-    budget = models.CharField(max_length=20, choices=BUDGET_CHOICES)
-    territory = models.CharField(max_length=2, choices=TERRITORIES_CHOICES)
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    USA_CHOICES = [
+        ('US-WI', 'Wisconsin'),
+        ('US-WV', 'West Virginia'),
+        ('US-MI', 'Michigan'),
+        ('US-OK', 'Oklahoma'),
+        ('US-MN', 'Minnesota'),
+        ('US-MO', 'Missouri'),
+        ('US-NJ', 'New Jersey'),
+        ('US-VT', 'Vermont'),
+        ('US-MS', 'Mississippi'),
+        ('US-SD', 'South Dakota'),
+        ('US-MT', 'Montana'),
+        ('US-NC', 'North Carolina'),
+        ('US-OR', 'Oregon'),
+        ('US-VA', 'Virginia'),
+        ('US-AK', 'Alaska'),
+        ('US-AL', 'Alabama'),
+        ('US-NM', 'New Mexico'),
+        ('US-AR', 'Arkansas'),
+        ('US-WY', 'Wyoming'),
+        ('US-TN', 'Tennessee'),
+        ('US-AZ', 'Arizona'),
+        ('US-CA', 'California'),
+        ('US-PA', 'Pennsylvania'),
+        ('US-CO', 'Colorado'),
+        ('US-CT', 'Connecticut'),
+        ('US-NV', 'Nevada'),
+        ('US-DE', 'Delaware'),
+        ('US-ND', 'North Dakota'),
+        ('US-WA', 'Washington'),
+        ('US-FL', 'Florida'),
+        ('US-GA', 'Georgia'),
+        ('US-HI', 'Hawaii'),
+        ('US-NY', 'New York'),
+        ('US-IA', 'Iowa'),
+        ('US-ID', 'Idaho'),
+        ('US-NE', 'Nebraska'),
+        ('US-IL', 'Illinois'),
+        ('US-IN', 'Indiana'),
+        ('US-RI', 'Rhode Island'),
+        ('US-UT', 'Utah'),
+        ('US-KS', 'Kansas'),
+        ('US-KY', 'Kentucky'),
+        ('US-OH', 'Ohio'),
+        ('US-LA', 'Louisiana'),
+        ('US-MA', 'Massachusetts'),
+        ('US-NH', 'New Hampshire'),
+        ('US-TX', 'Texas'),
+        ('US-MD', 'Maryland'),
+        ('US-ME', 'Maine'),
+        ('US-SC', 'South Carolina'),
+    ]
 
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    territory = models.CharField(max_length=2, choices=COUNTRIES_CHOICES)
+    territory_usa = models.CharField(max_length=5, choices=USA_CHOICES, null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class OrderProjectBase(Base):
+    production_name = models.CharField(max_length=300)
+    distribution = models.ManyToManyField(OrderDistributionProgramming,
+                                          related_name='order_dist_%(class)s')
+    order = models.ForeignKey('Order',
+                              on_delete=models.CASCADE,
+                              related_name='order_project_%(class)s')
+
+    class Meta:
+        abstract = True
+
+
+class OrderFilmMaking(OrderProjectBase):
+    # should be radio buttons
+    film_length = models.BooleanField()
+    # should be radio, yes/no
+    film_programming = models.BooleanField()
+    film_trailer = models.BooleanField()
 
     def __str__(self):
-        return 'wedding: ' + self.order.production_name + ', ' + str(self.number_uses)
+        return 'indie movie' + self.production_name
 
 
-class Order(models.Model):
+class FeaturedBackground(Base):
+    name = models.CharField(max_length=100)
+
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class OrderProgramming(OrderProjectBase):
+    pass
+
+
+class OrderAdvertising(OrderProjectBase):
+    pass
+
+
+class ProjectDetailsBase(Base):
+    ORIGINAL = 'original'
+    INSTRUMENTAL = 'instrumental'
+    CAPELLA = 'capella'
+    OTHER = 'other'
+
+    SONG_VERSION_CHOICES = (
+        (ORIGINAL, 'original recording'),
+        (INSTRUMENTAL, 'instrumental version'),
+        (CAPELLA, 'capella version'),
+        (OTHER, 'other')
+    )
+
+    DAY1 = '1d'
+    DAY3 = '3d'
+    WEEK1 = '1w'
+    WEEK2 = '2w'
+    MONTH1 = '1m'
+    MONTH3 = '3m'
+    MONTH6 = '6m'
+    YEAR1 = '1y'
+    YEAR2 = '2y'
+    UNLIMITED = 'no'
+
+    TERM_CHOICES = (
+        (DAY1, '1 day'),
+        (DAY3, '3 day'),
+        (WEEK1, '1 week'),
+        (WEEK2, '2 weeks'),
+        (MONTH1, '1 month'),
+        (MONTH3, '3 months'),
+        (MONTH6, '6 months'),
+        (YEAR1, '1 year'),
+        (YEAR2, '2 years'),
+        (UNLIMITED, 'In Perpetuity (not time-limited)'),
+    )
+
+    BUDGET_CHOICES = [
+        ('low', '$0-50k Budget'),
+        ('med', '$50-250k Budget'),
+        ('high', '$250-500k Budget'),
+        ('very', '$500k+ Budget'),
+    ]
+
+    NON_PROFIT_CHOICES = [
+        ('edu', 'School/University'),
+        ('rlg', 'Church'),
+        ('tax', '501c3 or International Equivalent'),
+        ('oth', 'Other'),
+    ]
+
+    number_uses = models.IntegerField()
+    opening_closing = models.BooleanField()
+    featured_background = models.ManyToManyField(FeaturedBackground,
+                                                 related_name='programming_project_details_%(class)s')
+    song_version = models.CharField(max_length=20, choices=SONG_VERSION_CHOICES)
+
+    # need to check what he wants
+    duration = models.IntegerField()
+    term = models.CharField(max_length=2, choices=TERM_CHOICES, default=YEAR1)
+
+    release_date = models.DateField()
+    budget = models.CharField(max_length=5, choices=BUDGET_CHOICES)
+
+    synopsis = models.CharField(max_length=1000)
+    description = models.TextField()
+
+    is_non_profit = models.BooleanField()
+    non_profit = models.CharField(max_length=3, choices=NON_PROFIT_CHOICES,
+                                  null=True, blank=True)
+
+    comments = models.TextField()
+
+    rate = models.SmallIntegerField()
+
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'details for project: %(class)s- ' + self.order.song_title
+
+    class Meta:
+        abstract = True
+
+
+class OrderIndieProjectDetails(ProjectDetailsBase):
+    pass
+
+
+class OrderProgrammingDetails(ProjectDetailsBase):
+    pass
+
+
+class OrderAdvertisingDetails(ProjectDetailsBase):
+    pass
+
+
+class OrderWedding(OrderProjectDetailsBase):
+    platform = models.CharField(max_length=1000)
+    num_uses = models.PositiveIntegerField()
+
+
+class OrderPersonal(OrderProjectDetailsBase):
+    purpose = models.CharField(max_length=1000)
+    platform = models.CharField(max_length=1000)
+
+
+class Order(Base):
     SENT = 'sent'
     DONE = 'done'
     ATTENTION = 'attention'
@@ -403,20 +569,6 @@ class Order(models.Model):
         (SENT, 'Sent'),
         (ATTENTION, 'Attention'),
         (DONE, 'Done'),
-    )
-
-    FEATURED = 'fg'
-    BACKGROUND = 'bg'
-
-    FEATURED_BACKGROUND_CHOICES = (
-        (FEATURED, 'featured'),
-        (BACKGROUND, 'background')
-    )
-
-    TRAILER_FULL_CHOICES = (
-        ('trailer', 'trailer'),
-        ('full', 'full movie'),
-        ('both', 'both')
     )
 
     user = models.ForeignKey(User,
@@ -429,21 +581,8 @@ class Order(models.Model):
 
     song_title = models.CharField(max_length=200)
     performer_name = models.CharField(max_length=200)
-    # num_of_uses = models.PositiveIntegerField()
 
-    song_version = models.CharField(max_length=200)
-    featured_background = models.CharField(max_length=20, choices=FEATURED_BACKGROUND_CHOICES)
-
-    production_name = models.CharField(max_length=300)
-    synopsis = models.TextField()
-    description = models.TextField()
-
-    trailer_full = models.CharField(max_length=20, choices=TRAILER_FULL_CHOICES)
-    project_release_date = models.DateField()
     project_type = models.ForeignKey(ProjectType, related_name='general_order')
 
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
     def __str__(self):
-        return self.production_name + ': ' + self.song_title
+        return str(self.id) + ': ' + self.song_title

@@ -1,0 +1,291 @@
+{% extends 'common/common_base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <!-- Subheader Area
+    ===================================== -->
+    <header class="bg-grad-stellar mt70">
+
+        <div class="container">
+            <div class="row mt50 mb30">
+                <div class="col-md-6 text-left">
+                    <h3 class="color-light text-uppercase">Your licenses
+                        <small class="color-light alpha7">blah blah blah</small>
+                    </h3>
+                </div>
+
+            </div>
+        </div>
+
+    </header>
+
+
+    <!-- Shop Area
+    ===================================== -->
+    <div id="shop" class="bg-light pt25">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-9 col-md-push-3">
+
+                    <div class="row mt25 mb25 animated" data-animation="fadeInDown" data-animation-delay="100">
+                    </div>
+
+                    <!-- Item 1
+                    ======================== -->
+                    <div class="row bt-solid-1 bb-dashed-1 pb25">
+
+                        <div class="row inline-form">
+                            <div class="col-md-4 col-sm-6 col-xs-6 pull left">
+                                <h2 class="text-uppercase color-blue">{{ order_data.song_title }}
+                                    <small>{{ order_data.performer_name }}</small>
+                                </h2>
+                            </div>
+                            <div class="col-md-2 col-sm-6 col-xs-4 pull-right mt35">
+
+                                <button class="button button-xs button-square button-gray hover-pulse"><i
+                                        class="fa fa-trash-o" style="margin: 0;"></i></button>
+                                <button class="button button-xs button-square button-gray hover-pulse"><i
+                                        class="fa fa-edit" style="margin: 0;"></i></button>
+                            </div>
+
+                        </div>
+
+
+                        <div class="container pt20 pb20">
+                            <div class="row">
+                                <div class="col-md-9"
+                                     style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+                                     ;>
+
+                                    <div class="tab-content">
+                                        <div id="pilljustifiedHome" class="tab-pane fade">
+                                            <h5>Music Selection</h5>
+                                            <p>song title: {{ order_data.song_title }}</p>
+                                            <p>performer name: {{ order_data.performer_name }}</p>
+                                            <p>
+                                                <button class="button button-xs button-square button-success">Status:
+                                                    Completed
+                                                </button>
+                                            </p>
+                                        </div>
+                                        <div id="pilljustified1" class="tab-pane fade">
+                                            <h5>License Inquiry</h5>
+                                            <form class="form-horizontal" action="">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2" for="id_song_version">song version?</label>
+                                                    <div class="col-sm-9">
+                                                        {{ order_form.song_version }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2" for="id_song_version">song version?</label>
+                                                    <div class="col-sm-9">
+                                                        {{ order_form.song_version }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2" for="id_song_version">song version?</label>
+                                                    <div class="col-sm-9">
+                                                        {{ order_form.song_version }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2" for="id_song_version">song version?</label>
+                                                    <div class="col-sm-9">
+                                                        {{ order_form.song_version }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2" for="id_song_version">song version?</label>
+                                                    <div class="col-sm-10">
+                                                        {{ order_form.song_version }}
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <p>
+                                                <button class="button button-xs button-square button-success">Status:
+                                                    Completed
+                                                </button>
+                                            </p>
+
+                                        </div>
+                                        <div id="pilljustified2" class="tab-pane fade">
+                                            <h5>Owner Identification</h5>
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, libero,
+                                                temporibus quam eaque numquam debitis excepturi assumenda necessitatibus
+                                                dolore dolorum vero enim distinctio ipsa. Quod, dolorum, quidem eum
+                                                quisquam facilis nam molestias et voluptas omnis quibusdam dignissimos
+                                                illum ullam.
+                                            </p>
+
+                                            <p>
+                                                <button class="button button-xs button-square button-success">Status:
+                                                    Completed
+                                                </button>
+                                            </p>
+
+                                        </div>
+                                        <div id="pilljustified3" class="tab-pane fade in active">
+                                            <h5>Clrearance Request</h5>
+                                            <form action="ask_user" method="post">
+                                                {% for question in ask_user %}
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="question{{ question.id }}">{{ question.question }}</label>
+                                                        <textarea id="question{{ question.id }}" name="question{{ question.id }}" class="form-control"></textarea>
+                                                    </div>
+                                                {% endfor %}
+                                            </form>
+                                            <p>
+                                                <button class="button button-xs button-square button-yellow">Status:
+                                                    pending
+                                                </button>
+                                            </p>
+                                        </div>
+                                        <div id="pilljustified4" class="tab-pane fade">
+                                            <h5>Payment</h5>
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, libero,
+                                                temporibus quam eaque numquam debitis excepturi assumenda necessitatibus
+                                                dolore dolorum vero enim distinctio ipsa. Quod, dolorum, quidem eum
+                                                quisquam facilis nam molestias et voluptas omnis quibusdam dignissimos
+                                                illum ullam.
+                                            </p>
+                                        </div>
+                                        <div id="pilljustified5" class="tab-pane fade">
+                                            <h5>Completed</h5>
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, libero,
+                                                temporibus quam eaque numquam debitis excepturi assumenda necessitatibus
+                                                dolore dolorum vero enim distinctio ipsa. Quod, dolorum, quidem eum
+                                                quisquam facilis nam molestias et voluptas omnis quibusdam dignissimos
+                                                illum ullam.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li><a data-toggle="pill" href="#pilljustifiedHome">Music selection <i
+                                                class="fa fa-check-circle fa-2x p5 color-success animated"
+                                                data-animation="fadeInUp" data-animation-delay="1200"></i></a></li>
+                                        <li><a data-toggle="pill" href="#pilljustified1">License inquiry <i
+                                                class="fa fa-check-circle fa-2x p5 color-success animated"
+                                                data-animation="fadeInUp" data-animation-delay="1600"></i></a></li>
+                                        <li><a data-toggle="pill" href="#pilljustified2">Owner identification<i
+                                                class="fa fa-check-circle fa-2x p5 color-success animated"
+                                                data-animation="fadeInUp" data-animation-delay="2000"></i></a></li>
+                                        <li class="active"><a data-toggle="pill" href="#pilljustified3">Clrearance
+                                            request <i class="fa fa-circle-thin fa-2x p5"></i></a></li>
+                                        <li><a data-toggle="pill" href="#pilljustified4">Payment <br> <i
+                                                class="fa fa-circle-thin fa-2x p5"></i></a></li>
+                                        <li><a data-toggle="pill" href="#pilljustified5"> License Completed <i
+                                                class="fa fa-circle-thin fa-2x p5"></i></a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Item 1 END
+                   ======================== -->
+
+
+                    <!-- Sidebar
+                    ===================================== -->
+                </div>
+                <div id="sidebar" class="col-md-2 col-md-pull-9 mt animated bg-dark mt50 pl10 pr10"
+                     data-animation="fadeInLeft" data-animation-delay="250">
+
+                    <!-- Search
+                    ===================================== -->
+                    <div class="mt20 pt20 clearfix">
+                        <form>
+                            <div class="form-group">
+                                <label class="sr-only">Email address</label>
+                                <input type="text" class="form-control" id="searchshop" placeholder="Search">
+                            </div>
+                            <button type="submit" class="button button-sm button-block button-blue mt-10">Search
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Sidebar Cart
+                    ===================================== -->
+                    <div class=" pb20 clearfix">
+                        <h5 class="mt25 color-light">
+                            Your Orders
+                            <span class="heading-divider mt10"></span>
+                        </h5>
+                        <div class="shop-sidebar-cart">
+                            {% for order in orders_list %}
+                            <div class="sidebar-cart-container">
+
+                                <h6><a href="{% url 'my_account_order' order.id %}" class="color-blue">{{ order.song_title }}</a></h6>
+                                <span class="sidebar-cart-price color-light">{{ order.performer_name }}</span>
+                                <span class="sidebar-cart-remove color-light"><a href="remove_song"><i
+                                        class="fa fa-times-circle fa-fw"></i>Remove</a></span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <h5><span class="color-light">YOUR LICENSING PROFILE</span></h5>
+                        <p class="color-light"> full Name and state</p> <br>
+
+                        <a class="button button-block button-gray button-sm hover-ripple-out mt-30">edit<i
+                                class="fa fa-edit fa-1x"></i></a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row pt50 pb30"></div><!-- sidebar end -->
+
+    </div><!-- row end -->
+    </div><!-- container end -->
+    </div><!-- shop section end -->
+
+
+    <!-- Shopping Method
+    ===================================== -->
+    <div id="shop-info" class="color-dark">
+        <div class="container">
+            <div class="row pt50 pb30 bt-solid-1 bb-dashed-1">
+
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="content-box content-box-center">
+                        <span class="icon-linegraph color-dark"></span>
+                        <h5 class="color-dark">Online Tracking</h5>
+                        <p class="color-dark alpha7">Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel
+                            dolor.</p>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="content-box content-box-center">
+                        <span class="icon-speedometer color-dark"></span>
+                        <h5 class="color-dark">Fast Delivery</h5>
+                        <p class="color-dark alpha7">Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel
+                            dolor.</p>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="content-box content-box-center">
+                        <span class="icon-refresh color-dark"></span>
+                        <h5 class="color-dark">Moneyback Guaranteed</h5>
+                        <p class="color-dark alpha7">Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel
+                            dolor.</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

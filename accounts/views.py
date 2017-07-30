@@ -9,6 +9,11 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
+# from orders.models import Order, OrderAdvertising, OrderIndie
+# from orders.models import  OrderProgram, OrderWedding
+from orders.forms import OrderForm
+from .models import AskUser
+
 
 class LoginView(View):
     def get(self, request, *args, **kwargs):
@@ -48,8 +53,25 @@ class SignupView(View):
 
 
 class Account(View):
-    def get(self, request):
-        pass
+    def get(self, request, order_id=None):
+        orders_list = Order.objects.filter(user=request.user).select_related()
+        if order_id:
+            print(order_id)
+            order_data = Order.objects.get(pk=order_id)
+        else:
+            order_data = orders_list.first()
+        order_form = OrderForm(initial={'song_version': order_data.song_version})
+        ask_user = AskUser.objects.filter(order=order_data.id)
+        context = {
+            'url': 'client_dash',
+            'orders_list': orders_list,
+            'order_data': order_data,
+            'order_form': order_form,
+            'ask_user': ask_user,
+        }
+        return render(request,
+                      'accounts/client-dash.html',
+                      context=context)
 
     def post(self, request):
         pass
