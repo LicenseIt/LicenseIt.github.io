@@ -416,8 +416,6 @@ class OrderProjectDetailsBase(Base):
 
 class OrderProjectBase(Base):
     production_name = models.CharField(max_length=300)
-    distribution = models.ManyToManyField(OrderDistributionProgramming,
-                                          related_name='order_dist_%(class)s')
     order = models.ForeignKey('Order',
                               on_delete=models.CASCADE,
                               related_name='order_project_%(class)s')
@@ -427,11 +425,21 @@ class OrderProjectBase(Base):
 
 
 class OrderFilmMaking(OrderProjectBase):
+    FILM_LENGTH = [
+        (0, 'short film'),
+        (1, 'full length')
+    ]
+    YES_NO = [
+        (0, 'no'),
+        (1, 'yes')
+    ]
     # should be radio buttons
-    film_length = models.BooleanField()
+    film_length = models.BooleanField(choices=FILM_LENGTH)
     # should be radio, yes/no
-    film_programming = models.BooleanField()
-    film_trailer = models.BooleanField()
+    film_programming = models.BooleanField(choices=YES_NO)
+    film_trailer = models.BooleanField(choices=YES_NO)
+    distribution = models.ManyToManyField(OrderDistributionIndie,
+                                          related_name='order_dist_indie')
 
     def __str__(self):
         return 'indie movie' + self.production_name
@@ -447,11 +455,13 @@ class FeaturedBackground(Base):
 
 
 class OrderProgramming(OrderProjectBase):
-    pass
+    distribution = models.ManyToManyField(OrderDistributionProgramming,
+                                          related_name='order_dist_programming')
 
 
 class OrderAdvertising(OrderProjectBase):
-    pass
+    distribution = models.ManyToManyField(OrderDistributionProgramming,
+                                          related_name='order_dist_advertising')
 
 
 class ProjectDetailsBase(Base):

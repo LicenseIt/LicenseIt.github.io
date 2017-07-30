@@ -31,6 +31,7 @@ class OrderView(View):
         form = OrderForm(request.POST)
         if form.is_valid():
             order_id = form.save()
+            print(order_id.project_type.slug)
             return HttpResponseRedirect(reverse(order_id.project_type.slug, args=[int(pk), order_id.id]))
 
         return render(request,
@@ -46,15 +47,30 @@ class OrderIndieView(View):
                       context={'form': form, 'pk': pk, 'order': order_id})
 
     def post(self, request, pk, order_id):
-        form = OrderIndieForm(request.POST)
+        form = OrderIndieForm(request.POST.copy())
+        form.data['order'] = order_id
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('home'))
+            print(order_id, pk)
+            return HttpResponseRedirect(reverse('indie_dist', args=[int(pk), order_id]))
         return render(request,
                       'orders/order_indie.html',
                       context={'form': form, 'pk': pk, 'order': order_id}
                       )
 
+
+class IndieDistribution(View):
+    def get(self, request, pk, order_id):
+        web_form = IndieWebDistribution()
+        ext_form = IndieExtDistribution()
+        return render(request,
+                      'orders/indie_distribution.html',
+                      context={
+                          'web': web_form,
+                          'ext': ext_form,
+                          'pk': pk,
+                          'order': order_id
+                      })
 
 # class OrderAdView(View):
 #     def get(self, request, pk, order_id):

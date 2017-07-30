@@ -1,5 +1,13 @@
 from django import forms
-from .models import Order, ProjectType #, OrderAdvertising, OrderIndie
+from .models import (
+    Order,
+    ProjectType,
+    OrderDistributionIndie,
+    OrderFilmMaking,
+    ExternalDistribution,
+    WebDistribution,
+    # OrderDistributionProgramming
+)  # , OrderAdvertising, OrderIndie
 # from .models import OrderProgram, OrderWedding, ProjectType
 
 
@@ -34,4 +42,50 @@ class OrderForm(forms.ModelForm):
         }
 
 
-#class OrderIndieForm(forms.ModelForm)
+class OrderIndieForm(forms.ModelForm):
+    distribution = forms.ModelMultipleChoiceField(
+        queryset=OrderDistributionIndie.objects,
+        widget=forms.SelectMultiple(
+            attrs={
+                'class': 'form-control col-sm-8'
+            }
+        )
+    )
+
+    class Meta:
+        CHOICES = [(0, 'No'), (1, 'Yes')]
+        FILM_LENGTH = [(0, 'short film'), (1, 'full length')]
+        model = OrderFilmMaking
+        fields = '__all__'
+        widgets = {
+            'production_name': forms.TextInput(attrs={
+                'class': 'form-control col-sm-8'
+            }),
+            'film_length': forms.Select(attrs={
+                    'class': 'form-control col-sm-8'
+                },
+                choices=FILM_LENGTH,
+            ),
+            'film_programming': forms.Select(attrs={
+                    'class': 'form-control col-sm-8'
+                },
+                choices=CHOICES,
+            ),
+            'film_trailer': forms.Select(attrs={
+                    'class': 'form-control col-sm-8'
+                },
+                choices=CHOICES,
+            ),
+        }
+
+
+class IndieWebDistribution(forms.ModelForm):
+    class Meta:
+        model = WebDistribution
+        fields = '__all__'
+
+
+class IndieExtDistribution(forms.ModelForm):
+    class Meta:
+        model = ExternalDistribution
+        fields = '__all__'
