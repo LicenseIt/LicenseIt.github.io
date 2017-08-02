@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
     <br><br><br><br><br>
-        <form class="form-horizontal" action="{% url 'indie_dist' pk order %}" method="post">
+        <form class="form-horizontal" action="{% url 'prog_dist' pk order %}" method="post">
             {% csrf_token %}
             {% if web %}
             <div class="row">
@@ -44,6 +44,16 @@
             <div class="form-group">
                 <label class="col-sm-3" for="id_youtube_id">number of people</label>
                 {{ ext.num_people }}
+            </div>
+            {% endif %}
+            {% if tv %}
+            <div class="row">tv
+                {{ tv.errors }}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3" for="id_distribute_on">Do you need a license for the trailer, the full show or both?</label>
+                <label for="id_tv_trailer">tv trailer {{ tv.tv_trailer }}</label>
+                <label for="id_tv_program">tv program {{ tv.tv_program }}</label>
             </div>
             {% endif %}
             <div class="row">

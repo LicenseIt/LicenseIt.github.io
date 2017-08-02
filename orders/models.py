@@ -97,6 +97,8 @@ class TvDistribution(Base):
     tv_program = models.BooleanField()
     tv_trailer = models.BooleanField()
 
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_tv_dist')
+
     def __str__(self):
         return 'program: ' + str(self.tv_program) + 'trailer: ' + str(self.tv_trailer)
 
@@ -414,8 +416,8 @@ class OrderProjectDetailBase(Base):
         ('South Carolina', 'South Carolina'),
     ]
 
-    territory = models.CharField(max_length=2, choices=COUNTRIES_CHOICES)
-    territory_usa = models.CharField(max_length=5, choices=USA_CHOICES, null=True, blank=True)
+    territory = models.CharField(max_length=50, choices=COUNTRIES_CHOICES)
+    territory_usa = models.CharField(max_length=50, choices=USA_CHOICES, null=True, blank=True)
 
     class Meta:
         abstract = True
