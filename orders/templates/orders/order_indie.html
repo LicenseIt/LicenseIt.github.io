@@ -13,19 +13,47 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-3" for="id_film_length">film length</label>
-                {{ form.film_length }}
+                {% for radio in form.film_length %}
+                    <div>
+                        <label class="col-sm-12" for="{{ radio.id_for_label }}">
+                            {{ radio.choice_label }}
+                            <span class="col-sm-2">{{ radio.tag }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
             </div>
             <div class="form-group">
                 <label class="col-sm-3" for="id_film_programming">film programming</label>
-                {{ form.film_programming }}
+                {% for radio in form.film_programming %}
+                    <div>
+                        <label class="col-sm-12" for="{{ radio.id_for_label }}">
+                            {{ radio.choice_label }}
+                            <span class="col-sm-2">{{ radio.tag }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
             </div>
             <div class="form-group">
                 <label class="col-sm-3" for="id_film_trailer">film trailer</label>
-                {{ form.film_trailer }}
+                {% for radio in form.film_trailer %}
+                    <div>
+                        <label class="col-sm-12" for="{{ radio.id_for_label }}">
+                            {{ radio.choice_label }}
+                            <span class="col-sm-2">{{ radio.tag }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
             </div>
             <div class="form-group">
                 <label class="col-sm-3" for="id_distribution">distribution</label>
-                {{ form.distribution }}
+                {% for check in form.distribution %}
+                    <div>
+                        <label class="col-sm-12" for="{{ check.id_for_label }}">
+                            {{ check.choice_label }}
+                            <span class="col-sm-2">{{ check.tag }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
             </div>
             <div class="row">
                 <button type="submit" class="btn btn-success">submit</button>

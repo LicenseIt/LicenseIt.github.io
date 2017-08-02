@@ -6,9 +6,11 @@ from .models import (
     OrderFilmMaking,
     ExternalDistribution,
     WebDistribution,
-    # OrderDistributionProgramming
-)  # , OrderAdvertising, OrderIndie
-# from .models import OrderProgram, OrderWedding, ProjectType
+    WebEntry,
+    ExternalEntry,
+    OrderIndieProjectDetail,
+    FeaturedBackground,
+)
 
 
 class OrderForm(forms.ModelForm):
@@ -45,7 +47,7 @@ class OrderForm(forms.ModelForm):
 class OrderIndieForm(forms.ModelForm):
     distribution = forms.ModelMultipleChoiceField(
         queryset=OrderDistributionIndie.objects,
-        widget=forms.SelectMultiple(
+        widget=forms.CheckboxSelectMultiple(
             attrs={
                 'class': 'form-control col-sm-8'
             }
@@ -53,39 +55,158 @@ class OrderIndieForm(forms.ModelForm):
     )
 
     class Meta:
-        CHOICES = [(0, 'No'), (1, 'Yes')]
-        FILM_LENGTH = [(0, 'short film'), (1, 'full length')]
         model = OrderFilmMaking
         fields = '__all__'
         widgets = {
             'production_name': forms.TextInput(attrs={
                 'class': 'form-control col-sm-8'
             }),
-            'film_length': forms.Select(attrs={
+            'film_length': forms.RadioSelect(
+                attrs={
                     'class': 'form-control col-sm-8'
                 },
-                choices=FILM_LENGTH,
             ),
-            'film_programming': forms.Select(attrs={
+            'film_programming': forms.RadioSelect(
+                attrs={
                     'class': 'form-control col-sm-8'
                 },
-                choices=CHOICES,
             ),
-            'film_trailer': forms.Select(attrs={
+            'film_trailer': forms.RadioSelect(
+                attrs={
                     'class': 'form-control col-sm-8'
                 },
-                choices=CHOICES,
             ),
         }
 
 
 class IndieWebDistribution(forms.ModelForm):
+    distribute_on = forms.ModelMultipleChoiceField(
+        queryset=WebEntry.objects,
+        widget=forms.CheckboxSelectMultiple(
+            attrs={
+                'class': 'form-control col-sm-8'
+            }
+        )
+    )
+
     class Meta:
         model = WebDistribution
         fields = '__all__'
+        widgets = {
+            'youtube_id': forms.NumberInput(
+                attrs={
+                    'class': 'form-control col-sm-2'
+                }
+            )
+        }
 
 
 class IndieExtDistribution(forms.ModelForm):
+    name = forms.ModelMultipleChoiceField(
+        queryset=ExternalEntry.objects,
+        widget=forms.CheckboxSelectMultiple(
+            attrs={
+                'class': 'form-control col-sm-8'
+            }
+        )
+    )
+
     class Meta:
         model = ExternalDistribution
         fields = '__all__'
+        widgets = {
+            'num_people': forms.NumberInput(
+                attrs={
+                    'class': 'form-control col-sm-2'
+                }
+            )
+        }
+
+
+class IndieDetailForm(forms.ModelForm):
+    featured_background = forms.ModelMultipleChoiceField(
+        queryset=FeaturedBackground.objects,
+        widget=forms.CheckboxSelectMultiple(
+            attrs={
+                'class': 'form-control col-sm-8'
+            }
+        )
+    )
+
+    class Meta:
+        model = OrderIndieProjectDetail
+        fields = '__all__'
+        widgets = {
+            'number_uses': forms.NumberInput(
+                attrs={
+                    'class': 'form-control col-sm-2'
+                }
+            ),
+            'opening_closing': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                },
+                choices=[(False, 'no'), (True, 'yes')]
+            ),
+            'song_version': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'duration': forms.NumberInput(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'term': forms.Select(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'territory': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+            'release_date': forms.DateInput(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'budget': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'synopsis': forms.TextInput(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'description': forms.Textarea(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'is_non_profit': forms.CheckboxInput(
+                attrs={
+                    'class': 'form-control col-sm-1'
+                }
+            ),
+            'non_profit': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'comments': forms.Textarea(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'rate': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                },
+                choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+            )
+        }

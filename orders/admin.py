@@ -1,11 +1,12 @@
 from django.contrib import admin
 from .models import (
     Order,
-    WebEntries,
-    ExternalEntries,
+    WebEntry,
+    ExternalEntry,
     OrderDistributionProgramming,
     OrderDistributionIndie,
     WebDistribution,
+    FeaturedBackground,
     ExternalDistribution,
     TvDistribution,
     OrderFilmMaking,
@@ -13,16 +14,16 @@ from .models import (
     OrderAdvertising,
     OrderPersonal,
     OrderProgramming,
-    OrderAdvertisingDetails,
-    OrderIndieProjectDetails,
-    OrderProgrammingDetails
+    OrderAdvertisingDetail,
+    OrderIndieProjectDetail,
+    OrderProgrammingDetail
 )
 from .models import ProjectType
 
 # Register your models here.
 admin.site.register(Order)
-admin.site.register(WebEntries)
-admin.site.register(ExternalEntries)
+admin.site.register(WebEntry)
+admin.site.register(ExternalEntry)
 admin.site.register(OrderDistributionProgramming)
 admin.site.register(OrderDistributionIndie)
 admin.site.register(WebDistribution)
@@ -33,7 +34,8 @@ admin.site.register(OrderWedding)
 admin.site.register(OrderAdvertising)
 admin.site.register(OrderPersonal)
 admin.site.register(OrderProgramming)
-admin.site.register(OrderAdvertisingDetails)
-admin.site.register(OrderIndieProjectDetails)
-admin.site.register(OrderProgrammingDetails)
+admin.site.register(OrderAdvertisingDetail)
+admin.site.register(OrderIndieProjectDetail)
+admin.site.register(OrderProgrammingDetail)
 admin.site.register(ProjectType)
+admin.site.register(FeaturedBackground)

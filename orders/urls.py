@@ -1,18 +1,16 @@
 from django.conf.urls import url
 from .views import (
     OrderView,
-    # OrderAdView,
     OrderIndieView,
     IndieDistribution,
-    # OrderProgramView,
-    # OrderWeddingView,
-    # PersonalUseView
+    IndieDetail,
 )
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     # url('now/(?P<pk>[0-9]+)/ad/(?P<order_id>[0-9]+)/$', OrderAdView.as_view(), name='advertising'),
     url('now/(?P<pk>[0-9]+)/indie/(?P<order_id>[0-9]+)/distribution/$', IndieDistribution.as_view(), name='indie_dist'),
+    url('now/(?P<pk>[0-9]+)/indie/(?P<order_id>[0-9]+)/details/$', IndieDetail.as_view(), name='indie_details'),
     url('now/(?P<pk>[0-9]+)/indie/(?P<order_id>[0-9]+)/$', OrderIndieView.as_view(), name='film_making'),
     # url('now/(?P<pk>[0-9]+)/program/(?P<order_id>[0-9]+)/$', OrderProgramView.as_view(), name='programming'),
     # url('now/(?P<pk>[0-9]+)/wedding/(?P<order_id>[0-9]+)/$', OrderWeddingView.as_view(), name='wedding'),

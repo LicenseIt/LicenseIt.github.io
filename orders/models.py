@@ -28,7 +28,7 @@ class ProjectType(Base):
 
 class DistributionBase(Base):
     '''
-    
+
     '''
     name = models.CharField(max_length=200)
 
@@ -39,7 +39,7 @@ class DistributionBase(Base):
         abstract = True
 
 
-class EntriesBase(Base):
+class EntryBase(Base):
     '''
     the entries on each of the categories
     '''
@@ -52,12 +52,16 @@ class EntriesBase(Base):
         abstract = True
 
 
-class WebEntries(EntriesBase):
-    pass
+class WebEntry(EntryBase):
+    class Meta:
+        verbose_name = 'web entry'
+        verbose_name_plural = 'web entries'
 
 
-class ExternalEntries(EntriesBase):
-    pass
+class ExternalEntry(EntryBase):
+    class Meta:
+        verbose_name = 'external entry'
+        verbose_name_plural = 'external entries'
 
 
 class OrderDistributionIndie(DistributionBase):
@@ -69,18 +73,21 @@ class OrderDistributionProgramming(DistributionBase):
 
 
 class WebDistribution(Base):
-    distribute_on = models.ManyToManyField(WebEntries, related_name='dist_web')
+    distribute_on = models.ManyToManyField(WebEntry, related_name='dist_web')
     youtube_id = models.IntegerField(null=True, blank=True)
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_dist_web')
 
     def __str__(self):
-        return self.distribute_on.name
+        ret = ''
+        for name in self.distribute_on.all():
+            ret += ', ' + name.name
+        return ret
 
 
 class ExternalDistribution(Base):
-    name = models.ManyToManyField(ExternalEntries, related_name='ext_dist')
+    name = models.ManyToManyField(ExternalEntry, related_name='ext_dist')
     num_people = models.IntegerField()
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_dist_ext')
 
     def __str__(self):
         return self.name
@@ -94,317 +101,317 @@ class TvDistribution(Base):
         return 'program: ' + str(self.tv_program) + 'trailer: ' + str(self.tv_trailer)
 
 
-class OrderProjectDetailsBase(Base):
+class OrderProjectDetailBase(Base):
     COUNTRIES_CHOICES = [
-        ('EA', 'All countries'),
-        ('A1', 'Asia'),
-        ('EU', 'Europe'),
-        ('NT', 'North America'),
-        ('SU', 'South America'),
-        ('A5', 'Australia'),
-        ('A3', 'Africa'),
-        ('AW', 'Aruba'),
-        ('AF', 'Afghanistan'),
-        ('AO', 'Angola'),
-        ('AI', 'Anguilla'),
-        ('AX', '\xc5land Islands'),
-        ('AL', 'Albania'),
-        ('AD', 'Andorra'),
-        ('AE', 'United Arab Emirates'),
-        ('AR', 'Argentina'),
-        ('AM', 'Armenia'),
-        ('AS', 'American Samoa'),
-        ('AQ', 'Antarctica'),
-        ('TF', 'French Southern Territories'),
-        ('AG', 'Antigua and Barbuda'),
-        ('AU', 'Australia'),
-        ('AT', 'Austria'),
-        ('AZ', 'Azerbaijan'),
-        ('BI', 'Burundi'),
-        ('BE', 'Belgium'),
-        ('BJ', 'Benin'),
-        ('BQ', 'Bonaire, Sint Eustatius and Saba'),
-        ('BF', 'Burkina Faso'),
-        ('BD', 'Bangladesh'),
-        ('BG', 'Bulgaria'),
-        ('BH', 'Bahrain'),
-        ('BS', 'Bahamas'),
-        ('BA', 'Bosnia and Herzegovina'),
-        ('BL', 'Saint Barth\xe9lemy'),
-        ('BY', 'Belarus'),
-        ('BZ', 'Belize'),
-        ('BM', 'Bermuda'),
-        ('BO', 'Bolivia, Plurinational State of'),
-        ('BR', 'Brazil'),
-        ('BB', 'Barbados'),
-        ('BN', 'Brunei Darussalam'),
-        ('BT', 'Bhutan'),
-        ('BV', 'Bouvet Island'),
-        ('BW', 'Botswana'),
-        ('CF', 'Central African Republic'),
-        ('CA', 'Canada'),
-        ('CC', 'Cocos (Keeling) Islands'),
-        ('CH', 'Switzerland'),
-        ('CL', 'Chile'),
-        ('CN', 'China'),
-        ('CI', "C\xf4te d'Ivoire"),
-        ('CM', 'Cameroon'),
-        ('CD', 'Congo, The Democratic Republic of the'),
-        ('CG', 'Congo'),
-        ('CK', 'Cook Islands'),
-        ('CO', 'Colombia'),
-        ('KM', 'Comoros'),
-        ('CV', 'Cabo Verde'),
-        ('CR', 'Costa Rica'),
-        ('CU', 'Cuba'),
-        ('CW', 'Cura\xe7ao'),
-        ('CX', 'Christmas Island'),
-        ('KY', 'Cayman Islands'),
-        ('CY', 'Cyprus'),
-        ('CZ', 'Czechia'),
-        ('DE', 'Germany'),
-        ('DJ', 'Djibouti'),
-        ('DM', 'Dominica'),
-        ('DK', 'Denmark'),
-        ('DO', 'Dominican Republic'),
-        ('DZ', 'Algeria'),
-        ('EC', 'Ecuador'),
-        ('EG', 'Egypt'),
-        ('ER', 'Eritrea'),
-        ('EH', 'Western Sahara'),
-        ('ES', 'Spain'),
-        ('EE', 'Estonia'),
-        ('ET', 'Ethiopia'),
-        ('FI', 'Finland'),
-        ('FJ', 'Fiji'),
-        ('FK', 'Falkland Islands (Malvinas)'),
-        ('FR', 'France'),
-        ('FO', 'Faroe Islands'),
-        ('FM', 'Micronesia, Federated States of'),
-        ('GA', 'Gabon'),
-        ('GB', 'United Kingdom'),
-        ('GE', 'Georgia'),
-        ('GG', 'Guernsey'),
-        ('GH', 'Ghana'),
-        ('GI', 'Gibraltar'),
-        ('GN', 'Guinea'),
-        ('GP', 'Guadeloupe'),
-        ('GM', 'Gambia'),
-        ('GW', 'Guinea-Bissau'),
-        ('GQ', 'Equatorial Guinea'),
-        ('GR', 'Greece'),
-        ('GD', 'Grenada'),
-        ('GL', 'Greenland'),
-        ('GT', 'Guatemala'),
-        ('GF', 'French Guiana'),
-        ('GU', 'Guam'),
-        ('GY', 'Guyana'),
-        ('HK', 'Hong Kong'),
-        ('HM', 'Heard Island and McDonald Islands'),
-        ('HN', 'Honduras'),
-        ('HR', 'Croatia'),
-        ('HT', 'Haiti'),
-        ('HU', 'Hungary'),
-        ('ID', 'Indonesia'),
-        ('IM', 'Isle of Man'),
-        ('IN', 'India'),
-        ('IO', 'British Indian Ocean Territory'),
-        ('IE', 'Ireland'),
-        ('IR', 'Iran, Islamic Republic of'),
-        ('IQ', 'Iraq'),
-        ('IS', 'Iceland'),
-        ('IL', 'Israel'),
-        ('IT', 'Italy'),
-        ('JM', 'Jamaica'),
-        ('JE', 'Jersey'),
-        ('JO', 'Jordan'),
-        ('JP', 'Japan'),
-        ('KZ', 'Kazakhstan'),
-        ('KE', 'Kenya'),
-        ('KG', 'Kyrgyzstan'),
-        ('KH', 'Cambodia'),
-        ('KI', 'Kiribati'),
-        ('KN', 'Saint Kitts and Nevis'),
-        ('KR', 'Korea, Republic of'),
-        ('KW', 'Kuwait'),
-        ('LA', "Lao People's Democratic Republic"),
-        ('LB', 'Lebanon'),
-        ('LR', 'Liberia'),
-        ('LY', 'Libya'),
-        ('LC', 'Saint Lucia'),
-        ('LI', 'Liechtenstein'),
-        ('LK', 'Sri Lanka'),
-        ('LS', 'Lesotho'),
-        ('LT', 'Lithuania'),
-        ('LU', 'Luxembourg'),
-        ('LV', 'Latvia'),
-        ('MO', 'Macao'),
-        ('MF', 'Saint Martin (French part)'),
-        ('MA', 'Morocco'),
-        ('MC', 'Monaco'),
-        ('MD', 'Moldova, Republic of'),
-        ('MG', 'Madagascar'),
-        ('MV', 'Maldives'),
-        ('MX', 'Mexico'),
-        ('MH', 'Marshall Islands'),
-        ('MK', 'Macedonia, Republic of'),
-        ('ML', 'Mali'),
-        ('MT', 'Malta'),
-        ('MM', 'Myanmar'),
-        ('ME', 'Montenegro'),
-        ('MN', 'Mongolia'),
-        ('MP', 'Northern Mariana Islands'),
-        ('MZ', 'Mozambique'),
-        ('MR', 'Mauritania'),
-        ('MS', 'Montserrat'),
-        ('MQ', 'Martinique'),
-        ('MU', 'Mauritius'),
-        ('MW', 'Malawi'),
-        ('MY', 'Malaysia'),
-        ('YT', 'Mayotte'),
-        ('NA', 'Namibia'),
-        ('NC', 'New Caledonia'),
-        ('NE', 'Niger'),
-        ('NF', 'Norfolk Island'),
-        ('NG', 'Nigeria'),
-        ('NI', 'Nicaragua'),
-        ('NU', 'Niue'),
-        ('NL', 'Netherlands'),
-        ('NO', 'Norway'),
-        ('NP', 'Nepal'),
-        ('NR', 'Nauru'),
-        ('NZ', 'New Zealand'),
-        ('OM', 'Oman'),
-        ('PK', 'Pakistan'),
-        ('PA', 'Panama'),
-        ('PN', 'Pitcairn'),
-        ('PE', 'Peru'),
-        ('PH', 'Philippines'),
-        ('PW', 'Palau'),
-        ('PG', 'Papua New Guinea'),
-        ('PL', 'Poland'),
-        ('PR', 'Puerto Rico'),
-        ('KP', "Korea, Democratic People's Republic of"),
-        ('PT', 'Portugal'),
-        ('PY', 'Paraguay'),
-        ('PS', 'Palestine, State of'),
-        ('PF', 'French Polynesia'),
-        ('QA', 'Qatar'),
-        ('RE', 'R\xe9union'),
-        ('RO', 'Romania'),
-        ('RU', 'Russian Federation'),
-        ('RW', 'Rwanda'),
-        ('SA', 'Saudi Arabia'),
-        ('SD', 'Sudan'),
-        ('SN', 'Senegal'),
-        ('SG', 'Singapore'),
-        ('GS', 'South Georgia and the South Sandwich Islands'),
-        ('SH', 'Saint Helena, Ascension and Tristan da Cunha'),
-        ('SJ', 'Svalbard and Jan Mayen'),
-        ('SB', 'Solomon Islands'),
-        ('SL', 'Sierra Leone'),
-        ('SV', 'El Salvador'),
-        ('SM', 'San Marino'),
-        ('SO', 'Somalia'),
-        ('PM', 'Saint Pierre and Miquelon'),
-        ('RS', 'Serbia'),
-        ('SS', 'South Sudan'),
-        ('ST', 'Sao Tome and Principe'),
-        ('SR', 'Suriname'),
-        ('SK', 'Slovakia'),
-        ('SI', 'Slovenia'),
-        ('SE', 'Sweden'),
-        ('SZ', 'Swaziland'),
-        ('SX', 'Sint Maarten (Dutch part)'),
-        ('SC', 'Seychelles'),
-        ('SY', 'Syrian Arab Republic'),
-        ('TC', 'Turks and Caicos Islands'),
-        ('TD', 'Chad'),
-        ('TG', 'Togo'),
-        ('TH', 'Thailand'),
-        ('TJ', 'Tajikistan'),
-        ('TK', 'Tokelau'),
-        ('TM', 'Turkmenistan'),
-        ('TL', 'Timor-Leste'),
-        ('TO', 'Tonga'),
-        ('TT', 'Trinidad and Tobago'),
-        ('TN', 'Tunisia'),
-        ('TR', 'Turkey'),
-        ('TV', 'Tuvalu'),
-        ('TW', 'Taiwan, Province of China'),
-        ('TZ', 'Tanzania, United Republic of'),
-        ('UG', 'Uganda'),
-        ('UA', 'Ukraine'),
-        ('UM', 'United States Minor Outlying Islands'),
-        ('UY', 'Uruguay'),
-        ('US', 'United States'),
-        ('UZ', 'Uzbekistan'),
-        ('VA', 'Holy See (Vatican City State)'),
-        ('VC', 'Saint Vincent and the Grenadines'),
-        ('VE', 'Venezuela, Bolivarian Republic of'),
-        ('VG', 'Virgin Islands, British'),
-        ('VI', 'Virgin Islands, U.S.'),
-        ('VN', 'Viet Nam'),
-        ('VU', 'Vanuatu'),
-        ('WF', 'Wallis and Futuna'),
-        ('WS', 'Samoa'),
-        ('YE', 'Yemen'),
-        ('ZA', 'South Africa'),
-        ('ZM', 'Zambia'),
-        ('ZW', 'Zimbabwe')
+        ('All countries', 'All countries'),
+        ('Asia', 'Asia'),
+        ('Europe', 'Europe'),
+        ('North America', 'North America'),
+        ('South America', 'South America'),
+        ('Australia', 'Australia'),
+        ('Africa', 'Africa'),
+        ('Aruba', 'Aruba'),
+        ('Afghanistan', 'Afghanistan'),
+        ('Angola', 'Angola'),
+        ('Anguilla', 'Anguilla'),
+        ('\xc5land Islands', '\xc5land Islands'),
+        ('Albania', 'Albania'),
+        ('Andorra', 'Andorra'),
+        ('United Arab Emirates', 'United Arab Emirates'),
+        ('Argentina', 'Argentina'),
+        ('Armenia', 'Armenia'),
+        ('American Samoa', 'American Samoa'),
+        ('Antarctica', 'Antarctica'),
+        ('French Southern Territories', 'French Southern Territories'),
+        ('Antigua and Barbuda', 'Antigua and Barbuda'),
+        ('Australia', 'Australia'),
+        ('Austria', 'Austria'),
+        ('Azerbaijan', 'Azerbaijan'),
+        ('Burundi', 'Burundi'),
+        ('Belgium', 'Belgium'),
+        ('Benin', 'Benin'),
+        ('Bonaire, Sint Eustatius and Saba', 'Bonaire, Sint Eustatius and Saba'),
+        ('Burkina Faso', 'Burkina Faso'),
+        ('Bangladesh', 'Bangladesh'),
+        ('Bulgaria', 'Bulgaria'),
+        ('Bahrain', 'Bahrain'),
+        ('Bahamas', 'Bahamas'),
+        ('Bosnia and Herzegovina', 'Bosnia and Herzegovina'),
+        ('Saint Barth\xe9lemy', 'Saint Barth\xe9lemy'),
+        ('Belarus', 'Belarus'),
+        ('Belize', 'Belize'),
+        ('Bermuda', 'Bermuda'),
+        ('Bolivia, Plurinational State of', 'Bolivia, Plurinational State of'),
+        ('Brazil', 'Brazil'),
+        ('Barbados', 'Barbados'),
+        ('Brunei Darussalam', 'Brunei Darussalam'),
+        ('Bhutan', 'Bhutan'),
+        ('Bouvet Island', 'Bouvet Island'),
+        ('Botswana', 'Botswana'),
+        ('Central African Republic', 'Central African Republic'),
+        ('Canada', 'Canada'),
+        ('Cocos (Keeling) Islands', 'Cocos (Keeling) Islands'),
+        ('Switzerland', 'Switzerland'),
+        ('Chile', 'Chile'),
+        ('China', 'China'),
+        ("C\xf4te d'Ivoire", "C\xf4te d'Ivoire"),
+        ('Cameroon', 'Cameroon'),
+        ('Congo, The Democratic Republic of the', 'Congo, The Democratic Republic of the'),
+        ('Congo', 'Congo'),
+        ('Cook Islands', 'Cook Islands'),
+        ('Colombia', 'Colombia'),
+        ('Comoros', 'Comoros'),
+        ('Cabo Verde', 'Cabo Verde'),
+        ('Costa Rica', 'Costa Rica'),
+        ('Cuba', 'Cuba'),
+        ('Cura\xe7ao', 'Cura\xe7ao'),
+        ('Christmas Island', 'Christmas Island'),
+        ('Cayman Islands', 'Cayman Islands'),
+        ('Cyprus', 'Cyprus'),
+        ('Czechia', 'Czechia'),
+        ('Germany', 'Germany'),
+        ('Djibouti', 'Djibouti'),
+        ('Dominica', 'Dominica'),
+        ('Denmark', 'Denmark'),
+        ('Dominican Republic', 'Dominican Republic'),
+        ('Algeria', 'Algeria'),
+        ('Ecuador', 'Ecuador'),
+        ('Egypt', 'Egypt'),
+        ('Eritrea', 'Eritrea'),
+        ('Western Sahara', 'Western Sahara'),
+        ('Spain', 'Spain'),
+        ('Estonia', 'Estonia'),
+        ('Ethiopia', 'Ethiopia'),
+        ('Finland', 'Finland'),
+        ('Fiji', 'Fiji'),
+        ('Falkland Islands (Malvinas)', 'Falkland Islands (Malvinas)'),
+        ('France', 'France'),
+        ('Faroe Islands', 'Faroe Islands'),
+        ('Micronesia, Federated States of', 'Micronesia, Federated States of'),
+        ('Gabon', 'Gabon'),
+        ('United Kingdom', 'United Kingdom'),
+        ('Georgia', 'Georgia'),
+        ('Guernsey', 'Guernsey'),
+        ('Ghana', 'Ghana'),
+        ('Gibraltar', 'Gibraltar'),
+        ('Guinea', 'Guinea'),
+        ('Guadeloupe', 'Guadeloupe'),
+        ('Gambia', 'Gambia'),
+        ('Guinea-Bissau', 'Guinea-Bissau'),
+        ('Equatorial Guinea', 'Equatorial Guinea'),
+        ('Greece', 'Greece'),
+        ('Grenada', 'Grenada'),
+        ('Greenland', 'Greenland'),
+        ('Guatemala', 'Guatemala'),
+        ('French Guiana', 'French Guiana'),
+        ('Guam', 'Guam'),
+        ('Guyana', 'Guyana'),
+        ('Hong Kong', 'Hong Kong'),
+        ('Heard Island and McDonald Islands', 'Heard Island and McDonald Islands'),
+        ('Honduras', 'Honduras'),
+        ('Croatia', 'Croatia'),
+        ('Haiti', 'Haiti'),
+        ('Hungary', 'Hungary'),
+        ('Indonesia', 'Indonesia'),
+        ('Isle of Man', 'Isle of Man'),
+        ('India', 'India'),
+        ('British Indian Ocean Territory', 'British Indian Ocean Territory'),
+        ('Ireland', 'Ireland'),
+        ('Iran, Islamic Republic of', 'Iran, Islamic Republic of'),
+        ('Iraq', 'Iraq'),
+        ('Iceland', 'Iceland'),
+        ('Israel', 'Israel'),
+        ('Italy', 'Italy'),
+        ('Jamaica', 'Jamaica'),
+        ('Jersey', 'Jersey'),
+        ('Jordan', 'Jordan'),
+        ('Japan', 'Japan'),
+        ('Kazakhstan', 'Kazakhstan'),
+        ('Kenya', 'Kenya'),
+        ('Kyrgyzstan', 'Kyrgyzstan'),
+        ('Cambodia', 'Cambodia'),
+        ('Kiribati', 'Kiribati'),
+        ('Saint Kitts and Nevis', 'Saint Kitts and Nevis'),
+        ('Korea, Republic of', 'Korea, Republic of'),
+        ('Kuwait', 'Kuwait'),
+        ("Lao People's Democratic Republic", "Lao People's Democratic Republic"),
+        ('Lebanon', 'Lebanon'),
+        ('Liberia', 'Liberia'),
+        ('Libya', 'Libya'),
+        ('Saint Lucia', 'Saint Lucia'),
+        ('Liechtenstein', 'Liechtenstein'),
+        ('Sri Lanka', 'Sri Lanka'),
+        ('Lesotho', 'Lesotho'),
+        ('Lithuania', 'Lithuania'),
+        ('Luxembourg', 'Luxembourg'),
+        ('Latvia', 'Latvia'),
+        ('Macao', 'Macao'),
+        ('Saint Martin (French part)', 'Saint Martin (French part)'),
+        ('Morocco', 'Morocco'),
+        ('Monaco', 'Monaco'),
+        ('Moldova, Republic of', 'Moldova, Republic of'),
+        ('Madagascar', 'Madagascar'),
+        ('Maldives', 'Maldives'),
+        ('Mexico', 'Mexico'),
+        ('Marshall Islands', 'Marshall Islands'),
+        ('Macedonia, Republic of', 'Macedonia, Republic of'),
+        ('Mali', 'Mali'),
+        ('Malta', 'Malta'),
+        ('Myanmar', 'Myanmar'),
+        ('Montenegro', 'Montenegro'),
+        ('Mongolia', 'Mongolia'),
+        ('Northern Mariana Islands', 'Northern Mariana Islands'),
+        ('Mozambique', 'Mozambique'),
+        ('Mauritania', 'Mauritania'),
+        ('Montserrat', 'Montserrat'),
+        ('Martinique', 'Martinique'),
+        ('Mauritius', 'Mauritius'),
+        ('Malawi', 'Malawi'),
+        ('Malaysia', 'Malaysia'),
+        ('Mayotte', 'Mayotte'),
+        ('Namibia', 'Namibia'),
+        ('New Caledonia', 'New Caledonia'),
+        ('Niger', 'Niger'),
+        ('Norfolk Island', 'Norfolk Island'),
+        ('Nigeria', 'Nigeria'),
+        ('Nicaragua', 'Nicaragua'),
+        ('Niue', 'Niue'),
+        ('Netherlands', 'Netherlands'),
+        ('Norway', 'Norway'),
+        ('Nepal', 'Nepal'),
+        ('Nauru', 'Nauru'),
+        ('New Zealand', 'New Zealand'),
+        ('Oman', 'Oman'),
+        ('Pakistan', 'Pakistan'),
+        ('Panama', 'Panama'),
+        ('Pitcairn', 'Pitcairn'),
+        ('Peru', 'Peru'),
+        ('Philippines', 'Philippines'),
+        ('Palau', 'Palau'),
+        ('Papua New Guinea', 'Papua New Guinea'),
+        ('Poland', 'Poland'),
+        ('Puerto Rico', 'Puerto Rico'),
+        ("Korea, Democratic People's Republic of", "Korea, Democratic People's Republic of"),
+        ('Portugal', 'Portugal'),
+        ('Paraguay', 'Paraguay'),
+        ('Palestine, State of', 'Palestine, State of'),
+        ('French Polynesia', 'French Polynesia'),
+        ('Qatar', 'Qatar'),
+        ('R\xe9union', 'R\xe9union'),
+        ('Romania', 'Romania'),
+        ('Russian Federation', 'Russian Federation'),
+        ('Rwanda', 'Rwanda'),
+        ('Saudi Arabia', 'Saudi Arabia'),
+        ('Sudan', 'Sudan'),
+        ('Senegal', 'Senegal'),
+        ('Singapore', 'Singapore'),
+        ('South Georgia and the South Sandwich Islands', 'South Georgia and the South Sandwich Islands'),
+        ('Saint Helena, Ascension and Tristan da Cunha', 'Saint Helena, Ascension and Tristan da Cunha'),
+        ('Svalbard and Jan Mayen', 'Svalbard and Jan Mayen'),
+        ('Solomon Islands', 'Solomon Islands'),
+        ('Sierra Leone', 'Sierra Leone'),
+        ('El Salvador', 'El Salvador'),
+        ('San Marino', 'San Marino'),
+        ('Somalia', 'Somalia'),
+        ('Saint Pierre and Miquelon', 'Saint Pierre and Miquelon'),
+        ('Serbia', 'Serbia'),
+        ('South Sudan', 'South Sudan'),
+        ('Sao Tome and Principe', 'Sao Tome and Principe'),
+        ('Suriname', 'Suriname'),
+        ('Slovakia', 'Slovakia'),
+        ('Slovenia', 'Slovenia'),
+        ('Sweden', 'Sweden'),
+        ('Swaziland', 'Swaziland'),
+        ('Sint Maarten (Dutch part)', 'Sint Maarten (Dutch part)'),
+        ('Seychelles', 'Seychelles'),
+        ('Syrian Arab Republic', 'Syrian Arab Republic'),
+        ('Turks and Caicos Islands', 'Turks and Caicos Islands'),
+        ('Chad', 'Chad'),
+        ('Togo', 'Togo'),
+        ('Thailand', 'Thailand'),
+        ('Tajikistan', 'Tajikistan'),
+        ('Tokelau', 'Tokelau'),
+        ('Turkmenistan', 'Turkmenistan'),
+        ('Timor-Leste', 'Timor-Leste'),
+        ('Tonga', 'Tonga'),
+        ('Trinidad and Tobago', 'Trinidad and Tobago'),
+        ('Tunisia', 'Tunisia'),
+        ('Turkey', 'Turkey'),
+        ('Tuvalu', 'Tuvalu'),
+        ('Taiwan, Province of China', 'Taiwan, Province of China'),
+        ('Tanzania, United Republic of', 'Tanzania, United Republic of'),
+        ('Uganda', 'Uganda'),
+        ('Ukraine', 'Ukraine'),
+        ('United States Minor Outlying Islands', 'United States Minor Outlying Islands'),
+        ('Uruguay', 'Uruguay'),
+        ('United States', 'United States'),
+        ('Uzbekistan', 'Uzbekistan'),
+        ('Holy See (Vatican City State)', 'Holy See (Vatican City State)'),
+        ('Saint Vincent and the Grenadines', 'Saint Vincent and the Grenadines'),
+        ('Venezuela, Bolivarian Republic of', 'Venezuela, Bolivarian Republic of'),
+        ('Virgin Islands, British', 'Virgin Islands, British'),
+        ('Virgin Islands, U.S.', 'Virgin Islands, U.S.'),
+        ('Vietnam', 'Vietnam'),
+        ('Vanuatu', 'Vanuatu'),
+        ('Wallis and Futuna', 'Wallis and Futuna'),
+        ('Samoa', 'Samoa'),
+        ('Yemen', 'Yemen'),
+        ('South Africa', 'South Africa'),
+        ('Zambia', 'Zambia'),
+        ('Zimbabwe', 'Zimbabwe')
     ]
 
     USA_CHOICES = [
-        ('US-WI', 'Wisconsin'),
-        ('US-WV', 'West Virginia'),
-        ('US-MI', 'Michigan'),
-        ('US-OK', 'Oklahoma'),
-        ('US-MN', 'Minnesota'),
-        ('US-MO', 'Missouri'),
-        ('US-NJ', 'New Jersey'),
-        ('US-VT', 'Vermont'),
-        ('US-MS', 'Mississippi'),
-        ('US-SD', 'South Dakota'),
-        ('US-MT', 'Montana'),
-        ('US-NC', 'North Carolina'),
-        ('US-OR', 'Oregon'),
-        ('US-VA', 'Virginia'),
-        ('US-AK', 'Alaska'),
-        ('US-AL', 'Alabama'),
-        ('US-NM', 'New Mexico'),
-        ('US-AR', 'Arkansas'),
-        ('US-WY', 'Wyoming'),
-        ('US-TN', 'Tennessee'),
-        ('US-AZ', 'Arizona'),
-        ('US-CA', 'California'),
-        ('US-PA', 'Pennsylvania'),
-        ('US-CO', 'Colorado'),
-        ('US-CT', 'Connecticut'),
-        ('US-NV', 'Nevada'),
-        ('US-DE', 'Delaware'),
-        ('US-ND', 'North Dakota'),
-        ('US-WA', 'Washington'),
-        ('US-FL', 'Florida'),
-        ('US-GA', 'Georgia'),
-        ('US-HI', 'Hawaii'),
-        ('US-NY', 'New York'),
-        ('US-IA', 'Iowa'),
-        ('US-ID', 'Idaho'),
-        ('US-NE', 'Nebraska'),
-        ('US-IL', 'Illinois'),
-        ('US-IN', 'Indiana'),
-        ('US-RI', 'Rhode Island'),
-        ('US-UT', 'Utah'),
-        ('US-KS', 'Kansas'),
-        ('US-KY', 'Kentucky'),
-        ('US-OH', 'Ohio'),
-        ('US-LA', 'Louisiana'),
-        ('US-MA', 'Massachusetts'),
-        ('US-NH', 'New Hampshire'),
-        ('US-TX', 'Texas'),
-        ('US-MD', 'Maryland'),
-        ('US-ME', 'Maine'),
-        ('US-SC', 'South Carolina'),
+        ('Wisconsin', 'Wisconsin'),
+        ('West Virginia', 'West Virginia'),
+        ('Michigan', 'Michigan'),
+        ('Oklahoma', 'Oklahoma'),
+        ('Minnesota', 'Minnesota'),
+        ('Missouri', 'Missouri'),
+        ('New Jersey', 'New Jersey'),
+        ('Vermont', 'Vermont'),
+        ('Mississippi', 'Mississippi'),
+        ('South Dakota', 'South Dakota'),
+        ('Montana', 'Montana'),
+        ('North Carolina', 'North Carolina'),
+        ('Oregon', 'Oregon'),
+        ('Virginia', 'Virginia'),
+        ('Alaska', 'Alaska'),
+        ('Alabama', 'Alabama'),
+        ('New Mexico', 'New Mexico'),
+        ('Arkansas', 'Arkansas'),
+        ('Wyoming', 'Wyoming'),
+        ('Tennessee', 'Tennessee'),
+        ('Arizona', 'Arizona'),
+        ('California', 'California'),
+        ('Pennsylvania', 'Pennsylvania'),
+        ('Colorado', 'Colorado'),
+        ('Connecticut', 'Connecticut'),
+        ('Nevada', 'Nevada'),
+        ('Delaware', 'Delaware'),
+        ('North Dakota', 'North Dakota'),
+        ('Washington', 'Washington'),
+        ('Florida', 'Florida'),
+        ('Georgia', 'Georgia'),
+        ('Hawaii', 'Hawaii'),
+        ('New York', 'New York'),
+        ('Iowa', 'Iowa'),
+        ('Idaho', 'Idaho'),
+        ('Nebraska', 'Nebraska'),
+        ('Illinois', 'Illinois'),
+        ('Indiana', 'Indiana'),
+        ('Rhode Island', 'Rhode Island'),
+        ('Utah', 'Utah'),
+        ('Kansas', 'Kansas'),
+        ('Kentucky', 'Kentucky'),
+        ('Ohio', 'Ohio'),
+        ('Louisiana', 'Louisiana'),
+        ('Massachusetts', 'Massachusetts'),
+        ('New Hampshire', 'New Hampshire'),
+        ('Texas', 'Texas'),
+        ('Maryland', 'Maryland'),
+        ('Maine', 'Maine'),
+        ('South Carolina', 'South Carolina'),
     ]
 
     territory = models.CharField(max_length=2, choices=COUNTRIES_CHOICES)
@@ -426,18 +433,16 @@ class OrderProjectBase(Base):
 
 class OrderFilmMaking(OrderProjectBase):
     FILM_LENGTH = [
-        (0, 'short film'),
-        (1, 'full length')
+        ('short', 'short film'),
+        ('full', 'full length')
     ]
     YES_NO = [
-        (0, 'no'),
-        (1, 'yes')
+        ('n', 'no'),
+        ('y', 'yes')
     ]
-    # should be radio buttons
-    film_length = models.BooleanField(choices=FILM_LENGTH)
-    # should be radio, yes/no
-    film_programming = models.BooleanField(choices=YES_NO)
-    film_trailer = models.BooleanField(choices=YES_NO)
+    film_length = models.CharField(max_length=10, choices=FILM_LENGTH, default='short')
+    film_programming = models.CharField(max_length=2, choices=YES_NO, default='n')
+    film_trailer = models.CharField(max_length=2, choices=YES_NO, default='n')
     distribution = models.ManyToManyField(OrderDistributionIndie,
                                           related_name='order_dist_indie')
 
@@ -447,8 +452,6 @@ class OrderFilmMaking(OrderProjectBase):
 
 class FeaturedBackground(Base):
     name = models.CharField(max_length=100)
-
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -464,7 +467,7 @@ class OrderAdvertising(OrderProjectBase):
                                           related_name='order_dist_advertising')
 
 
-class ProjectDetailsBase(Base):
+class ProjectDetailBase(OrderProjectDetailBase):
     ORIGINAL = 'original'
     INSTRUMENTAL = 'instrumental'
     CAPELLA = 'capella'
@@ -516,10 +519,10 @@ class ProjectDetailsBase(Base):
     ]
 
     number_uses = models.IntegerField()
-    opening_closing = models.BooleanField()
+    opening_closing = models.BooleanField(default=False)
     featured_background = models.ManyToManyField(FeaturedBackground,
-                                                 related_name='programming_project_details_%(class)s')
-    song_version = models.CharField(max_length=20, choices=SONG_VERSION_CHOICES)
+                                                 related_name='programming_project_detail_%(class)s')
+    song_version = models.CharField(max_length=20, choices=SONG_VERSION_CHOICES, default=ORIGINAL)
 
     # need to check what he wants
     duration = models.IntegerField()
@@ -548,24 +551,24 @@ class ProjectDetailsBase(Base):
         abstract = True
 
 
-class OrderIndieProjectDetails(ProjectDetailsBase):
+class OrderIndieProjectDetail(ProjectDetailBase):
     pass
 
 
-class OrderProgrammingDetails(ProjectDetailsBase):
+class OrderProgrammingDetail(ProjectDetailBase):
     pass
 
 
-class OrderAdvertisingDetails(ProjectDetailsBase):
+class OrderAdvertisingDetail(ProjectDetailBase):
     pass
 
 
-class OrderWedding(OrderProjectDetailsBase):
+class OrderWedding(OrderProjectDetailBase):
     platform = models.CharField(max_length=1000)
     num_uses = models.PositiveIntegerField()
 
 
-class OrderPersonal(OrderProjectDetailsBase):
+class OrderPersonal(OrderProjectDetailBase):
     purpose = models.CharField(max_length=1000)
     platform = models.CharField(max_length=1000)
 

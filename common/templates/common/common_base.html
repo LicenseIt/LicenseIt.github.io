@@ -87,6 +87,20 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
+        {% if url == 'distribution' %}
+            <style>
+                #id_youtube {
+                    display: none;
+                }
+            </style>
+        {% endif %}
+        {% if url == 'details' %}
+            <style>
+            #usa_states {
+                display: none;
+            }
+            </style>
+        {% endif %}
     </head>
     <body id="topPage" data-spy="scroll" data-target=".navbar" data-offset="100">
 
@@ -380,6 +394,12 @@
 <script src="{% static 'common/assets/js/main/ion.rangeSlider.min.js' %}"></script>
 <script src="{% static 'common/assets/js/main/imagesloaded.pkgd.min.js' %}"></script>
 <script src="{% static 'common/assets/js/main/main.js' %}"></script>
+    {% if url == 'distribution' %}
+        <script src="{% static 'orders/youtube_show_hide.js' %}"></script>
+    {% endif %}
+    {% if url == 'details' %}
+        <script src="{% static 'orders/states_show_hide.js' %}"></script>
+    {% endif %}
 
 {% if url == 'works' %}
     <!-- Google Map
