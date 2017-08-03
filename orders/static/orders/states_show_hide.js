@@ -8,3 +8,11 @@ $('#id_territory').change(function () {
         $('#usa_states').hide();
     }
 });
+
+$('#is-non-profit').click(function () {
+    $('#non-profit').show();
+});
+
+$('#is-not-non-profit').click(function () {
+    $('#non-profit').hide();
+});

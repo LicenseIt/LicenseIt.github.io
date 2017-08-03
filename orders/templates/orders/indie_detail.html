@@ -5,11 +5,9 @@
         <form class="form-horizontal" action="{% url 'indie_details' pk order %}" method="post">
             {% csrf_token %}
             <div class="row">
-                form
                 {{ form.errors }}
             </div>
             <div class="row">
-                personal
                 {{ personal_info.errors }}
             </div>
             <div class="form-group">
@@ -118,7 +116,14 @@
         <fieldset>
             <div class="form-group">
                 <label class="col-sm-2">is for non profit?</label>
-                {{ form.is_non_profit }}
+                {% for radio in form.is_non_profit %}
+                    <div>
+                        <label class="col-sm-12" for="{{ radio.id_for_label }}">
+                            {{ radio.choice_label }}
+                            <span class="col-sm-2">{{ radio.tag }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
             </div>
             <div class="form-group">
                 <label class="col-sm-2">non profit</label>

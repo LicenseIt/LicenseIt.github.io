@@ -16,7 +16,7 @@ class Base(models.Model):
 
 class ProjectType(Base):
     '''
-    type of project the user is working on
+    type of project we use for questions
     '''
     name = models.CharField(max_length=200)
     # the url name of the type to work with on the back end
@@ -25,10 +25,14 @@ class ProjectType(Base):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'project type'
+        verbose_name_plural = 'project types'
+
 
 class DistributionBase(Base):
     '''
-
+    name of the distribution categories
     '''
     name = models.CharField(max_length=200)
 
@@ -53,26 +57,42 @@ class EntryBase(Base):
 
 
 class WebEntry(EntryBase):
+    '''
+    a web entry name to choose on where the user will publish the work
+    '''
     class Meta:
         verbose_name = 'web entry'
         verbose_name_plural = 'web entries'
 
 
 class ExternalEntry(EntryBase):
+    '''
+    an external option on where to publish the work
+    '''
     class Meta:
         verbose_name = 'external entry'
         verbose_name_plural = 'external entries'
 
 
 class OrderDistributionIndie(DistributionBase):
-    pass
+    '''
+    the options film making creators will be able to choose on where they publish their work
+    '''
+    class Meta:
+        verbose_name = 'distribution indie film'
+        verbose_name_plural = 'distributions indie film'
 
 
 class OrderDistributionProgramming(DistributionBase):
-    pass
+    '''
+    the options programmer creators will be able to choose on where they publish their work
+    '''
 
 
 class WebDistribution(Base):
+    '''
+    the places the publisher will publish on the web
+    '''
     distribute_on = models.ManyToManyField(WebEntry, related_name='dist_web')
     youtube_id = models.IntegerField(null=True, blank=True)
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_dist_web')
@@ -83,8 +103,15 @@ class WebDistribution(Base):
             ret += ', ' + name.name
         return ret
 
+    class Meta:
+        verbose_name = 'web distribution'
+        verbose_name_plural = 'web distributions'
+
 
 class ExternalDistribution(Base):
+    '''
+    the kind of events the publisher will publish his/her work
+    '''
     name = models.ManyToManyField(ExternalEntry, related_name='ext_dist')
     num_people = models.IntegerField()
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_dist_ext')
@@ -92,8 +119,15 @@ class ExternalDistribution(Base):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'external distribution'
+        verbose_name_plural = 'external distributions'
+
 
 class TvDistribution(Base):
+    '''
+    the kind of tv distribution of the publisher
+    '''
     tv_program = models.BooleanField()
     tv_trailer = models.BooleanField()
 
@@ -102,10 +136,17 @@ class TvDistribution(Base):
     def __str__(self):
         return 'program: ' + str(self.tv_program) + 'trailer: ' + str(self.tv_trailer)
 
+    class Meta:
+        verbose_name = 'tv distribution'
+        verbose_name_plural = 'tv distributions'
+
 
 class OrderProjectDetailBase(Base):
+    '''
+    base class for all other details classes
+    '''
     COUNTRIES_CHOICES = [
-        ('All countries', 'All countries'),
+        ('worldwide', 'worldwide'),
         ('Asia', 'Asia'),
         ('Europe', 'Europe'),
         ('North America', 'North America'),
@@ -363,67 +404,17 @@ class OrderProjectDetailBase(Base):
         ('Zimbabwe', 'Zimbabwe')
     ]
 
-    USA_CHOICES = [
-        ('Wisconsin', 'Wisconsin'),
-        ('West Virginia', 'West Virginia'),
-        ('Michigan', 'Michigan'),
-        ('Oklahoma', 'Oklahoma'),
-        ('Minnesota', 'Minnesota'),
-        ('Missouri', 'Missouri'),
-        ('New Jersey', 'New Jersey'),
-        ('Vermont', 'Vermont'),
-        ('Mississippi', 'Mississippi'),
-        ('South Dakota', 'South Dakota'),
-        ('Montana', 'Montana'),
-        ('North Carolina', 'North Carolina'),
-        ('Oregon', 'Oregon'),
-        ('Virginia', 'Virginia'),
-        ('Alaska', 'Alaska'),
-        ('Alabama', 'Alabama'),
-        ('New Mexico', 'New Mexico'),
-        ('Arkansas', 'Arkansas'),
-        ('Wyoming', 'Wyoming'),
-        ('Tennessee', 'Tennessee'),
-        ('Arizona', 'Arizona'),
-        ('California', 'California'),
-        ('Pennsylvania', 'Pennsylvania'),
-        ('Colorado', 'Colorado'),
-        ('Connecticut', 'Connecticut'),
-        ('Nevada', 'Nevada'),
-        ('Delaware', 'Delaware'),
-        ('North Dakota', 'North Dakota'),
-        ('Washington', 'Washington'),
-        ('Florida', 'Florida'),
-        ('Georgia', 'Georgia'),
-        ('Hawaii', 'Hawaii'),
-        ('New York', 'New York'),
-        ('Iowa', 'Iowa'),
-        ('Idaho', 'Idaho'),
-        ('Nebraska', 'Nebraska'),
-        ('Illinois', 'Illinois'),
-        ('Indiana', 'Indiana'),
-        ('Rhode Island', 'Rhode Island'),
-        ('Utah', 'Utah'),
-        ('Kansas', 'Kansas'),
-        ('Kentucky', 'Kentucky'),
-        ('Ohio', 'Ohio'),
-        ('Louisiana', 'Louisiana'),
-        ('Massachusetts', 'Massachusetts'),
-        ('New Hampshire', 'New Hampshire'),
-        ('Texas', 'Texas'),
-        ('Maryland', 'Maryland'),
-        ('Maine', 'Maine'),
-        ('South Carolina', 'South Carolina'),
-    ]
-
     territory = models.CharField(max_length=50, choices=COUNTRIES_CHOICES)
-    territory_usa = models.CharField(max_length=50, choices=USA_CHOICES, null=True, blank=True)
+    territory_usa = models.CharField(max_length=1000, null=True, blank=True)
 
     class Meta:
         abstract = True
 
 
 class OrderProjectBase(Base):
+    '''
+    base class for all project based classes
+    '''
     production_name = models.CharField(max_length=300)
     order = models.ForeignKey('Order',
                               on_delete=models.CASCADE,
@@ -434,6 +425,9 @@ class OrderProjectBase(Base):
 
 
 class OrderFilmMaking(OrderProjectBase):
+    '''
+    the data we need on indie film projects
+    '''
     FILM_LENGTH = [
         ('short', 'short film'),
         ('full', 'full length')
@@ -451,25 +445,54 @@ class OrderFilmMaking(OrderProjectBase):
     def __str__(self):
         return 'indie movie' + self.production_name
 
+    class Meta:
+        verbose_name = 'film making project'
+        verbose_name_plural = 'film making projects'
+
 
 class FeaturedBackground(Base):
+    '''
+    this class should have only 2 options, featured and background on it's field,
+    but since this is a multi choice option we need a model.
+    '''
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'feature or background'
+        verbose_name_plural = 'featured or backgrounds'
+
 
 class OrderProgramming(OrderProjectBase):
+    '''
+    basic data we need from programming projects
+    '''
     distribution = models.ManyToManyField(OrderDistributionProgramming,
                                           related_name='order_dist_programming')
 
+    class Meta:
+        verbose_name = 'programming project'
+        verbose_name_plural = 'programming projects'
+
 
 class OrderAdvertising(OrderProjectBase):
+    '''
+    basic data about advertising projects
+    '''
     distribution = models.ManyToManyField(OrderDistributionProgramming,
                                           related_name='order_dist_advertising')
 
+    class Meta:
+        verbose_name = 'advertising project'
+        verbose_name_plural = 'advertising projects'
+
 
 class ProjectDetailBase(OrderProjectDetailBase):
+    '''
+    base class for project details classes
+    '''
     ORIGINAL = 'original'
     INSTRUMENTAL = 'instrumental'
     CAPELLA = 'capella'
@@ -520,14 +543,20 @@ class ProjectDetailBase(OrderProjectDetailBase):
         ('oth', 'Other'),
     ]
 
+    IS_NON_PROFIT_CHOICES = [
+        ('no', 'no'),
+        ('yes', 'yes')
+    ]
+
     number_uses = models.IntegerField()
     opening_closing = models.BooleanField(default=False)
     featured_background = models.ManyToManyField(FeaturedBackground,
                                                  related_name='programming_project_detail_%(class)s')
     song_version = models.CharField(max_length=20, choices=SONG_VERSION_CHOICES, default=ORIGINAL)
 
-    # need to check what he wants
-    duration = models.IntegerField()
+    # start and end point of the song to work on
+    start_duration = models.CharField(max_length=8)
+    end_duration = models.CharField(max_length=8)
     term = models.CharField(max_length=2, choices=TERM_CHOICES, default=YEAR1)
 
     release_date = models.DateField()
@@ -536,11 +565,11 @@ class ProjectDetailBase(OrderProjectDetailBase):
     synopsis = models.CharField(max_length=1000)
     description = models.TextField()
 
-    is_non_profit = models.BooleanField()
+    is_non_profit = models.CharField(max_length=3, choices=IS_NON_PROFIT_CHOICES, default='no')
     non_profit = models.CharField(max_length=3, choices=NON_PROFIT_CHOICES,
                                   null=True, blank=True)
 
-    comments = models.TextField()
+    comments = models.TextField(null=True, blank=True)
 
     rate = models.SmallIntegerField()
 
@@ -554,28 +583,60 @@ class ProjectDetailBase(OrderProjectDetailBase):
 
 
 class OrderIndieProjectDetail(ProjectDetailBase):
-    pass
+    '''
+    details about the film making project
+    '''
+    class Meta:
+        verbose_name = 'film making detail'
+        verbose_name_plural = 'film making details'
 
 
 class OrderProgrammingDetail(ProjectDetailBase):
-    pass
+    '''
+    details about the programming project
+    '''
+    class Meta:
+        verbose_name = 'programming project detail'
+        verbose_name_plural = 'programming project details'
 
 
 class OrderAdvertisingDetail(ProjectDetailBase):
-    pass
+    '''
+    details about advertising projects
+    '''
+    class Meta:
+        verbose_name = 'advertising project detail'
+        verbose_name_plural = 'advertising project details'
 
 
 class OrderWedding(OrderProjectDetailBase):
+    '''
+    data about wedding project
+    '''
     platform = models.CharField(max_length=1000)
     num_uses = models.PositiveIntegerField()
 
+    class Meta:
+        verbose_name = 'wedding'
+        verbose_name_plural = 'weddings'
+
 
 class OrderPersonal(OrderProjectDetailBase):
+    '''
+    data about personal projects
+    '''
     purpose = models.CharField(max_length=1000)
     platform = models.CharField(max_length=1000)
 
+    class Meta:
+        verbose_name = 'personal project'
+        verbose_name_plural = 'personal projects'
+
 
 class Order(Base):
+    '''
+    basic project data
+    '''
     SENT = 'sent'
     DONE = 'done'
     ATTENTION = 'attention'
@@ -601,3 +662,7 @@ class Order(Base):
 
     def __str__(self):
         return str(self.id) + ': ' + self.song_title
+
+    class Meta:
+        verbose_name = 'order'
+        verbose_name_plural = 'orders'

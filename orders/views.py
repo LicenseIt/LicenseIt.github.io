@@ -16,9 +16,11 @@ class OrderView(View):
     '''
     The order page
     '''
+    template_name = 'orders/order.html'
+
     def get(self, request, pk, *args, **kwargs):
         '''
-        Return the order page
+        get the order page
         :param request:
         :return:
         '''
@@ -28,22 +30,40 @@ class OrderView(View):
             'performer_name': track.artist
         })
         return render(request,
-                      'orders/order.html',
+                      self.template_name,
                       context={'form': order_form, 'pk': pk})
 
     def post(self, request, pk):
+        '''
+        processing the order
+        :param request: the request object
+        :param pk: the song id
+        :return:
+        '''
         form = OrderForm(request.POST)
         if form.is_valid():
             order_id = form.save()
             return HttpResponseRedirect(reverse(order_id.project_type.slug, args=[int(pk), order_id.id]))
 
         return render(request,
-                      'orders/order.html',
+                      self.template_name,
                       context={'form': form, 'pk': pk})
 
 
 class OrderIndieView(View):
+    '''
+    the film making page after choosing film making
+    '''
+    template_name = 'orders/order_indie.html'
+
     def get(self, request, pk, order_id):
+        '''
+        get the film making page
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         try:
             order = OrderFilmMaking.objects.filter(order=order_id)[0]
             form = OrderIndieForm(initial=order)
@@ -51,23 +71,42 @@ class OrderIndieView(View):
             form = OrderIndieForm()
 
         return render(request,
-                      'orders/order_indie.html',
+                      self.template_name,
                       context={'form': form, 'pk': pk, 'order': order_id})
 
     def post(self, request, pk, order_id):
+        '''
+        processing the film making data and continue to the right page afterwards
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         form = OrderIndieForm(request.POST.copy())
         form.data['order'] = order_id
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('indie_dist', args=[int(pk), order_id]))
         return render(request,
-                      'orders/order_indie.html',
+                      self.template_name,
                       context={'form': form, 'pk': pk, 'order': order_id}
                       )
 
 
 class OrderProgramView(View):
+    '''
+    the programming page after choosing programming
+    '''
+    template_name = 'orders/order_program.html'
+
     def get(self, request, pk, order_id):
+        '''
+        get the programming page
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         try:
             order = OrderProgramming.objects.filter(order=order_id)[0]
             form = OrderProgramForm(initial=order)
@@ -75,23 +114,85 @@ class OrderProgramView(View):
             form = OrderProgramForm()
 
         return render(request,
-                      'orders/order_program.html',
+                      self.template_name,
                       context={'form': form, 'pk': pk, 'order': order_id})
 
     def post(self, request, pk, order_id):
+        '''
+        processing the data from the programming page
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         form = OrderProgramForm(request.POST.copy())
         form.data['order'] = order_id
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('prog_dist', args=[int(pk), order_id]))
         return render(request,
-                      'orders/order_program.html',
+                      self.template_name,
+                      context={'form': form, 'pk': pk, 'order': order_id}
+                      )
+
+
+class OrderAdvertisingView(View):
+    '''
+    the advertising view
+    '''
+    template_name = 'orders/order_Advertising.html'
+
+    def get(self, request, pk, order_id):
+        '''
+        get the advertising form page
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
+        try:
+            order = OrderAdvertising.objects.filter(order=order_id)[0]
+            form = OrderAdvertisingForm(initial=order)
+        except IndexError:
+            form = OrderAdvertisingForm()
+
+        return render(request,
+                      self.template_name,
+                      context={'form': form, 'pk': pk, 'order': order_id})
+
+    def post(self, request, pk, order_id):
+        '''
+        processing the advertising data from the form
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
+        form = OrderAdvertisingForm(request.POST.copy())
+        form.data['order'] = order_id
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('ad_dist', args=[int(pk), order_id]))
+        return render(request,
+                      self.template_name,
                       context={'form': form, 'pk': pk, 'order': order_id}
                       )
 
 
 class IndieDistribution(View):
+    '''
+    film making distribution form
+    '''
+    template_name = 'orders/indie_distribution.html'
+
     def get(self, request, pk, order_id):
+        '''
+        get the film making distribution form
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         web_form = IndieWebDistribution()
         ext_form = IndieExtDistribution()
 
@@ -110,26 +211,35 @@ class IndieDistribution(View):
         if 'external' in dist_list:
             context['ext'] = ext_form
 
-        context['form_url'] = 'indie_dist'
-
-        return render(request,
-                      'orders/indie_distribution.html',
-                      context=context)
+        if 'web' in context or 'ext' in context.keys():
+            return render(request,
+                          self.template_name,
+                          context=context)
+        else:
+            return HttpResponseRedirect(reverse('indie_details', args=[int(pk), order_id]))
 
     def post(self, request, pk, order_id):
+        '''
+        processing the data from the film making distribution form
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         web_form = None
         ext_form = None
 
         if 'distribute_on' in request.POST:
             web_form = IndieWebDistribution(request.POST.copy())
             web_form.data['order'] = order_id
+
         if 'name' in request.POST:
             ext_form = IndieExtDistribution(request.POST.copy())
             ext_form.data['order'] = order_id
 
         if web_form and not web_form.is_valid() or ext_form and not ext_form.is_valid():
             return render(request,
-                          'orders/indie_distribution.html',
+                          self.template_name,
                           context={
                               'web': web_form,
                               'ext': ext_form,
@@ -139,15 +249,42 @@ class IndieDistribution(View):
                           })
 
         if web_form:
-            web_form.save()
+            done = web_form.save()
+            if web_form.data['distribute_new']:
+                new_dist = WebEntry(name=web_form.data['distribute_new'])
+                new_dist.full_clean()
+                new_dist.save()
+                dist = WebDistribution.objects.get(pk=done.id)
+                dist.distribute_on.add(new_dist.id)
+                dist.save()
+
         if ext_form:
-            ext_form.save()
+            done = ext_form.save()
+            if ext_form.data['dist_new']:
+                new_dist = ExternalEntry(name=ext_form.data['dist_new'])
+                new_dist.full_clean()
+                new_dist.save()
+                dist = ExternalDistribution.objects.get(pk=done.id)
+                dist.distribute_on.add(new_dist.id)
+                dist.save()
 
         return HttpResponseRedirect(reverse('indie_details', args=[int(pk), order_id]))
 
 
 class ProgramDistribution(View):
+    '''
+    the programming distribution form view
+    '''
+    template_name = 'orders/program_distribution.html'
+
     def get(self, request, pk, order_id):
+        '''
+        get the programming distribution form
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         web_form = IndieWebDistribution()
         ext_form = IndieExtDistribution()
         tv_form = TvDistributionForm()
@@ -169,13 +306,21 @@ class ProgramDistribution(View):
         if 'tv' in dist_list:
             context['tv'] = tv_form
 
-        context['form_url'] = 'prog_dist'
-
-        return render(request,
-                      'orders/program_distribution.html',
-                      context=context)
+        if 'web' in context or 'ext' in context or 'tv' in context:
+            return render(request,
+                          self.template_name,
+                          context=context)
+        else:
+            HttpResponseRedirect(reverse('program_details', args=[int(pk), order_id]))
 
     def post(self, request, pk, order_id):
+        '''
+        processing the form
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         web_form = None
         ext_form = None
         tv_form = None
@@ -192,7 +337,7 @@ class ProgramDistribution(View):
 
         if web_form and not web_form.is_valid() or ext_form and not ext_form.is_valid() or tv_form and not tv_form.is_valid():
             return render(request,
-                          'orders/program_distribution.html',
+                          self.template_name,
                           context={
                               'web': web_form,
                               'ext': ext_form,
@@ -203,19 +348,145 @@ class ProgramDistribution(View):
                           })
 
         if web_form:
-            web_form.save()
+            done = web_form.save()
+            if web_form.data['distribute_new']:
+                new_dist = WebEntry(name=web_form.data['distribute_new'])
+                new_dist.full_clean()
+                new_dist.save()
+                dist = WebDistribution.objects.get(pk=done.id)
+                dist.distribute_on.add(new_dist.id)
+                dist.save()
+
         if ext_form:
-            ext_form.save()
+            done = ext_form.save()
+            if ext_form.data['dist_new']:
+                new_dist = ExternalEntry(name=ext_form.data['dist_new'])
+                new_dist.full_clean()
+                new_dist.save()
+                dist = ExternalDistribution.objects.get(pk=done.id)
+                dist.distribute_on.add(new_dist.id)
+                dist.save()
+
         if tv_form:
-            print('in tv_form')
             tv_form.save()
-        print('end of form')
+
+        return HttpResponseRedirect(reverse('program_details', args=[int(pk), order_id]))
+
+
+class AdvertisingDistribution(View):
+    '''
+    advertising distribution form
+    '''
+    template_name = 'orders/advertising_distribution.html'
+
+    def get(self, request, pk, order_id):
+        '''
+        get the advertising distribution form
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
+        web_form = IndieWebDistribution()
+        ext_form = IndieExtDistribution()
+        # tv_form = TvDistributionForm()
+
+        order_dist = OrderAdvertising.objects.filter(order=order_id)[0]
+
+        context = {
+            'pk': pk,
+            'order': order_id,
+            'url': 'distribution',
+        }
+
+        dist_list = [dist.__str__() for dist in order_dist.distribution.all()]
+
+        if 'web/streaming' in dist_list:
+            context['web'] = web_form
+        if 'external' in dist_list:
+            context['ext'] = ext_form
+        # if 'tv' in dist_list:
+        #     context['tv'] = tv_form
+
+        if 'web' in context or 'ext' in context: # or 'tv' in context:
+            return render(request,
+                          self.template_name,
+                          context=context)
+        else:
+            HttpResponseRedirect(reverse('advertising_details', args=[int(pk), order_id]))
+
+    def post(self, request, pk, order_id):
+        '''
+        processing the data from advertising distribution form
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
+        web_form = None
+        ext_form = None
+        # tv_form = None
+
+        if 'distribute_on' in request.POST:
+            web_form = IndieWebDistribution(request.POST.copy())
+            web_form.data['order'] = order_id
+        if 'name' in request.POST:
+            ext_form = IndieExtDistribution(request.POST.copy())
+            ext_form.data['order'] = order_id
+        # if 'tv_trailer' or 'tv_program' in request.POST:
+        #     tv_form = TvDistributionForm(request.POST.copy())
+        #     tv_form.data['order'] = order_id
+
+        if web_form and not web_form.is_valid() or ext_form and not ext_form.is_valid(): # or tv_form and not tv_form.is_valid():
+            return render(request,
+                          self.template_name,
+                          context={
+                              'web': web_form,
+                              'ext': ext_form,
+                              # 'tv': tv_form,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'distribution',
+                          })
+
+        if web_form:
+            done = web_form.save()
+            if web_form.data['distribute_new']:
+                new_dist = WebEntry(name=web_form.data['distribute_new'])
+                new_dist.full_clean()
+                new_dist.save()
+                dist = WebDistribution.objects.get(pk=done.id)
+                dist.distribute_on.add(new_dist.id)
+                dist.save()
+
+        if ext_form:
+            done = ext_form.save()
+            if ext_form.data['dist_new']:
+                new_dist = ExternalEntry(name=ext_form.data['dist_new'])
+                new_dist.full_clean()
+                new_dist.save()
+                dist = ExternalDistribution.objects.get(pk=done.id)
+                dist.distribute_on.add(new_dist.id)
+                dist.save()
+
+        # if tv_form:
+        #     tv_form.save()
 
         return HttpResponseRedirect(reverse('program_details', args=[int(pk), order_id]))
 
 
 class IndieDetail(View):
+    '''
+    the details form view for film making
+    '''
     def get(self, request, pk, order_id):
+        '''
+        get the film making details form
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         form = IndieDetailForm()
         personal_info = PersonalInfoForm()
         return render(request,
@@ -229,6 +500,13 @@ class IndieDetail(View):
                       })
 
     def post(self, request, pk, order_id):
+        '''
+        processing the form
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         email = request.POST['email']
         username = request.POST['email']
         password = request.POST['password']
@@ -330,12 +608,24 @@ class IndieDetail(View):
 
 
 class ProgramDetail(View):
+    '''
+    programming details view
+    '''
+    template_name = 'orders/program_detail.html'
+
     def get(self, request, pk, order_id):
+        '''
+        get the programming details view
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         form = ProgramDetailForm()
         personal_info = PersonalInfoForm()
 
         return render(request,
-                      'orders/indie_detail.html',
+                      self.template_name,
                       context={
                           'form': form,
                           'personal_info': personal_info,
@@ -345,6 +635,13 @@ class ProgramDetail(View):
                       })
 
     def post(self, request, pk, order_id):
+        '''
+        processing the data from the form and logging in the user
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
         email = request.POST['email']
         username = request.POST['email']
         password = request.POST['password']
@@ -359,7 +656,7 @@ class ProgramDetail(View):
 
         if not password or not confirm_password:
             return render(request,
-                          'orders/program_detail.html',
+                          self.template_name,
                           context={
                               'form': form,
                               'personal_info': personal_info,
@@ -373,7 +670,7 @@ class ProgramDetail(View):
 
         if password != confirm_password:
             return render(request,
-                          'orders/program_detail.html',
+                          self.template_name,
                           context={
                               'form': form,
                               'personal_info': personal_info,
@@ -392,7 +689,7 @@ class ProgramDetail(View):
             form.save()
         else:
             return render(request,
-                          'orders/program_detail.html',
+                          self.template_name,
                           context={
                               'form': form,
                               'personal_info': personal_info,
@@ -413,7 +710,7 @@ class ProgramDetail(View):
                 personal_info.save()
             else:
                 return render(request,
-                              'orders/program_detail.html',
+                              self.template_name,
                               context={
                                   'form': form,
                                   'personal_info': personal_info,
@@ -430,7 +727,401 @@ class ProgramDetail(View):
 
         except IntegrityError:
             return render(request,
-                          'orders/indie_detail.html',
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+
+class AdvertisingDetail(View):
+    '''
+    advertising details form view
+    '''
+    template_name = 'orders/advertising_detail.html'
+
+    def get(self, request, pk, order_id):
+        '''
+        get the advertising detail form
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
+        form = AdvertisingDetailForm()
+        personal_info = PersonalInfoForm()
+
+        return render(request,
+                      self.template_name,
+                      context={
+                          'form': form,
+                          'personal_info': personal_info,
+                          'pk': pk,
+                          'order': order_id,
+                          'url': 'details',
+                      })
+
+    def post(self, request, pk, order_id):
+        '''
+        processing the form and logging in the user
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
+        email = request.POST['email']
+        username = request.POST['email']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+
+        data = request.POST.copy()
+
+        form = ProgramDetailForm(request.POST)
+        personal_info = PersonalInfoForm(request.POST.copy())
+
+        if not password or not confirm_password:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+        if password != confirm_password:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+        data['order'] = order_id
+
+        form = ProgramDetailForm(data)
+        if form.is_valid():
+            form.save()
+        else:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+        try:
+            user = User.objects.create_user(username, email, password)
+            login(request, user)
+            data['user'] = user.id
+            personal_info = PersonalInfoForm(data)
+            if personal_info.is_valid():
+                personal_info.save()
+            else:
+                return render(request,
+                              self.template_name,
+                              context={
+                                  'form': form,
+                                  'personal_info': personal_info,
+                                  'pk': pk,
+                                  'order': order_id,
+                                  'url': 'details',
+                                  'first_name': first_name,
+                                  'last_name': last_name,
+                                  'email': email,
+                              })
+            form.data['order'] = order_id
+
+            return HttpResponseRedirect(reverse('my_account'))
+
+        except IntegrityError:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+
+class WeddingDetails(View):
+    '''
+    the wedding details form view
+    '''
+    template_name = 'orders/wedding_detail.html'
+
+    def get(self, request, pk, order_id):
+        '''
+        get the page
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
+        form = WeddingDetailForm()
+        personal_info = PersonalInfoForm()
+
+        return render(request,
+                      self.template_name,
+                      context={
+                          'form': form,
+                          'personal_info': personal_info,
+                          'pk': pk,
+                          'order': order_id,
+                          'url': 'details',
+                      })
+
+    def post(self, request, pk, order_id):
+        '''
+        processing the form and logging in the user
+        :param request: the request object
+        :param pk: the song id
+        :param order_id: the order id
+        :return:
+        '''
+        email = request.POST['email']
+        username = request.POST['email']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+
+        data = request.POST.copy()
+        data['order'] = order_id
+
+        form = WeddingDetailForm(data)
+        personal_info = PersonalInfoForm(request.POST.copy())
+
+        if not password or not confirm_password:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+        if password != confirm_password:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+        if form.is_valid():
+            form.save()
+        else:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+        try:
+            user = User.objects.create_user(username, email, password)
+            login(request, user)
+            data['user'] = user.id
+            personal_info = PersonalInfoForm(data)
+            if personal_info.is_valid():
+                personal_info.save()
+            else:
+                return render(request,
+                              self.template_name,
+                              context={
+                                  'form': form,
+                                  'personal_info': personal_info,
+                                  'pk': pk,
+                                  'order': order_id,
+                                  'url': 'details',
+                                  'first_name': first_name,
+                                  'last_name': last_name,
+                                  'email': email,
+                              })
+            form.data['order'] = order_id
+
+            return HttpResponseRedirect(reverse('my_account'))
+
+        except IntegrityError:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+
+class PersonalDetails(View):
+    '''
+    the personal details form view
+    '''
+    template_name = 'orders/personal_detail.html'
+
+    def get(self, request, pk, order_id):
+        '''
+        get the page
+        :param request: request object
+        :param pk: song id
+        :param order_id: order id
+        :return:
+        '''
+        form = PersonalDetailForm()
+        personal_info = PersonalInfoForm()
+
+        return render(request,
+                      self.template_name,
+                      context={
+                          'form': form,
+                          'personal_info': personal_info,
+                          'pk': pk,
+                          'order': order_id,
+                          'url': 'details',
+                      })
+
+    def post(self, request, pk, order_id):
+        '''
+        processing the form and logging in the user
+        :param request: request object
+        :param pk: song id
+        :param order_id: order id
+        :return:
+        '''
+        email = request.POST['email']
+        username = request.POST['email']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+
+        data = request.POST.copy()
+        data['order'] = order_id
+
+        form = PersonalDetailForm(data)
+        personal_info = PersonalInfoForm(request.POST.copy())
+
+        if not password or not confirm_password:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+        if password != confirm_password:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+        if form.is_valid():
+            form.save()
+        else:
+            return render(request,
+                          self.template_name,
+                          context={
+                              'form': form,
+                              'personal_info': personal_info,
+                              'pk': pk,
+                              'order': order_id,
+                              'url': 'details',
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'email': email,
+                          })
+
+        try:
+            user = User.objects.create_user(username, email, password)
+            login(request, user)
+            data['user'] = user.id
+            personal_info = PersonalInfoForm(data)
+            if personal_info.is_valid():
+                personal_info.save()
+            else:
+                return render(request,
+                              self.template_name,
+                              context={
+                                  'form': form,
+                                  'personal_info': personal_info,
+                                  'pk': pk,
+                                  'order': order_id,
+                                  'url': 'details',
+                                  'first_name': first_name,
+                                  'last_name': last_name,
+                                  'email': email,
+                              })
+
+            return HttpResponseRedirect(reverse('my_account'))
+
+        except IntegrityError:
+            return render(request,
+                          self.template_name,
                           context={
                               'form': form,
                               'personal_info': personal_info,

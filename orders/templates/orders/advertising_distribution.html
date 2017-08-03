@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
     <br><br><br><br><br>
-        <form class="form-horizontal" action="{% url 'indie_dist' pk order %}" method="post">
+        <form class="form-horizontal" action="{% url 'ad_dist' pk order %}" method="post">
             {% csrf_token %}
             {% if web %}
             <div class="row">
@@ -39,7 +39,7 @@
                 {{ ext.errors }}
             </div>
             <div class="form-group">
-                <label class="col-sm-3" for="id_distribute_on">where exactly externally?</label>
+                <label class="col-sm-3" for="id_distribute_on">where exactly online?</label>
                 {% for check in ext.name %}
                     <div>
                         <label class="col-sm-12" for="{{ check.id_for_label }}">
@@ -62,6 +62,16 @@
                 {{ ext.num_people }}
             </div>
             {% endif %}
+{#            {% if tv %}#}
+{#            <div class="row">tv#}
+{#                {{ tv.errors }}#}
+{#            </div>#}
+{#            <div class="form-group">#}
+{#                <label class="col-sm-3" for="id_distribute_on">Do you need a license for the trailer, the full show or both?</label>#}
+{#                <label for="id_tv_trailer">tv trailer {{ tv.tv_trailer }}</label>#}
+{#                <label for="id_tv_program">tv program {{ tv.tv_program }}</label>#}
+{#            </div>#}
+{#            {% endif %}#}
             <div class="row">
                 <button class="btn btn-success">submit</button>
                 <button type="reset" class="btn btn-warning">reset</button>
