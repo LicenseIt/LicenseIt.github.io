@@ -18,17 +18,23 @@ class OrderView(View):
     '''
     template_name = 'orders/order.html'
 
-    def get(self, request, pk, *args, **kwargs):
+    def get(self, request, pk=None, *args, **kwargs):
         '''
         get the order page
-        :param request:
+        :param request: the request object
+        :param pk: the song id if available in our database
         :return:
         '''
-        track = Track.objects.get(pk=pk)
-        order_form = OrderForm(initial={
-            'song_title': track.name,
-            'performer_name': track.artist
-        })
+        if request.resolver_match.url_name == 'order':
+            track = Track.objects.get(pk=pk)
+            order_form = OrderForm(initial={
+                'song_title': track.name,
+                'performer_name': track.artist
+            })
+        # we want a manual song title and performer name- url name is manual_order
+        else:
+            order_form = ManualOrderForm()
+
         return render(request,
                       self.template_name,
                       context={'form': order_form, 'pk': pk})
@@ -40,7 +46,10 @@ class OrderView(View):
         :param pk: the song id
         :return:
         '''
-        form = OrderForm(request.POST)
+        if request.resolver_match.url_name == 'order':
+            form = OrderForm(request.POST)
+        else:
+            form = ManualOrderForm(request.POST)
         if form.is_valid():
             order_id = form.save()
             return HttpResponseRedirect(reverse(order_id.project_type.slug, args=[int(pk), order_id.id]))
@@ -568,9 +577,13 @@ class IndieDetail(View):
 
         try:
             user = User.objects.create_user(username, email, password)
-            print(user.id)
             login(request, user)
             data['user'] = user.id
+
+            order = Order.objects.get(pk=order_id)
+            order.user = user
+            order.save()
+
             personal_info = PersonalInfoForm(data)
             if personal_info.is_valid():
                 personal_info.save()
@@ -587,8 +600,6 @@ class IndieDetail(View):
                                   'last_name': last_name,
                                   'email': email,
                               })
-            form.data['order'] = order_id
-            print('hello')
 
             return HttpResponseRedirect(reverse('my_account'))
 
@@ -705,6 +716,11 @@ class ProgramDetail(View):
             user = User.objects.create_user(username, email, password)
             login(request, user)
             data['user'] = user.id
+
+            order = Order.objects.get(pk=order_id)
+            order.user = user
+            order.save()
+
             personal_info = PersonalInfoForm(data)
             if personal_info.is_valid():
                 personal_info.save()
@@ -838,6 +854,11 @@ class AdvertisingDetail(View):
             user = User.objects.create_user(username, email, password)
             login(request, user)
             data['user'] = user.id
+
+            order = Order.objects.get(pk=order_id)
+            order.user = user
+            order.save()
+
             personal_info = PersonalInfoForm(data)
             if personal_info.is_valid():
                 personal_info.save()
@@ -969,6 +990,11 @@ class WeddingDetails(View):
             user = User.objects.create_user(username, email, password)
             login(request, user)
             data['user'] = user.id
+
+            order = Order.objects.get(pk=order_id)
+            order.user = user
+            order.save()
+
             personal_info = PersonalInfoForm(data)
             if personal_info.is_valid():
                 personal_info.save()
@@ -1100,6 +1126,11 @@ class PersonalDetails(View):
             user = User.objects.create_user(username, email, password)
             login(request, user)
             data['user'] = user.id
+
+            order = Order.objects.get(pk=order_id)
+            order.user = user
+            order.save()
+
             personal_info = PersonalInfoForm(data)
             if personal_info.is_valid():
                 personal_info.save()

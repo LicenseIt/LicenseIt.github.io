@@ -27,5 +27,6 @@ urlpatterns = [
     url('now/(?P<pk>[0-9]+)/program/(?P<order_id>[0-9]+)/$', OrderProgramView.as_view(), name='programming'),
     url('now/(?P<pk>[0-9]+)/wedding/(?P<order_id>[0-9]+)/$', WeddingDetails.as_view(), name='wedding'),
     url('now/(?P<pk>[0-9]+)/personal/(?P<order_id>[0-9]+)/$',  PersonalDetails.as_view(), name='personal_use'),
+    url('now/manual/$', OrderView.as_view(), name='manual_order'),
     url('now/(?P<pk>[0-9]+)/$', OrderView.as_view(), name='order'),
 ]

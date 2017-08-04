@@ -52,6 +52,35 @@ class OrderForm(forms.ModelForm):
         }
 
 
+class ManualOrderForm(forms.ModelForm):
+    SENT = 'sent'
+    DONE = 'done'
+    ATTENTION = 'attention'
+
+    ORDER_CHOICES = (
+        (SENT, 'Sent'),
+        (ATTENTION, 'Attention'),
+        (DONE, 'Done'),
+    )
+
+    project_type = forms.ModelChoiceField(
+        queryset=ProjectType.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Order
+        exclude = ['user', 'state']
+        widgets = {
+            'song_title': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'performer_name': forms.TextInput(attrs={
+                'class': "form-control",
+            }),
+        }
+
+
 class OrderIndieForm(forms.ModelForm):
     distribution = forms.ModelMultipleChoiceField(
         queryset=OrderDistributionIndie.objects,
