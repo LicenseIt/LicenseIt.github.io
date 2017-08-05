@@ -233,12 +233,12 @@ class DetailsFormBase(forms.ModelForm):
                     'class': 'form-control col-sm-3'
                 }
             ),
-            'start_duration': forms.NumberInput(
+            'start_duration': forms.TextInput(
                 attrs={
                     'class': 'form-control col-sm-3'
                 }
             ),
-            'end_duration': forms.NumberInput(
+            'end_duration': forms.TextInput(
                 attrs={
                     'class': 'form-control col-sm-3'
                 }
