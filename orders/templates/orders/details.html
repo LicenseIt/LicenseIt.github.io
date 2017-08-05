@@ -16,36 +16,36 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-2">opening closing?</label>
-                {% for check in form.opening_closing %}
-                    <div>
-                        <label class="col-sm-12" for="{{ check.id_for_label }}">
-                            {{ check.choice_label }}
-                            <span class="col-sm-2">{{ check.tag }}</span>
-                        </label>
-                    </div>
-                {% endfor %}
+{#                {% for check in form.opening_closing %}#}
+{#                    <div>#}
+{#                        <label class="col-sm-12" for="{{ check.id_for_label }}">#}
+{#                            {{ check.choice_label }}#}
+{#                            <span class="col-sm-2">{{ check.tag }}</span>#}
+{#                        </label>#}
+{#                    </div>#}
+{#                {% endfor %}#}
             </div>
             <div class="form-group">
                 <label class="col-sm-2">featured or background?</label>
-                {% for check in form.featured_background %}
-                    <div>
-                        <label class="col-sm-12" for="{{ check.id_for_label }}">
-                            {{ check.choice_label }}
-                            <span class="col-sm-2">{{ check.tag }}</span>
-                        </label>
-                    </div>
-                {% endfor %}
+{#                {% for check in form.featured_background %}#}
+{#                    <div>#}
+{#                        <label class="col-sm-12" for="{{ check.id_for_label }}">#}
+{#                            {{ check.choice_label }}#}
+{#                            <span class="col-sm-2">{{ check.tag }}</span>#}
+{#                        </label>#}
+{#                    </div>#}
+{#                {% endfor %}#}
             </div>
             <div class="form-group">
                 <label class="col-sm-2">song version</label>
-                {% for check in form.song_version %}
-                    <div class="form-group">
-                        <label class="col-sm-12" for="{{ check.id_for_label }}">
-                            {{ check.choice_label }}
-                            <span class="col-sm-2">{{ check.tag }}</span>
-                        </label>
-                    </div>
-                {% endfor %}
+{#                {% for check in form.song_version %}#}
+{#                    <div class="form-group">#}
+{#                        <label class="col-sm-12" for="{{ check.id_for_label }}">#}
+{#                            {{ check.choice_label }}#}
+{#                            <span class="col-sm-2">{{ check.tag }}</span>#}
+{#                        </label>#}
+{#                    </div>#}
+{#                {% endfor %}#}
             </div>
         <fieldset>
             <div class="form-group">
@@ -67,11 +67,11 @@
                                class="form-control">
                     </div>
                 <datalist id="territory">
-                {% for territory in form.territory %}
-                    <option {% if territory.choice_label == 'United States' %}
-                        id="usa"
-                    {% endif %}>{{ territory.choice_label }}</option>
-                {% endfor %}
+{#                {% for territory in form.territory %}#}
+{#                    <option {% if territory.choice_label == 'United States' %}#}
+{#                        id="usa"#}
+{#                    {% endif %}>{{ territory.choice_label }}</option>#}
+{#                {% endfor %}#}
                 </datalist>
             </div>
             <div id="usa_states" class="form-group">
@@ -93,14 +93,14 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-2">budget</label>
-                {% for radio in form.budget %}
-                    <div>
-                        <label class="col-sm-12" for="{{ radio.id_for_label }}">
-                            {{ radio.choice_label }}
-                            <span class="col-sm-2">{{ radio.tag }}</span>
-                        </label>
-                    </div>
-                {% endfor %}
+{#                {% for radio in form.budget %}#}
+{#                    <div>#}
+{#                        <label class="col-sm-12" for="{{ radio.id_for_label }}">#}
+{#                            {{ radio.choice_label }}#}
+{#                            <span class="col-sm-2">{{ radio.tag }}</span>#}
+{#                        </label>#}
+{#                    </div>#}
+{#                {% endfor %}#}
             </div>
         </fieldset>
         <fieldset>
@@ -116,29 +116,29 @@
         <fieldset>
             <div class="form-group">
                 <label class="col-sm-2">is for non profit?</label>
-                {% for radio in form.is_non_profit %}
-                    <div>
-                        <label class="col-sm-12" for="{{ radio.id_for_label }}">
-                            {{ radio.choice_label }}
-                            <span {% if radio.choice_label == 'yes' %}
-                                id="is-non-profit"
-                                {% else %}
-                                id="is-not-non-profit"
-                            {% endif %} class="col-sm-2">{{ radio.tag }}</span>
-                        </label>
-                    </div>
-                {% endfor %}
+{#                {% for radio in form.is_non_profit %}#}
+{#                    <div>#}
+{#                        <label class="col-sm-12" for="{{ radio.id_for_label }}">#}
+{#                            {{ radio.choice_label }}#}
+{#                            <span {% if radio.choice_label == 'yes' %}#}
+{#                                id="is-non-profit"#}
+{#                                {% else %}#}
+{#                                id="is-not-non-profit"#}
+{#                            {% endif %} class="col-sm-2">{{ radio.tag }}</span>#}
+{#                        </label>#}
+{#                    </div>#}
+{#                {% endfor %}#}
             </div>
             <div id="non-profit" class="form-group">
                 <label class="col-sm-2">non profit</label>
-                {% for radio in form.non_profit %}
-                    <div>
-                        <label class="col-sm-12" for="{{ radio.id_for_label }}">
-                            {{ radio.choice_label }}
-                            <span class="col-sm-2">{{ radio.tag }}</span>
-                        </label>
-                    </div>
-                {% endfor %}
+{#                {% for radio in form.non_profit %}#}
+{#                    <div>#}
+{#                        <label class="col-sm-12" for="{{ radio.id_for_label }}">#}
+{#                            {{ radio.choice_label }}#}
+{#                            <span class="col-sm-2">{{ radio.tag }}</span>#}
+{#                        </label>#}
+{#                    </div>#}
+{#                {% endfor %}#}
             </div>
         </fieldset>
             <div class="form-group">

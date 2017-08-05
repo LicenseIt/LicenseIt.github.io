@@ -21,7 +21,7 @@ from .models import (
 )
 
 
-class OrderForm(forms.ModelForm):
+class OrderFormBase(forms.ModelForm):
     SENT = 'sent'
     DONE = 'done'
     ATTENTION = 'attention'
@@ -37,6 +37,8 @@ class OrderForm(forms.ModelForm):
         widget=forms.Select(
             attrs={'class': 'form-control'}))
 
+
+class OrderForm(OrderFormBase):
     class Meta:
         model = Order
         exclude = ['user', 'state']
@@ -53,21 +55,6 @@ class OrderForm(forms.ModelForm):
 
 
 class ManualOrderForm(forms.ModelForm):
-    SENT = 'sent'
-    DONE = 'done'
-    ATTENTION = 'attention'
-
-    ORDER_CHOICES = (
-        (SENT, 'Sent'),
-        (ATTENTION, 'Attention'),
-        (DONE, 'Done'),
-    )
-
-    project_type = forms.ModelChoiceField(
-        queryset=ProjectType.objects.all(),
-        widget=forms.Select(
-            attrs={'class': 'form-control'}))
-
     class Meta:
         model = Order
         exclude = ['user', 'state']
@@ -218,7 +205,7 @@ class TvDistributionForm(forms.ModelForm):
         }
 
 
-class IndieDetailForm(forms.ModelForm):
+class DetailsFormBase(forms.ModelForm):
     featured_background = forms.ModelMultipleChoiceField(
         queryset=FeaturedBackground.objects,
         widget=forms.CheckboxSelectMultiple(
@@ -229,276 +216,108 @@ class IndieDetailForm(forms.ModelForm):
     )
 
     class Meta:
+        widgets = {
+            'number_uses': forms.NumberInput(
+                attrs={
+                    'class': 'form-control col-sm-2'
+                }
+            ),
+            'opening_closing': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                },
+                choices=[(False, 'no'), (True, 'yes')]
+            ),
+            'song_version': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'start_duration': forms.NumberInput(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'end_duration': forms.NumberInput(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'term': forms.Select(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'territory': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+            'territory_usa': forms.TextInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+            'release_date': forms.DateInput(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'budget': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'synopsis': forms.TextInput(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'description': forms.Textarea(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'is_non_profit': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-1'
+                }
+            ),
+            'non_profit': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'comments': forms.Textarea(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                }
+            ),
+            'rate': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                },
+                choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+            )
+        }
+
+
+class IndieDetailForm(DetailsFormBase):
+    class Meta(DetailsFormBase.Meta):
         model = OrderIndieProjectDetail
         fields = '__all__'
-        widgets = {
-            'number_uses': forms.NumberInput(
-                attrs={
-                    'class': 'form-control col-sm-2'
-                }
-            ),
-            'opening_closing': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                },
-                choices=[(False, 'no'), (True, 'yes')]
-            ),
-            'song_version': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'duration': forms.NumberInput(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'term': forms.Select(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'territory': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'territory_usa': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'release_date': forms.DateInput(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'budget': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'synopsis': forms.TextInput(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'description': forms.Textarea(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'is_non_profit': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-1'
-                }
-            ),
-            'non_profit': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'comments': forms.Textarea(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'rate': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                },
-                choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
-            )
-        }
 
 
-class ProgramDetailForm(forms.ModelForm):
-    featured_background = forms.ModelMultipleChoiceField(
-        queryset=FeaturedBackground.objects,
-        widget=forms.CheckboxSelectMultiple(
-            attrs={
-                'class': 'form-control col-sm-8'
-            }
-        )
-    )
-
-    class Meta:
+class ProgramDetailForm(DetailsFormBase):
+    class Meta(DetailsFormBase.Meta):
         model = OrderProgrammingDetail
         fields = '__all__'
-        widgets = {
-            'number_uses': forms.NumberInput(
-                attrs={
-                    'class': 'form-control col-sm-2'
-                }
-            ),
-            'opening_closing': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                },
-                choices=[(False, 'no'), (True, 'yes')]
-            ),
-            'song_version': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'duration': forms.NumberInput(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'term': forms.Select(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'territory': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'territory_usa': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'release_date': forms.DateInput(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'budget': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'synopsis': forms.TextInput(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'description': forms.Textarea(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'is_non_profit': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-1'
-                }
-            ),
-            'non_profit': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'comments': forms.Textarea(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'rate': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                },
-                choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
-            )
-        }
 
 
-class AdvertisingDetailForm(forms.ModelForm):
-    featured_background = forms.ModelMultipleChoiceField(
-        queryset=FeaturedBackground.objects,
-        widget=forms.CheckboxSelectMultiple(
-            attrs={
-                'class': 'form-control col-sm-8'
-            }
-        )
-    )
-
-    class Meta:
+class AdvertisingDetailForm(DetailsFormBase):
+    class Meta(DetailsFormBase.Meta):
         model = OrderAdvertisingDetail
         fields = '__all__'
-        widgets = {
-            'number_uses': forms.NumberInput(
-                attrs={
-                    'class': 'form-control col-sm-2'
-                }
-            ),
-            'opening_closing': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                },
-                choices=[(False, 'no'), (True, 'yes')]
-            ),
-            'song_version': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'duration': forms.NumberInput(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'term': forms.Select(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'territory': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'territory_usa': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'release_date': forms.DateInput(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'budget': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'synopsis': forms.TextInput(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'description': forms.Textarea(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'is_non_profit': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                },
-                choices=[(False, 'No'), (True, 'Yes')]
-            ),
-            'non_profit': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'comments': forms.Textarea(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                }
-            ),
-            'rate': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                },
-                choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
-            )
-        }
 
 
 class WeddingDetailForm(forms.ModelForm):
