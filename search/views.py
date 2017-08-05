@@ -107,6 +107,8 @@ class SearchView(View):
 
             if 'copyright' in result:
                 track.media_copyright = result['copyright']
+            if 'previewUrl' in result:
+                track.preview_url = result['previewUrl']
 
             track.search = search_db
             track.save()

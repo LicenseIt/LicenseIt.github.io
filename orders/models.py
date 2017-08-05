@@ -573,7 +573,7 @@ class ProjectDetailBase(OrderProjectDetailBase):
 
     rate = models.SmallIntegerField()
 
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_details_%(class)s')
 
     def __str__(self):
         return 'details for project: %(class)s- ' + self.order.song_title

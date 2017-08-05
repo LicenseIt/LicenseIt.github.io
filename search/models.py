@@ -51,6 +51,7 @@ class Track(models.Model):
     genre_category = models.CharField(max_length=200, default='')
     release_date = models.DateField(default=datetime.date(1900, 1, 1))
     media_copyright = models.CharField(max_length=300, default='')
+    preview_url = models.URLField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
