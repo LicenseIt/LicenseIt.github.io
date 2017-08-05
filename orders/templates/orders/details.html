@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
     <br><br><br><br><br>
-        <form class="form-horizontal" action="{% url 'program_details' pk order %}" method="post">
+        <form class="form-horizontal" action="{% if request.resolver_match.url_name == 'program_details' %}{% url 'program_details' order %}{% endif %}{% if request.resolver_match.url_name == 'indie_details' %}{% url 'indie_details' order %}{% endif %}{% if request.resolver_match.url_name == 'advertising_details' %}{% url 'advertising_details' order %}{% endif %}" method="post">
             {% csrf_token %}
             <div class="row">
                 {{ form.errors }}
@@ -49,8 +49,12 @@
             </div>
         <fieldset>
             <div class="form-group">
-                <label class="col-sm-2">duration</label>
-                {{ form.duration }}
+                <label class="col-sm-2">start duration</label>
+                {{ form.start_duration }}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2">end duration</label>
+                {{ form.end_duration }}
             </div>
             <div class="form-group">
                 <label class="col-sm-2">term</label>
@@ -67,10 +71,6 @@
                     <option {% if territory.choice_label == 'United States' %}
                         id="usa"
                     {% endif %}>{{ territory.choice_label }}</option>
-{#                    {{ territory.tag }}#}
-{#                    <option {% if territory.tag == 'United States' %}#}
-{#                        id="usa"#}
-{#                    {% endif %} value="{{ territory.index}}">{{ territory.tag }}</option>#}
                 {% endfor %}
                 </datalist>
             </div>
@@ -79,11 +79,11 @@
                     <div class="col-sm-10">
                         <input id="id_states" list="states" name="territory_usa" class="form-control">
                     </div>
-                <datalist id="states">
-                {% for territory in form.territory_usa %}
-                    <option value="{{ territory.index}}">{{ territory.tag }}</option>
-                {% endfor %}
-                </datalist>
+{#                <datalist id="states">#}
+{#                {% for territory in form.territory_usa %}#}
+{#                    <option value="{{ territory.index}}">{{ territory.tag }}</option>#}
+{#                {% endfor %}#}
+{#                </datalist>#}
             </div>
         </fieldset>
         <fieldset>

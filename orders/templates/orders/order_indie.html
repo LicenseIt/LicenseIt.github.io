@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
     <br><br><br><br><br>
-        <form class="form-horizontal" action="{% url 'film_making' pk order %}" method="post">
+        <form class="form-horizontal" action="{% url 'film_making' order %}" method="post">
             {% csrf_token %}
             <div class="row">
                 {{ form.errors }}

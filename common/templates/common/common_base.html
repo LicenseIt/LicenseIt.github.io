@@ -29,8 +29,12 @@
         <link rel="stylesheet" href="{% static 'common/assets/css/main/setting.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/main/hover.css' %}">
 
-        <link rel="stylesheet" href="{% static 'common/assets/css/range-slider/ion.rangeSlider.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/range-slider/ion.rangeSlider.skinFlat.css' %}">
+        {% if url == 'home' %}
+            <link rel="stylesheet" href="{% static 'common/assets/css/typed/typed.css' %}">
+        {% else %}
+            <link rel="stylesheet" href="{% static 'common/assets/css/range-slider/ion.rangeSlider.css' %}">
+            <link rel="stylesheet" href="{% static 'common/assets/css/range-slider/ion.rangeSlider.skinFlat.css' %}">
+        {% endif %}
 
         <!-- Load Magnific Popup CSS
         =====================================-->
@@ -56,11 +60,11 @@
         <link rel="stylesheet" href="{% static 'common/assets/css/color/pink.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/color/red.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/color/yellow.css' %}">-->
-    {% if url != 'client_dash' %}
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/pasific.css' %}">
-    {% else %}
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/blue.css' %}">
-    {% endif %}
+        {% if url != 'client_dash' %}
+            <link rel="stylesheet" href="{% static 'common/assets/css/color/pasific.css' %}">
+        {% else %}
+            <link rel="stylesheet" href="{% static 'common/assets/css/color/blue.css' %}">
+        {% endif %}
 
         <!-- Load Fontbase Icons - Please Uncomment to use linea icons
         =====================================
@@ -96,12 +100,13 @@
         {% endif %}
         {% if url == 'details' %}
             <style>
-            #usa_states {
-                display: none;
-            }
-            #non-profit {
-                display: none;
-            }
+                #usa_states {
+                    display: none;
+                }
+
+                #non-profit {
+                    display: none;
+                }
             </style>
         {% endif %}
     </head>
@@ -121,12 +126,11 @@
         <i class="fa fa-long-arrow-up"></i>
     </a>
 
-
     <!-- Navigation Area
     ===================================== -->
-    <nav class="navbar navbar-pasific navbar-mp navbar-standart megamenu navbar-fixed-top"
-         style="border-bottom:1px solid #fff;">
-        <div class="container">
+    <nav class="navbar navbar-pasific navbar-mp {% if url != 'home' %}navbar-standart{% endif %} megamenu navbar-fixed-top"
+         {% if url != 'home' %}style="border-bottom:1px solid #fff;{% endif %}">
+        <div class="{% if url == 'home' %}container-fluid{% else %}container{% endif %}">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
@@ -140,17 +144,26 @@
 
             <div class="navbar-collapse collapse navbar-main-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
-                                                                          class="dropdown-toggle color-dark">Home </a>
+                    <li class="dropdown megamenu-fw has-dropdown-menu">
+                        <a href="{% url 'home' %}"
+                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">Home </a>
                     </li>
-                    <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'how_it_works' %}"
-                                                                          class="dropdown-toggle color-dark">How it
+                    <li class="dropdown megamenu-fw has-dropdown-menu">
+                        <a href="{% url 'how_it_works' %}"
+                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">How it
                         works </a></li>
-                    <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'search' %}"
-                                                                          class="dropdown-toggle color-dark">Search </a>
+                    <li class="dropdown megamenu-fw has-dropdown-menu">
+                        <a href="{% url 'search' %}"
+                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">Search </a>
                     </li>
-                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle color-light">Sign
-                        in </a>
+                {% if user.is_authenticated %}
+                    <li class="dropdown megamenu-fw has-dropdown-menu">
+                        <a href="{% url 'my_account' %}"
+                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">{{ user.email }}</a>
+                    </li>
+                {% else %}
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle color-light">Sign in </a>
                         <ul class="dropdown-menu has-submenu" role="menu">
                             <li>
                                 <div class="row p15">
@@ -198,6 +211,7 @@
                             </li>
                         </ul>
                     </li>
+                {% endif %}
                     <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
                                                                           class="dropdown-toggle color-dark">Contact
                         Us</a></li>
@@ -397,12 +411,12 @@
 <script src="{% static 'common/assets/js/main/ion.rangeSlider.min.js' %}"></script>
 <script src="{% static 'common/assets/js/main/imagesloaded.pkgd.min.js' %}"></script>
 <script src="{% static 'common/assets/js/main/main.js' %}"></script>
-    {% if url == 'distribution' %}
-        <script src="{% static 'orders/youtube_show_hide.js' %}"></script>
-    {% endif %}
-    {% if url == 'details' %}
-        <script src="{% static 'orders/states_show_hide.js' %}"></script>
-    {% endif %}
+{% if url == 'distribution' %}
+    <script src="{% static 'orders/youtube_show_hide.js' %}"></script>
+{% endif %}
+{% if url == 'details' %}
+    <script src="{% static 'orders/states_show_hide.js' %}"></script>
+{% endif %}
 
 {% if url == 'works' %}
     <!-- Google Map

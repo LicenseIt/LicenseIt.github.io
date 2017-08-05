@@ -1,672 +1,507 @@
 {% extends 'common/common_base.html' %}
 {% load staticfiles %}
-{% block head %}
-    <head>
-    <title>License It | licence music for any purpose</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta charset="utf-8">
-    <meta name="author" content="Harry Boo">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-
-    <!-- Favicons -->
-    <link rel="shortcut icon" href="{% static 'common/assets/img/favicon.png' %}">
-    <link rel="apple-touch-icon" href="{% static 'common/assets/img/apple-touch-icon.png' %}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'common/assets/img/apple-touch-icon-72x72.png' %}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'common/assets/img/apple-touch-icon-114x114.png' %}">
-
-    <!-- Load Core CSS
-    =====================================-->
-    <link rel="stylesheet" href="{% static 'common/assets/css/core/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/core/animate.min.css' %}">
-
-    <!-- Load Main CSS
-    =====================================-->
-    <link rel="stylesheet" href="{% static 'common/assets/css/main/main.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/main/setting.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/main/hover.css' %}">
-
-    <link rel="stylesheet" href="{% static 'common/assets/css/typed/typed.css' %}">
-
-    <!-- Load Magnific Popup CSS
-    =====================================-->
-    <link rel="stylesheet" href="{% static 'common/assets/css/magnific/magic.min.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/magnific/magnific-popup.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/magnific/magnific-popup-zoom-gallery.css' %}">
-
-    <!-- Load OWL Carousel CSS
-    =====================================-->
-    <link rel="stylesheet" href="{% static 'common/assets/css/owl-carousel/owl.carousel.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/owl-carousel/owl.theme.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/owl-carousel/owl.transitions.css' %}">
-
-    <!-- Load Color CSS - Please uncomment to apply the color.
-        =====================================
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/blue.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/brown.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/cyan.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/dark.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/green.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/orange.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/purple.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/pink.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/red.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/color/yellow.css' %}">-->
-    <link rel="stylesheet" href="{% static 'common/assets/css/color/pasific.css' %}">
-
-    <!-- Load Fontbase Icons - Please Uncomment to use linea icons
-        =====================================
-        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-arrows-10.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-basic-10.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-basic-elaboration-10.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-ecommerce-10.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-music-10.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-software-10.css' %}">
-        <link rel="stylesheet" href="{% static 'common/assets/css/icon/linea-weather-10.css' %}">-->
-    <link rel="stylesheet" href="{% static 'common/assets/css/icon/font-awesome.css' %}">
-    <link rel="stylesheet" href="{% static 'common/assets/css/icon/et-line-font.css' %}">
-
-    <!-- Load JS
-    HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
-    WARNING: Respond.js doesn't work if you view the page via file://
-    =====================================-->
-
-    <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-</head>
-<body id="page-top" data-spy="scroll" data-target=".navbar" data-offset="100">
-
-<!-- Page Loader
-===================================== -->
-<div id="pageloader">
-    <div class="loader-item">
-        <img src="{% static 'common/assets/img/other/puff.svg' %}" alt="page loader">
-    </div>
-</div>
-
-<a href="#page-top" class="go-to-top">
-    <i class="fa fa-long-arrow-up"></i>
-</a>
-
-
-<!-- Navigation Area
-===================================== -->
-<nav class="navbar navbar-pasific navbar-mp megamenu navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand page-scroll" href="{% url 'home' %}">
-                <img src="{% static 'common/assets/img/logo/logo-default.png' %}" alt="logo" href="{% url 'home' %}">
-                License It
-            </a>
-        </div>
-
-        <div class="navbar-collapse collapse navbar-main-collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'home' %}"
-                                                                      class="dropdown-toggle color-light">Home </a></li>
-                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'how_it_works' %}"
-                                                                      class="dropdown-toggle color-light">How it
-                    works </a></li>
-                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'search' %}"
-                                                                      class="dropdown-toggle color-light">Search</a>
-                </li>
-
-
-                <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle color-light">Sign in </a>
-                    <ul class="dropdown-menu has-submenu" role="menu">
-                        <li>
-                            <div class="row p15">
-                                <div class="col-md-12">
-                                    Login via
-                                    <div class="social-buttons pb5">
-                                        <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
-                                        <a href="#" class="btn btn-tw"><i class="fa fa-google"></i> Google</a>
-                                    </div>
-                                    or
-                                    <form class="form mt5" role="form" method="post" action="{% url 'login' %}"
-                                          accept-charset="UTF-8" id="login-nav">
-                                        {% csrf_token %}
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                            <input type="email" name="username" class="form-control"
-                                                   id="exampleInputEmail2" placeholder="Email address" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                            <input type="password" name="password" class="form-control"
-                                                   id="exampleInputPassword2" placeholder="Password" required>
-                                            <div class="help-block text-right"><a href="forgot_password">Forget the
-                                                password ?</a></div>
-                                        </div>
-                                        <div class="form-group mt10">
-                                            <button type="submit"
-                                                    class="button btn-block button-rounded button-success hover-ripple-out">
-                                                Sign in
-                                            </button>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> keep me logged-in
-                                            </label>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="bottom text-center mt5 font-size-normal">
-                                    New here ? <a href="#"><b>Join Us</b></a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
-                                                                      class="dropdown-toggle color-light">Contact Us</a>
-                </li>
-
-
-            </ul>
-
-
-        </div>
-    </div>
-</nav>
-
-{% endblock %}
-
 {% block content %}
     <!-- Intro Area
 ===================================== -->
-<header class="intro pt100 pb100 parallax-window" data-parallax="scroll" data-speed="0.5"
-        data-image-src="{% static 'common/assets/img/bg/music1.jpg' %}">
-    <div class="intro-body">
+    <header class="intro pt100 pb100 parallax-window" data-parallax="scroll" data-speed="0.5"
+            data-image-src="{% static 'common/assets/img/bg/music1.jpg' %}">
+        <div class="intro-body">
 
+            <div class="container">
+
+                <br><br><br><br>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2  mt-100">
+                        <h1 class="text-uppercase font-montserrat mt-100 color-light animated" data-animation="fadeInUp"
+                            data-animation-delay="300">
+                            Frictionless <span class="text-uppercase color-pasific"> music licensing</span> solution
+                        </h1>
+
+                        <div class="col-md-8 col-md-offset-2">
+                            <form action="{% url 'search' %}" method="post" class="form-horizontal"
+                                  style="display: flex;"
+                                  ;>
+                                {% csrf_token %}
+                                <label class="sr-only" for="inputHelpBlock">Input with help text</label>
+                                <input type="text" name="search" class="form-control input-sqaure input-lg text-center"
+                                       aria-describedby="helpBlock" placeholder="search by artist, band etc."> <span>&nbsp&nbsp</span>
+                                <button class="button button-pasific button-lg hover-ripple-out animated"
+                                        data-animation="fadeInUp" data-animation-delay="1200"
+                                        style="float:right; display: inline-flex;">Search
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-direction">
+                <a href="#welcome">
+                    <div class="mouse-icon">
+                        <div class="wheel"></div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+
+    <div>
+        <img src="{% static 'common/assets/img/bg/img-bg-19.jpg' %}" width="100%">
+        <h1 class="font-pacifico text-center color-light">
+            Unlimited Features
+        </h1>
+        <h5 class="text-center color-light">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, libero, temporibus quam eaque<br>numquam
+            debitis excepturi assumenda necessitatibus dolore dolorum vero enim distinctio ipsa.
+        </h5>
+        <p class="text-center">
+            <a class="button-3d button-md button-pasific">Purchase Pasific Now</a>
+        </p>
+    </div>
+
+
+    <!-- Search Modal Dialog Box
+    ===================================== -->
+    <div id="searchModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header bg-gray">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title text-center"><i class="fa fa-search fa-fw"></i> Search here</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'search' %}" method="post" class="inline-form">
+                        {% csrf_token %}
+                        <input type="text" name="search" class="modal-search-input" autofocus>
+                    </form>
+                </div>
+                <div class="modal-footer bg-gray">
+                    <span class="text-center"><a href="#" class="color-dark">Advanced Search</a></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Welcome Area
+    ===================================== -->
+    <div id="howworks" class="pt75">
+        <div class="container">
+            <div class="row">
+
+                <!-- title start -->
+                <div class="col-md-12 text-center">
+                    <h1 class="font-size-normal">
+                        <small>We exist to help all creators use music in their projects</small>
+
+                        <small class="heading heading-solid center-block"></small>
+                    </h1>
+                </div>
+                <!-- title end -->
+
+                <!-- title description start -->
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <p>
+                        <span class="lead"><strong>We've built a platform based on thousands of databases, where creators can search for any song for their project and license it, all in one place.</strong></span><br><br>
+
+                        Every creator knows Music is universal – defying age, language, and culture. It’s shared, it’s
+                        talked about, it’s emotional, and that’s powerful. <b>License It</b> built the perfect platform
+                        to
+                        search and license almost every song – because we know there is no substitute for the music you
+                        have
+                        in mind.
+                    </p>
+                </div>
+                <!-- title description end -->
+            </div>
+
+            <div class="row mt50">
+
+                <!-- item one start -->
+                <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInLeft" data-animation-delay="100">
+                    <div class="content-box content-box-center">
+                        <span class="icon-search color-pasific"></span>
+                        <h5>Search</h5>
+                        <p>More than 40M musical works are now indexed in one place.</p>
+
+                    </div>
+                </div>
+                <!-- item one end -->
+
+                <!-- item two start -->
+                <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInLeft" data-animation-delay="200">
+                    <div class="content-box content-box-center">
+                        <span class="icon-layers color-pasific"></span>
+                        <h5>Owner Identification</h5>
+                        <p>Find all the right-holders you need for any project in one place.</p>
+
+                    </div>
+                </div>
+                <!-- item two end -->
+
+                <!-- item three start -->
+                <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInRight"
+                     data-animation-delay="300">
+                    <div class="content-box content-box-center">
+                        <span class="icon-pencil color-pasific"></span>
+                        <h5>License Inquiry</h5>
+                        <p>An easy license inquiry method. Fill it out once and automatically send to all relevant
+                            right-holders for their permission.</p>
+
+                    </div>
+                </div>
+                <!-- item three end -->
+
+                <!-- item four start -->
+                <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInRight"
+                     data-animation-delay="400">
+                    <div class="content-box content-box-center">
+                        <span class="icon-flag color-pasific"></span>
+                        <h5>Done!</h5>
+                        <p>Now relax and wait for the parties' approval – we have shortened the waiting time by 50%.</p>
+
+                    </div>
+                </div>
+                <!-- item four start -->
+
+            </div>
+        </div>
+    </div>
+
+    <div id="solution" class="container-fluid bg-dark2 pt50 pb50"
+         style="background: url(assets/img/bg/bg-parallax-4.jpg) 100% 50% no-repeat;">
         <div class="container">
 
-            <br><br><br><br>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h4 class="text-center color-light">
+                        Better Solution for Better music
+                        <small class="heading-desc text-lowercase color-light">
+                            There are numerous services acting in the micro licensing world, providing pre-cleared
+                            music,
+                            but the problem is that the catalogue is poor. License It offers a new approach for
+                            licensing
+                            music: one platform to search, identify music owners and negotiate directly.
+                        </small>
+                    </h4>
+
+                </div>
+            </div>
 
             <div class="row">
-                <div class="col-md-8 col-md-offset-2  mt-100">
-                    <h1 class="text-uppercase font-montserrat mt-100 color-light animated" data-animation="fadeInUp"
-                        data-animation-delay="300">
-                        Frictionless <span class="text-uppercase color-pasific"> music licensing</span> solution
-                    </h1>
 
-                    <div class="col-md-8 col-md-offset-2">
-                        <form action="{% url 'search' %}" method="post" class="form-horizontal" style="display: flex;"
-                              ;>
-                            {% csrf_token %}
-                            <label class="sr-only" for="inputHelpBlock">Input with help text</label>
-                            <input type="text" name="search" class="form-control input-sqaure input-lg text-center"
-                                   aria-describedby="helpBlock" placeholder="search by artist, band etc."> <span>&nbsp&nbsp</span>
-                            <button class="button button-pasific button-lg hover-ripple-out animated"
-                                    data-animation="fadeInUp" data-animation-delay="1200"
-                                    style="float:right; display: inline-flex;">Search
-                            </button>
-
-                        </form>
-
-
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="fact">
+                        <div class="fact-number timer" data-perc="387">
+                            <span class="factor color-info"></span>
+                        </div>
+                        <span class="fact-title color-light alpha7">Projects Completed</span>
                     </div>
+                </div>
 
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="fact">
+                        <div class="fact-number timer" data-perc="545">
+                            <span class="factor color-warning"></span>
+                        </div>
+                        <span class="fact-title color-light alpha7">Happy Clients</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="fact">
+                        <div class="fact-number timer" data-perc="750">
+                            <span class="factor color-green"></span>
+                        </div>
+                        <span class="fact-title color-light alpha7">Positive Feedbacks</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="fact">
+                        <div class="fact-number timer" data-perc="1000000">
+                            <span class="factor color-pasific"> 10M </span>
+                        </div>
+                        <span class="fact-title color-light alpha7">indexed songs</span>
+                    </div>
+                </div>
+                <br>
+                <div class="col-sm-8 col-sm-push-2 text-center">
+
+
+                    <a class="typeform-share button button-md button-gray hover-ripple-out"
+                       href="https://tal29.typeform.com/to/R1QFI2" data-mode="popup" target="_blank">Start
+                        Licensing </a>
+                    <script> (function () {
+                        var qs, js, q, s, d = document, gi = d.getElementById, ce = d.createElement,
+                            gt = d.getElementsByTagName, id = "typef_orm_share", b = "https://embed.typeform.com/";
+                        if (!gi.call(d, id)) {
+                            js = ce.call(d, "script");
+                            js.id = id;
+                            js.src = b + "embed.js";
+                            q = gt.call(d, "script")[0];
+                            q.parentNode.insertBefore(js, q)
+                        }
+                    })() </script>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Features Area
+    ===================================== -->
+    <div id="creators" id="features" class="pt75 mb25">
+        <div class="container">
+
+            <!-- title and short description start -->
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 class="font-size-normal">
+                        <small>A license for every use</small>
+                        Who needs our services?
+                        <small class="heading heading-solid center-block"></small>
+                    </h1>
+                </div>
+
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <p class="lead">
+                        We’ve taken the guesswork out of licensing music by introducing all the rights you need for any
+                        project directly from the copyright owners. Skip the research and legal bills and order your
+                        license
+                        via our platform.
+                    </p>
+                </div>
+            </div>
+            <!-- title and short description end -->
+
+
+            <!-- Content Box -O Center -->
+
+            <!-- Content Box Center -->
+            <div class="col-md-3 col-sm-6 col-xs-12 mb35">
+                <div class="content-box content-box-o content-box-center">
+                    <span class="icon-video color-blue"></span>
+                    <h5>Film making</h5>
+                    <p>Use in full-length or short film. Choose between streaming use, festival entry, wide release,
+                        and/or
+                        trailer.</p>
 
                 </div>
             </div>
-        </div>
 
-        <div class="intro-direction">
-            <a href="#welcome">
-                <div class="mouse-icon">
-                    <div class="wheel"></div>
+            <div class="col-md-3 col-sm-6 col-xs-12 mb35">
+                <div class="content-box content-box-o content-box-center">
+                    <span class="icon-browser color-orange"></span>
+                    <h5>Online series</h5>
+                    <p>Use in a film, short film, single episode of a TV/web/other series.</p>
+
                 </div>
-            </a>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12 mb35">
+                <div class="content-box content-box-o content-box-center">
+                    <span class="fa fa-youtube color-red"></span>
+                    <h5>YouTube</h5>
+                    <p>Check if you are allowed to use the song with this platform before publication.</p>
+
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12 mb35">
+                <div class="content-box content-box-o content-box-center">
+                    <span class="icon-megaphone color-green"></span>
+                    <h5>Advertising</h5>
+                    <p>Use in a project promoting a brand, product, service, promotion, company, organization, or event,
+                        including fundraising and calls to action.</p>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-3 col-sm-6 col-xs-12 mb35">
+                <div class="content-box content-box-o content-box-center">
+                    <span class="icon-wine color-pasific"></span>
+                    <h5>Events & Weddings</h5>
+                    <p>Use in short Wedding films, trailers, or event videos.</p>
+
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12 mb35">
+                <div class="content-box content-box-o content-box-center">
+                    <span class="icon-happy color-pink"></span>
+                    <h5>Personal uses</h5>
+                    <p>Use in a personal films for an individual or family.</p>
+
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12 mb35">
+                <div class="content-box content-box-o content-box-center">
+                    <span class="icon-toolbox"></span>
+                    <h5>Corporate uses</h5>
+                    <p>Use within a single company/organization. (e.g., presentations, meetings, training, and other
+                        employee viewings).</p>
+
+                </div>
+            </div>
         </div>
 
     </div>
-</header>
 
+    <!-- Contact Us Area
+    =====================================-->
+    <div id="contact" class="pt75 pb75 bt-solid-1">
+        <div class="container">
 
-<div>
-    <img src="{% static 'common/assets/img/bg/img-bg-19.jpg' %}" width="100%">
-    <h1 class="font-pacifico text-center color-light">
-        Unlimited Features
-    </h1>
-    <h5 class="text-center color-light">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, libero, temporibus quam eaque<br>numquam
-        debitis excepturi assumenda necessitatibus dolore dolorum vero enim distinctio ipsa.
-    </h5>
-    <p class="text-center">
-        <a class="button-3d button-md button-pasific">Purchase Pasific Now</a>
-    </p>
-</div>
-
-
-<!-- Search Modal Dialog Box
-===================================== -->
-<div id="searchModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header bg-gray">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h5 class="modal-title text-center"><i class="fa fa-search fa-fw"></i> Search here</h5>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center">
+                        Get In Touch With Us.
+                        <small class="heading-desc text-lowercase">
+                            Please feel free to say anything here. Our staff will reply as soon as possible. Anything!
+                        </small>
+                        <small class="heading heading-solid center-block"></small>
+                    </h3>
+                </div>
             </div>
-            <div class="modal-body">
-                <form action="{% url 'search' %}" method="post" class="inline-form">
+
+            <div class="row">
+                {% if form.errors %}
+                    {% for error in form.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="row mt50">
+                <form name="contactform" id="contactForm" method="post" action="{% url 'contact_us' %}">
                     {% csrf_token %}
-                    <input type="text" name="search" class="modal-search-input" autofocus>
+                    <!-- sender name start -->
+                    <div class="col-md-3 col-sm-3 col-xs-6">
+                        <div class="form-group">
+                            {{ form.full_name }}
+                        </div>
+                    </div>
+                    <!-- sender name end -->
+
+                    <!-- sender email start -->
+                    <div class="col-md-3 col-sm-3 col-xs-6">
+                        <div class="form-group">
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    <!-- sender email end -->
+
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                        {{ form.text }}
+                        <button type="submit" name="sendMessage" id="sendMessage"
+                                class="button-3d button-md button-pasific hover-ripple-out mt20 center-block">Send
+                            Message
+                        </button>
+                    </div>
+
+                    <div id="sendingMessage" class="statusMessage sending-message"><p>Sending your message. Please
+                        wait...</p></div>
+                    <div id="successMessage" class="statusMessage success-message"><p>Thanks for sending your message!
+                        We'll
+                        get back to you shortly.</p></div>
+                    <div id="failureMessage" class="statusMessage failure-message"><p>There was a problem sending your
+                        message. Please try again.</p></div>
+                    <div id="incompleteMessage" class="statusMessage"><p>Please complete all the fields in the form
+                        before
+                        sending.</p></div>
+
                 </form>
             </div>
-            <div class="modal-footer bg-gray">
-                <span class="text-center"><a href="#" class="color-dark">Advanced Search</a></span>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<!-- Welcome Area
-===================================== -->
-<div id="howworks" class="pt75">
-    <div class="container">
-        <div class="row">
-
-            <!-- title start -->
-            <div class="col-md-12 text-center">
-                <h1 class="font-size-normal">
-                    <small>We exist to help all creators use music in their projects</small>
-
-                    <small class="heading heading-solid center-block"></small>
-                </h1>
-            </div>
-            <!-- title end -->
-
-            <!-- title description start -->
-            <div class="col-md-8 col-md-offset-2 text-center">
-                <p>
-                    <span class="lead"><strong>We've built a platform based on thousands of databases, where creators can search for any song for their project and license it, all in one place.</strong></span><br><br>
-
-                    Every creator knows Music is universal – defying age, language, and culture. It’s shared, it’s
-                    talked about, it’s emotional, and that’s powerful. <b>License It</b> built the perfect platform to
-                    search and license almost every song – because we know there is no substitute for the music you have
-                    in mind.
-                </p>
-            </div>
-            <!-- title description end -->
-        </div>
-
-        <div class="row mt50">
-
-            <!-- item one start -->
-            <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInLeft" data-animation-delay="100">
-                <div class="content-box content-box-center">
-                    <span class="icon-search color-pasific"></span>
-                    <h5>Search</h5>
-                    <p>More than 40M musical works are now indexed in one place.</p>
-
-                </div>
-            </div>
-            <!-- item one end -->
-
-            <!-- item two start -->
-            <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInLeft" data-animation-delay="200">
-                <div class="content-box content-box-center">
-                    <span class="icon-layers color-pasific"></span>
-                    <h5>Owner Identification</h5>
-                    <p>Find all the right-holders you need for any project in one place.</p>
-
-                </div>
-            </div>
-            <!-- item two end -->
-
-            <!-- item three start -->
-            <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInRight" data-animation-delay="300">
-                <div class="content-box content-box-center">
-                    <span class="icon-pencil color-pasific"></span>
-                    <h5>License Inquiry</h5>
-                    <p>An easy license inquiry method. Fill it out once and automatically send to all relevant
-                        right-holders for their permission.</p>
-
-                </div>
-            </div>
-            <!-- item three end -->
-
-            <!-- item four start -->
-            <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInRight" data-animation-delay="400">
-                <div class="content-box content-box-center">
-                    <span class="icon-flag color-pasific"></span>
-                    <h5>Done!</h5>
-                    <p>Now relax and wait for the parties' approval – we have shortened the waiting time by 50%.</p>
-
-                </div>
-            </div>
-            <!-- item four start -->
 
         </div>
     </div>
-</div>
 
-<div id="solution" class="container-fluid bg-dark2 pt50 pb50"
-     style="background: url(assets/img/bg/bg-parallax-4.jpg) 100% 50% no-repeat;">
-    <div class="container">
 
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center">
-                <h4 class="text-center color-light">
-                    Better Solution for Better music
-                    <small class="heading-desc text-lowercase color-light">
-                        There are numerous services acting in the micro licensing world, providing pre-cleared music,
-                        but the problem is that the catalogue is poor. License It offers a new approach for licensing
-                        music: one platform to search, identify music owners and negotiate directly.
-                    </small>
-                </h4>
+    <!-- Testimonial Area
+    ===================================== -->
+    <div id="testimonial" class="bg-gray pt50 pb25 pl50 bb-solid-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="owlSectionThreeItem" class="owl-carousel">
 
-            </div>
-        </div>
+                        <!-- Testimonial Item -->
+                        <div class="testimonial testimonial-center">
+                            <div class="testimonial-header">
+                                <img src="{% static 'common/assets/img/other/photo-3.jpg' %}" alt="testimonial author"
+                                     class="img-responsive img-circle">
+                            </div>
+                            <div class="testimonial-body">
+                                <p>
+                                    License It has given me the ability to streamline my workflow and never worry about
+                                    properly licensing music.
+                                </p>
+                            </div>
+                            <div class="testimonial-footer">
+                                <i class="fa fa-quote-left"></i>
+                                James Brinkley <a href="#">New York</a>
+                            </div>
+                        </div>
 
-        <div class="row">
+                        <!-- Testimonial Item -->
+                        <div class="testimonial testimonial-center">
+                            <div class="testimonial-header">
+                                <img src="{% static 'common/assets/img/other/photo-2.jpg' %}" alt="testimonial author"
+                                     class="img-responsive img-circle">
+                            </div>
+                            <div class="testimonial-body">
+                                <p>
+                                    I’ve worked with a number of different licensing companies over the last few years
+                                    and I
+                                    can honestly say that the team at License It delivers better and more personal
+                                    service.
+                                </p>
+                            </div>
+                            <div class="testimonial-footer">
+                                <i class="fa fa-quote-left"></i>
+                                Steve Austin <a href="#">Los Angeles </a>
+                            </div>
+                        </div>
 
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="fact">
-                    <div class="fact-number timer" data-perc="387">
-                        <span class="factor color-info"></span>
+                        <!-- Testimonial Item -->
+                        <div class="testimonial testimonial-center">
+                            <div class="testimonial-header">
+                                <img src="{% static 'common/assets/img/other/photo-1.jpg' %}" alt="testimonial author"
+                                     class="img-responsive img-circle">
+                            </div>
+                            <div class="testimonial-body">
+                                <p>
+                                    License It is so simple. That's why I love it.
+                                </p>
+                            </div>
+                            <div class="testimonial-footer">
+                                <i class="fa fa-quote-left"></i>
+                                Maria Lunes <a href="#">Nashville </a>
+                            </div>
+                        </div>
+
+
                     </div>
-                    <span class="fact-title color-light alpha7">Projects Completed</span>
+
                 </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="fact">
-                    <div class="fact-number timer" data-perc="545">
-                        <span class="factor color-warning"></span>
-                    </div>
-                    <span class="fact-title color-light alpha7">Happy Clients</span>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="fact">
-                    <div class="fact-number timer" data-perc="750">
-                        <span class="factor color-green"></span>
-                    </div>
-                    <span class="fact-title color-light alpha7">Positive Feedbacks</span>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="fact">
-                    <div class="fact-number timer" data-perc="1000000">
-                        <span class="factor color-pasific"> 10M </span>
-                    </div>
-                    <span class="fact-title color-light alpha7">indexed songs</span>
-                </div>
-            </div>
-            <br>
-            <div class="col-sm-8 col-sm-push-2 text-center">
-
-
-                <a class="typeform-share button button-md button-gray hover-ripple-out"
-                   href="https://tal29.typeform.com/to/R1QFI2" data-mode="popup" target="_blank">Start Licensing </a>
-                <script> (function () {
-                    var qs, js, q, s, d = document, gi = d.getElementById, ce = d.createElement,
-                        gt = d.getElementsByTagName, id = "typef_orm_share", b = "https://embed.typeform.com/";
-                    if (!gi.call(d, id)) {
-                        js = ce.call(d, "script");
-                        js.id = id;
-                        js.src = b + "embed.js";
-                        q = gt.call(d, "script")[0];
-                        q.parentNode.insertBefore(js, q)
-                    }
-                })() </script>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<!-- Features Area
-===================================== -->
-<div id="creators" id="features" class="pt75 mb25">
-    <div class="container">
-
-        <!-- title and short description start -->
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1 class="font-size-normal">
-                    <small>A license for every use</small>
-                    Who needs our services?
-                    <small class="heading heading-solid center-block"></small>
-                </h1>
-            </div>
-
-            <div class="col-md-8 col-md-offset-2 text-center">
-                <p class="lead">
-                    We’ve taken the guesswork out of licensing music by introducing all the rights you need for any
-                    project directly from the copyright owners. Skip the research and legal bills and order your license
-                    via our platform.
-                </p>
-            </div>
-        </div>
-        <!-- title and short description end -->
-
-
-        <!-- Content Box -O Center -->
-
-        <!-- Content Box Center -->
-        <div class="col-md-3 col-sm-6 col-xs-12 mb35">
-            <div class="content-box content-box-o content-box-center">
-                <span class="icon-video color-blue"></span>
-                <h5>Film making</h5>
-                <p>Use in full-length or short film. Choose between streaming use, festival entry, wide release, and/or
-                    trailer.</p>
-
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12 mb35">
-            <div class="content-box content-box-o content-box-center">
-                <span class="icon-browser color-orange"></span>
-                <h5>Online series</h5>
-                <p>Use in a film, short film, single episode of a TV/web/other series.</p>
-
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12 mb35">
-            <div class="content-box content-box-o content-box-center">
-                <span class="fa fa-youtube color-red"></span>
-                <h5>YouTube</h5>
-                <p>Check if you are allowed to use the song with this platform before publication.</p>
-
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12 mb35">
-            <div class="content-box content-box-o content-box-center">
-                <span class="icon-megaphone color-green"></span>
-                <h5>Advertising</h5>
-                <p>Use in a project promoting a brand, product, service, promotion, company, organization, or event,
-                    including fundraising and calls to action.</p>
-
-            </div>
-        </div>
-
-
-        <div class="col-md-3 col-sm-6 col-xs-12 mb35">
-            <div class="content-box content-box-o content-box-center">
-                <span class="icon-wine color-pasific"></span>
-                <h5>Events & Weddings</h5>
-                <p>Use in short Wedding films, trailers, or event videos.</p>
-
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12 mb35">
-            <div class="content-box content-box-o content-box-center">
-                <span class="icon-happy color-pink"></span>
-                <h5>Personal uses</h5>
-                <p>Use in a personal films for an individual or family.</p>
-
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12 mb35">
-            <div class="content-box content-box-o content-box-center">
-                <span class="icon-toolbox"></span>
-                <h5>Corporate uses</h5>
-                <p>Use within a single company/organization. (e.g., presentations, meetings, training, and other
-                    employee viewings).</p>
 
             </div>
         </div>
     </div>
-
-</div>
-
-<!-- Contact Us Area
-=====================================-->
-<div id="contact" class="pt75 pb75 bt-solid-1">
-    <div class="container">
-
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="text-center">
-                    Get In Touch With Us.
-                    <small class="heading-desc text-lowercase">
-                        Please feel free to say anything here. Our staff will reply as soon as possible. Anything!
-                    </small>
-                    <small class="heading heading-solid center-block"></small>
-                </h3>
-            </div>
-        </div>
-
-        <div class="row">
-            {% if form.errors %}
-                {% for error in form.errors %}
-                    <span>{{ error }}</span>
-                {% endfor %}
-            {% endif %}
-        </div>
-        <div class="row mt50">
-            <form name="contactform" id="contactForm" method="post" action="{% url 'contact_us' %}">
-                {% csrf_token %}
-                <!-- sender name start -->
-                <div class="col-md-3 col-sm-3 col-xs-6">
-                    <div class="form-group">
-                        {{ form.full_name }}
-                    </div>
-                </div>
-                <!-- sender name end -->
-
-                <!-- sender email start -->
-                <div class="col-md-3 col-sm-3 col-xs-6">
-                    <div class="form-group">
-                        {{ form.email }}
-                    </div>
-                </div>
-                <!-- sender email end -->
-
-
-                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                    {{ form.text }}
-                    <button type="submit" name="sendMessage" id="sendMessage"
-                            class="button-3d button-md button-pasific hover-ripple-out mt20 center-block">Send Message
-                    </button>
-                </div>
-
-                <div id="sendingMessage" class="statusMessage sending-message"><p>Sending your message. Please
-                    wait...</p></div>
-                <div id="successMessage" class="statusMessage success-message"><p>Thanks for sending your message! We'll
-                    get back to you shortly.</p></div>
-                <div id="failureMessage" class="statusMessage failure-message"><p>There was a problem sending your
-                    message. Please try again.</p></div>
-                <div id="incompleteMessage" class="statusMessage"><p>Please complete all the fields in the form before
-                    sending.</p></div>
-
-            </form>
-        </div>
-
-    </div>
-</div>
-
-
-<!-- Testimonial Area
-===================================== -->
-<div id="testimonial" class="bg-gray pt50 pb25 pl50 bb-solid-1">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="owlSectionThreeItem" class="owl-carousel">
-
-                    <!-- Testimonial Item -->
-                    <div class="testimonial testimonial-center">
-                        <div class="testimonial-header">
-                            <img src="{% static 'common/assets/img/other/photo-3.jpg' %}" alt="testimonial author"
-                                 class="img-responsive img-circle">
-                        </div>
-                        <div class="testimonial-body">
-                            <p>
-                                License It has given me the ability to streamline my workflow and never worry about
-                                properly licensing music.
-                            </p>
-                        </div>
-                        <div class="testimonial-footer">
-                            <i class="fa fa-quote-left"></i>
-                            James Brinkley <a href="#">New York</a>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial Item -->
-                    <div class="testimonial testimonial-center">
-                        <div class="testimonial-header">
-                            <img src="{% static 'common/assets/img/other/photo-2.jpg' %}" alt="testimonial author"
-                                 class="img-responsive img-circle">
-                        </div>
-                        <div class="testimonial-body">
-                            <p>
-                                I’ve worked with a number of different licensing companies over the last few years and I
-                                can honestly say that the team at License It delivers better and more personal service.
-                            </p>
-                        </div>
-                        <div class="testimonial-footer">
-                            <i class="fa fa-quote-left"></i>
-                            Steve Austin <a href="#">Los Angeles </a>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial Item -->
-                    <div class="testimonial testimonial-center">
-                        <div class="testimonial-header">
-                            <img src="{% static 'common/assets/img/other/photo-1.jpg' %}" alt="testimonial author"
-                                 class="img-responsive img-circle">
-                        </div>
-                        <div class="testimonial-body">
-                            <p>
-                                License It is so simple. That's why I love it.
-                            </p>
-                        </div>
-                        <div class="testimonial-footer">
-                            <i class="fa fa-quote-left"></i>
-                            Maria Lunes <a href="#">Nashville </a>
-                        </div>
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
 {% endblock %}

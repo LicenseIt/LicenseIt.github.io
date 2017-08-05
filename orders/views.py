@@ -18,15 +18,15 @@ class OrderView(View):
     '''
     template_name = 'orders/order.html'
 
-    def get(self, request, pk=None, *args, **kwargs):
+    def get(self, request, song_id=None, *args, **kwargs):
         '''
         get the order page
         :param request: the request object
-        :param pk: the song id if available in our database
+        :param song_id: the song id if available in our database
         :return:
         '''
         if request.resolver_match.url_name == 'order':
-            track = Track.objects.get(pk=pk)
+            track = Track.objects.get(pk=song_id)
             order_form = OrderForm(initial={
                 'song_title': track.name,
                 'performer_name': track.artist
@@ -37,13 +37,13 @@ class OrderView(View):
 
         return render(request,
                       self.template_name,
-                      context={'form': order_form, 'pk': pk})
+                      context={'form': order_form, 'song_id': song_id})
 
-    def post(self, request, pk):
+    def post(self, request, song_id=None):
         '''
         processing the order
         :param request: the request object
-        :param pk: the song id
+        :param song_id: the song id
         :return:
         '''
         if request.resolver_match.url_name == 'order':
@@ -52,11 +52,11 @@ class OrderView(View):
             form = ManualOrderForm(request.POST)
         if form.is_valid():
             order_id = form.save()
-            return HttpResponseRedirect(reverse(order_id.project_type.slug, args=[int(pk), order_id.id]))
+            return HttpResponseRedirect(reverse(order_id.project_type.slug, args=[order_id.id]))
 
         return render(request,
                       self.template_name,
-                      context={'form': form, 'pk': pk})
+                      context={'form': form, 'song_id': song_id})
 
 
 class OrderIndieView(View):
@@ -65,11 +65,10 @@ class OrderIndieView(View):
     '''
     template_name = 'orders/order_indie.html'
 
-    def get(self, request, pk, order_id):
+    def get(self, request, order_id):
         '''
         get the film making page
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -81,13 +80,12 @@ class OrderIndieView(View):
 
         return render(request,
                       self.template_name,
-                      context={'form': form, 'pk': pk, 'order': order_id})
+                      context={'form': form, 'order': order_id})
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the film making data and continue to the right page afterwards
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -95,10 +93,10 @@ class OrderIndieView(View):
         form.data['order'] = order_id
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('indie_dist', args=[int(pk), order_id]))
+            return HttpResponseRedirect(reverse('indie_dist', args=[order_id]))
         return render(request,
                       self.template_name,
-                      context={'form': form, 'pk': pk, 'order': order_id}
+                      context={'form': form, 'order': order_id}
                       )
 
 
@@ -108,11 +106,10 @@ class OrderProgramView(View):
     '''
     template_name = 'orders/order_program.html'
 
-    def get(self, request, pk, order_id):
+    def get(self, request, order_id):
         '''
         get the programming page
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -124,13 +121,12 @@ class OrderProgramView(View):
 
         return render(request,
                       self.template_name,
-                      context={'form': form, 'pk': pk, 'order': order_id})
+                      context={'form': form, 'order': order_id})
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the data from the programming page
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -138,10 +134,10 @@ class OrderProgramView(View):
         form.data['order'] = order_id
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('prog_dist', args=[int(pk), order_id]))
+            return HttpResponseRedirect(reverse('prog_dist', args=[order_id]))
         return render(request,
                       self.template_name,
-                      context={'form': form, 'pk': pk, 'order': order_id}
+                      context={'form': form, 'order': order_id}
                       )
 
 
@@ -151,11 +147,10 @@ class OrderAdvertisingView(View):
     '''
     template_name = 'orders/order_Advertising.html'
 
-    def get(self, request, pk, order_id):
+    def get(self, request, order_id):
         '''
         get the advertising form page
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -167,13 +162,12 @@ class OrderAdvertisingView(View):
 
         return render(request,
                       self.template_name,
-                      context={'form': form, 'pk': pk, 'order': order_id})
+                      context={'form': form, 'order': order_id})
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the advertising data from the form
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -181,10 +175,10 @@ class OrderAdvertisingView(View):
         form.data['order'] = order_id
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('ad_dist', args=[int(pk), order_id]))
+            return HttpResponseRedirect(reverse('ad_dist', args=[order_id]))
         return render(request,
                       self.template_name,
-                      context={'form': form, 'pk': pk, 'order': order_id}
+                      context={'form': form, 'order': order_id}
                       )
 
 
@@ -194,11 +188,10 @@ class IndieDistribution(View):
     '''
     template_name = 'orders/indie_distribution.html'
 
-    def get(self, request, pk, order_id):
+    def get(self, request, order_id):
         '''
         get the film making distribution form
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -208,7 +201,6 @@ class IndieDistribution(View):
         order_dist = OrderFilmMaking.objects.filter(order=order_id)[0]
 
         context = {
-            'pk': pk,
             'order': order_id,
             'url': 'distribution',
         }
@@ -225,13 +217,12 @@ class IndieDistribution(View):
                           self.template_name,
                           context=context)
         else:
-            return HttpResponseRedirect(reverse('indie_details', args=[int(pk), order_id]))
+            return HttpResponseRedirect(reverse('indie_details', args=[order_id]))
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the data from the film making distribution form
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -252,7 +243,6 @@ class IndieDistribution(View):
                           context={
                               'web': web_form,
                               'ext': ext_form,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'distribution',
                           })
@@ -277,7 +267,7 @@ class IndieDistribution(View):
                 dist.distribute_on.add(new_dist.id)
                 dist.save()
 
-        return HttpResponseRedirect(reverse('indie_details', args=[int(pk), order_id]))
+        return HttpResponseRedirect(reverse('indie_details', args=[order_id]))
 
 
 class ProgramDistribution(View):
@@ -286,11 +276,10 @@ class ProgramDistribution(View):
     '''
     template_name = 'orders/program_distribution.html'
 
-    def get(self, request, pk, order_id):
+    def get(self, request, order_id):
         '''
         get the programming distribution form
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -301,7 +290,6 @@ class ProgramDistribution(View):
         order_dist = OrderProgramming.objects.filter(order=order_id)[0]
 
         context = {
-            'pk': pk,
             'order': order_id,
             'url': 'distribution',
         }
@@ -320,13 +308,12 @@ class ProgramDistribution(View):
                           self.template_name,
                           context=context)
         else:
-            HttpResponseRedirect(reverse('program_details', args=[int(pk), order_id]))
+            HttpResponseRedirect(reverse('program_details', args=[order_id]))
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the form
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -351,7 +338,6 @@ class ProgramDistribution(View):
                               'web': web_form,
                               'ext': ext_form,
                               'tv': tv_form,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'distribution',
                           })
@@ -379,7 +365,7 @@ class ProgramDistribution(View):
         if tv_form:
             tv_form.save()
 
-        return HttpResponseRedirect(reverse('program_details', args=[int(pk), order_id]))
+        return HttpResponseRedirect(reverse('program_details', args=[order_id]))
 
 
 class AdvertisingDistribution(View):
@@ -388,11 +374,10 @@ class AdvertisingDistribution(View):
     '''
     template_name = 'orders/advertising_distribution.html'
 
-    def get(self, request, pk, order_id):
+    def get(self, request, order_id):
         '''
         get the advertising distribution form
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -403,7 +388,6 @@ class AdvertisingDistribution(View):
         order_dist = OrderAdvertising.objects.filter(order=order_id)[0]
 
         context = {
-            'pk': pk,
             'order': order_id,
             'url': 'distribution',
         }
@@ -422,13 +406,12 @@ class AdvertisingDistribution(View):
                           self.template_name,
                           context=context)
         else:
-            HttpResponseRedirect(reverse('advertising_details', args=[int(pk), order_id]))
+            HttpResponseRedirect(reverse('advertising_details', args=[order_id]))
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the data from advertising distribution form
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -453,7 +436,6 @@ class AdvertisingDistribution(View):
                               'web': web_form,
                               'ext': ext_form,
                               # 'tv': tv_form,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'distribution',
                           })
@@ -481,38 +463,37 @@ class AdvertisingDistribution(View):
         # if tv_form:
         #     tv_form.save()
 
-        return HttpResponseRedirect(reverse('program_details', args=[int(pk), order_id]))
+        return HttpResponseRedirect(reverse('program_details', args=[order_id]))
 
 
 class IndieDetail(View):
     '''
     the details form view for film making
     '''
-    def get(self, request, pk, order_id):
+    template_name = 'orders/details.html'
+
+    def get(self, request, order_id):
         '''
         get the film making details form
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
         form = IndieDetailForm()
         personal_info = PersonalInfoForm()
         return render(request,
-                      'orders/indie_detail.html',
+                      self.template_name,
                       context={
                           'form': form,
                           'personal_info': personal_info,
-                          'pk': pk,
                           'order': order_id,
                           'url': 'details',
                       })
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the form
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -530,11 +511,10 @@ class IndieDetail(View):
 
         if not password or not confirm_password:
             return render(request,
-                          'orders/indie_detail.html',
+                          self.template_name,
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -544,11 +524,10 @@ class IndieDetail(View):
 
         if password != confirm_password:
             return render(request,
-                          'orders/indie_detail.html',
+                          self.template_name,
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -563,11 +542,10 @@ class IndieDetail(View):
             form.save()
         else:
             return render(request,
-                          'orders/indie_detail.html',
+                          self.template_name,
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -589,11 +567,10 @@ class IndieDetail(View):
                 personal_info.save()
             else:
                 return render(request,
-                              'orders/indie_detail.html',
+                              self.template_name,
                               context={
                                   'form': form,
                                   'personal_info': personal_info,
-                                  'pk': pk,
                                   'order': order_id,
                                   'url': 'details',
                                   'first_name': first_name,
@@ -605,11 +582,10 @@ class IndieDetail(View):
 
         except IntegrityError:
             return render(request,
-                          'orders/indie_detail.html',
+                          self.template_name,
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -622,13 +598,12 @@ class ProgramDetail(View):
     '''
     programming details view
     '''
-    template_name = 'orders/program_detail.html'
+    template_name = 'orders/details.html'
 
-    def get(self, request, pk, order_id):
+    def get(self, request, order_id):
         '''
         get the programming details view
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -640,16 +615,14 @@ class ProgramDetail(View):
                       context={
                           'form': form,
                           'personal_info': personal_info,
-                          'pk': pk,
                           'order': order_id,
                           'url': 'details',
                       })
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the data from the form and logging in the user
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -671,7 +644,6 @@ class ProgramDetail(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -685,7 +657,6 @@ class ProgramDetail(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -704,7 +675,6 @@ class ProgramDetail(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -730,7 +700,6 @@ class ProgramDetail(View):
                               context={
                                   'form': form,
                                   'personal_info': personal_info,
-                                  'pk': pk,
                                   'order': order_id,
                                   'url': 'details',
                                   'first_name': first_name,
@@ -747,7 +716,6 @@ class ProgramDetail(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -760,13 +728,12 @@ class AdvertisingDetail(View):
     '''
     advertising details form view
     '''
-    template_name = 'orders/advertising_detail.html'
+    template_name = 'orders/details.html'
 
-    def get(self, request, pk, order_id):
+    def get(self, request, order_id):
         '''
         get the advertising detail form
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -778,16 +745,14 @@ class AdvertisingDetail(View):
                       context={
                           'form': form,
                           'personal_info': personal_info,
-                          'pk': pk,
                           'order': order_id,
                           'url': 'details',
                       })
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the form and logging in the user
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -809,7 +774,6 @@ class AdvertisingDetail(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -823,7 +787,6 @@ class AdvertisingDetail(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -842,7 +805,6 @@ class AdvertisingDetail(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -868,7 +830,6 @@ class AdvertisingDetail(View):
                               context={
                                   'form': form,
                                   'personal_info': personal_info,
-                                  'pk': pk,
                                   'order': order_id,
                                   'url': 'details',
                                   'first_name': first_name,
@@ -885,7 +846,6 @@ class AdvertisingDetail(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -900,11 +860,10 @@ class WeddingDetails(View):
     '''
     template_name = 'orders/wedding_detail.html'
 
-    def get(self, request, pk, order_id):
+    def get(self, request, order_id):
         '''
         get the page
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -916,16 +875,14 @@ class WeddingDetails(View):
                       context={
                           'form': form,
                           'personal_info': personal_info,
-                          'pk': pk,
                           'order': order_id,
                           'url': 'details',
                       })
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the form and logging in the user
         :param request: the request object
-        :param pk: the song id
         :param order_id: the order id
         :return:
         '''
@@ -948,7 +905,6 @@ class WeddingDetails(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -962,7 +918,6 @@ class WeddingDetails(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -978,7 +933,6 @@ class WeddingDetails(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -1004,7 +958,6 @@ class WeddingDetails(View):
                               context={
                                   'form': form,
                                   'personal_info': personal_info,
-                                  'pk': pk,
                                   'order': order_id,
                                   'url': 'details',
                                   'first_name': first_name,
@@ -1021,7 +974,6 @@ class WeddingDetails(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -1036,11 +988,10 @@ class PersonalDetails(View):
     '''
     template_name = 'orders/personal_detail.html'
 
-    def get(self, request, pk, order_id):
+    def get(self, request, order_id):
         '''
         get the page
         :param request: request object
-        :param pk: song id
         :param order_id: order id
         :return:
         '''
@@ -1052,16 +1003,14 @@ class PersonalDetails(View):
                       context={
                           'form': form,
                           'personal_info': personal_info,
-                          'pk': pk,
                           'order': order_id,
                           'url': 'details',
                       })
 
-    def post(self, request, pk, order_id):
+    def post(self, request, order_id):
         '''
         processing the form and logging in the user
         :param request: request object
-        :param pk: song id
         :param order_id: order id
         :return:
         '''
@@ -1084,7 +1033,6 @@ class PersonalDetails(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -1098,7 +1046,6 @@ class PersonalDetails(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -1114,7 +1061,6 @@ class PersonalDetails(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
@@ -1140,7 +1086,6 @@ class PersonalDetails(View):
                               context={
                                   'form': form,
                                   'personal_info': personal_info,
-                                  'pk': pk,
                                   'order': order_id,
                                   'url': 'details',
                                   'first_name': first_name,
@@ -1156,7 +1101,6 @@ class PersonalDetails(View):
                           context={
                               'form': form,
                               'personal_info': personal_info,
-                              'pk': pk,
                               'order': order_id,
                               'url': 'details',
                               'first_name': first_name,
