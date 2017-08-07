@@ -657,10 +657,12 @@ class Order(Base):
     SENT = 'sent'
     DONE = 'done'
     ATTENTION = 'attention'
+    PAYMENT = 'payment'
 
     ORDER_CHOICES = (
         (SENT, 'Sent'),
         (ATTENTION, 'Attention'),
+        (PAYMENT, 'payment'),
         (DONE, 'Done'),
     )
 
