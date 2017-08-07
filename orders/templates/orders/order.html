@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
     <br><br><br><br><br>
-        <form action="{% if pk %}{% url 'order' pk %}{% else %}{% url 'manual_order' %}{% endif %}" method="post">
+        <form action="{% if song_id %}{% url 'order' song_id %}{% else %}{% url 'manual_order' %}{% endif %}" method="post">
             {% csrf_token %}
             <div class="row">
                 {{ form.errors }}

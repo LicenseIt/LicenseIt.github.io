@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'team',
     'terms',
     'common',
-    'home'
+    'home',
+    'owners',
 ]
 
 MIDDLEWARE = [

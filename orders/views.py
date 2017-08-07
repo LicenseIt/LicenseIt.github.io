@@ -47,11 +47,17 @@ class OrderView(View):
         :return:
         '''
         if request.resolver_match.url_name == 'order':
-            form = OrderForm(request.POST)
+            form = OrderForm(request.POST.copy())
+            form.data['song'] = song_id
         else:
             form = ManualOrderForm(request.POST)
+
         if form.is_valid():
             order_id = form.save()
+            print(order_id.project_type)
+            if request.user.is_authenticated():
+                order_id.user = request.user
+                order_id.save()
             return HttpResponseRedirect(reverse(order_id.project_type.slug, args=[order_id.id]))
 
         return render(request,
@@ -205,7 +211,7 @@ class IndieDistribution(View):
             'url': 'distribution',
         }
 
-        dist_list = [dist.__str__() for dist in order_dist.distribution.all()]
+        dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
 
         if 'web/streaming' in dist_list:
             context['web'] = web_form
@@ -294,11 +300,12 @@ class ProgramDistribution(View):
             'url': 'distribution',
         }
 
-        dist_list = [dist.__str__() for dist in order_dist.distribution.all()]
+        dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
+        print(dist_list)
 
         if 'web/streaming' in dist_list:
             context['web'] = web_form
-        if 'external' in dist_list:
+        if 'externally' in dist_list:
             context['ext'] = ext_form
         if 'tv' in dist_list:
             context['tv'] = tv_form
@@ -308,7 +315,7 @@ class ProgramDistribution(View):
                           self.template_name,
                           context=context)
         else:
-            HttpResponseRedirect(reverse('program_details', args=[order_id]))
+            return HttpResponseRedirect(reverse('program_details', args=[order_id]))
 
     def post(self, request, order_id):
         '''
@@ -359,7 +366,7 @@ class ProgramDistribution(View):
                 new_dist.full_clean()
                 new_dist.save()
                 dist = ExternalDistribution.objects.get(pk=done.id)
-                dist.distribute_on.add(new_dist.id)
+                dist.name.add(new_dist.id)
                 dist.save()
 
         if tv_form:
@@ -381,6 +388,7 @@ class AdvertisingDistribution(View):
         :param order_id: the order id
         :return:
         '''
+        print('hello')
         web_form = IndieWebDistribution()
         ext_form = IndieExtDistribution()
         # tv_form = TvDistributionForm()
@@ -392,7 +400,7 @@ class AdvertisingDistribution(View):
             'url': 'distribution',
         }
 
-        dist_list = [dist.__str__() for dist in order_dist.distribution.all()]
+        dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
 
         if 'web/streaming' in dist_list:
             context['web'] = web_form
@@ -406,7 +414,7 @@ class AdvertisingDistribution(View):
                           self.template_name,
                           context=context)
         else:
-            HttpResponseRedirect(reverse('advertising_details', args=[order_id]))
+            return HttpResponseRedirect(reverse('advertising_details', args=[order_id]))
 
     def post(self, request, order_id):
         '''
@@ -524,9 +532,9 @@ class DetailBase(View):
                           context=context)
 
         order = Order.objects.get(pk=order_id)
-        if request.user.is_authenticated():
+        if request.user.is_authenticated() and not order.user:
             order.user = request.user
-        else:
+        elif not order.user:
             order.user = data['user']
         order.save()
 

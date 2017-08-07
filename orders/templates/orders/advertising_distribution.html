@@ -16,7 +16,7 @@
                             {{ check.choice_label }}
                             <span class="col-sm-1">{{ check.tag }}</span>
                         </label>
-                        {% if check.choice_label == 'youtube' %}
+                        {% if check.choice_label|lower == 'youtube' %}
                             <span class="col-sm-5" id="id_youtube">
                                 <label class="col-sm-3" for="id_youtube_id">youtube id</label>
                                 {{ web.youtube_id }}

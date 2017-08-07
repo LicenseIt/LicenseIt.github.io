@@ -1,6 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.db import models
+from search.models import Track
 
 
 class Base(models.Model):
@@ -21,6 +22,8 @@ class ProjectType(Base):
     name = models.CharField(max_length=200)
     # the url name of the type to work with on the back end
     slug = models.SlugField()
+    # the explanation for the field
+    explanation = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -35,6 +38,7 @@ class DistributionBase(Base):
     name of the distribution categories
     '''
     name = models.CharField(max_length=200)
+    explanation = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -79,14 +83,17 @@ class OrderDistributionIndie(DistributionBase):
     the options film making creators will be able to choose on where they publish their work
     '''
     class Meta:
-        verbose_name = 'distribution indie film'
-        verbose_name_plural = 'distributions indie film'
+        verbose_name = 'indie film distribution option'
+        verbose_name_plural = 'indie film distribution options'
 
 
 class OrderDistributionProgramming(DistributionBase):
     '''
     the options programmer creators will be able to choose on where they publish their work
     '''
+    class Meta:
+        verbose_name = 'programming distribution option'
+        verbose_name_plural = 'programming distribution options'
 
 
 class WebDistribution(Base):
@@ -117,7 +124,10 @@ class ExternalDistribution(Base):
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_dist_ext')
 
     def __str__(self):
-        return self.name
+        ret = ''
+        for name in self.name.all():
+            ret += name.name + ' '
+        return ret
 
     class Meta:
         verbose_name = 'external distribution'
@@ -407,6 +417,11 @@ class OrderProjectDetailBase(Base):
     territory = models.CharField(max_length=50, choices=COUNTRIES_CHOICES)
     territory_usa = models.CharField(max_length=1000, null=True, blank=True)
 
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='%(class)s_details')
+
+    def __str__(self):
+        return '%(class)s: ' + self.order.song_title
+
     class Meta:
         abstract = True
 
@@ -557,10 +572,12 @@ class ProjectDetailBase(OrderProjectDetailBase):
     # start and end point of the song to work on
     start_duration = models.CharField(max_length=8)
     end_duration = models.CharField(max_length=8)
-    term = models.CharField(max_length=2, choices=TERM_CHOICES, default=YEAR1)
+    term = models.CharField(max_length=2,
+                            choices=TERM_CHOICES,
+                            default=YEAR1)
 
     release_date = models.DateField()
-    budget = models.CharField(max_length=5, choices=BUDGET_CHOICES)
+    budget = models.CharField(max_length=5, choices=BUDGET_CHOICES, default='low')
 
     synopsis = models.CharField(max_length=1000)
     description = models.TextField()
@@ -587,8 +604,8 @@ class OrderIndieProjectDetail(ProjectDetailBase):
     details about the film making project
     '''
     class Meta:
-        verbose_name = 'film making detail'
-        verbose_name_plural = 'film making details'
+        verbose_name = 'film making project details'
+        verbose_name_plural = 'film making projects details'
 
 
 class OrderProgrammingDetail(ProjectDetailBase):
@@ -605,8 +622,8 @@ class OrderAdvertisingDetail(ProjectDetailBase):
     details about advertising projects
     '''
     class Meta:
-        verbose_name = 'advertising project detail'
-        verbose_name_plural = 'advertising project details'
+        verbose_name = 'advertising project details'
+        verbose_name_plural = 'advertising projects details'
 
 
 class OrderWedding(OrderProjectDetailBase):
@@ -617,8 +634,8 @@ class OrderWedding(OrderProjectDetailBase):
     num_uses = models.PositiveIntegerField()
 
     class Meta:
-        verbose_name = 'wedding'
-        verbose_name_plural = 'weddings'
+        verbose_name = 'wedding project'
+        verbose_name_plural = 'wedding projects'
 
 
 class OrderPersonal(OrderProjectDetailBase):
@@ -655,13 +672,14 @@ class Order(Base):
                              choices=ORDER_CHOICES,
                              default=SENT)
 
+    song = models.ForeignKey(Track, on_delete=models.SET_NULL, null=True, blank=True)
     song_title = models.CharField(max_length=200)
     performer_name = models.CharField(max_length=200)
 
     project_type = models.ForeignKey(ProjectType, related_name='general_order')
 
     def __str__(self):
-        return str(self.id) + ': ' + self.song_title
+        return str(self.user) + ': ' + self.song_title
 
     class Meta:
         verbose_name = 'order'

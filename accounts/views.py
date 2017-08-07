@@ -9,9 +9,13 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
+from .models import AskUser
+
 from orders.models import Order
 from orders.forms import OrderForm
-from .models import AskUser
+
+from owners.models import Question, OwnerDatabase
+
 
 
 class LoginView(View):
@@ -54,31 +58,35 @@ class SignupView(View):
 class Account(View):
     def get(self, request, order_id=None):
         orders_list = Order.objects.filter(user=request.user).select_related()
+        owners = OwnerDatabase.objects.all()
+
         if order_id:
             order_data = Order.objects.get(pk=order_id)
-            print('this')
-            print(order_data.order_details_orderindieprojectdetail.get(order=order_id).song_version)
         else:
             order_data = orders_list.first()
 
-        ask_user = AskUser.objects.filter(order=order_data.id)
+        if order_data:
+            ask_user = AskUser.objects.filter(order=order_data.id)
+        else:
+            ask_user = ''
 
         context = {
             'url': 'client_dash',
             'orders_list': orders_list,
             'order_data': order_data,
             'ask_user': ask_user,
+            'owners': owners,
         }
 
-        if order_data.project_type.name == 'film making':
-            order_details = order_data.order_details_orderindieprojectdetail.get(order=order_id)
+        if order_data and order_data.project_type.name == 'film making':
+            order_details = order_data.order_details_orderindieprojectdetail.get(order=order_data.id)
             print(order_details.song_version)
             context['order_details'] = order_details
-        if order_data.project_type.name == 'programming':
-            order_details = order_data.order_details_orderprogrammingdetail.get(order=order_id)
+        if order_data and order_data.project_type.name == 'programming':
+            order_details = order_data.order_details_orderprogrammingdetail.get(order=order_data.id)
             context['order_details'] = order_details
-        elif order_data.project_type.name == 'advertising':
-            order_details = order_data.order_details_orderadvertisingdetail.get(order=order_id)
+        elif order_data and order_data.project_type.name == 'advertising':
+            order_details = order_data.order_details_orderadvertisingdetail.get(order=order_data.id)
             context['order_details'] = order_details
 
         return render(request,

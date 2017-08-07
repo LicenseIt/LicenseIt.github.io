@@ -29,7 +29,7 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="form-group">
+            <div title="Is the song being sung by one of your characters? Is it playing without any voiceover? That is likely a featured use. However, a song is playing in the background at low volume with narration over the top, that is likely background use" class="form-group">
                 <label class="col-sm-2">featured or background?</label>
                 {% for check in form.featured_background %}
                     <div>
@@ -61,11 +61,14 @@
                     {{ form.end_duration }}
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2">term</label>
+                    <label class="col-sm-12">term</label>
+                    <span class="col-sm-12">State how long you would like to license the song for your project</span>
                     {{ form.term }}
                 </div>
                 <div class="form-group">
-                    <label for="id_territory" class="col-sm-2 control-label">territory</label>
+                    <label for="id_territory" class="col-sm-2 control-label">
+                        territory <span>State where you would like the rights to use music in your project</span>
+                    </label>
                     <div class="col-sm-10">
                         <input id="id_territory" list="territory" name="territory"
                                class="form-control">
@@ -81,14 +84,6 @@
                 <div id="usa_states" class="form-group">
                     <label for="id_states" class="col-sm-2 control-label">states</label>
                     {{ form.territory_usa }}
-                    {#                    <div class="col-sm-10">#}
-                    {#                        <input id="id_states" list="states" name="territory_usa" class="form-control">#}
-                    {#                    </div>#}
-                    {#                <datalist id="states">#}
-                    {#                {% for territory in form.territory_usa %}#}
-                    {#                    <option value="{{ territory.index}}">{{ territory.tag }}</option>#}
-                    {#                {% endfor %}#}
-                    {#                </datalist>#}
                 </div>
             </fieldset>
             <fieldset>
@@ -96,7 +91,7 @@
                     <label class="col-sm-2">release date</label>
                     {{ form.release_date }}
                 </div>
-                <div class="form-group">
+                <div title="Publishers and record companies use budget to estimate viewership" class="form-group">
                     <label class="col-sm-2">budget</label>
                     {% for radio in form.budget %}
                         <div>

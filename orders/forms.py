@@ -1,4 +1,8 @@
 from django import forms
+
+from common.form_widgets import SelectMultipleWithTitles, MultipleChoiceFieldWithTitles
+from common.form_widgets import SelectWithTitles, ChoiceFieldWithTitles
+
 from .models import (
     Order,
     ProjectType,
@@ -32,17 +36,31 @@ class OrderFormBase(forms.ModelForm):
         (DONE, 'Done'),
     )
 
-    project_type = forms.ModelChoiceField(
-        queryset=ProjectType.objects.all(),
-        widget=forms.Select(
-            attrs={'class': 'form-control'}))
+    project_type = ChoiceFieldWithTitles(
+        queryset=ProjectType.objects,
+        widget=SelectWithTitles(
+            attrs={
+                'class': 'form-control',
+            }
+        )
+    )
 
 
 class OrderForm(OrderFormBase):
+    project_type = forms.ModelChoiceField(
+        queryset=ProjectType.objects,
+        empty_label=None,
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        )
+    )
     class Meta:
         model = Order
         exclude = ['user', 'state']
         widgets = {
+            'song': forms.HiddenInput(),
             'song_title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'readonly': 'true'
@@ -69,11 +87,11 @@ class ManualOrderForm(forms.ModelForm):
 
 
 class OrderIndieForm(forms.ModelForm):
-    distribution = forms.ModelMultipleChoiceField(
+    distribution = MultipleChoiceFieldWithTitles(
         queryset=OrderDistributionIndie.objects,
-        widget=forms.CheckboxSelectMultiple(
+        widget=SelectMultipleWithTitles(
             attrs={
-                'class': 'form-control col-sm-8'
+                'class': 'form-control col-sm-8',
             }
         )
     )
@@ -83,7 +101,8 @@ class OrderIndieForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'production_name': forms.TextInput(attrs={
-                'class': 'form-control col-sm-8'
+                'class': 'form-control col-sm-8',
+                'placeholder': 'State the name of the production - typically the title of a film, video project, name of a TV show, or advertisement'
             }),
             'film_length': forms.RadioSelect(
                 attrs={
@@ -104,9 +123,9 @@ class OrderIndieForm(forms.ModelForm):
 
 
 class OrderProgramForm(forms.ModelForm):
-    distribution = forms.ModelMultipleChoiceField(
+    distribution = MultipleChoiceFieldWithTitles(
         queryset=OrderDistributionProgramming.objects,
-        widget=forms.CheckboxSelectMultiple(
+        widget=SelectMultipleWithTitles(
             attrs={
                 'class': 'form-control col-sm-8'
             }
@@ -118,15 +137,16 @@ class OrderProgramForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'production_name': forms.TextInput(attrs={
-                'class': 'form-control col-sm-8'
-            }),
+                'class': 'form-control col-sm-8',
+                'placeholder': 'State the name of the production - typically the title of a film, video project, name of a TV show, or advertisement'
+        }),
         }
 
 
 class OrderAdvertisingForm(forms.ModelForm):
-    distribution = forms.ModelMultipleChoiceField(
+    distribution = MultipleChoiceFieldWithTitles(
         queryset=OrderDistributionProgramming.objects,
-        widget=forms.CheckboxSelectMultiple(
+        widget=SelectMultipleWithTitles(
             attrs={
                 'class': 'form-control col-sm-8'
             }
@@ -138,7 +158,8 @@ class OrderAdvertisingForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'production_name': forms.TextInput(attrs={
-                'class': 'form-control col-sm-8'
+                'class': 'form-control col-sm-8',
+                'placeholder': 'State the name of the production - typically the title of a film, video project, name of a TV show, or advertisement',
             }),
         }
 
@@ -210,7 +231,7 @@ class DetailsFormBase(forms.ModelForm):
         queryset=FeaturedBackground.objects,
         widget=forms.CheckboxSelectMultiple(
             attrs={
-                'class': 'form-control col-sm-8'
+                'class': 'form-control col-sm-8',
             }
         )
     )
@@ -260,22 +281,25 @@ class DetailsFormBase(forms.ModelForm):
             ),
             'release_date': forms.DateInput(
                 attrs={
-                    'class': 'form-control col-sm-3'
+                    'class': 'form-control col-sm-3',
+                    'title': 'if no, just type your estimation',
                 }
             ),
-            'budget': forms.RadioSelect(
+            'budget': SelectWithTitles(
                 attrs={
                     'class': 'form-control col-sm-3'
                 }
             ),
             'synopsis': forms.TextInput(
                 attrs={
-                    'class': 'form-control col-sm-3'
+                    'class': 'form-control col-sm-3',
+                    'placeholder': 'A brief synopsis of the entire project'
                 }
             ),
             'description': forms.Textarea(
                 attrs={
-                    'class': 'form-control col-sm-3'
+                    'class': 'form-control col-sm-3',
+                    'placeholder': 'A description of the particular scene with the music'
                 }
             ),
             'is_non_profit': forms.RadioSelect(
@@ -290,7 +314,8 @@ class DetailsFormBase(forms.ModelForm):
             ),
             'comments': forms.Textarea(
                 attrs={
-                    'class': 'form-control col-sm-3'
+                    'class': 'form-control col-sm-3',
+                    'placeholder': 'Any other comments or request that you believe are important to the right owners to know'
                 }
             ),
             'rate': forms.RadioSelect(
