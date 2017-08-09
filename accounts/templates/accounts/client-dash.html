@@ -71,8 +71,9 @@
                                             </p>
                                         </div>
                                         <div id="pilljustified1" class="tab-pane fade">
+                                        {% if order_data %}
                                             <h5>License Inquiry</h5>
-                                            <form class="form-horizontal" method="post" action="{% url 'my_account_order' order_data.id %}">
+                                            <form class="form-horizontal" method="post" action="{% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
                                             {% csrf_token %}
                                                 {% include 'orders/order_form_fields.html' %}
                                                 {% if advertising_form %}
@@ -97,7 +98,7 @@
                                                     {% include 'orders/personal_form_fields.html' %}
                                                 {% endif %}
                                                 <div class="row">
-                                                    <button type="submit" class="btn btn-success">submit</button>
+                                                    <button type="submit" class="btn btn-success">resubmit changes</button>
                                                     <button type="reset" class="btn btn-warning">reset</button>
                                                 </div>
                                             </form>
@@ -106,7 +107,7 @@
                                                     Completed
                                                 </button>
                                             </p>
-
+                                        {% endif %}
                                         </div>
                                         <div id="pilljustified2" class="tab-pane fade">
                                             <h5>Owner Identification</h5>

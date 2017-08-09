@@ -559,8 +559,8 @@ class ProjectDetailBase(OrderProjectDetailBase):
     ]
 
     IS_NON_PROFIT_CHOICES = [
-        ('no', 'no'),
-        ('yes', 'yes')
+        ('no', 'non profit'),
+        ('yes', 'profit')
     ]
 
     number_uses = models.IntegerField()
