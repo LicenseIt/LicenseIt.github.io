@@ -9,7 +9,9 @@ from django.contrib.auth import login
 from search.models import Track
 from accounts.forms import PersonalInfoForm
 from .models import *
-from .forms import *
+import sys
+if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
+    from .forms import *
 
 
 class OrderView(View):
@@ -471,7 +473,7 @@ class AdvertisingDistribution(View):
         # if tv_form:
         #     tv_form.save()
 
-        return HttpResponseRedirect(reverse('program_details', args=[order_id]))
+        return HttpResponseRedirect(reverse('advertising_details', args=[order_id]))
 
 
 class DetailBase(View):

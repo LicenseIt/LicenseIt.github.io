@@ -23,7 +23,7 @@ class ProjectType(Base):
     # the url name of the type to work with on the back end
     slug = models.SlugField()
     # the explanation for the field
-    explanation = models.CharField(max_length=200, null=True, blank=True)
+    explanation = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -38,7 +38,7 @@ class DistributionBase(Base):
     name of the distribution categories
     '''
     name = models.CharField(max_length=200)
-    explanation = models.CharField(max_length=100)
+    explanation = models.CharField(max_length=300)
 
     def __str__(self):
         return self.name
@@ -414,7 +414,7 @@ class OrderProjectDetailBase(Base):
         ('Zimbabwe', 'Zimbabwe')
     ]
 
-    territory = models.CharField(max_length=50, choices=COUNTRIES_CHOICES)
+    territory = models.CharField(max_length=50, choices=COUNTRIES_CHOICES, default='')
     territory_usa = models.CharField(max_length=1000, null=True, blank=True)
 
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='%(class)s_details')

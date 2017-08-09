@@ -11,21 +11,23 @@ from django.contrib.auth.models import User
 
 from orders.models import Order
 
-from orders.forms import (
-    OrderForm,
-    ManualOrderForm,
-    OrderIndieForm,
-    OrderProgramForm,
-    OrderAdvertisingForm,
-    IndieWebDistribution,
-    IndieExtDistribution,
-    TvDistributionForm,
-    IndieDetailForm,
-    ProgramDetailForm,
-    AdvertisingDetailForm,
-    WeddingDetailForm,
-    PersonalDetailForm
-)
+import sys
+if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
+    from orders.forms import (
+        OrderForm,
+        ManualOrderForm,
+        OrderIndieForm,
+        OrderProgramForm,
+        OrderAdvertisingForm,
+        IndieWebDistribution,
+        IndieExtDistribution,
+        TvDistributionForm,
+        IndieDetailForm,
+        ProgramDetailForm,
+        AdvertisingDetailForm,
+        WeddingDetailForm,
+        PersonalDetailForm
+    )
 
 from owners.models import Question, OwnerDatabase
 
@@ -93,7 +95,7 @@ class Account(View):
             'owners': owners,
         }
 
-        if order_data and order_data.project_type.name == 'film making':
+        if order_data and order_data.project_type.name.lower() == 'film making':
             indie_data = order_data.order_project_orderfilmmaking.get(order=order_data.id)
             context['indie_form'] = OrderIndieForm(instance=indie_data)
             details = order_data.order_details_orderindieprojectdetail.get(order=order_data.id)
@@ -105,7 +107,7 @@ class Account(View):
             if order_data.order_project_orderfilmmaking.filter(distribution__name='externally').exists():
                 ext = order_data.order_dist_ext.get(order=order_data.id)
                 context['ext'] = IndieExtDistribution(instance=ext)
-        if order_data and order_data.project_type.name == 'programming':
+        if order_data and order_data.project_type.name.lower() == 'programming':
             prog_data = order_data.order_project_orderprogramming.get(order=order_data.id)
             context['program_form'] = OrderProgramForm(instance=prog_data)
             details = order_data.order_details_orderprogrammingdetail.get(order=order_data.id)
@@ -120,7 +122,7 @@ class Account(View):
             if order_data.order_project_orderprogramming.filter(distribution__name='tv').exists():
                 tv = order_data.order_tv_dist.get(order=order_data.id)
                 context['tv'] = TvDistributionForm(instance=tv)
-        elif order_data and order_data.project_type.name == 'advertising':
+        elif order_data and order_data.project_type.name.lower() == 'advertising':
             ad_data = order_data.order_project_orderadvertising.get(order=order_data.id)
             context['advertising_form'] = OrderAdvertisingForm(instance=ad_data)
             details = order_data.order_details_orderadvertisingdetail.get(order=order_data.id)
@@ -135,10 +137,10 @@ class Account(View):
             # if order_data.order_project_orderadvertising.filter(distribution__name='tv').exists():
                 # tv = order_data.order_tv_dist.get(order=order_data.id)
                 # context['tv'] = TvDistributionForm(instance=tv)
-        elif order_data and order_data.project_type.name == 'wedding':
+        elif order_data and order_data.project_type.name.lower() == 'wedding':
             details = order_data.orderwedding_details.get(order=order_data.id)
             context['wedding_form'] = WeddingDetailForm(instance=details)
-        elif order_data and order_data.project_type.name == 'personal use':
+        elif order_data and order_data.project_type.name.lower() == 'personal use':
             details = order_data.orderpersonal_details.get(order=order_data.id)
             context['personal_form'] = PersonalDetailForm(instance=details)
 
@@ -169,7 +171,7 @@ class Account(View):
             'owners': owners,
         }
 
-        if order_data.project_type.name == 'film making':
+        if order_data.project_type.name.lower() == 'film making':
             indie_form = OrderIndieForm(request.POST)
             indie_details_form = IndieDetailForm(request.POST)
             context['indie_form'] = indie_form
@@ -194,7 +196,7 @@ class Account(View):
             else:
                 context['order_details'] = order_data.order_details_orderindieprojectdetail.get(order=order_data.id)
 
-        if order_data.project_type.name == 'programming':
+        if order_data.project_type.name.lower() == 'programming':
             program_form = OrderProgramForm(request.POST)
             context['program_form'] = program_form
             details = order_data.order_details_orderprogrammingdetail.get(order=order_data.id)
@@ -225,7 +227,7 @@ class Account(View):
             else:
                 context['order_details'] = order_data.order_details_orderprogrammingdetail.get(order=order_data.id)
 
-        elif order_data and order_data.project_type.name == 'advertising':
+        elif order_data and order_data.project_type.name.lower() == 'advertising':
             ad_form = OrderAdvertisingForm(request.POST)
             context['advertising_form'] = ad_form
             ad_details_form = AdvertisingDetailForm(request.POST)
@@ -242,7 +244,10 @@ class Account(View):
                 if ext.is_valid():
                     ext.save()
             if ad_form.is_valid():
+                print('ad form is valid')
                 ad_form.save()
+            else:
+                print(ad_form.errors)
             if ad_details_form.is_valid():
                 details = ad_details_form.save()
                 context['order_details'] = details
@@ -251,7 +256,7 @@ class Account(View):
             # if order_data.order_project_orderadvertising.filter(distribution__name='tv').exists():
                 # context['tv'] = TvDistributionForm(request.POST)
 
-        elif order_data and order_data.project_type.name == 'wedding':
+        elif order_data and order_data.project_type.name.lower() == 'wedding':
             wedding_form = WeddingDetailForm(request.POST)
             context['wedding_form'] = wedding_form
             if wedding_form.is_valid():
@@ -260,7 +265,7 @@ class Account(View):
             else:
                 context['order_details'] = order_data.orderwedding_details.get(order=order_data.id)
 
-        elif order_data and order_data.project_type.name == 'personal use':
+        elif order_data and order_data.project_type.name.lower() == 'personal use':
             personal_form = PersonalDetailForm(request.POST)
             context['personal_form'] = personal_form
             if personal_form.is_valid():
@@ -268,5 +273,11 @@ class Account(View):
                 context['order_details'] = details
             else:
                 context['order_details'] = order_data.orderpersonal_details.get(order=order_data.id)
+        else:
+            print('what is going on??')
+            print(order_data.project_type.name)
+
+        if order_form.is_valid():
+            order_form.save()
 
         return render(request, self.template_name, context)

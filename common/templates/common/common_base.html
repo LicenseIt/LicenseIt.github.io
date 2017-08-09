@@ -156,10 +156,14 @@
                         <a href="{% url 'search' %}"
                            class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">Search </a>
                     </li>
-                {% if user.is_authenticated %}
+                {% if request.user.is_authenticated %}
                     <li class="dropdown megamenu-fw has-dropdown-menu">
                         <a href="{% url 'my_account' %}"
                            class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">{{ user.email }}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout' %}"
+                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">signout</a>
                     </li>
                 {% else %}
                     <li class="dropdown">
