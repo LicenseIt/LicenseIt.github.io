@@ -411,10 +411,10 @@
 <script src="{% static 'common/assets/js/main/ion.rangeSlider.min.js' %}"></script>
 <script src="{% static 'common/assets/js/main/imagesloaded.pkgd.min.js' %}"></script>
 <script src="{% static 'common/assets/js/main/main.js' %}"></script>
-{% if url == 'distribution' %}
+{% if url == 'distribution' or 'client_dash' %}
     <script src="{% static 'orders/youtube_show_hide.js' %}"></script>
 {% endif %}
-{% if url == 'details' %}
+{% if url == 'details' or url == 'client_dash' %}
     <script src="{% static 'orders/states_show_hide.js' %}"></script>
 {% endif %}
 

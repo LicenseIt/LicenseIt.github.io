@@ -82,7 +82,7 @@ class SelectMultipleWithTitles(forms.CheckboxSelectMultiple):
         title_html = (option_label in self.titles) and \
             ' title="%s" ' % escape(self.titles[option_label]) or ''
         option_value = option_value
-        selected_html = (option_value in selected_choices) and ' checked' or ''
+        selected_html = ' checked' if (str(option_value) in selected_choices) else ''
         return '<div class=form-group><label class="col-sm-12" %s>'' \
         ''<span class="col-sm-1"><input type="checkbox" name="%s" value="%s" %s></span>%s</label></div>' % (
             title_html, 'distribution', escape(option_value), selected_html, option_label)

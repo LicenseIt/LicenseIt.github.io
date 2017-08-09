@@ -4,25 +4,7 @@
     <br><br><br><br><br>
         <form class="form-horizontal" action="{% url 'advertising' order %}" method="post">
             {% csrf_token %}
-            <div class="row">
-                {{ form.errors }}
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3" for="id_production_name">production name</label>
-                {{ form.production_name }}
-            </div>
-            <div class="form-group">
-                <label class="col-sm-12" for="id_distribution">distribution</label>
-                {{ form.distribution }}
-{#                {% for check in form.distribution %}#}
-{#                    <div>#}
-{#                        <label class="col-sm-12" for="{{ check.id_for_label }}">#}
-{#                            {{ check.choice_label }}#}
-{#                            <span class="col-sm-2">{{ check.tag }}</span>#}
-{#                        </label>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-            </div>
+            {% include 'orders/advertising_form_fields.html' %}
             <div class="row">
                 <button class="btn btn-success">submit</button>
                 <button type="reset" class="btn btn-warning">reset</button>

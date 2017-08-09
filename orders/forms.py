@@ -75,7 +75,7 @@ class OrderForm(OrderFormBase):
 class ManualOrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        exclude = ['user', 'state']
+        exclude = ['user', 'state', 'song_id']
         widgets = {
             'song_title': forms.TextInput(attrs={
                 'class': 'form-control',

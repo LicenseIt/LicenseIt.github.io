@@ -37,7 +37,7 @@ class OrderView(View):
 
         return render(request,
                       self.template_name,
-                      context={'form': order_form, 'song_id': song_id})
+                      context={'order_form': order_form, 'song_id': song_id})
 
     def post(self, request, song_id=None):
         '''
@@ -62,7 +62,7 @@ class OrderView(View):
 
         return render(request,
                       self.template_name,
-                      context={'form': form, 'song_id': song_id})
+                      context={'order_form': form, 'song_id': song_id})
 
 
 class OrderIndieView(View):
@@ -86,7 +86,7 @@ class OrderIndieView(View):
 
         return render(request,
                       self.template_name,
-                      context={'form': form, 'order': order_id})
+                      context={'indie_form': form, 'order': order_id})
 
     def post(self, request, order_id):
         '''
@@ -102,7 +102,7 @@ class OrderIndieView(View):
             return HttpResponseRedirect(reverse('indie_dist', args=[order_id]))
         return render(request,
                       self.template_name,
-                      context={'form': form, 'order': order_id}
+                      context={'indie_form': form, 'order': order_id}
                       )
 
 
@@ -127,7 +127,7 @@ class OrderProgramView(View):
 
         return render(request,
                       self.template_name,
-                      context={'form': form, 'order': order_id})
+                      context={'program_form': form, 'order': order_id})
 
     def post(self, request, order_id):
         '''
@@ -143,7 +143,7 @@ class OrderProgramView(View):
             return HttpResponseRedirect(reverse('prog_dist', args=[order_id]))
         return render(request,
                       self.template_name,
-                      context={'form': form, 'order': order_id}
+                      context={'program_form': form, 'order': order_id}
                       )
 
 
@@ -168,7 +168,7 @@ class OrderAdvertisingView(View):
 
         return render(request,
                       self.template_name,
-                      context={'form': form, 'order': order_id})
+                      context={'advertising_form': form, 'order': order_id})
 
     def post(self, request, order_id):
         '''
@@ -184,7 +184,7 @@ class OrderAdvertisingView(View):
             return HttpResponseRedirect(reverse('ad_dist', args=[order_id]))
         return render(request,
                       self.template_name,
-                      context={'form': form, 'order': order_id}
+                      context={'advertising_form': form, 'order': order_id}
                       )
 
 
@@ -481,7 +481,7 @@ class DetailBase(View):
         form = detail_form(data)
 
         context = {
-            'form': form,
+            'details_form': form,
             'order': order_id,
             'url': 'details',
         }
@@ -556,7 +556,7 @@ class IndieDetail(DetailBase):
         '''
         form = IndieDetailForm()
         context = {
-            'form': form,
+            'details_form': form,
             'order': order_id,
             'url': 'details'
         }
@@ -595,7 +595,7 @@ class ProgramDetail(DetailBase):
         return render(request,
                       self.template_name,
                       context={
-                          'form': form,
+                          'details_form': form,
                           'personal_info': personal_info,
                           'order': order_id,
                           'url': 'details',
@@ -630,7 +630,7 @@ class AdvertisingDetail(DetailBase):
         return render(request,
                       self.template_name,
                       context={
-                          'form': form,
+                          'details_form': form,
                           'personal_info': personal_info,
                           'order': order_id,
                           'url': 'details',
@@ -665,7 +665,7 @@ class WeddingDetails(View):
         return render(request,
                       self.template_name,
                       context={
-                          'form': form,
+                          'wedding_form': form,
                           'personal_info': personal_info,
                           'order': order_id,
                           'url': 'details',
@@ -695,7 +695,7 @@ class WeddingDetails(View):
             return render(request,
                           self.template_name,
                           context={
-                              'form': form,
+                              'wedding_form': form,
                               'personal_info': personal_info,
                               'order': order_id,
                               'url': 'details',
@@ -708,7 +708,7 @@ class WeddingDetails(View):
             return render(request,
                           self.template_name,
                           context={
-                              'form': form,
+                              'wedding_form': form,
                               'personal_info': personal_info,
                               'order': order_id,
                               'url': 'details',
@@ -723,7 +723,7 @@ class WeddingDetails(View):
             return render(request,
                           self.template_name,
                           context={
-                              'form': form,
+                              'wedding_form': form,
                               'personal_info': personal_info,
                               'order': order_id,
                               'url': 'details',
@@ -748,7 +748,7 @@ class WeddingDetails(View):
                 return render(request,
                               self.template_name,
                               context={
-                                  'form': form,
+                                  'wedding_form': form,
                                   'personal_info': personal_info,
                                   'order': order_id,
                                   'url': 'details',
@@ -764,7 +764,7 @@ class WeddingDetails(View):
             return render(request,
                           self.template_name,
                           context={
-                              'form': form,
+                              'wedding_form': form,
                               'personal_info': personal_info,
                               'order': order_id,
                               'url': 'details',
@@ -793,7 +793,7 @@ class PersonalDetails(View):
         return render(request,
                       self.template_name,
                       context={
-                          'form': form,
+                          'personal_form': form,
                           'personal_info': personal_info,
                           'order': order_id,
                           'url': 'details',
@@ -823,7 +823,7 @@ class PersonalDetails(View):
             return render(request,
                           self.template_name,
                           context={
-                              'form': form,
+                              'personal_form': form,
                               'personal_info': personal_info,
                               'order': order_id,
                               'url': 'details',
@@ -836,7 +836,7 @@ class PersonalDetails(View):
             return render(request,
                           self.template_name,
                           context={
-                              'form': form,
+                              'personal_form': form,
                               'personal_info': personal_info,
                               'order': order_id,
                               'url': 'details',
@@ -851,7 +851,7 @@ class PersonalDetails(View):
             return render(request,
                           self.template_name,
                           context={
-                              'form': form,
+                              'personal_form': form,
                               'personal_info': personal_info,
                               'order': order_id,
                               'url': 'details',
@@ -876,7 +876,7 @@ class PersonalDetails(View):
                 return render(request,
                               self.template_name,
                               context={
-                                  'form': form,
+                                  'personal_form': form,
                                   'personal_info': personal_info,
                                   'order': order_id,
                                   'url': 'details',
@@ -891,7 +891,7 @@ class PersonalDetails(View):
             return render(request,
                           self.template_name,
                           context={
-                              'form': form,
+                              'personal_form': form,
                               'personal_info': personal_info,
                               'order': order_id,
                               'url': 'details',

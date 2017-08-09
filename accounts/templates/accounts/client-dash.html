@@ -72,36 +72,32 @@
                                         </div>
                                         <div id="pilljustified1" class="tab-pane fade">
                                             <h5>License Inquiry</h5>
-                                            <form class="form-horizontal" action="">
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-2" for="id_song_version">song version?</label>
-                                                    <div class="col-sm-9">
-                                                        {{ order_form.song_version }}
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-2" for="id_song_version">song version?</label>
-                                                    <div class="col-sm-9">
-                                                        {{ order_form.song_version }}
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-2" for="id_song_version">song version?</label>
-                                                    <div class="col-sm-9">
-                                                        {{ order_form.song_version }}
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-2" for="id_song_version">song version?</label>
-                                                    <div class="col-sm-9">
-                                                        {{ order_form.song_version }}
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-2" for="id_song_version">song version?</label>
-                                                    <div class="col-sm-10">
-                                                        {{ order_form.song_version }}
-                                                    </div>
+                                            <form class="form-horizontal" action="{% url 'my_account_order' order_data.id %}">
+                                                {% include 'orders/order_form_fields.html' %}
+                                                {% if advertising_form %}
+                                                    {% include 'orders/advertising_form_fields.html' %}
+                                                {% endif %}
+                                                {% if program_form %}
+                                                    {% include 'orders/program_form_fields.html' %}
+                                                {% endif %}
+                                                {% if indie_form %}
+                                                    {% include 'orders/indie_form_fields.html' %}
+                                                {% endif %}
+                                                {% if web or ext or tv %}
+                                                    {% include 'orders/distribution_form_fields.html' %}
+                                                {% endif %}
+                                                {% if details_form %}
+                                                    {% include 'orders/details_form_fields.html' %}
+                                                {% endif %}
+                                                {% if wedding_form %}
+                                                    {% include 'orders/wedding_form_fields.html' %}
+                                                {% endif %}
+                                                {% if personal_form %}
+                                                    {% include 'orders/personal_form_fields.html' %}
+                                                {% endif %}
+                                                <div class="row">
+                                                    <button type="submit" class="btn btn-success">submit</button>
+                                                    <button type="reset" class="btn btn-warning">reset</button>
                                                 </div>
                                             </form>
                                             <p>
@@ -132,8 +128,11 @@
                                             <form action="ask_user" method="post">
                                                 {% for question in ask_user %}
                                                     <div class="form-group">
-                                                        <label class="control-label" for="question{{ question.id }}">{{ question.question }}</label>
-                                                        <textarea id="question{{ question.id }}" name="question{{ question.id }}" class="form-control"></textarea>
+                                                        <label class="control-label"
+                                                               for="question{{ question.id }}">{{ question.question }}</label>
+                                                        <textarea id="question{{ question.id }}"
+                                                                  name="question_{{ question.id }}"
+                                                                  class="form-control"></textarea>
                                                     </div>
                                                 {% endfor %}
                                             </form>
@@ -143,7 +142,8 @@
                                                 </button>
                                             </p>
                                         </div>
-                                        <div id="pilljustified4" class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
+                                        <div id="pilljustified4"
+                                             class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
                                             <h5>Payment</h5>
                                             <p>
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, libero,
@@ -153,7 +153,8 @@
                                                 illum ullam.
                                             </p>
                                         </div>
-                                        <div id="pilljustified5" class="tab-pane fade{% if order_data.state == 'done' %} in active{% endif %}">
+                                        <div id="pilljustified5"
+                                             class="tab-pane fade{% if order_data.state == 'done' %} in active{% endif %}">
                                             <h5>Completed</h5>
                                             <p>
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, libero,
@@ -174,11 +175,17 @@
                                         <li><a data-toggle="pill" href="#pilljustified2">Owner identification<i
                                                 class="fa fa-check-circle fa-2x p5 color-success animated"
                                                 data-animation="fadeInUp" data-animation-delay="2000"></i></a></li>
-                                        <li {% if order_data.state == 'sent' or order_data.state == 'attention' %}class="active"{% endif %}><a data-toggle="pill" href="#pilljustified3">
-                                            Clrearance request <i class="fa{% if order_data.state == 'done' or order_data.state == 'payment' %} fa-check-circle color-success animated{% else %} fa-circle-thin{% endif %} fa-2x p5"></i></a></li>
-                                        <li {% if order_data.state == 'payment' %}class="active"{% endif %}><a data-toggle="pill" href="#pilljustified4">Payment <br> <i
-                                                class="fa {% if order_data.state == 'done' %} fa-check-circle color-success animated{% else %}fa-circle-thin{% endif %} fa-2x p5"></i></a></li>
-                                        <li {% if order_data.state == 'done' %}class="active"{% endif %}><a data-toggle="pill" href="#pilljustified5"> License Completed <i
+                                        <li {% if order_data.state == 'sent' or order_data.state == 'attention' %}class="active"{% endif %}>
+                                            <a data-toggle="pill" href="#pilljustified3">
+                                                Clrearance request <i
+                                                    class="fa{% if order_data.state == 'done' or order_data.state == 'payment' %} fa-check-circle color-success animated{% else %} fa-circle-thin{% endif %} fa-2x p5"></i></a>
+                                        </li>
+                                        <li {% if order_data.state == 'payment' %}class="active"{% endif %}><a
+                                                data-toggle="pill" href="#pilljustified4">Payment <br> <i
+                                                class="fa {% if order_data.state == 'done' %} fa-check-circle color-success animated{% else %}fa-circle-thin{% endif %} fa-2x p5"></i></a>
+                                        </li>
+                                        <li {% if order_data.state == 'done' %}class="active"{% endif %}><a
+                                                data-toggle="pill" href="#pilljustified5"> License Completed <i
                                                 class="fa fa-circle-thin fa-2x p5"></i></a></li>
 
                                     </ul>
@@ -221,13 +228,14 @@
                         </h5>
                         <div class="shop-sidebar-cart">
                             {% for order in orders_list %}
-                            <div class="sidebar-cart-container">
+                                <div class="sidebar-cart-container">
 
-                                <h6><a href="{% url 'my_account_order' order.id %}" class="color-blue">{{ order.song_title }}</a></h6>
-                                <span class="sidebar-cart-price color-light">{{ order.performer_name }}</span>
-                                <span class="sidebar-cart-remove color-light"><a href="remove_song"><i
-                                        class="fa fa-times-circle fa-fw"></i>Remove</a></span>
-                            </div>
+                                    <h6><a href="{% url 'my_account_order' order.id %}"
+                                           class="color-blue">{{ order.song_title }}</a></h6>
+                                    <span class="sidebar-cart-price color-light">{{ order.performer_name }}</span>
+                                    <span class="sidebar-cart-remove color-light"><a href="remove_song"><i
+                                            class="fa fa-times-circle fa-fw"></i>Remove</a></span>
+                                </div>
                             {% endfor %}
                         </div>
                         <h5><span class="color-light">YOUR LICENSING PROFILE</span></h5>

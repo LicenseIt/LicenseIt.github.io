@@ -1,0 +1,52 @@
+            <div class="row">
+                {{ indie_form.errors }}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3" for="id_production_name">production name</label>
+                {{ indie_form.production_name }}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3" for="id_film_length">film length</label>
+                {% for radio in indie_form.film_length %}
+                    <div>
+                        <label class="col-sm-12" for="{{ radio.id_for_label }}">
+                            {{ radio.choice_label }}
+                            <span class="col-sm-2">{{ radio.tag }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3" for="id_film_programming">film programming</label>
+                {% for radio in indie_form.film_programming %}
+                    <div>
+                        <label class="col-sm-12" for="{{ radio.id_for_label }}">
+                            {{ radio.choice_label }}
+                            <span class="col-sm-2">{{ radio.tag }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3" for="id_film_trailer">film trailer</label>
+                {% for radio in indie_form.film_trailer %}
+                    <div>
+                        <label class="col-sm-12" for="{{ radio.id_for_label }}">
+                            {{ radio.choice_label }}
+                            <span class="col-sm-2">{{ radio.tag }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3" for="id_distribution">distribution</label>
+{#                {{ form.distribution }}#}
+                {% for check in indie_form.distribution %}
+                    <div>
+                        <label title="{{ check.title }}" class="col-sm-12" for="{{ check.id_for_label }}">
+                            {{ check.choice_label }}
+                            <span class="col-sm-2">{{ check.tag }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
