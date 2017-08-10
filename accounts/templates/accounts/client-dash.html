@@ -111,11 +111,14 @@
                                         </div>
                                         <div id="pilljustified2" class="tab-pane fade">
                                             <h5>Owner Identification</h5>
-                                            <ul>
+                                            <h6>Synchronization license was requested from:</h6>
+                                            <div class="row">
                                                 {% for owner in owners %}
-                                                    <li>{{ owner }}</li>
+                                                <div class="col-md-12">
+                                                    {{ owner.right_type }} - owned by {{ owner.owner }}
+                                                </div>
                                                 {% endfor %}
-                                            </ul>
+                                            </div>
 
                                             <p>
                                                 <button class="button button-xs button-square button-success">Status:

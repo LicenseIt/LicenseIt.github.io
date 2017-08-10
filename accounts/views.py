@@ -11,11 +11,12 @@ from django.contrib.auth.models import User
 
 from orders.models import Order
 
+from owners.models import Question, OrderOwnerRight
+
 import sys
 if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
     from orders.forms import (
         OrderForm,
-        ManualOrderForm,
         OrderIndieForm,
         OrderProgramForm,
         OrderAdvertisingForm,
@@ -28,8 +29,6 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
         WeddingDetailForm,
         PersonalDetailForm
     )
-
-from owners.models import Question, OwnerDatabase
 
 
 class LoginView(View):
@@ -74,12 +73,13 @@ class Account(View):
 
     def data(self, user, order_id=None):
         orders_list = Order.objects.filter(user=user).select_related()
-        owners = OwnerDatabase.objects.all()
 
         if order_id:
             order_data = Order.objects.get(pk=order_id)
         else:
             order_data = orders_list.first()
+
+        owners = OrderOwnerRight.objects.filter(order=order_data.id)
 
         if order_data:
             ask_user = Question.objects.filter(order=order_data.id)

@@ -9,6 +9,9 @@ from django.contrib.auth import login
 from search.models import Track
 from accounts.forms import PersonalInfoForm
 from .models import *
+
+from owners.models import OrderOwnerRight, OwnerDatabase
+
 import sys
 if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
     from .forms import *
@@ -56,10 +59,16 @@ class OrderView(View):
 
         if form.is_valid():
             order_id = form.save()
-            print(order_id.project_type)
+            order_owner = OrderOwnerRight()
+            owner = OwnerDatabase.objects.filter(name=order_id.song.media_copyright)[0]
+            order_owner.owner = owner
+            order_owner.order = order_id
+            order_owner.save()
+
             if request.user.is_authenticated():
                 order_id.user = request.user
                 order_id.save()
+
             return HttpResponseRedirect(reverse(order_id.project_type.slug, args=[order_id.id]))
 
         return render(request,
@@ -488,6 +497,13 @@ class DetailBase(View):
             'url': 'details',
         }
 
+        if 'rate' in request.POST:
+            form_rate = RateUsForm(request.POST.copy())
+            form_rate.data['order'] = order_id
+            context['rate_form'] = form_rate
+            if form_rate.is_valid():
+                form_rate.save()
+
         if not request.user.is_authenticated():
             email = request.POST['email']
             username = request.POST['email']
@@ -540,7 +556,10 @@ class DetailBase(View):
             order.user = data['user']
         order.save()
 
-        return HttpResponseRedirect(reverse('my_account'))
+        if 'rate' in request.POST:
+            return HttpResponseRedirect(reverse('my_account'))
+        else:
+            return HttpResponseRedirect(reverse('rate_us', args=[order_id]))
 
 
 class IndieDetail(DetailBase):
@@ -564,6 +583,16 @@ class IndieDetail(DetailBase):
         }
         if not request.user.is_authenticated():
             context['personal_info'] = PersonalInfoForm()
+
+        order_dist = OrderFilmMaking.objects.filter(order=order_id)[0]
+        dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
+
+        if 'web/streaming' in dist_list or 'external' in dist_list:
+            context['rate_form'] = RateUsForm()
+            context['page_num'] = 3
+        else:
+            context['page_num'] = 4
+
         return render(request,
                       self.template_name,
                       context=context)
@@ -594,14 +623,22 @@ class ProgramDetail(DetailBase):
         form = ProgramDetailForm()
         personal_info = PersonalInfoForm()
 
+        order_dist = OrderProgramming.objects.filter(order=order_id)[0]
+        dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
+
+        context = {
+            'details_form': form,
+            'personal_info': personal_info,
+            'order': order_id,
+            'url': 'details',
+        }
+
+        if 'web/streaming' in dist_list or 'external' in dist_list or 'tv' in dist_list:
+            context['rate_form'] = RateUsForm()
+
         return render(request,
                       self.template_name,
-                      context={
-                          'details_form': form,
-                          'personal_info': personal_info,
-                          'order': order_id,
-                          'url': 'details',
-                      })
+                      context=context)
 
     def post(self, request, order_id):
         '''
@@ -629,14 +666,22 @@ class AdvertisingDetail(DetailBase):
         form = AdvertisingDetailForm()
         personal_info = PersonalInfoForm()
 
+        context = {
+            'details_form': form,
+            'personal_info': personal_info,
+            'order': order_id,
+            'url': 'details',
+        }
+
+        order_dist = OrderAdvertising.objects.filter(order=order_id)[0]
+        dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
+
+        if 'web/streaming' in dist_list or 'external' in dist_list:
+            context['rate_form'] = RateUsForm()
+
         return render(request,
                       self.template_name,
-                      context={
-                          'details_form': form,
-                          'personal_info': personal_info,
-                          'order': order_id,
-                          'url': 'details',
-                      })
+                      context=context)
 
     def post(self, request, order_id):
         '''
@@ -646,6 +691,29 @@ class AdvertisingDetail(DetailBase):
         :return:
         '''
         return self.func(request, order_id, AdvertisingDetailForm)
+
+
+class RateUsView(View):
+    '''
+    the view for a rate us page if we have only 3 forms on indie, programming or advertising
+    '''
+
+    def get(self, request, order_id):
+        rate_form = RateUsForm()
+        return render(request,
+                      'orders/rate_us_form.html',
+                      context={'rate_form': rate_form, 'order': order_id})
+
+    def post(self, request, order_id):
+        rate_form = RateUsForm(request.POST.copy())
+        rate_form.data['order'] = order_id
+
+        if rate_form.is_valid():
+            rate_form.save()
+            return HttpResponseRedirect(reverse('my_account'))
+        return render(request,
+                      'orders/rate_us_form.html',
+                      context={'rate_form': rate_form, 'order': order_id})
 
 
 class WeddingDetails(View):

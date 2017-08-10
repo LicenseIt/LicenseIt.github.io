@@ -12,6 +12,8 @@ from django.urls import reverse
 
 from .models import Search, Track, Collection, Artist
 
+from owners.models import OwnerDatabase, OrderOwnerRight
+
 
 class SearchView(View):
     '''
@@ -106,7 +108,14 @@ class SearchView(View):
                 track.release_date = time.strftime('%Y-%m-%d', date)
 
             if 'copyright' in result:
-                track.media_copyright = result['copyright']
+                copyright_owner = result['copyright']
+                track.media_copyright = copyright_owner
+                owner = OwnerDatabase.objects.filter(name=copyright_owner)
+                if not owner:
+                    owner = OwnerDatabase()
+                    owner.name = copyright_owner
+                    owner.save()
+
             if 'previewUrl' in result:
                 track.preview_url = result['previewUrl']
 

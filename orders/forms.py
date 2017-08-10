@@ -22,6 +22,7 @@ from .models import (
     OrderPersonal,
     FeaturedBackground,
     OrderDistributionProgramming,
+    RateUs,
 )
 
 
@@ -318,12 +319,6 @@ class DetailsFormBase(forms.ModelForm):
                     'placeholder': 'Any other comments or request that you believe are important to the right owners to know'
                 }
             ),
-            'rate': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control col-sm-3'
-                },
-                choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
-            )
         }
 
 
@@ -343,6 +338,20 @@ class AdvertisingDetailForm(DetailsFormBase):
     class Meta(DetailsFormBase.Meta):
         model = OrderAdvertisingDetail
         fields = '__all__'
+
+
+class RateUsForm(forms.ModelForm):
+    class Meta:
+        model = RateUs
+        fields = '__all__'
+        widgets = {
+            'rate': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control col-sm-3'
+                },
+                choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+            )
+        }
 
 
 class WeddingDetailForm(forms.ModelForm):

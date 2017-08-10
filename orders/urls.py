@@ -12,6 +12,7 @@ from .views import (
     AdvertisingDetail,
     WeddingDetails,
     PersonalDetails,
+    RateUsView,
 )
 from django.contrib.auth.decorators import login_required
 
@@ -27,6 +28,7 @@ urlpatterns = [
     url('now/program/(?P<order_id>[0-9]+)/$', OrderProgramView.as_view(), name='programming'),
     url('now/wedding/(?P<order_id>[0-9]+)/$', WeddingDetails.as_view(), name='wedding'),
     url('now/personal/(?P<order_id>[0-9]+)/$',  PersonalDetails.as_view(), name='personal_use'),
+    url('now/(?P<order_id>[0-9]+)/rate-us/$', RateUsView.as_view(), name='rate_us'),
     url('now/(?P<song_id>[0-9]+)/$', OrderView.as_view(), name='order'),
     url('now/manual/$', OrderView.as_view(), name='manual_order'),
 ]

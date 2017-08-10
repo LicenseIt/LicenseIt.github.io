@@ -1,0 +1,13 @@
+{% extends 'common/common_base.html' %}
+{% block content %}
+    <br><br><br><br><br><br>
+    <form method="post" action="{% url 'rate_us' order %}">
+    {% csrf_token %}
+    {% include 'orders/rate_us.html' %}
+        <div class="col-md-3">
+            part 4 of 4
+        </div>
+        <button type="submit" class="btn btn-success">submit</button>
+        <button type="reset" class="btn btn-warning">reset</button>
+    </form>
+{% endblock %}

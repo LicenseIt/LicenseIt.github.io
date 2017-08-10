@@ -6,8 +6,13 @@
             {% csrf_token %}
             {% include 'orders/advertising_form_fields.html' %}
             <div class="row">
-                <button class="btn btn-success">continue</button>
-                <button type="reset" class="btn btn-warning">reset</button>
+                <div class="col-md-3">
+                    <button class="btn btn-success">continue</button>
+                    <button type="reset" class="btn btn-warning">reset</button>
+                </div>
+                <div class="col-md-3">
+                    part 2 of 4
+                </div>
             </div>
         </form>
     </div>

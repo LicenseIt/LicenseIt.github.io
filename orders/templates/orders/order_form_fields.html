@@ -1,15 +1,15 @@
-            <div class="row">
-                <div class="col-md-6">errors {{ order_form.errors }} errors</div>
-            </div>
-            <div class="form-group">
-                <label for="id_song_title">song title</label>
-                {{ order_form.song_title }}
-            </div>
-            <div class="form-group">
-                <label for="id_performer_name">performer name</label>
-                {{ order_form.performer_name }}
-            </div>
-            <div class="form-group">
-                <label for="id_project_type">project type</label>
-                {{ order_form.project_type }}
-            </div>
+<div class="row">
+    <div class="col-md-6">{{ order_form.errors }}</div>
+</div>
+<div class="form-group">
+    <label for="id_song_title">song title</label>
+    {{ order_form.song_title }}
+</div>
+<div class="form-group">
+    <label for="id_performer_name">performer name</label>
+    {{ order_form.performer_name }}
+</div>
+<div class="form-group">
+    <label for="id_project_type">project type</label>
+    {{ order_form.project_type }}
+</div>

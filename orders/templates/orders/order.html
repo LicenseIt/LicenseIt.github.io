@@ -6,8 +6,13 @@
             {% csrf_token %}
             {% include 'orders/order_form_fields.html' %}
             <div class="row">
-                <button type="submit" class="btn btn-success">continue</button>
-                <button type="reset" class="btn btn-warning">reset</button>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-success">continue</button>
+                    <button type="reset" class="btn btn-warning">reset</button>
+                </div>
+                <div class="col-md-3">
+                    part 1 of <span id="num_forms">4</span>
+                </div>
             </div>
         </form>
     </div>

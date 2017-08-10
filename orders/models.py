@@ -588,8 +588,6 @@ class ProjectDetailBase(OrderProjectDetailBase):
 
     comments = models.TextField(null=True, blank=True)
 
-    rate = models.SmallIntegerField()
-
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_details_%(class)s')
 
     def __str__(self):
@@ -597,6 +595,11 @@ class ProjectDetailBase(OrderProjectDetailBase):
 
     class Meta:
         abstract = True
+
+
+class RateUs(Base):
+    rate = models.SmallIntegerField()
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_rate_us')
 
 
 class OrderIndieProjectDetail(ProjectDetailBase):

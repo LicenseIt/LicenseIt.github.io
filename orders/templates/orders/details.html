@@ -7,9 +7,15 @@
               method="post">
             {% csrf_token %}
             {% include 'orders/details_form_fields.html' %}
+            {% include 'orders/rate_us.html' %}
             <div class="row">
-                <button type="submit" class="btn btn-success">submit</button>
-                <button type="reset" class="btn btn-warning">reset</button>
+                <div class="col-md-3">
+                    <button class="btn btn-success">continue</button>
+                    <button type="reset" class="btn btn-warning">reset</button>
+                </div>
+                <div class="col-md-3">
+                    part {{ page_num }} of 4
+                </div>
             </div>
         </form>
     </div>
