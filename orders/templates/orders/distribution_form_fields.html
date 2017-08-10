@@ -6,9 +6,9 @@
                 <label class="col-sm-12">where exactly online?</label>
                 {% for check in web.distribute_on %}
                     <div class="form-group">
-                        <label class="col-sm-2" for="{{ check.id_for_label }}">
+                        <label class="col-sm-4" for="{{ check.id_for_label }}">
                             {{ check.choice_label }}
-                            <span class="col-sm-1">{{ check.tag }}</span>
+                            <span class="col-sm-2">{{ check.tag }}</span>
                         </label>
                         {% if check.choice_label|lower == 'youtube' %}
                             <span class="col-sm-5" id="id_youtube">

@@ -60,10 +60,12 @@ class OrderView(View):
         if form.is_valid():
             order_id = form.save()
             order_owner = OrderOwnerRight()
-            owner = OwnerDatabase.objects.filter(name=order_id.song.media_copyright)[0]
-            order_owner.owner = owner
-            order_owner.order = order_id
-            order_owner.save()
+            print(order_id.song)
+            owner = OwnerDatabase.objects.filter(name=order_id.song.media_copyright)
+            if owner:
+                order_owner.owner = owner
+                order_owner.order = order_id
+                order_owner.save()
 
             if request.user.is_authenticated():
                 order_id.user = request.user
@@ -93,6 +95,8 @@ class OrderIndieView(View):
             order = OrderFilmMaking.objects.filter(order=order_id)[0]
             form = OrderIndieForm(initial=order)
         except IndexError:
+            form = OrderIndieForm()
+        except TypeError:
             form = OrderIndieForm()
 
         return render(request,

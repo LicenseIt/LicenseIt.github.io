@@ -170,7 +170,7 @@ class IndieWebDistribution(forms.ModelForm):
         queryset=WebEntry.objects,
         widget=forms.CheckboxSelectMultiple(
             attrs={
-                'class': 'form-control col-sm-8'
+                'class': 'form-control'
             }
         )
     )
@@ -192,7 +192,7 @@ class IndieExtDistribution(forms.ModelForm):
         queryset=ExternalEntry.objects,
         widget=forms.CheckboxSelectMultiple(
             attrs={
-                'class': 'form-control col-sm-8'
+                'class': 'form-control'
             }
         )
     )
@@ -203,7 +203,7 @@ class IndieExtDistribution(forms.ModelForm):
         widgets = {
             'num_people': forms.NumberInput(
                 attrs={
-                    'class': 'form-control col-sm-2'
+                    'class': 'form-control'
                 }
             )
         }
@@ -216,7 +216,7 @@ class TvDistributionForm(forms.ModelForm):
         widgets = {
             'tv_program': forms.CheckboxInput(
                 attrs={
-                    'class': 'form-control col-sm-2'
+                    'class': 'form-control'
                 }
             ),
             'tv_trailer': forms.CheckboxInput(
