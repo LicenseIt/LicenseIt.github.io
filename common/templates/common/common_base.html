@@ -460,20 +460,34 @@
 
 {% endif %}
     <script>
+    function loginUser(email) {
+        $.ajax({
+            url: {% url 'facebook_login' %},
+            data: {email: email},
+            success: function (data, status, jqXHR) {
+                if (data.status === true) {
+                    window.location.reload();
+                }
+            },
+            error: function (jqXHR, status, errorThrown) {
+                alert('there was an error: ' + jqXHR + ', status: ' + status +
+                    ', error: ' + errorThrown);
+            }
+        });
+    }
+
     function loginCheck() {
         FB.getLoginStatus(function (response) {
             if (response.status === 'connected') {
                 FB.api('/me?fields=first_name,last_name,email', function (response) {
-                    for (res in response) {
-                        console.log(res, response[res]);
-                    }
+                    loginUser(response.email);
                 });
-                FB.logout();
-{#                window.location.reload();#}
             } else {
                 FB.login(function (response) {
-                    for (res in response) {
-                        console.log(response[res]);
+                    if (response.status === 'connected') {
+                        FB.api('/me?fields=first_name,last_name,email', function (response) {
+                            loginUser(response.email);
+                        })
                     }
                 }, {scope: 'public_profile,email'});
             }

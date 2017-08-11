@@ -4,14 +4,14 @@ import traceback
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.views import View
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
 from orders.models import Order
-
 from owners.models import Question, OrderOwnerRight, OwnerDatabase
+from common.helpers import generate_password
 
 import sys
 if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
@@ -60,12 +60,21 @@ class SignupView(View):
             login(request, user)
         except IntegrityError:
             return render(request, 'accounts/signup.html', context={'error': 'this username is already taken'})
-        except:
-            logger = logging.getLogger(__name__)
-            logger.error('error in signup')
-            logger.error(traceback.print_exc())
-            logger.error('end traceback')
         return HttpResponseRedirect(reverse('search_page'))
+
+
+class LoginFacebook(View):
+    def post(self, request):
+        email = request.POST['email']
+        password = generate_password()
+        try:
+            user = User.objects.create_user(email, email, password)
+            login(request, user)
+            return JsonResponse({'status': True})
+        except IntegrityError:
+            user = User.objects.get(username=email)
+            login(request, user)
+            return JsonResponse({'status': True})
 
 
 class Account(View):
