@@ -112,6 +112,16 @@
     </head>
     <body id="topPage" data-spy="scroll" data-target=".navbar" data-offset="100">
     <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '790070294505633',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+        };
+
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {
@@ -122,22 +132,6 @@
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '790070294505633',
-                cookie: true,
-                xfbml: true,
-                version: 'v2.8'
-            });
-            FB.AppEvents.logPageView();
-        };
-    </script>
-    <script>
-
-        FB.getLoginStatus(function (response) {
-            alert(response);
-        });
     </script>
 
     {% if url != 'results' %}
@@ -464,6 +458,11 @@
     <script src="{% static 'common/assets/js/main/googlemap.js' %}"></script>
 
 {% endif %}
+    <script>
+        FB.getLoginStatus(function (response) {
+            alert(response);
+        });
+    </script>
 
     </body>
     </html>
