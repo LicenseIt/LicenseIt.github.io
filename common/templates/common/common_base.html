@@ -477,6 +477,7 @@
             return cookieValue;
         }
         var csrftoken = getCookie('csrftoken');
+        alert(csrftoken);
 
         $.ajax({
             url: "{% url 'facebook_login' %}",
