@@ -422,6 +422,9 @@
     <script src="{% static 'orders/states_show_hide.js' %}"></script>
 {% endif %}
 
+    {% if url == 'client_dash' %}
+        <script src="{% static 'accounts/client_dash.js' %}"></script>
+    {% endif %}
 {% if url == 'works' %}
     <!-- Google Map
     =====================================-->
