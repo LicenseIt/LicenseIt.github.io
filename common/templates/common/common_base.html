@@ -119,6 +119,7 @@
                 xfbml: true,
                 version: 'v2.8'
             });
+            loginCheck();
             FB.AppEvents.logPageView();
         };
 
@@ -459,9 +460,11 @@
 
 {% endif %}
     <script>
+    function loginCheck() {
         FB.getLoginStatus(function (response) {
             alert(response);
         });
+    }
     </script>
 
     </body>
