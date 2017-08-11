@@ -468,9 +468,14 @@
                         console.log(response[res]);
                     }
                 });
+                FB.logout();
 {#                window.location.reload();#}
             } else {
-                FB.login()
+                FB.login(function (response) {
+                    for (res in response) {
+                        console.log(response[res]);
+                    }
+                }, {scope: 'public_profile,email'});
             }
         });
     }
