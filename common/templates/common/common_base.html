@@ -463,6 +463,7 @@
     function loginCheck() {
         FB.getLoginStatus(function (response) {
             if (response.status === 'connected') {
+                alert(response.authResponse.email);
                 window.location.reload();
             } else {
                 FB.login()
