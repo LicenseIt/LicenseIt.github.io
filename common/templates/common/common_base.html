@@ -465,7 +465,7 @@
             if (response.status === 'connected') {
                 FB.api('/me', function (response) {
                     for (res in response) {
-                        console.log(response[res]);
+                        console.log(res, response[res]);
                     }
                 });
                 FB.logout();
