@@ -484,7 +484,7 @@
 
         $.ajax({
             url: "{% url 'facebook_login' %}",
-            data: {email: email, url: '{% request.resolver_match.url_name %}'},
+            data: {email: email, url: '{{ request.resolver_match.url_name }}'},
             method: 'POST',
             beforeSend: function (xhr, settings) {
                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
