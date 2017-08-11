@@ -198,6 +198,9 @@
                                         <div class="col-md-12">
                                             Login via
                                             <div class="social-buttons pb5">
+                                                <fb:login-button scope="public_profile,email" onlogin="loginCheck();">
+
+                                                </fb:login-button>
                                                 <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i>
                                                     Facebook</a>
                                                 <a href="#" class="btn btn-tw"><i class="fa fa-google"></i> Google</a>
@@ -462,7 +465,7 @@
     <script>
     function loginCheck() {
         FB.getLoginStatus(function (response) {
-            alert(response.status);
+            console.log(response.status);
         });
     }
     </script>
