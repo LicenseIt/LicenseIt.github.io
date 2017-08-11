@@ -485,6 +485,7 @@
         $.ajax({
             url: "{% url 'facebook_login' %}",
             data: {email: email, csrf_token: csrftoken},
+            method: 'POST',
             beforeSend: function (xhr, settings) {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 alert('hello ' + csrftoken);
