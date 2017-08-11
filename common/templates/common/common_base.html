@@ -119,7 +119,7 @@
                 xfbml: true,
                 version: 'v2.8'
             });
-            loginCheck();
+
             FB.AppEvents.logPageView();
         };
 
@@ -198,9 +198,8 @@
                                         <div class="col-md-12">
                                             Login via
                                             <div class="social-buttons pb5">
-                                                <fb:login-button scope="public_profile,email" onlogin="loginCheck();">
-
-                                                </fb:login-button>
+                                                <button id="fb-button" class="btn btn-fb"><i class="fa fa-facebook"></i>
+                                                    Facebook</button>
                                                 <a href="#" class="btn btn-tw"><i class="fa fa-google"></i> Google</a>
                                             </div>
                                             or
@@ -463,10 +462,17 @@
     <script>
     function loginCheck() {
         FB.getLoginStatus(function (response) {
-            console.log(response.status);
-            console.log(response.authResponse)
+            if (response.status === 'connected') {
+                window.location.reload();
+            } else {
+                FB.login()
+            }
         });
     }
+
+    $('#fb-button').click(function () {
+        loginCheck();
+    });
     </script>
 
     </body>
