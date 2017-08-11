@@ -111,6 +111,34 @@
         {% endif %}
     </head>
     <body id="topPage" data-spy="scroll" data-target=".navbar" data-offset="100">
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '790070294505633',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    </script>
 
     {% if url != 'results' %}
         <!-- Page Loader
@@ -150,72 +178,76 @@
                     </li>
                     <li class="dropdown megamenu-fw has-dropdown-menu">
                         <a href="{% url 'how_it_works' %}"
-                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">How it
-                        works </a></li>
+                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">How
+                            it
+                            works </a></li>
                     <li class="dropdown megamenu-fw has-dropdown-menu">
                         <a href="{% url 'search' %}"
                            class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">Search </a>
                     </li>
-                {% if request.user.is_authenticated %}
-                    <li class="dropdown megamenu-fw has-dropdown-menu">
-                        <a href="{% url 'my_account' %}"
-                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">{{ user.email }}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'logout' %}"
-                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">signout</a>
-                    </li>
-                {% else %}
-                    <li class="dropdown">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle color-light">Sign in </a>
-                        <ul class="dropdown-menu has-submenu" role="menu">
-                            <li>
-                                <div class="row p15">
-                                    <div class="col-md-12">
-                                        Login via
-                                        <div class="social-buttons pb5">
-                                            <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
-                                            <a href="#" class="btn btn-tw"><i class="fa fa-google"></i> Google</a>
-                                        </div>
-                                        or
-                                        <form class="form mt5" role="form" method="post" action="{% url 'login' %}"
-                                              accept-charset="UTF-8" id="login-nav">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                <input type="email" name="username" class="form-control"
-                                                       id="exampleInputEmail2"
-                                                       placeholder="Email address" required>
+                    {% if request.user.is_authenticated %}
+                        <li class="dropdown megamenu-fw has-dropdown-menu">
+                            <a href="{% url 'my_account' %}"
+                               class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">{{ user.email }}</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'logout' %}"
+                               class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">signout</a>
+                        </li>
+                    {% else %}
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle color-light">Sign in </a>
+                            <ul class="dropdown-menu has-submenu" role="menu">
+                                <li>
+                                    <div class="row p15">
+                                        <div class="col-md-12">
+                                            Login via
+                                            <div class="social-buttons pb5">
+                                                <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i>
+                                                    Facebook</a>
+                                                <a href="#" class="btn btn-tw"><i class="fa fa-google"></i> Google</a>
                                             </div>
-                                            <div class="form-group">
-                                                <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                                <input type="password" name="password" class="form-control"
-                                                       id="exampleInputPassword2"
-                                                       placeholder="Password" required>
-                                                <div class="help-block text-right"><a href="">Forget the password ?</a>
+                                            or
+                                            <form class="form mt5" role="form" method="post" action="{% url 'login' %}"
+                                                  accept-charset="UTF-8" id="login-nav">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label class="sr-only" for="exampleInputEmail2">Email
+                                                        address</label>
+                                                    <input type="email" name="username" class="form-control"
+                                                           id="exampleInputEmail2"
+                                                           placeholder="Email address" required>
                                                 </div>
-                                            </div>
-                                            <div class="form-group mt10">
-                                                <button type="submit"
-                                                        class="button btn-block button-rounded button-success hover-ripple-out">
-                                                    Sign in
-                                                </button>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox"> keep me logged-in
-                                                </label>
-                                            </div>
-                                        </form>
+                                                <div class="form-group">
+                                                    <label class="sr-only" for="exampleInputPassword2">Password</label>
+                                                    <input type="password" name="password" class="form-control"
+                                                           id="exampleInputPassword2"
+                                                           placeholder="Password" required>
+                                                    <div class="help-block text-right"><a href="">Forget the password
+                                                        ?</a>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt10">
+                                                    <button type="submit"
+                                                            class="button btn-block button-rounded button-success hover-ripple-out">
+                                                        Sign in
+                                                    </button>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox"> keep me logged-in
+                                                    </label>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="bottom text-center mt5 font-size-normal">
+                                            New here ? <a href="#"><b>Join Us</b></a>
+                                        </div>
                                     </div>
-                                    <div class="bottom text-center mt5 font-size-normal">
-                                        New here ? <a href="#"><b>Join Us</b></a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                {% endif %}
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
                     <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
                                                                           class="dropdown-toggle color-dark">Contact
                         Us</a></li>
@@ -422,9 +454,9 @@
     <script src="{% static 'orders/states_show_hide.js' %}"></script>
 {% endif %}
 
-    {% if url == 'client_dash' %}
-        <script src="{% static 'accounts/client_dash.js' %}"></script>
-    {% endif %}
+{% if url == 'client_dash' %}
+    <script src="{% static 'accounts/client_dash.js' %}"></script>
+{% endif %}
 {% if url == 'works' %}
     <!-- Google Map
     =====================================-->
@@ -432,6 +464,7 @@
     <script src="{% static 'common/assets/js/main/googlemap.js' %}"></script>
 
 {% endif %}
+
     </body>
     </html>
 {% endblock %}
