@@ -64,8 +64,7 @@ class SignupView(View):
 
 
 class LoginFacebook(View):
-    def post(self, request):
-        email = request.POST['email']
+    def get(self, request, email):
         password = generate_password()
         try:
             user = User.objects.create_user(email, email, password)
