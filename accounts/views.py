@@ -69,11 +69,11 @@ class LoginFacebook(View):
         try:
             user = User.objects.create_user(email, email, password)
             login(request, user)
-            return HttpResponseRedirect(reverse(request.POST['url']))
+            return HttpResponseRedirect(reverse('home'))
         except IntegrityError:
             user = User.objects.get(username=email)
             login(request, user)
-            return HttpResponseRedirect(reverse(request.POST['url']))
+            return HttpResponseRedirect(reverse('home'))
 
 
 class Account(View):
