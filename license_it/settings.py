@@ -137,8 +137,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR + '/static/'
 
 AUTHENTICATION_BACKENDS = [
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
