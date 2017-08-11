@@ -461,7 +461,7 @@
 {% endif %}
     <script>
     function loginUser(email) {
-        window.location = "{% url 'facebook_login' email %}";
+        window.location = "accounts/facebook-login/" + email;
     }
 
     function loginCheck() {
