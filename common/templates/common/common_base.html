@@ -462,7 +462,7 @@
     <script>
     function loginUser(email) {
         $.ajax({
-            url: {% url 'facebook_login' %},
+            url: "{% url 'facebook_login' %}",
             data: {email: email},
             success: function (data, status, jqXHR) {
                 if (data.status === true) {
