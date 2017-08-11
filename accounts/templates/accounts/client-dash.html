@@ -43,8 +43,10 @@
                             </div>
                             <div class="col-md-2 col-sm-6 col-xs-4 pull-right mt35">
 
-                                <a href="" class="button button-xs button-square button-gray hover-pulse"><i
+                                {% if order_data %}
+                                <a href="{% url 'delete_order' order_data.id %}" class="button button-xs button-square button-gray hover-pulse"><i
                                         class="fa fa-trash-o" style="margin: 0;"></i></a>
+                                {% endif %}
                                 <button id="edit_order" class="button button-xs button-square button-gray hover-pulse"><i
                                         class="fa fa-edit" style="margin: 0;"></i></button>
                             </div>

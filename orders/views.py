@@ -1,10 +1,11 @@
 from django.db import IntegrityError
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import login
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from search.models import Track
 from accounts.forms import PersonalInfoForm
@@ -981,3 +982,12 @@ class PersonalDetails(View):
                               'last_name': last_name,
                               'email': email,
                           })
+
+
+class DeleteOrder(View):
+    def get(self, request, order_id=None):
+        order = get_object_or_404(Order, id=order_id)
+        if request.user != order.user and not request.user.is_superuser:
+            return Http404()
+        order.delete()
+        return HttpResponseRedirect(reverse('my_account'))

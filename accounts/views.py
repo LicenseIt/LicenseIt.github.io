@@ -79,12 +79,12 @@ class Account(View):
         else:
             order_data = orders_list.first()
 
-        owners = OrderOwnerRight.objects.filter(order=order_data.id)
-
         if order_data:
+            owners = OrderOwnerRight.objects.filter(order=order_data.id)
             ask_user = Question.objects.filter(order=order_data.id)
         else:
             ask_user = ''
+            owners = ''
 
         context = {
             'url': 'client_dash',
