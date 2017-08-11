@@ -494,6 +494,8 @@ class DetailBase(View):
         data = request.POST.copy()
         data['order'] = order_id
         form = detail_form(data)
+        data['start_duration'] = request.POST['min_start'] + ':' + request.POST['sec_start']
+        data['end_duration'] = request.POST['min_end'] + ':' + request.POST['sec_end']
 
         context = {
             'details_form': form,
@@ -593,9 +595,9 @@ class IndieDetail(DetailBase):
 
         if 'web/streaming' in dist_list or 'external' in dist_list:
             context['rate_form'] = RateUsForm()
-            context['page_num'] = 3
-        else:
             context['page_num'] = 4
+        else:
+            context['page_num'] = 3
 
         return render(request,
                       self.template_name,
@@ -639,6 +641,9 @@ class ProgramDetail(DetailBase):
 
         if 'web/streaming' in dist_list or 'external' in dist_list or 'tv' in dist_list:
             context['rate_form'] = RateUsForm()
+            context['page_num'] = 4
+        else:
+            context['page_num'] = 3
 
         return render(request,
                       self.template_name,
@@ -682,6 +687,9 @@ class AdvertisingDetail(DetailBase):
 
         if 'web/streaming' in dist_list or 'external' in dist_list:
             context['rate_form'] = RateUsForm()
+            context['page_num'] = 4
+        else:
+            context['page_num'] = 3
 
         return render(request,
                       self.template_name,

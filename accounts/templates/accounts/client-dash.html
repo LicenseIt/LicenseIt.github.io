@@ -57,6 +57,30 @@
                                 <div class="col-md-9"
                                      style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
                                      ;>
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li><a data-toggle="pill" href="#pilljustifiedHome">Music selection <i
+                                                class="fa fa-check-circle fa-2x p5 color-success animated"
+                                                data-animation="fadeInUp" data-animation-delay="1200"></i></a></li>
+                                        <li><a data-toggle="pill" href="#pilljustified1">License inquiry <i
+                                                class="fa fa-check-circle fa-2x p5 color-success animated"
+                                                data-animation="fadeInUp" data-animation-delay="1600"></i></a></li>
+                                        <li><a data-toggle="pill" href="#pilljustified2">Owner identification<i
+                                                class="fa fa-check-circle fa-2x p5 color-success animated"
+                                                data-animation="fadeInUp" data-animation-delay="2000"></i></a></li>
+                                        <li {% if order_data.state == 'sent' or order_data.state == 'attention' %}class="active"{% endif %}>
+                                            <a data-toggle="pill" href="#pilljustified3">
+                                                Clrearance request <i
+                                                    class="fa{% if order_data.state == 'done' or order_data.state == 'payment' %} fa-check-circle color-success animated{% else %} fa-circle-thin{% endif %} fa-2x p5"></i></a>
+                                        </li>
+                                        <li {% if order_data.state == 'payment' %}class="active"{% endif %}><a
+                                                data-toggle="pill" href="#pilljustified4">Payment <br> <i
+                                                class="fa {% if order_data.state == 'done' %} fa-check-circle color-success animated{% else %}fa-circle-thin{% endif %} fa-2x p5"></i></a>
+                                        </li>
+                                        <li {% if order_data.state == 'done' %}class="active"{% endif %}><a
+                                                data-toggle="pill" href="#pilljustified5"> License Completed <i
+                                                class="fa fa-circle-thin fa-2x p5"></i></a></li>
+
+                                    </ul>
 
                                     <div class="tab-content">
                                         <div id="pilljustifiedHome" class="tab-pane fade">
@@ -170,30 +194,6 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <ul class="nav nav-pills nav-justified">
-                                        <li><a data-toggle="pill" href="#pilljustifiedHome">Music selection <i
-                                                class="fa fa-check-circle fa-2x p5 color-success animated"
-                                                data-animation="fadeInUp" data-animation-delay="1200"></i></a></li>
-                                        <li><a data-toggle="pill" href="#pilljustified1">License inquiry <i
-                                                class="fa fa-check-circle fa-2x p5 color-success animated"
-                                                data-animation="fadeInUp" data-animation-delay="1600"></i></a></li>
-                                        <li><a data-toggle="pill" href="#pilljustified2">Owner identification<i
-                                                class="fa fa-check-circle fa-2x p5 color-success animated"
-                                                data-animation="fadeInUp" data-animation-delay="2000"></i></a></li>
-                                        <li {% if order_data.state == 'sent' or order_data.state == 'attention' %}class="active"{% endif %}>
-                                            <a data-toggle="pill" href="#pilljustified3">
-                                                Clrearance request <i
-                                                    class="fa{% if order_data.state == 'done' or order_data.state == 'payment' %} fa-check-circle color-success animated{% else %} fa-circle-thin{% endif %} fa-2x p5"></i></a>
-                                        </li>
-                                        <li {% if order_data.state == 'payment' %}class="active"{% endif %}><a
-                                                data-toggle="pill" href="#pilljustified4">Payment <br> <i
-                                                class="fa {% if order_data.state == 'done' %} fa-check-circle color-success animated{% else %}fa-circle-thin{% endif %} fa-2x p5"></i></a>
-                                        </li>
-                                        <li {% if order_data.state == 'done' %}class="active"{% endif %}><a
-                                                data-toggle="pill" href="#pilljustified5"> License Completed <i
-                                                class="fa fa-circle-thin fa-2x p5"></i></a></li>
-
-                                    </ul>
                                 </div>
                             </div>
                         </div>

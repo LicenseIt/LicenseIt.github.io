@@ -44,12 +44,32 @@
 </div>
 <fieldset>
     <div class="form-group">
-        <label class="col-sm-2">start duration</label>
-        {{ details_form.start_duration }}
+        <label for="id_start_minutes" class="col-sm-3">duration start at (minutes)</label>
+        <div class="col-md-2">
+            <input class="form-control" name="min_start" type="number" required
+                   value="{% if min_start %}{{ min_start }}{% endif %}"
+                   id="id_start_minutes" min="00" max="59" placeholder="MM">
+        </div>
+        <label for="id_start_seconds" class="col-md-3">duration start at (seconds)</label>
+        <div class="col-md-2">
+            <input class="form-control" name="sec_start" type="number" required
+                   value="{% if sec_start %}{{ sec_start }}{% endif %}"
+                   id="id_start_seconds" min="00" max="59" placeholder="SS">
+        </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2">end duration</label>
-        {{ details_form.end_duration }}
+        <label for="id_end_minutes" class="col-sm-3">duration end at (minutes)</label>
+        <div class="col-md-2">
+            <input class="form-control" name="min_end" type="number" required
+                   value="{% if min_end %}{{ min_end }}{% endif %}"
+                   id="id_end_minutes" min="00" max="59" placeholder="MM">
+        </div>
+        <label for="id_end_seconds" class="col-md-3">duration end at (seconds)</label>
+        <div class="col-md-2">
+            <input class="form-control" name="sec_end" type="number" required
+                   value="{% if sec_end %}{{ sec_end }}{% endif %}"
+                   id="id_end_seconds" min="00" max="59" placeholder="SS">
+        </div>
     </div>
     <div class="form-group">
         <label class="col-sm-12">term</label>

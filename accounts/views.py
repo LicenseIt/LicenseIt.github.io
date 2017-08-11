@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 from orders.models import Order
 
-from owners.models import Question, OrderOwnerRight
+from owners.models import Question, OrderOwnerRight, OwnerDatabase
 
 import sys
 if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
@@ -100,6 +100,13 @@ class Account(View):
             context['indie_form'] = OrderIndieForm(instance=indie_data)
             details = order_data.order_details_orderindieprojectdetail.get(order=order_data.id)
             context['details_form'] = IndieDetailForm(instance=details)
+            start = details.start_duration.split(':')
+            end = details.end_duration.split(':')
+            context['min_start'] = start[0]
+            context['sec_start'] = start[1]
+            context['min_end'] = end[0]
+            context['sec_end'] = end[1]
+
             context['order_details'] = details
             if order_data.order_project_orderfilmmaking.filter(distribution__name='web/streaming').exists():
                 web = order_data.order_dist_web.get(order=order_data.id)
@@ -113,6 +120,12 @@ class Account(View):
             details = order_data.order_details_orderprogrammingdetail.get(order=order_data.id)
             context['details_form'] = ProgramDetailForm(instance=details)
             context['order_details'] = details
+            start = details.start_duration.split(':')
+            end = details.end_duration.split(':')
+            context['min_start'] = start[0]
+            context['sec_start'] = start[1]
+            context['min_end'] = end[0]
+            context['sec_end'] = end[1]
             if order_data.order_project_orderprogramming.filter(distribution__name='web/streaming').exists():
                 web = order_data.order_dist_web.get(order=order_data.id)
                 context['web'] = IndieWebDistribution(instance=web)
@@ -127,6 +140,12 @@ class Account(View):
             context['advertising_form'] = OrderAdvertisingForm(instance=ad_data)
             details = order_data.order_details_orderadvertisingdetail.get(order=order_data.id)
             context['order_details'] = details
+            start = details.start_duration.split(':')
+            end = details.end_duration.split(':')
+            context['min_start'] = start[0]
+            context['sec_start'] = start[1]
+            context['min_end'] = end[0]
+            context['sec_end'] = end[1]
             context['details_form'] = AdvertisingDetailForm(instance=details)
             if order_data.order_project_orderadvertising.filter(distribution__name='web/streaming').exists():
                 web = order_data.order_dist_web.get(order=order_data.id)
@@ -154,6 +173,10 @@ class Account(View):
 
     def post(self, request, order_id=None):
         # context = self.data(request.user, order_id)
+        data = request.POST.copy()
+        data['start_duration'] = request.POST['min_start'] + ':' + request.POST['sec_start']
+        data['end_duration'] = request.POST['min_end'] + ':' + request.POST['sec_end']
+
         order_data = Order.objects.get(pk=order_id)
         order_form = OrderForm(request.POST)
 
@@ -173,7 +196,7 @@ class Account(View):
 
         if order_data.project_type.name.lower() == 'film making':
             indie_form = OrderIndieForm(request.POST)
-            indie_details_form = IndieDetailForm(request.POST)
+            indie_details_form = IndieDetailForm(data)
             context['indie_form'] = indie_form
             context['details_form'] = indie_details_form
             if order_data.order_project_orderfilmmaking.filter(distribution__name='web/streaming').exists():
@@ -199,8 +222,7 @@ class Account(View):
         if order_data.project_type.name.lower() == 'programming':
             program_form = OrderProgramForm(request.POST)
             context['program_form'] = program_form
-            details = order_data.order_details_orderprogrammingdetail.get(order=order_data.id)
-            prog_details_form = ProgramDetailForm(request.POST)
+            prog_details_form = ProgramDetailForm(data)
             context['details_form'] = prog_details_form
 
             if order_data.order_project_orderprogramming.filter(distribution__name='web/streaming').exists():
@@ -230,7 +252,7 @@ class Account(View):
         elif order_data and order_data.project_type.name.lower() == 'advertising':
             ad_form = OrderAdvertisingForm(request.POST)
             context['advertising_form'] = ad_form
-            ad_details_form = AdvertisingDetailForm(request.POST)
+            ad_details_form = AdvertisingDetailForm(data)
             context['details_form'] = ad_details_form
 
             if order_data.order_project_orderadvertising.filter(distribution__name='web/streaming').exists():
