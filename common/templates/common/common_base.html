@@ -481,7 +481,7 @@
 
         $.ajax({
             url: "{% url 'facebook_login' %}",
-            data: {email: email, csrftoken: csrftoken},
+            data: {email: email, csrf_token: csrftoken},
             success: function (data, status, jqXHR) {
                 if (data.status === true) {
                     window.location.reload();
