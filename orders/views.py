@@ -772,89 +772,54 @@ class WeddingDetails(View):
         data['order'] = order_id
 
         form = WeddingDetailForm(data)
-        personal_info = PersonalInfoForm(request.POST.copy())
+        context = {
+            'wedding_form': form,
+            'order': order_id,
+            'url': 'details',
+            'first_name': first_name,
+            'last_name': last_name,
+            'email': email,
+        }
+        if not request.user.is_authenticated():
+            personal_info = PersonalInfoForm(request.POST.copy())
+            context['personal_info'] = personal_info
 
-        if not password or not confirm_password:
-            return render(request,
-                          self.template_name,
-                          context={
-                              'wedding_form': form,
-                              'personal_info': personal_info,
-                              'order': order_id,
-                              'url': 'details',
-                              'first_name': first_name,
-                              'last_name': last_name,
-                              'email': email,
-                          })
+            if not password or not confirm_password:
+                return render(request,
+                              self.template_name,
+                              context=context)
 
-        if password != confirm_password:
-            return render(request,
-                          self.template_name,
-                          context={
-                              'wedding_form': form,
-                              'personal_info': personal_info,
-                              'order': order_id,
-                              'url': 'details',
-                              'first_name': first_name,
-                              'last_name': last_name,
-                              'email': email,
-                          })
+            if password != confirm_password:
+                return render(request,
+                              self.template_name,
+                              context=context)
+
+            try:
+                user = User.objects.create_user(username, email, password)
+                login(request, user)
+                data['user'] = user.id
+                personal_info.data['user'] = user
+
+                if personal_info.is_valid():
+                    personal_info.save()
+
+                order = Order.objects.get(pk=order_id)
+                order.user = user
+                order.save()
+
+            except IntegrityError:
+                return render(request,
+                              self.template_name,
+                              context=context)
 
         if form.is_valid():
             form.save()
         else:
             return render(request,
                           self.template_name,
-                          context={
-                              'wedding_form': form,
-                              'personal_info': personal_info,
-                              'order': order_id,
-                              'url': 'details',
-                              'first_name': first_name,
-                              'last_name': last_name,
-                              'email': email,
-                          })
+                          context=context)
 
-        try:
-            user = User.objects.create_user(username, email, password)
-            login(request, user)
-            data['user'] = user.id
-
-            order = Order.objects.get(pk=order_id)
-            order.user = user
-            order.save()
-
-            personal_info = PersonalInfoForm(data)
-            if personal_info.is_valid():
-                personal_info.save()
-            else:
-                return render(request,
-                              self.template_name,
-                              context={
-                                  'wedding_form': form,
-                                  'personal_info': personal_info,
-                                  'order': order_id,
-                                  'url': 'details',
-                                  'first_name': first_name,
-                                  'last_name': last_name,
-                                  'email': email,
-                              })
-            form.data['order'] = order_id
-
-            return HttpResponseRedirect(reverse('my_account'))
-
-        except IntegrityError:
-            return render(request,
-                          self.template_name,
-                          context={
-                              'wedding_form': form,
-                              'personal_info': personal_info,
-                              'order': order_id,
-                              'url': 'details',
-                              'first_name': first_name,
-                              'last_name': last_name,
-                              'email': email,
-                          })
+        return HttpResponseRedirect(reverse('my_account'))
 
 
 class PersonalDetails(View):
@@ -889,99 +854,68 @@ class PersonalDetails(View):
         :param order_id: order id
         :return:
         '''
-        email = request.POST['email']
-        username = request.POST['email']
-        password = request.POST['password']
-        confirm_password = request.POST['confirm_password']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-
         data = request.POST.copy()
         data['order'] = order_id
 
         form = PersonalDetailForm(data)
-        personal_info = PersonalInfoForm(request.POST.copy())
 
-        if not password or not confirm_password:
-            return render(request,
-                          self.template_name,
-                          context={
-                              'personal_form': form,
-                              'personal_info': personal_info,
-                              'order': order_id,
-                              'url': 'details',
-                              'first_name': first_name,
-                              'last_name': last_name,
-                              'email': email,
-                          })
+        context = {
+            'personal_form': form,
+            'order': order_id,
+            'url': 'details',
+        }
 
-        if password != confirm_password:
-            return render(request,
-                          self.template_name,
-                          context={
-                              'personal_form': form,
-                              'personal_info': personal_info,
-                              'order': order_id,
-                              'url': 'details',
-                              'first_name': first_name,
-                              'last_name': last_name,
-                              'email': email,
-                          })
+        if not request.user.is_authenticated():
+            personal_info = PersonalInfoForm(data)
+            context['personal_info'] = personal_info
+            email = request.POST['email']
+            context['email'] = email
+            username = request.POST['email']
+            password = request.POST['password']
+            confirm_password = request.POST['confirm_password']
+            first_name = request.POST['first_name']
+            context['first_name'] = first_name
+            last_name = request.POST['last_name']
+            context['last_name'] = last_name
+            personal_info = PersonalInfoForm(data)
+
+            if not password or not confirm_password or password != confirm_password:
+                return render(request,
+                              self.template_name,
+                              context=context)
+
+            try:
+                user = User.objects.create_user(username, email, password)
+                data['user'] = user.id
+                if personal_info.is_valid():
+                    personal_info.save()
+                else:
+                    return render(request,
+                                  self.template_name,
+                                  context=context)
+
+                login(request, user)
+
+                order = Order.objects.get(pk=order_id)
+                order.user = user
+                order.save()
+
+            except IntegrityError:
+                return render(request,
+                              self.template_name,
+                              context=context)
 
         if form.is_valid():
             form.save()
         else:
             return render(request,
                           self.template_name,
-                          context={
-                              'personal_form': form,
-                              'personal_info': personal_info,
-                              'order': order_id,
-                              'url': 'details',
-                              'first_name': first_name,
-                              'last_name': last_name,
-                              'email': email,
-                          })
+                          context=context)
+        order = Order.objects.get(pk=order_id)
+        order.user = request.user
+        order.save()
 
-        try:
-            user = User.objects.create_user(username, email, password)
-            login(request, user)
-            data['user'] = user.id
-
-            order = Order.objects.get(pk=order_id)
-            order.user = user
-            order.save()
-
-            personal_info = PersonalInfoForm(data)
-            if personal_info.is_valid():
-                personal_info.save()
-            else:
-                return render(request,
-                              self.template_name,
-                              context={
-                                  'personal_form': form,
-                                  'personal_info': personal_info,
-                                  'order': order_id,
-                                  'url': 'details',
-                                  'first_name': first_name,
-                                  'last_name': last_name,
-                                  'email': email,
-                              })
-
-            return HttpResponseRedirect(reverse('my_account'))
-
-        except IntegrityError:
-            return render(request,
-                          self.template_name,
-                          context={
-                              'personal_form': form,
-                              'personal_info': personal_info,
-                              'order': order_id,
-                              'url': 'details',
-                              'first_name': first_name,
-                              'last_name': last_name,
-                              'email': email,
-                          })
+        return HttpResponseRedirect(reverse('my_account'))
 
 
 class DeleteOrder(View):

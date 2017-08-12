@@ -89,7 +89,8 @@
                                             <h5>Music Selection</h5>
                                             <p>song title: {{ order_data.song_title }}</p>
                                             <p>performer name: {{ order_data.performer_name }}</p>
-                                            <p>song version: {{ order_details.song_version }}</p>
+                                            <p>date of order: {{ order_data.created }}</p>
+                                            <p>order state: {{ order_data.state }}</p>
                                             <p>
                                                 <button class="button button-xs button-square button-success">Status:
                                                     Completed
@@ -160,9 +161,11 @@
                                                 {% for question in ask_user %}
                                                     <div class="form-group">
                                                         <label class="control-label"
-                                                               for="question{{ question.id }}">{{ question.question }}</label>
+                                                               for="question{{ question.id }}">
+                                                            {{ question.question }} asked by {{ question.owner }}
+                                                        </label>
                                                         <textarea id="question{{ question.id }}"
-                                                                  name="question_{{ question.id }}"
+                                                                  name="{{ question.answer }}"
                                                                   class="form-control"></textarea>
                                                     </div>
                                                 {% endfor %}
