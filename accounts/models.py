@@ -25,5 +25,15 @@ class PersonalInfo(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
-# class Notifications(models.Model):
-#     notification_type =
+class Notifications(models.Model):
+    NOTIFICATION_TYPE_CHOICES = (
+        ('question', 'question'),
+        ('state', 'state'),
+    )
+    notification_type = models.CharField(max_length=20,
+                                         choices=NOTIFICATION_TYPE_CHOICES)
+    order = models.ForeignKey(Order,
+                              on_delete=models.CASCADE,
+                              related_name='notifications_for_order')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
