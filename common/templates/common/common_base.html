@@ -186,6 +186,12 @@
                             <a href="{% url 'my_account' %}"
                                class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">{{ user.email }}</a>
                         </li>
+                        {% notifications user as notif %}
+                        {% if notif %}
+                        <li class="dropdown megamenu-fw has-dropdown-menu">
+                            <a href="#" class="dropdown-toggle" id="notifications">{{ notif }}</a>
+                        </li>
+                        {% endif %}
                         <li>
                             <a href="{% url 'logout' %}"
                                class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">signout</a>
