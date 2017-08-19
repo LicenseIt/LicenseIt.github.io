@@ -31,11 +31,15 @@ class OrderView(View):
         :param song_id: the song id if available in our database
         :return:
         '''
+        song_name = ''
+        artist = ''
         if request.resolver_match.url_name == 'order':
             track = Track.objects.get(pk=song_id)
+            song_name = track.name
+            artist = track.artist
             order_form = OrderForm(initial={
-                'song_title': track.name,
-                'performer_name': track.artist
+                'song_title': song_name,
+                'performer_name': artist
             })
         # we want a manual song title and performer name- url name is manual_order
         else:
@@ -43,7 +47,13 @@ class OrderView(View):
 
         return render(request,
                       self.template_name,
-                      context={'order_form': order_form, 'song_id': song_id})
+                      context={
+                          'order_form': order_form,
+                          'song_id': song_id,
+                          'song_title': song_name,
+                          'artist': artist,
+                          'is_form': True,
+                      })
 
     def post(self, request, song_id=None):
         '''
@@ -61,12 +71,13 @@ class OrderView(View):
         if form.is_valid():
             order_id = form.save()
             order_owner = OrderOwnerRight()
-            print(order_id.song)
-            owner = OwnerDatabase.objects.filter(name=order_id.song.media_copyright)
-            if owner:
-                order_owner.owner = owner
-                order_owner.order = order_id
-                order_owner.save()
+            if order_id.song:
+                owner = OwnerDatabase.objects.filter(name=order_id.song.media_copyright)
+
+                if owner:
+                    order_owner.owner = owner
+                    order_owner.order = order_id
+                    order_owner.save()
 
             if request.user.is_authenticated():
                 order_id.user = request.user
@@ -76,7 +87,11 @@ class OrderView(View):
 
         return render(request,
                       self.template_name,
-                      context={'order_form': form, 'song_id': song_id})
+                      context={
+                          'order_form': form,
+                          'song_id': song_id,
+                          'is_form': True
+                      })
 
 
 class OrderIndieView(View):
@@ -102,7 +117,7 @@ class OrderIndieView(View):
 
         return render(request,
                       self.template_name,
-                      context={'indie_form': form, 'order': order_id})
+                      context={'indie_form': form, 'order': order_id, 'is_form': True})
 
     def post(self, request, order_id):
         '''
@@ -118,7 +133,7 @@ class OrderIndieView(View):
             return HttpResponseRedirect(reverse('indie_dist', args=[order_id]))
         return render(request,
                       self.template_name,
-                      context={'indie_form': form, 'order': order_id}
+                      context={'indie_form': form, 'order': order_id, 'is_form': True}
                       )
 
 
@@ -143,7 +158,7 @@ class OrderProgramView(View):
 
         return render(request,
                       self.template_name,
-                      context={'program_form': form, 'order': order_id})
+                      context={'program_form': form, 'order': order_id, 'is_form': True})
 
     def post(self, request, order_id):
         '''
@@ -159,7 +174,7 @@ class OrderProgramView(View):
             return HttpResponseRedirect(reverse('prog_dist', args=[order_id]))
         return render(request,
                       self.template_name,
-                      context={'program_form': form, 'order': order_id}
+                      context={'program_form': form, 'order': order_id, 'is_form': True}
                       )
 
 
@@ -184,7 +199,7 @@ class OrderAdvertisingView(View):
 
         return render(request,
                       self.template_name,
-                      context={'advertising_form': form, 'order': order_id})
+                      context={'advertising_form': form, 'order': order_id, 'is_form': True})
 
     def post(self, request, order_id):
         '''
@@ -200,7 +215,7 @@ class OrderAdvertisingView(View):
             return HttpResponseRedirect(reverse('ad_dist', args=[order_id]))
         return render(request,
                       self.template_name,
-                      context={'advertising_form': form, 'order': order_id}
+                      context={'advertising_form': form, 'order': order_id, 'is_form': True}
                       )
 
 
@@ -225,13 +240,15 @@ class IndieDistribution(View):
         context = {
             'order': order_id,
             'url': 'distribution',
+            'is_form': True,
         }
 
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
+        print(dist_list)
 
         if 'web/streaming' in dist_list:
             context['web'] = web_form
-        if 'external' in dist_list:
+        if 'externally' in dist_list:
             context['ext'] = ext_form
 
         if 'web' in context or 'ext' in context.keys():
@@ -267,6 +284,7 @@ class IndieDistribution(View):
                               'ext': ext_form,
                               'order': order_id,
                               'url': 'distribution',
+                              'is_form': True
                           })
 
         if web_form:
@@ -314,10 +332,10 @@ class ProgramDistribution(View):
         context = {
             'order': order_id,
             'url': 'distribution',
+            'is_form': True,
         }
 
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
-        print(dist_list)
 
         if 'web/streaming' in dist_list:
             context['web'] = web_form
@@ -363,6 +381,7 @@ class ProgramDistribution(View):
                               'tv': tv_form,
                               'order': order_id,
                               'url': 'distribution',
+                              'is_form': True,
                           })
 
         if web_form:
@@ -404,7 +423,6 @@ class AdvertisingDistribution(View):
         :param order_id: the order id
         :return:
         '''
-        print('hello')
         web_form = IndieWebDistribution()
         ext_form = IndieExtDistribution()
         # tv_form = TvDistributionForm()
@@ -414,6 +432,7 @@ class AdvertisingDistribution(View):
         context = {
             'order': order_id,
             'url': 'distribution',
+            'is_form': True,
         }
 
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
@@ -462,6 +481,7 @@ class AdvertisingDistribution(View):
                               # 'tv': tv_form,
                               'order': order_id,
                               'url': 'distribution',
+                              'is_form': True,
                           })
 
         if web_form:
@@ -502,6 +522,7 @@ class DetailBase(View):
             'details_form': form,
             'order': order_id,
             'url': 'details',
+            'is_form': True
         }
 
         if 'rate' in request.POST:
@@ -518,11 +539,11 @@ class DetailBase(View):
             confirm_password = request.POST['confirm_password']
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
-            personal_info = PersonalInfoForm(data)
 
             context['first_name'] = first_name
             context['last_name'] = last_name
             context['email'] = email
+            personal_info = PersonalInfoForm(data)
             context['personal_info'] = personal_info
 
             if not password or not confirm_password or password != confirm_password:
@@ -533,18 +554,21 @@ class DetailBase(View):
             try:
                 user = User.objects.create_user(username, email, password)
                 login(request, user)
+                user.first_name = first_name
+                user.last_name = last_name
+                user.save()
                 data['user'] = user.id
+                personal_info = PersonalInfoForm(data)
+                context['personal_info'] = personal_info
+
+                if personal_info.is_valid():
+                    personal_info.save()
+                else:
+                    return render(request,
+                                  self.template_name,
+                                  context=context)
 
             except IntegrityError:
-                return render(request,
-                              self.template_name,
-                              context=context)
-
-            personal_info = PersonalInfoForm(data)
-
-            if personal_info.is_valid():
-                personal_info.save()
-            else:
                 return render(request,
                               self.template_name,
                               context=context)
@@ -586,7 +610,8 @@ class IndieDetail(DetailBase):
         context = {
             'details_form': form,
             'order': order_id,
-            'url': 'details'
+            'url': 'details',
+            'is_form': True
         }
         if not request.user.is_authenticated():
             context['personal_info'] = PersonalInfoForm()
@@ -638,6 +663,7 @@ class ProgramDetail(DetailBase):
             'personal_info': personal_info,
             'order': order_id,
             'url': 'details',
+            'is_form': True,
         }
 
         if 'web/streaming' in dist_list or 'external' in dist_list or 'tv' in dist_list:
@@ -681,6 +707,7 @@ class AdvertisingDetail(DetailBase):
             'personal_info': personal_info,
             'order': order_id,
             'url': 'details',
+            'is_form': True,
         }
 
         order_dist = OrderAdvertising.objects.filter(order=order_id)[0]
@@ -715,7 +742,7 @@ class RateUsView(View):
         rate_form = RateUsForm()
         return render(request,
                       'orders/rate_us_form.html',
-                      context={'rate_form': rate_form, 'order': order_id})
+                      context={'rate_form': rate_form, 'order': order_id, 'is_form': True})
 
     def post(self, request, order_id):
         rate_form = RateUsForm(request.POST.copy())
@@ -726,7 +753,7 @@ class RateUsView(View):
             return HttpResponseRedirect(reverse('my_account'))
         return render(request,
                       'orders/rate_us_form.html',
-                      context={'rate_form': rate_form, 'order': order_id})
+                      context={'rate_form': rate_form, 'order': order_id, 'is_form': True})
 
 
 class WeddingDetails(View):
@@ -752,6 +779,7 @@ class WeddingDetails(View):
                           'personal_info': personal_info,
                           'order': order_id,
                           'url': 'details',
+                          'is_form': True,
                       })
 
     def post(self, request, order_id):
@@ -761,13 +789,6 @@ class WeddingDetails(View):
         :param order_id: the order id
         :return:
         '''
-        email = request.POST['email']
-        username = request.POST['email']
-        password = request.POST['password']
-        confirm_password = request.POST['confirm_password']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-
         data = request.POST.copy()
         data['order'] = order_id
 
@@ -776,11 +797,20 @@ class WeddingDetails(View):
             'wedding_form': form,
             'order': order_id,
             'url': 'details',
-            'first_name': first_name,
-            'last_name': last_name,
-            'email': email,
+            'is_form': True,
         }
+
         if not request.user.is_authenticated():
+            email = request.POST['email']
+            context['email'] = email
+            username = request.POST['email']
+            password = request.POST['password']
+            confirm_password = request.POST['confirm_password']
+            first_name = request.POST['first_name']
+            context['first_name'] = first_name
+            last_name = request.POST['last_name']
+            context['last_name'] = last_name
+
             personal_info = PersonalInfoForm(request.POST.copy())
             context['personal_info'] = personal_info
 
@@ -845,6 +875,7 @@ class PersonalDetails(View):
                           'personal_info': personal_info,
                           'order': order_id,
                           'url': 'details',
+                          'is_form': True,
                       })
 
     def post(self, request, order_id):
@@ -863,6 +894,7 @@ class PersonalDetails(View):
             'personal_form': form,
             'order': order_id,
             'url': 'details',
+            'is_form': True
         }
 
         if not request.user.is_authenticated():

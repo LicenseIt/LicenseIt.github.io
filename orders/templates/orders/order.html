@@ -1,19 +1,30 @@
 {% extends 'common/common_base.html' %}
 {% block content %}
     <div class="container">
-    <br><br><br><br><br>
-        <form action="{% if song_id %}{% url 'order' song_id %}{% else %}{% url 'manual_order' %}{% endif %}" method="post">
-            {% csrf_token %}
-            {% include 'orders/order_form_fields.html' %}
-            <div class="row">
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-success">continue</button>
-                    <button type="reset" class="btn btn-warning">reset</button>
+        <br><br><br><br><br>
+        <div class="smart-wrap">
+        <div class="smart-forms wrap-4">
+        <div class="form-header header-yellow">
+            <h4><i class="fa fa-pencil-square"></i>Your order</h4>
+            <span style="display:inline-block;width:200px;text-align: center;">{{ song_title }}</span>
+            <span>{{ artist }}</span>
+        </div>
+            <form action="{% if song_id %}{% url 'order' song_id %}{% else %}{% url 'manual_order' %}{% endif %}" method="post">
+                {% csrf_token %}
+                <div class="form-body theme-yellow">
+                    {% include 'orders/order_form_fields.html' %}
                 </div>
-                <div class="col-md-3">
-                    part 1 of <span id="num_forms">4</span>
+                <div class="form-footer">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-yellow">continue</button>
+                        <button type="reset" class="btn btn-warning">reset</button>
+                    </div>
+                    <div class="col-md-3">
+                        part 1 of <span id="num_forms">4</span>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        </div>
     </div>
 {% endblock %}

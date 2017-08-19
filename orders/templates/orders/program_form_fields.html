@@ -1,11 +1,24 @@
-            <div class="row">
-                {{ program_form.errors }}
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3" for="id_production_name">production name</label>
-                {{ program_form.production_name }}
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3" for="id_distribution">distribution</label>
-                {{ program_form.distribution }}
-            </div>
+<div class="row">
+    {{ program_form.errors }}
+</div>
+<div class="section">
+    <label class="field" for="id_production_name">
+        {{ program_form.production_name }}
+    </label>
+</div>
+<div class="option-group field">
+    <div class="smart-option-group smart-option-list group-vertical">
+        {% for option in program_form.distribution.field.choices.queryset %}
+            <label title="{{ option.explanation }}" class="option">
+                <input type="checkbox" name="distribution"
+                       value="{{ option.id }}">
+                <span class="smart-option smart-checkbox">
+                    <span class="smart-option-ui">
+                        {{ option.name }}
+                        <span class="iconc-pos"> <i class="fa fa-check"></i> </span>
+                    </span>
+                </span>
+            </label>
+        {% endfor %}
+    </div>
+</div>

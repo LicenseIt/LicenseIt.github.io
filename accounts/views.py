@@ -1,5 +1,6 @@
 import logging
 import traceback
+from datetime import datetime
 
 from django.db import IntegrityError
 from django.shortcuts import render
@@ -8,6 +9,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserChangeForm
 
 from orders.models import Order
 from owners.models import Question, OrderOwnerRight, OwnerDatabase
@@ -29,6 +31,8 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
         WeddingDetailForm,
         PersonalDetailForm
     )
+    from accounts.models import PersonalInfo
+    from accounts.forms import PersonalInfoForm
 
 
 class LoginView(View):
@@ -63,6 +67,36 @@ class SignupView(View):
         return HttpResponseRedirect(reverse('search_page'))
 
 
+class EditUserData(View):
+    def post(self, request):
+        data = request.POST.copy()
+
+        user = User.objects.get(username=request.user.username)
+        data['user'] = user.id
+        personal_info = PersonalInfoForm(data)
+
+        if 'first_name' in request.POST and request.POST['first_name']:
+            user.first_name = request.POST['first_name']
+            user.save()
+        if 'last_name' in request.POST and request.POST['last_name']:
+            user.last_name = request.POST['last_name']
+            user.save()
+        if 'email' in request.POST and request.POST['email']:
+            user.email = request.POST['email']
+            user.save()
+        if 'password' in request.POST and 'confirm_password' in request.POST and request.POST['password']:
+            pas = request.POST['password']
+            pas2 = request.POST['confirm_password']
+            if pas == pas2:
+                user.password = pas
+                user.save()
+
+        if personal_info.is_valid():
+            personal_info.save()
+
+        return HttpResponseRedirect(reverse('my_account'))
+
+
 class LoginFacebook(View):
     def get(self, request, email):
         password = generate_password()
@@ -94,6 +128,14 @@ class Account(View):
             ask_user = ''
             owners = ''
 
+        if PersonalInfo.objects.filter(user=user).exists():
+            personal_info = PersonalInfo.objects.get(user=user)
+            personal_info_form = PersonalInfoForm(instance=personal_info)
+        else:
+            personal_info_form = PersonalInfoForm()
+
+        user_data = User.objects.get(username=user.email)
+
         context = {
             'url': 'client_dash',
             'orders_list': orders_list,
@@ -101,6 +143,10 @@ class Account(View):
             'order_form': OrderForm(instance=order_data),
             'ask_user': ask_user,
             'owners': owners,
+            'is_form': True,
+            'personal_info': personal_info_form,
+            'user_data': UserChangeForm(instance=user_data),
+            'user': user,
         }
 
         if order_data and order_data.project_type.name.lower() == 'film making':
@@ -200,6 +246,7 @@ class Account(View):
             'order_form': order_form,
             'ask_user': ask_user,
             'owners': owners,
+            'is_form': True,
         }
 
         if order_data.project_type.name.lower() == 'film making':
@@ -273,11 +320,10 @@ class Account(View):
                 context['ext'] = ext
                 if ext.is_valid():
                     ext.save()
+
             if ad_form.is_valid():
-                print('ad form is valid')
                 ad_form.save()
-            else:
-                print(ad_form.errors)
+
             if ad_details_form.is_valid():
                 details = ad_details_form.save()
                 context['order_details'] = details
@@ -303,9 +349,6 @@ class Account(View):
                 context['order_details'] = details
             else:
                 context['order_details'] = order_data.orderpersonal_details.get(order=order_data.id)
-        else:
-            print('what is going on??')
-            print(order_data.project_type.name)
 
         if order_form.is_valid():
             order_form.save()

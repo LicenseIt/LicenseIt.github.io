@@ -1,15 +1,29 @@
 <div class="row">
     <div class="col-md-6">{{ order_form.errors }}</div>
 </div>
-<div class="form-group">
-    <label for="id_song_title">song title</label>
-    {{ order_form.song_title }}
+<div class="section">
+    <label class="field">
+        {{ order_form.song_title }}
+    </label>
 </div>
-<div class="form-group">
-    <label for="id_performer_name">performer name</label>
-    {{ order_form.performer_name }}
+<div class="section">
+    <label class="field">
+        {{ order_form.performer_name }}
+    </label>
 </div>
-<div class="form-group">
-    <label for="id_project_type">project type</label>
-    {{ order_form.project_type }}
+<div class="section">
+    <div class="option-group field">
+        <div class="smart-option-group">
+            {% for option in order_form.project_type.field.choices.queryset %}
+                <label title="{{ option.explanation }}" for="{{ option.slug }}"
+                       class="option">
+                    <input type="radio" id="{{ option.slug }}" name="project_type"
+                           value="{{ option.id }}" {% if order_form.project_type.value == option.id %}checked{% endif %}>
+                    <span class="smart-option smart-radio">
+                        <span class="smart-option-ui"> <i class="iconc"></i> {{ option.name }}</span>
+                    </span>
+                </label>
+            {% endfor %}
+        </div>
+    </div>
 </div>

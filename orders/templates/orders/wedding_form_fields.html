@@ -4,62 +4,51 @@
 <div class="row">
     {{ personal_info.errors }}
 </div>
-<div class="form-group">
-    <label class="col-sm-2">platform</label>
+<div class="section">
+    <label class="field-label">platform</label>
     {{ wedding_form.platform }}
 </div>
-<div class="form-group">
-    <label class="col-sm-2">number of uses</label>
+<div class="section">
+    <label class="field-label">number of uses</label>
     {{ wedding_form.num_uses }}
 </div>
-<div class="form-group">
-    <label for="id_territory" class="col-sm-2 control-label">territory</label>
-    <div class="col-sm-10">
-        <input id="id_territory" list="territory" name="territory"
-               class="form-control" value="{{ wedding_form.territory.value }}">
-    </div>
-    <datalist id="territory">
-        {% for territory in wedding_form.territory %}
-            <option {% if territory.choice_label == 'United States' %}
-                id="usa"
-            {% endif %}>{{ territory.choice_label }}</option>
-        {% endfor %}
-    </datalist>
+<div class="section">
+    <label for="id_territory" class="field-label">territory</label>
+    <input id="id_territory" name="territory"
+           class="gui-input" value="{{ wedding_form.territory.value }}">
 </div>
-<div id="usa_states" class="form-group">
-    <label for="id_states" class="col-sm-2 control-label">states</label>
+<div id="usa_states" class="section">
+    <label for="id_states" class="field-label">states</label>
     {{ wedding_form.territory_usa }}
 </div>
 {% if not request.user.is_authenticated %}
-    <fieldset>
-        <div class="form-group">
-            <label class="control-label" for="id_first_name">first name</label>
-            <input class="form-control" type="text" id="id_first_name" name="first_name"
+        <div class="section">
+            <label class="field-label" for="id_first_name">first name</label>
+            <input class="gui-input" type="text" id="id_first_name" name="first_name"
                    value="{{ first_name }}" placeholder="first name" required>
         </div>
-        <div class="form-group">
-            <label for="id_last_name">last name</label>
-            <input type="text" id="id_last_name" name="last_name"
+        <div class="section">
+            <label class="field-label" for="id_last_name">last name</label>
+            <input class="gui-input" type="text" id="id_last_name" name="last_name"
                    value="{{ last_name }}" placeholder="last name" required>
         </div>
-        <div class="form-group">
-            <label for="id_email">email</label>
-            <input type="email" id="id_email" name="email"
+        <div class="section">
+            <label class="field-label" for="id_email">email</label>
+            <input class="gui-input" type="email" id="id_email" name="email"
                    value="{{ email }}" placeholder="username@example.com" required>
         </div>
-        <div class="form-group">
-            <label for="id_address">address</label>
+        <div class="section">
+            <label class="field-label" for="id_address">address</label>
             {{ personal_info.address }}
         </div>
-        <div class="form-group">
-            <label for="id_password">password</label>
-            <input type="password" id="id_password" name="password"
+        <div class="section">
+            <label class="field-label" for="id_password">password</label>
+            <input class="gui-input" type="password" id="id_password" name="password"
                    value="" required>
         </div>
-        <div class="form-group">
-            <label for="id_confirm_password">confirm password</label>
-            <input type="password" id="id_confirm_password" name="confirm_password"
+        <div class="section">
+            <label class="field-label" for="id_confirm_password">confirm password</label>
+            <input class="gui-input" type="password" id="id_confirm_password" name="confirm_password"
                    value="" required>
         </div>
-    </fieldset>
 {% endif %}

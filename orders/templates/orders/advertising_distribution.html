@@ -2,18 +2,23 @@
 {% block content %}
     <div class="container">
     <br><br><br><br><br>
-        <form class="form-horizontal" action="{% url 'ad_dist' order %}" method="post">
-            {% csrf_token %}
-            {% include 'orders/distribution_form_fields.html' %}
-            <div class="row">
-                <div class="col-md-3">
+    <div class="smart-wrap">
+        <div class="smart-forms smart-container wrap-4">
+            <div class="form-header header-yellow">
+                <h4><i class="fa fa-pencil-square"></i>distribution data</h4>
+            </div>
+            <form action="{% url 'ad_dist' order %}" method="post">
+                {% csrf_token %}
+                <div class="form-body theme-yellow">
+                    {% include 'orders/distribution_form_fields.html' %}
+                </div>
+                <div class="form-footer">
                     <button class="btn btn-success">continue</button>
                     <button type="reset" class="btn btn-warning">reset</button>
-                </div>
-                <div class="col-md-3">
                     part 3 of 4
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+    </div>
     </div>
 {% endblock %}

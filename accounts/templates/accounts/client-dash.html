@@ -1,6 +1,69 @@
 {% extends 'common/common_base.html' %}
 {% load staticfiles %}
 {% block content %}
+    <div id="edit_user" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4>edit personal details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="smart-wrap">
+                        <div class="smart-forms wrap-4">
+                            <form method="post" action="{% url 'edit_user' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="date_joined" value="{{ user_data.date_joined.value }}">
+                                <input type="hidden" name="username" value="{{ user_data.email.value }}">
+                                <div class="form-body theme-yellow">
+                                    <div class="section">
+                                        <label class="field-label" for="id_first_name">first name</label>
+                                        <input class="gui-input" type="text" id="id_first_name" name="first_name"
+                                               value="{{ user_data.first_name.value }}" placeholder="first name" required>
+                                    </div>
+                                    <div class="section">
+                                        <label class="field-label" for="id_last_name">last name</label>
+
+                                        <input class="gui-input" type="text" id="id_last_name" name="last_name"
+                                               value="{{ user_data.last_name.value }}" placeholder="last name" required>
+                                    </div>
+                                    <div class="section">
+                                        <label class="field-label" for="id_email">email</label>
+                                        <input class="gui-input" type="email" id="id_email" name="email"
+                                               value="{{ user_data.email.value }}" placeholder="username@example.com" required>
+                                    </div>
+                                    <div class="section">
+                                        <label class="field-label" for="id_address">address</label>
+                                        {{ personal_info.address }}
+                                    </div>
+                                    <div class="section">
+                                        <label class="field-label" for="id_password">password</label>
+                                        <input class="gui-input" type="password" id="id_password" name="password"
+                                               value="">
+                                    </div>
+                                    <div class="section">
+                                        <label class="field-label" for="id_confirm_password">confirm password</label>
+                                        <input class="gui-input" type="password" id="id_confirm_password" name="confirm_password"
+                                               value="">
+                                    </div>
+                                    <div class="form-footer">
+                                        <button class="button">submit</button>
+                                        <button class="button button-danger">reset</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning">cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Subheader Area
     ===================================== -->
     <header class="bg-grad-stellar mt70">
@@ -44,11 +107,13 @@
                             <div class="col-md-2 col-sm-6 col-xs-4 pull-right mt35">
 
                                 {% if order_data %}
-                                <a href="{% url 'delete_order' order_data.id %}" class="button button-xs button-square button-gray hover-pulse"><i
-                                        class="fa fa-trash-o" style="margin: 0;"></i></a>
+                                    <a href="{% url 'delete_order' order_data.id %}"
+                                       class="button button-xs button-square button-gray hover-pulse"><i
+                                            class="fa fa-trash-o" style="margin: 0;"></i></a>
                                 {% endif %}
-                                <button id="edit_order" class="button button-xs button-square button-gray hover-pulse"><i
-                                        class="fa fa-edit" style="margin: 0;"></i></button>
+                                <button id="edit_order" class="button button-xs button-square button-gray hover-pulse">
+                                    <i
+                                            class="fa fa-edit" style="margin: 0;"></i></button>
                             </div>
 
                         </div>
@@ -63,7 +128,8 @@
                                         <li><a data-toggle="pill" href="#pilljustifiedHome">Music selection <i
                                                 class="fa fa-check-circle fa-2x p5 color-success animated"
                                                 data-animation="fadeInUp" data-animation-delay="1200"></i></a></li>
-                                        <li id="license_inquiry"><a id="link_inquiry" data-toggle="pill" href="#pilljustified1">License inquiry <i
+                                        <li id="license_inquiry"><a id="link_inquiry" data-toggle="pill"
+                                                                    href="#pilljustified1">License inquiry <i
                                                 class="fa fa-check-circle fa-2x p5 color-success animated"
                                                 data-animation="fadeInUp" data-animation-delay="1600"></i></a></li>
                                         <li><a data-toggle="pill" href="#pilljustified2">Owner identification<i
@@ -98,170 +164,185 @@
                                             </p>
                                         </div>
                                         <div id="pilljustified1" class="tab-pane fade">
-                                        {% if order_data %}
-                                            <h5>License Inquiry</h5>
-                                            <form class="form-horizontal" method="post" action="{% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
-                                            {% csrf_token %}
-                                                {% include 'orders/order_form_fields.html' %}
-                                                {% if advertising_form %}
-                                                    {% include 'orders/advertising_form_fields.html' %}
-                                                {% endif %}
-                                                {% if program_form %}
-                                                    {% include 'orders/program_form_fields.html' %}
-                                                {% endif %}
-                                                {% if indie_form %}
-                                                    {% include 'orders/indie_form_fields.html' %}
-                                                {% endif %}
-                                                {% if web or ext or tv %}
-                                                    {% include 'orders/distribution_form_fields.html' %}
-                                                {% endif %}
-                                                {% if details_form %}
-                                                    {% include 'orders/details_form_fields.html' %}
-                                                {% endif %}
-                                                {% if wedding_form %}
-                                                    {% include 'orders/wedding_form_fields.html' %}
-                                                {% endif %}
-                                                {% if personal_form %}
-                                                    {% include 'orders/personal_form_fields.html' %}
-                                                {% endif %}
-                                                <div class="row">
-                                                    <button type="submit" class="btn btn-success">resubmit changes</button>
-                                                    <button type="reset" class="btn btn-warning">reset</button>
+                                            {% if order_data %}
+                                                    <h5>License Inquiry</h5>
+                                                <div class="smart-wrap">
+                                                <div class="smart-forms smart-container wrap-4">
+                                                    <form method="post" action="
+                                                            {% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
+                                                        {% csrf_token %}
+                                                        {% include 'orders/order_form_fields.html' %}
+                                                        {% if advertising_form %}
+                                                            {% include 'orders/advertising_form_fields.html' %}
+                                                        {% endif %}
+                                                        {% if program_form %}
+                                                            {% include 'orders/program_form_fields.html' %}
+                                                        {% endif %}
+                                                        {% if indie_form %}
+                                                            {% include 'orders/indie_form_fields.html' %}
+                                                        {% endif %}
+                                                        {% if web or ext or tv %}
+                                                            {% include 'orders/distribution_form_fields.html' %}
+                                                        {% endif %}
+                                                        {% if details_form %}
+                                                            {% include 'orders/details_form_fields.html' %}
+                                                        {% endif %}
+                                                        {% if wedding_form %}
+                                                            {% include 'orders/wedding_form_fields.html' %}
+                                                        {% endif %}
+                                                        {% if personal_form %}
+                                                            {% include 'orders/personal_form_fields.html' %}
+                                                        {% endif %}
+                                                        <div class="form-footer">
+                                                            <button type="submit" class="btn btn-success">resubmit
+                                                                changes
+                                                            </button>
+                                                            <button type="reset" class="btn btn-warning">reset</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                            </form>
-                                            <p>
-                                                <button class="button button-xs button-square button-success">Status:
-                                                    Completed
-                                                </button>
-                                            </p>
-                                        {% endif %}
-                                        </div>
-                                        <div id="pilljustified2" class="tab-pane fade">
-                                            <h5>Owner Identification</h5>
-                                            <h6>Synchronization license was requested from:</h6>
-                                            <div class="row">
-                                                {% for owner in owners %}
-                                                <div class="col-md-12">
-                                                    {{ owner.right_type }} - owned by {{ owner.owner }}
                                                 </div>
-                                                {% endfor %}
+                                                <p>
+                                                    <button class="button button-xs button-square button-success">
+                                                        Status:
+                                                        Completed
+                                                    </button>
+                                                </p>
+                                            {% endif %}
                                             </div>
+                                            <div id="pilljustified2" class="tab-pane fade">
+                                                <h5>Owner Identification</h5>
+                                                <h6>Synchronization license was requested from:</h6>
+                                                <div class="row">
+                                                    {% for owner in owners %}
+                                                        <div class="col-md-12">
+                                                            {{ owner.right_type }} - owned by {{ owner.owner }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
 
-                                            <p>
-                                                <button class="button button-xs button-square button-success">Status:
-                                                    Completed
-                                                </button>
-                                            </p>
+                                                <p>
+                                                    <button class="button button-xs button-square button-success">
+                                                        Status:
+                                                        Completed
+                                                    </button>
+                                                </p>
 
-                                        </div>
-                                        <div id="pilljustified3"
-                                             class="tab-pane fade in{% if order_data.state == 'sent' or order_data.state == 'attention' %} active{% endif %}">
-                                            <h5>Clrearance Request</h5>
-                                            <form action="ask_user" method="post">
-                                                {% for question in ask_user %}
-                                                    <div class="form-group">
-                                                        <label class="control-label"
-                                                               for="question{{ question.id }}">
-                                                            {{ question.question }} asked by {{ question.owner }}
-                                                        </label>
-                                                        <textarea id="question{{ question.id }}"
-                                                                  name="{{ question.answer }}"
-                                                                  class="form-control"></textarea>
-                                                    </div>
-                                                {% endfor %}
-                                            </form>
-                                            <p>
-                                                <button class="button button-xs button-square button-yellow">Status:
-                                                    pending
-                                                </button>
-                                            </p>
-                                        </div>
-                                        <div id="pilljustified4"
-                                             class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
-                                            <h5>Payment</h5>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, libero,
-                                                temporibus quam eaque numquam debitis excepturi assumenda necessitatibus
-                                                dolore dolorum vero enim distinctio ipsa. Quod, dolorum, quidem eum
-                                                quisquam facilis nam molestias et voluptas omnis quibusdam dignissimos
-                                                illum ullam.
-                                            </p>
-                                        </div>
-                                        <div id="pilljustified5"
-                                             class="tab-pane fade{% if order_data.state == 'done' %} in active{% endif %}">
-                                            <h5>Completed</h5>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, libero,
-                                                temporibus quam eaque numquam debitis excepturi assumenda necessitatibus
-                                                dolore dolorum vero enim distinctio ipsa. Quod, dolorum, quidem eum
-                                                quisquam facilis nam molestias et voluptas omnis quibusdam dignissimos
-                                                illum ullam.
-                                            </p>
+                                            </div>
+                                            <div id="pilljustified3"
+                                                 class="tab-pane fade in{% if order_data.state == 'sent' or order_data.state == 'attention' %} active{% endif %}">
+                                                <h5>Clrearance Request</h5>
+                                                <form action="ask_user" method="post">
+                                                    {% for question in ask_user %}
+                                                        <div class="form-group">
+                                                            <label class="control-label"
+                                                                   for="question{{ question.id }}">
+                                                                {{ question.question }} asked by {{ question.owner }}
+                                                            </label>
+                                                            <textarea id="question{{ question.id }}"
+                                                                      name="{{ question.answer }}"
+                                                                      class="form-control"></textarea>
+                                                        </div>
+                                                    {% endfor %}
+                                                </form>
+                                                <p>
+                                                    <button class="button button-xs button-square button-yellow">Status:
+                                                        pending
+                                                    </button>
+                                                </p>
+                                            </div>
+                                            <div id="pilljustified4"
+                                                 class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
+                                                <h5>Payment</h5>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro,
+                                                    libero,
+                                                    temporibus quam eaque numquam debitis excepturi assumenda
+                                                    necessitatibus
+                                                    dolore dolorum vero enim distinctio ipsa. Quod, dolorum, quidem eum
+                                                    quisquam facilis nam molestias et voluptas omnis quibusdam
+                                                    dignissimos
+                                                    illum ullam.
+                                                </p>
+                                            </div>
+                                            <div id="pilljustified5"
+                                                 class="tab-pane fade{% if order_data.state == 'done' %} in active{% endif %}">
+                                                <h5>Completed</h5>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro,
+                                                    libero,
+                                                    temporibus quam eaque numquam debitis excepturi assumenda
+                                                    necessitatibus
+                                                    dolore dolorum vero enim distinctio ipsa. Quod, dolorum, quidem eum
+                                                    quisquam facilis nam molestias et voluptas omnis quibusdam
+                                                    dignissimos
+                                                    illum ullam.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
+
+                        <!-- Item 1 END
+                       ======================== -->
+
+
+                        <!-- Sidebar
+                        ===================================== -->
                     </div>
+                    <div id="sidebar" class="col-md-2 col-md-pull-9 mt animated bg-dark mt50 pl10 pr10"
+                         data-animation="fadeInLeft" data-animation-delay="250">
 
-
-                    <!-- Item 1 END
-                   ======================== -->
-
-
-                    <!-- Sidebar
-                    ===================================== -->
-                </div>
-                <div id="sidebar" class="col-md-2 col-md-pull-9 mt animated bg-dark mt50 pl10 pr10"
-                     data-animation="fadeInLeft" data-animation-delay="250">
-
-                    <!-- Search
-                    ===================================== -->
-                    <div class="mt20 pt20 clearfix">
-                        <form>
-                            <div class="form-group">
-                                <label class="sr-only">Email address</label>
-                                <input type="text" class="form-control" id="searchshop" placeholder="Search">
-                            </div>
-                            <button type="submit" class="button button-sm button-block button-blue mt-10">Search
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Sidebar Cart
-                    ===================================== -->
-                    <div class=" pb20 clearfix">
-                        <h5 class="mt25 color-light">
-                            Your Orders
-                            <span class="heading-divider mt10"></span>
-                        </h5>
-                        <div class="shop-sidebar-cart">
-                            {% for order in orders_list %}
-                                <div class="sidebar-cart-container">
-
-                                    <h6><a href="{% url 'my_account_order' order.id %}"
-                                           class="color-blue">{{ order.song_title }}</a></h6>
-                                    <span class="sidebar-cart-price color-light">{{ order.performer_name }}</span>
-                                    <span class="sidebar-cart-remove color-light"><a href="remove_song"><i
-                                            class="fa fa-times-circle fa-fw"></i>Remove</a></span>
+                        <!-- Search
+                        ===================================== -->
+                        <div class="mt20 pt20 clearfix">
+                            <form>
+                                <div class="form-group">
+                                    <label class="sr-only">Email address</label>
+                                    <input type="text" class="form-control" id="searchshop" placeholder="Search">
                                 </div>
-                            {% endfor %}
+                                <button type="submit" class="button button-sm button-block button-blue mt-10">Search
+                                </button>
+                            </form>
                         </div>
-                        <h5><span class="color-light">YOUR LICENSING PROFILE</span></h5>
-                        <p class="color-light"> full Name and state</p> <br>
 
-                        <a class="button button-block button-gray button-sm hover-ripple-out mt-30">edit<i
-                                class="fa fa-edit fa-1x"></i></a>
+                        <!-- Sidebar Cart
+                        ===================================== -->
+                        <div class=" pb20 clearfix">
+                            <h5 class="mt25 color-light">
+                                Your Orders
+                                <span class="heading-divider mt10"></span>
+                            </h5>
+                            <div class="shop-sidebar-cart">
+                                {% for order in orders_list %}
+                                    <div class="sidebar-cart-container">
+
+                                        <h6><a href="{% url 'my_account_order' order.id %}"
+                                               class="color-blue">{{ order.song_title }}</a></h6>
+                                        <span class="sidebar-cart-price color-light">{{ order.performer_name }}</span>
+                                        <span class="sidebar-cart-remove color-light"><a href="remove_song"><i
+                                                class="fa fa-times-circle fa-fw"></i>Remove</a></span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <h5><span class="color-light">YOUR LICENSING PROFILE</span></h5>
+                            <p class="color-light"> full Name and state</p> <br>
+
+                            <button data-toggle="modal" data-target="#edit_user" class="button button-block button-gray button-sm hover-ripple-out mt-30">edit<i
+                                    class="fa fa-edit fa-1x"></i></button>
+                        </div>
+
+
                     </div>
-
-
                 </div>
             </div>
-        </div>
-        <div class="row pt50 pb30"></div><!-- sidebar end -->
+            <div class="row pt50 pb30"></div><!-- sidebar end -->
 
-    </div><!-- row end -->
+        </div><!-- row end -->
     </div><!-- container end -->
     </div><!-- shop section end -->
 

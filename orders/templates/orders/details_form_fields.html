@@ -1,191 +1,183 @@
 <div class="row">
-    {{ details_form.errors }}
+    details {{ details_form.errors }}
 </div>
 <div class="row">
-    {{ personal_info.errors }}
+    personal {{ personal_info.errors }}
 </div>
-<div class="form-group">
-    <label class="col-sm-2">number of uses</label>
-    {{ details_form.number_uses }}
+<div class="section">
+    <label class="field-label" for="id_number_uses">number of uses</label>
+    <label class="field">{{ details_form.number_uses }}</label>
 </div>
-<div class="form-group">
-    <label class="col-sm-2">opening closing?</label>
-    {% for check in details_form.opening_closing %}
-        <div>
-            <label class="col-sm-12" for="{{ check.id_for_label }}">
-                {{ check.choice_label }}
-                <span class="col-sm-2">{{ check.tag }}</span>
+<div class="section">
+    <label class="field-label">opening closing?</label>
+</div>
+
+<div class="section">
+    <div class="group-vertical">
+        {% for check in details_form.opening_closing %}
+            <label class="option" for="{{ check.id_for_label }}">
+                {{ check.tag }}
+                <span class="radio"></span>{{ check.choice_label }}
             </label>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 </div>
 <div title="Is the song being sung by one of your characters? Is it playing without any voiceover? That is likely a featured use. However, a song is playing in the background at low volume with narration over the top, that is likely background use"
-     class="form-group">
-    <label class="col-sm-2">featured or background?</label>
-    {% for check in details_form.featured_background %}
-        <div>
-            <label class="col-sm-12" for="{{ check.id_for_label }}">
-                {{ check.choice_label }}
-                <span class="col-sm-2">{{ check.tag }}</span>
-            </label>
-        </div>
-    {% endfor %}
-</div>
-<div class="form-group">
-    <label class="col-sm-2">song version</label>
-    {% for check in details_form.song_version %}
-        <div class="form-group">
-            <label class="col-sm-12" for="{{ check.id_for_label }}">
-                {{ check.choice_label }}
-                <span class="col-sm-2">{{ check.tag }}</span>
-            </label>
-        </div>
-    {% endfor %}
-</div>
-<fieldset>
-    <div class="form-group">
-        <label for="id_start_minutes" class="col-sm-3">duration start at (minutes)</label>
-        <div class="col-md-2">
-            <input class="form-control" name="min_start" type="number" required
-                   value="{% if min_start %}{{ min_start }}{% endif %}"
-                   id="id_start_minutes" min="00" max="59" placeholder="MM">
-        </div>
-        <label for="id_start_seconds" class="col-md-3">duration start at (seconds)</label>
-        <div class="col-md-2">
-            <input class="form-control" name="sec_start" type="number" required
-                   value="{% if sec_start %}{{ sec_start }}{% endif %}"
-                   id="id_start_seconds" min="00" max="59" placeholder="SS">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="id_end_minutes" class="col-sm-3">duration end at (minutes)</label>
-        <div class="col-md-2">
-            <input class="form-control" name="min_end" type="number" required
-                   value="{% if min_end %}{{ min_end }}{% endif %}"
-                   id="id_end_minutes" min="00" max="59" placeholder="MM">
-        </div>
-        <label for="id_end_seconds" class="col-md-3">duration end at (seconds)</label>
-        <div class="col-md-2">
-            <input class="form-control" name="sec_end" type="number" required
-                   value="{% if sec_end %}{{ sec_end }}{% endif %}"
-                   id="id_end_seconds" min="00" max="59" placeholder="SS">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-12">term</label>
-        <span class="col-sm-12">State how long you would like to license the song for your project</span>
-        {{ details_form.term }}
-    </div>
-    <div class="form-group">
-        <label for="id_territory" class="col-sm-2 control-label">
-            territory <span>State where you would like the rights to use music in your project</span>
-        </label>
-        <div class="col-sm-10">
-            <input id="id_territory" list="territory" name="territory"
-                   class="form-control" value="{{ details_form.territory.value }}">
-        </div>
-        <datalist id="territory">
-            {% for territory in details_form.territory %}
-                <option {% if territory.choice_label == 'United States' %}
-                    id="usa"
-                {% endif %}>{{ territory.choice_label }}</option>
+     class="section">
+    <div class="option-group field">
+        <div class="group-vertical">
+            <label class="field-label">featured or background?</label>
+            {% for check in details_form.featured_background %}
+                <label class="option" for="{{ check.id_for_label }}">
+                    {{ check.tag }}
+                    <span class="checkbox"></span>{{ check.choice_label }}
+                </label>
             {% endfor %}
-        </datalist>
+        </div>
     </div>
-    <div id="usa_states" class="form-group">
-        <label for="id_states" class="col-sm-2 control-label">states</label>
-        {{ details_form.territory_usa }}
-    </div>
-</fieldset>
-<fieldset>
-    <div class="form-group">
-        <label class="col-sm-2">release date</label>
-        {{ details_form.release_date }}
-    </div>
-    <div title="Publishers and record companies use budget to estimate viewership" class="form-group">
-        <label class="col-sm-2">budget</label>
-        {% for radio in details_form.budget %}
-            <div>
-                <label class="col-sm-12" for="{{ radio.id_for_label }}">
-                    {{ radio.choice_label }}
-                    <span class="col-sm-2">{{ radio.tag }}</span>
+</div>
+<div class="section">
+    <div class="option-group field">
+        <div class="group-vertical">
+            <label class="field-label">song version</label>
+            {% for check in details_form.song_version %}
+                <label class="option" for="{{ check.id_for_label }}">
+                    {{ check.tag }}
+                    <span class="radio"></span>{{ check.choice_label }}
                 </label>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</fieldset>
-<fieldset>
-    <div class="form-group">
-        <label class="col-sm-2">synopsis</label>
-        {{ details_form.synopsis }}
+</div>
+<div class="section">
+    <label for="id_start_minutes" class="field-label">duration start at (minutes)</label>
+    <input class="gui-input" name="min_start" type="number" required
+           value="{% if min_start %}{{ min_start }}{% endif %}"
+           id="id_start_minutes" min="00" max="59" placeholder="MM">
+</div>
+<div class="section">
+    <label for="id_start_seconds" class="field-label">duration start at (seconds)</label>
+    <input class="gui-input" name="sec_start" type="number" required
+           value="{% if sec_start %}{{ sec_start }}{% endif %}"
+           id="id_start_seconds" min="00" max="59" placeholder="SS">
+</div>
+<div class="section">
+    <label for="id_end_minutes" class="field-label">duration end at (minutes)</label>
+    <input class="gui-input" name="min_end" type="number" required
+           value="{% if min_end %}{{ min_end }}{% endif %}"
+           id="id_end_minutes" min="00" max="59" placeholder="MM">
+</div>
+<div class="section">
+    <label for="id_end_seconds" class="field-label">duration end at (seconds)</label>
+    <input class="gui-input" name="sec_end" type="number" required
+           value="{% if sec_end %}{{ sec_end }}{% endif %}"
+           id="id_end_seconds" min="00" max="59" placeholder="SS">
+</div>
+<div class="section">
+    <label class="field-label">term</label>
+    <span>State how long you would like to license the song for your project</span>
+    <div class="section colm colm6">
+        <label class="field select">
+            {{ details_form.term }}
+        </label>
     </div>
-    <div class="form-group">
-        <label class="col-sm-2">description</label>
-        {{ details_form.description }}
-    </div>
-</fieldset>
-<fieldset>
-    <div class="form-group">
-        <label class="col-sm-2">purpose?</label>
-        {% for radio in details_form.is_non_profit %}
-            <div>
-                <label class="col-sm-12" for="{{ radio.id_for_label }}">
-                    {{ radio.choice_label }}
-                    <span {% if radio.choice_label == 'yes' %}
-                        id="is-non-profit"
-                    {% else %}
-                        id="is-not-non-profit"
-                    {% endif %} class="col-sm-2">{{ radio.tag }}</span>
+</div>
+<div class="section">
+    <label for="id_territory" class="field-label">
+        territory <span>State where you would like the rights to use music in your project</span>
+    </label>
+    <input id="id_territory" name="territory"
+           class="gui-input" value="{{ details_form.territory.value }}">
+</div>
+<div id="usa_states" class="section">
+    <label for="id_states" class="field-label">states</label>
+    {{ details_form.territory_usa }}
+</div>
+<div class="section">
+    <label class="field-label">release date</label>
+    {{ details_form.release_date }}
+</div>
+<div title="Publishers and record companies use budget to estimate viewership"
+     class="section">
+    <label class="">budget</label>
+    <div class="option-group field">
+        <div class="group-vertical">
+            {% for radio in details_form.budget %}
+                <label class="option" for="{{ radio.id_for_label }}">
+                    {{ radio.tag }}
+                    <span class="radio"></span>{{ radio.choice_label }}
                 </label>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-    <div id="non-profit" class="form-group">
-        <label class="col-sm-2">non profit</label>
-        {% for radio in details_form.non_profit %}
-            <div>
-                <label class="col-sm-12" for="{{ radio.id_for_label }}">
-                    {{ radio.choice_label }}
-                    <span class="col-sm-2">{{ radio.tag }}</span>
+</div>
+<div class="section">
+    <label class="field-label">synopsis</label>
+    {{ details_form.synopsis }}
+</div>
+<div class="section">
+    <label class="field-label">description</label>
+    {{ details_form.description }}
+</div>
+<div class="section">
+    <label class="field-label">purpose?</label>
+    <div class="option-group field">
+        <div class="group-vertical">
+            {% for radio in details_form.is_non_profit %}
+                <label id="{% if radio.choice_label == 'profit' %}is-non-profit{% else %}is-not-non-profit{% endif %}"
+                       class="option" for="{{ radio.id_for_label }}">
+                    {{ radio.tag }}
+                    <span class="radio"></span>{{ radio.choice_label }}
                 </label>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</fieldset>
-<div class="form-group">
-    <label class="col-sm-2">comments?</label>
+</div>
+<div id="non-profit" class="section">
+    <label class="field-label">non profit</label>
+    <div class="option-group field">
+        <div class="group-vertical">
+            {% for radio in details_form.non_profit %}
+                <label class="option" for="{{ radio.id_for_label }}">
+                    {{ radio.tag }}
+                    <span class="radio"></span>{{ radio.choice_label }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="section">
+    <label class="field-label">comments?</label>
     {{ details_form.comments }}
 </div>
 {% if not request.user.is_authenticated %}
-    <fieldset>
-        <div class="form-group">
-            <label for="id_first_name">first name</label>
-            <input type="text" id="id_first_name" name="first_name"
+        <div class="section">
+            <label class="field-label" for="id_first_name">first name</label>
+            <input class="gui-input" type="text" id="id_first_name" name="first_name"
                    value="{{ first_name }}" placeholder="first name" required>
         </div>
-        <div class="form-group">
-            <label for="id_last_name">last name</label>
-            <input type="text" id="id_last_name" name="last_name"
+        <div class="section">
+            <label class="field-label" for="id_last_name">last name</label>
+            <input class="gui-input" type="text" id="id_last_name" name="last_name"
                    value="{{ last_name }}" placeholder="last name" required>
         </div>
-        <div class="form-group">
-            <label for="id_email">email</label>
-            <input type="email" id="id_email" name="email"
+        <div class="section">
+            <label class="field-label" for="id_email">email</label>
+            <input class="gui-input" type="email" id="id_email" name="email"
                    value="{{ email }}" placeholder="username@example.com" required>
         </div>
-        <div class="form-group">
-            <label for="id_address">address</label>
+        <div class="section">
+            <label class="field-label" for="id_address">address</label>
             {{ personal_info.address }}
         </div>
-        <div class="form-group">
-            <label for="id_password">password</label>
-            <input type="password" id="id_password" name="password"
+        <div class="section">
+            <label class="field-label" for="id_password">password</label>
+            <input class="gui-input" type="password" id="id_password" name="password"
                    value="" required>
         </div>
-        <div class="form-group">
-            <label for="id_confirm_password">confirm password</label>
-            <input type="password" id="id_confirm_password" name="confirm_password"
+        <div class="section">
+            <label class="field-label" for="id_confirm_password">confirm password</label>
+            <input class="gui-input" type="password" id="id_confirm_password" name="confirm_password"
                    value="" required>
         </div>
-    </fieldset>
 {% endif %}

@@ -1,11 +1,20 @@
-            <div class="row">
-                {{ advertising_form.errors }}
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3" for="id_production_name">production name</label>
-                {{ advertising_form.production_name }}
-            </div>
-            <div class="form-group">
-                <label class="col-sm-12" for="id_distribution">distribution</label>
-                {{ advertising_form.distribution }}
-            </div>
+<div class="row">
+    {{ advertising_form.errors }}
+</div>
+<div class="section">
+    <label class="field-label" for="id_production_name">production name</label>
+    {{ advertising_form.production_name }}
+</div>
+<div class="section">
+    <label class="field-label" for="id_distribution">distribution</label>
+    <div class="option-group field">
+        <div class="group-vertical">
+            {% for option in advertising_form.distribution %}
+                <label class="option">
+                {{ option.tag }}
+                <span class="checkbox"></span>{{ option.choice_label }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+</div>

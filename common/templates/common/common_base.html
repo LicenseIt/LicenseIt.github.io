@@ -104,11 +104,11 @@
                 #usa_states {
                     display: none;
                 }
-
-                #non-profit {
-                    display: none;
-                }
             </style>
+        {% endif %}
+        {% if is_form %}
+            <link rel="stylesheet" type="text/css" href="{% static 'common/assets/css-form/smart-forms.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'common/assets/css-form/smart-themes/yellow.css' %}">
         {% endif %}
     </head>
     <body id="topPage" data-spy="scroll" data-target=".navbar" data-offset="100">
@@ -152,110 +152,110 @@
 
     <!-- Navigation Area
     ===================================== -->
+    <div class="{% if url == 'home' %}container-fluid{% else %}container{% endif %}">
     <nav class="navbar navbar-pasific navbar-mp {% if url != 'home' %}navbar-standart{% endif %} megamenu navbar-fixed-top"
          {% if url != 'home' %}style="border-bottom:1px solid #fff;{% endif %}">
-        <div class="{% if url == 'home' %}container-fluid{% else %}container{% endif %}">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                    <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="{% url 'home' %}">
-                    <img src="{% static 'common/assets/img/logo/logo-default.png' %}" alt="logo"
-                         href="{% url 'home' %}">
-                    License It
-                </a>
-            </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="{% url 'home' %}">
+                <img src="{% static 'common/assets/img/logo/logo-default.png' %}" alt="logo"
+                     href="{% url 'home' %}">
+                License It
+            </a>
+        </div>
 
-            <div class="navbar-collapse collapse navbar-main-collapse">
-                <ul class="nav navbar-nav">
+        <div class="navbar-collapse collapse navbar-main-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown megamenu-fw has-dropdown-menu">
+                    <a href="{% url 'home' %}"
+                       class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">Home </a>
+                </li>
+                <li class="dropdown megamenu-fw has-dropdown-menu">
+                    <a href="{% url 'how_it_works' %}"
+                       class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">How
+                        it
+                        works </a></li>
+                <li class="dropdown megamenu-fw has-dropdown-menu">
+                    <a href="{% url 'search' %}"
+                       class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">Search </a>
+                </li>
+                {% if request.user.is_authenticated %}
                     <li class="dropdown megamenu-fw has-dropdown-menu">
-                        <a href="{% url 'home' %}"
-                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">Home </a>
+                        <a href="{% url 'my_account' %}"
+                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">{{ user.email }}</a>
                     </li>
-                    <li class="dropdown megamenu-fw has-dropdown-menu">
-                        <a href="{% url 'how_it_works' %}"
-                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">How
-                            it
-                            works </a></li>
-                    <li class="dropdown megamenu-fw has-dropdown-menu">
-                        <a href="{% url 'search' %}"
-                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">Search </a>
-                    </li>
-                    {% if request.user.is_authenticated %}
-                        <li class="dropdown megamenu-fw has-dropdown-menu">
-                            <a href="{% url 'my_account' %}"
-                               class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">{{ user.email }}</a>
-                        </li>
-                        {% notifications user as notif %}
-                        {% if notif %}
+                    {% notifications user as notif %}
+                    {% if notif %}
                         <li class="dropdown megamenu-fw has-dropdown-menu">
                             <a href="#" class="dropdown-toggle" id="notifications">{{ notif }}</a>
                         </li>
-                        {% endif %}
-                        <li>
-                            <a href="{% url 'logout' %}"
-                               class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">signout</a>
-                        </li>
-                    {% else %}
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle color-light">Sign in </a>
-                            <ul class="dropdown-menu has-submenu" role="menu">
-                                <li>
-                                    <div class="row p15">
-                                        <div class="col-md-12">
-                                            Login via
-                                            <div class="social-buttons pb5">
-                                                <a id="fb-button" class="btn btn-fb"><i class="fa fa-facebook"></i>
-                                                    Facebook</a>
-                                                <a href="#" class="btn btn-tw"><i class="fa fa-google"></i> Google</a>
-                                            </div>
-                                            or
-                                            <form class="form mt5" role="form" method="post" action="{% url 'login' %}"
-                                                  accept-charset="UTF-8" id="login-nav">
-                                                {% csrf_token %}
-                                                <div class="form-group">
-                                                    <label class="sr-only" for="exampleInputEmail2">Email
-                                                        address</label>
-                                                    <input type="email" name="username" class="form-control"
-                                                           id="exampleInputEmail2"
-                                                           placeholder="Email address" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                                    <input type="password" name="password" class="form-control"
-                                                           id="exampleInputPassword2"
-                                                           placeholder="Password" required>
-                                                    <div class="help-block text-right"><a href="">Forget the password
-                                                        ?</a>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group mt10">
-                                                    <button type="submit"
-                                                            class="button btn-block button-rounded button-success hover-ripple-out">
-                                                        Sign in
-                                                    </button>
-                                                </div>
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> keep me logged-in
-                                                    </label>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="bottom text-center mt5 font-size-normal">
-                                            New here ? <a href="#"><b>Join Us</b></a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
                     {% endif %}
-                    <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
-                                                                          class="dropdown-toggle color-dark">Contact
-                        Us</a></li>
+                    <li>
+                        <a href="{% url 'logout' %}"
+                           class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">signout</a>
+                    </li>
+                {% else %}
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle color-light">Sign in </a>
+                        <ul class="dropdown-menu has-submenu" role="menu">
+                            <li>
+                                <div class="row p15">
+                                    <div class="col-md-12">
+                                        Login via
+                                        <div class="social-buttons pb5">
+                                            <a id="fb-button" class="btn btn-fb"><i class="fa fa-facebook"></i>
+                                                Facebook</a>
+                                            <a href="#" class="btn btn-tw"><i class="fa fa-google"></i> Google</a>
+                                        </div>
+                                        or
+                                        <form class="form mt5" role="form" method="post" action="{% url 'login' %}"
+                                              accept-charset="UTF-8" id="login-nav">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label class="sr-only" for="exampleInputEmail2">Email
+                                                    address</label>
+                                                <input type="email" name="username" class="form-control"
+                                                       id="exampleInputEmail2"
+                                                       placeholder="Email address" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="exampleInputPassword2">Password</label>
+                                                <input type="password" name="password" class="form-control"
+                                                       id="exampleInputPassword2"
+                                                       placeholder="Password" required>
+                                                <div class="help-block text-right"><a href="">Forget the password
+                                                    ?</a>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt10">
+                                                <button type="submit"
+                                                        class="button btn-block button-rounded button-success hover-ripple-out">
+                                                    Sign in
+                                                </button>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"> keep me logged-in
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="bottom text-center mt5 font-size-normal">
+                                        New here ? <a href="#"><b>Join Us</b></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+                <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
+                                                                      class="dropdown-toggle color-dark">Contact
+                    Us</a></li>
 
-                </ul>
-            </div>
+            </ul>
+        </div>
     </nav>
 
 
@@ -382,118 +382,177 @@
 
     {% if url == 'results' and first %}
         <div id="page">
-        <div id="phrase_box">
-            <svg width="100%" height="100%">
-                <defs>
-                    <mask id="mask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
-                        <linearGradient id="linearGradient" gradientUnits="objectBoundingBox" x2="0" y2="1">
-                            <stop stop-color="white" stop-opacity="0" offset="0%"/>
-                            <stop stop-color="white" stop-opacity="1" offset="30%"/>
-                            <stop stop-color="white" stop-opacity="1" offset="70%"/>
-                            <stop stop-color="white" stop-opacity="0" offset="100%"/>
-                        </linearGradient>
-                        <rect width="100%" height="100%" fill="url(#linearGradient)"/>
-                    </mask>
-                </defs>
-                <g width="100%" height="100%" style="mask: url(#mask);">
-                    <g id="phrases"></g>
-                </g>
-            </svg>
+            <div id="phrase_box">
+                <svg width="100%" height="100%">
+                    <defs>
+                        <mask id="mask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+                            <linearGradient id="linearGradient" gradientUnits="objectBoundingBox" x2="0" y2="1">
+                                <stop stop-color="white" stop-opacity="0" offset="0%"/>
+                                <stop stop-color="white" stop-opacity="1" offset="30%"/>
+                                <stop stop-color="white" stop-opacity="1" offset="70%"/>
+                                <stop stop-color="white" stop-opacity="0" offset="100%"/>
+                            </linearGradient>
+                            <rect width="100%" height="100%" fill="url(#linearGradient)"/>
+                        </mask>
+                    </defs>
+                    <g width="100%" height="100%" style="mask: url(#mask);">
+                        <g id="phrases"></g>
+                    </g>
+                </svg>
+            </div>
+            <div id="footer-page">
+                <div><img src="{% static 'common/assets/img/logo2.png' %}" width="10%"></div>
+            </div>
+            <script src="{% static 'common/assets/js/loading.js' %}"></script>
         </div>
-        <div id="footer-page">
-            <div><img src="{% static 'common/assets/img/logo2.png' %}" width="10%"></div>
-        </div>
-        <script src="{% static 'common/assets/js/loading.js' %}"></script>
+
     {% endif %}
 
-<!-- JQuery Core
-=====================================-->
-<script src="{% static 'common/assets/js/core/jquery.min.js' %}"></script>
-<script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
-
-{% if url != 'pricing' %}
-    <!-- Magnific Popup
+    <!-- JQuery Core
     =====================================-->
-    <script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
-    <script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
-{% endif %}
+    <script src="{% static 'common/assets/js/core/jquery.min.js' %}"></script>
+    <script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
 
-{% if url == 'home' %}
-    <!-- Typed
+    {% if url != 'pricing' %}
+        <!-- Magnific Popup
+        =====================================-->
+        <script src="{% static 'common/assets/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'common/assets/js/magnific-popup/magnific-popup-zoom-gallery.js' %}"></script>
+    {% endif %}
+
+    {% if url == 'home' %}
+        <!-- Typed
+        =====================================-->
+        <script src="{% static 'common/assets/js/typed/typed.min.js' %}"></script>
+    {% endif %}
+
+    {% if url == 'works' or url == 'contact' %}
+        <!-- Progress Bars
+        =====================================-->
+        <script src="{% static 'common/assets/js/progress-bar/circle-progress.js' %}"></script>
+        <script src="{% static 'common/assets/js/progress-bar/circle-progress-main.js' %}"></script>
+    {% endif %}
+
+    {% if url == 'home' or url == 'about' or url == 'team' or url == 'terms' %}
+        <!-- Progress Bars
+        =====================================-->
+        <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar.js' %}"></script>
+        <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar-main.js' %}"></script>
+    {% endif %}
+
+    <!-- JQuery Main
     =====================================-->
-    <script src="{% static 'common/assets/js/typed/typed.min.js' %}"></script>
-{% endif %}
+    <script src="{% static 'common/assets/js/main/jquery.appear.js' %}"></script>
+    <script src="{% static 'common/assets/js/main/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'common/assets/js/main/parallax.min.js' %}"></script>
+    <script src="{% static 'common/assets/js/main/jquery.countTo.js' %}"></script>
+    <script src="{% static 'common/assets/js/main/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'common/assets/js/main/jquery.sticky.js' %}"></script>
+    <script src="{% static 'common/assets/js/main/ion.rangeSlider.min.js' %}"></script>
+    <script src="{% static 'common/assets/js/main/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'common/assets/js/main/main.js' %}"></script>
+    {% if url == 'distribution' or 'client_dash' %}
+        <script src="{% static 'orders/youtube_show_hide.js' %}"></script>
+    {% endif %}
+    {% if url == 'details' or url == 'client_dash' %}
+        <script src="{% static 'orders/states_show_hide.js' %}"></script>
+    {% endif %}
 
-{% if url == 'works' or url == 'contact' %}
-    <!-- Progress Bars
-    =====================================-->
-    <script src="{% static 'common/assets/js/progress-bar/circle-progress.js' %}"></script>
-    <script src="{% static 'common/assets/js/progress-bar/circle-progress-main.js' %}"></script>
-{% endif %}
+    {% if url == 'client_dash' %}
+        <script src="{% static 'accounts/client_dash.js' %}"></script>
+    {% endif %}
+    {% if url == 'works' %}
+        <!-- Google Map
+        =====================================-->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script src="{% static 'common/assets/js/main/googlemap.js' %}"></script>
 
-{% if url == 'home' or url == 'about' or url == 'team' or url == 'terms' %}
-    <!-- Progress Bars
-    =====================================-->
-    <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar.js' %}"></script>
-    <script src="{% static 'common/assets/js/progress-bar/bootstrap-progressbar-main.js' %}"></script>
-{% endif %}
-
-<!-- JQuery Main
-=====================================-->
-<script src="{% static 'common/assets/js/main/jquery.appear.js' %}"></script>
-<script src="{% static 'common/assets/js/main/isotope.pkgd.min.js' %}"></script>
-<script src="{% static 'common/assets/js/main/parallax.min.js' %}"></script>
-<script src="{% static 'common/assets/js/main/jquery.countTo.js' %}"></script>
-<script src="{% static 'common/assets/js/main/owl.carousel.min.js' %}"></script>
-<script src="{% static 'common/assets/js/main/jquery.sticky.js' %}"></script>
-<script src="{% static 'common/assets/js/main/ion.rangeSlider.min.js' %}"></script>
-<script src="{% static 'common/assets/js/main/imagesloaded.pkgd.min.js' %}"></script>
-<script src="{% static 'common/assets/js/main/main.js' %}"></script>
-{% if url == 'distribution' or 'client_dash' %}
-    <script src="{% static 'orders/youtube_show_hide.js' %}"></script>
-{% endif %}
-{% if url == 'details' or url == 'client_dash' %}
-    <script src="{% static 'orders/states_show_hide.js' %}"></script>
-{% endif %}
-
-{% if url == 'client_dash' %}
-    <script src="{% static 'accounts/client_dash.js' %}"></script>
-{% endif %}
-{% if url == 'works' %}
-    <!-- Google Map
-    =====================================-->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <script src="{% static 'common/assets/js/main/googlemap.js' %}"></script>
-
-{% endif %}
+    {% endif %}
     <script>
-    function loginUser(email) {
-        window.location = "/accounts/facebook-login/" + email + '/';
-    }
+        function loginUser(email) {
+            window.location = "/accounts/facebook-login/" + email + '/';
+        }
 
-    function loginCheck() {
-        FB.getLoginStatus(function (response) {
-            if (response.status === 'connected') {
-                FB.api('/me?fields=first_name,last_name,email', function (response) {
-                    loginUser(response.email);
-                });
-            } else {
-                FB.login(function (response) {
-                    if (response.status === 'connected') {
-                        FB.api('/me?fields=first_name,last_name,email', function (response) {
-                            loginUser(response.email);
-                        })
-                    }
-                }, {scope: 'public_profile,email'});
-            }
+        function loginCheck() {
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+                    FB.api('/me?fields=first_name,last_name,email', function (response) {
+                        loginUser(response.email);
+                    });
+                } else {
+                    FB.login(function (response) {
+                        if (response.status === 'connected') {
+                            FB.api('/me?fields=first_name,last_name,email', function (response) {
+                                loginUser(response.email);
+                            })
+                        }
+                    }, {scope: 'public_profile,email'});
+                }
+            });
+        }
+
+        $('#fb-button').click(function () {
+            loginCheck();
         });
-    }
-
-    $('#fb-button').click(function () {
-        loginCheck();
-    });
     </script>
+    <script
+            src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"
+            integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc="
+            crossorigin="anonymous"></script>
 
+    <script>
+        var countries = [];
+
+        {% if details_form %}
+            {% for territory in details_form.territory %}
+                countries.push("{{ territory.choice_label }}");
+            {% endfor %}
+        {% endif %}
+
+        {% if wedding_form %}
+            {% for territory in wedding_form.territory %}
+                countries.push("{{ territory.choice_label }}");
+            {% endfor %}
+        {% endif %}
+
+        {% if personal_form %}
+            {% for territory in personal_form.territory %}
+                countries.push("{{ territory.choice_label }}");
+            {% endfor %}
+        {% endif %}
+
+        $('#id_territory').autocomplete({
+            appendTo: '#territory',
+            autoFocus: true,
+            source: countries
+        });
+
+        $('#id_release_date').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+    </script>
+    <script>
+        $('#wedding').click(function () {
+            $('#num_forms').html(2);
+        });
+
+        $('#personal_use').click(function () {
+            $('#num_forms').html(2);
+        });
+
+        $('#film_making').click(function () {
+            $('#num_forms').html(4);
+        });
+
+        $('#programming').click(function () {
+            $('#num_forms').html(4);
+        });
+
+        $('#advertising').click(function () {
+            $('#num_forms').html(4);
+        });
+    </script>
+    </div>
     </body>
     </html>
 {% endblock %}

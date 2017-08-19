@@ -2,18 +2,23 @@
 {% block content %}
     <div class="container">
     <br><br><br><br><br>
-        <form class="form-horizontal" action="{% url 'film_making' order %}" method="post">
-            {% csrf_token %}
-            {% include 'orders/indie_form_fields.html' %}
-            <div class="row">
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-success">continue</button>
-                    <button type="reset" class="btn btn-warning">reset</button>
+        <div class="smart-wrap">
+            <div class="smart-forms wrap-4">
+                <div class="form-header header-yellow">
+                    <h4><i class="fa fa-pencil-square"></i>order for film making</h4>
                 </div>
-                <div class="col-md-3">
-                    part 2 of 4
-                </div>
+                <form action="{% url 'film_making' order %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-body theme-yellow">
+                        {% include 'orders/indie_form_fields.html' %}
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-success">continue</button>
+                        <button type="reset" class="btn btn-warning">reset</button>
+                        <span>part 2 of 4</span>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 {% endblock %}

@@ -1,14 +1,24 @@
 {% extends 'common/common_base.html' %}
 {% block content %}
     <div class="container">
-    <br><br><br><br><br>
-        <form class="form-horizontal" action="{% url 'personal_use' order %}" method="post">
-            {% csrf_token %}
-            {% include 'orders/personal_form_fields.html' %}
-            <div class="row">
-                <button type="submit" class="btn btn-success">submit</button>
-                <button type="reset" class="btn btn-warning">reset</button>
+        <br><br><br><br><br>
+        <div class="smart-wrap">
+            <div class="smart-forms smart-container wrap-4">
+                <div class="form-header header-yellow">
+                    <h4><i class="fa fa-pencil-square"></i>order for personal use</h4>
+                </div>
+                <form action="{% url 'personal_use' order %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-body theme-yellow">
+                        {% include 'orders/personal_form_fields.html' %}
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-success">submit</button>
+                        <button type="reset" class="btn btn-warning">reset</button>
+                        part 2 of 2
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 {% endblock %}

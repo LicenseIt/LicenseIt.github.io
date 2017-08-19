@@ -1,68 +1,79 @@
-            {% if web %}
-            <div class="row">
-                {{ web.errors }}
-            </div>
-            <div class="form-group">
-                <label class="col-sm-12">where exactly online?</label>
+{% if web %}
+    <div class="row">
+        {{ web.errors }}
+    </div>
+    <div class="section">
+        <div class="option-group field">
+            <div class="group-vertical">
+                <label class="field-label">where exactly online?</label>
                 {% for check in web.distribute_on %}
-                    <div class="form-group">
-                        <label class="col-sm-4" for="{{ check.id_for_label }}">
-                            {{ check.choice_label }}
-                            <span class="col-sm-2">{{ check.tag }}</span>
-                        </label>
-                        {% if check.choice_label|lower == 'youtube' %}
-                            <span class="col-sm-5" id="id_youtube">
-                                <label class="col-sm-3" for="id_youtube_id">youtube id</label>
-                                {{ web.youtube_id }}
-                            </span>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-                <div class="form-group">
-                    <label class="col-sm-2" for="other">other
-                    <span class="col-sm-4">
-                        <input id="other" type="checkbox">
-                        <input type="text" name="distribute_new" value="">
-                    </span>
+                    <label class="option">
+                        {{ check.tag }}
+                        <span class="checkbox"></span>{{ check.choice_label }}
                     </label>
-                </div>
+                {% endfor %}
+                <label class="option" for="other">
+                    <input id="other" name="web_other" type="checkbox">
+                    <span class="checkbox"></span>other
+                    <label class="field">
+                        <input class="gui-input" type="text" name="distribute_new" value="">
+                    </label>
+
+                </label>
             </div>
-            {% endif %}
-            {% if ext %}
-            <div class="row">
-                {{ ext.errors }}
+        </div>
+        <div id="id_youtube" class="section">
+            <div class="option-group field">
+                <label class="field" for="id_youtube_id">
+                    youtube id
+                    {{ web.youtube_id }}
+                </label>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3" for="id_distribute_on">where exactly online?</label>
+        </div>
+    </div>
+{% endif %}
+{% if ext %}
+    <div class="section">
+        <div class="option-group field">
+            <div class="group-vertical">
+                <label class="field-label">where exactly externally?</label>
                 {% for check in ext.name %}
-                    <div>
-                        <label class="col-sm-12" for="{{ check.id_for_label }}">
-                            {{ check.choice_label }}
-                            <span class="col-sm-2">{{ check.tag }}</span>
-                        </label>
-                    </div>
-                {% endfor %}
-                <div class="form-group">
-                    <label class="col-sm-2" for="other">other
-                    <span class="col-sm-4">
-                        <input id="other" type="checkbox">
-                        <input type="text" name="dist_new" value="">
-                    </span>
+                    <label class="option">
+                        {{ check.tag }}
+                        <span class="checkbox"></span>{{ check.choice_label }}
                     </label>
-                </div>
+                {% endfor %}
+                <label class="option" for="other">
+                    <input id="other" name="ext_other" type="checkbox">
+                    <span class="checkbox"></span>other
+                    <label class="field">
+                        <input class="gui-input" type="text" name="dist_new" value="">
+                    </label>
+                </label>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3" for="id_youtube_id">number of people</label>
-                {{ ext.num_people }}
-            </div>
-            {% endif %}
-            {% if tv %}
-            <div class="row">tv
-                {{ tv.errors }}
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3" for="id_distribute_on">Do you need a license for the trailer, the full show or both?</label>
-                <label for="id_tv_trailer">tv trailer {{ tv.tv_trailer }}</label>
-                <label for="id_tv_program">tv program {{ tv.tv_program }}</label>
-            </div>
-            {% endif %}
+        </div>
+    </div>
+    <div class="section">
+        <label class="field-label" for="id_youtube_id">number of people</label>
+        {{ ext.num_people }}
+    </div>
+{% endif %}
+{% if tv %}
+    <div class="section">
+        {{ tv.errors }}
+    </div>
+    <div class="section">
+    <div class="group-vertical">
+        <label class="field-label" for="id_distribute_on">Do you need a license for the trailer, the full show or
+            both?</label>
+        <label class="option" for="id_tv_trailer">
+            {{ tv.tv_trailer }}
+            <span class="checkbox"></span>tv trailer
+        </label>
+        <label class="option" for="id_tv_program">
+            {{ tv.tv_program }}
+            <span class="checkbox"></span>tv program
+        </label>
+    </div>
+    </div>
+{% endif %}
