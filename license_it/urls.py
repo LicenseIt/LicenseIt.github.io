@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
 # from django.contrib.auth.decorators import login_required, permission_required
 
 from about.views import AboutView
@@ -39,4 +41,4 @@ urlpatterns = [
     url('^team/', Team.as_view(), name='team'),
     url('^terms/', Terms.as_view(), name='terms'),
     url('', include('home.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

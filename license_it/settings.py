@@ -136,6 +136,9 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR + '/static/'
 
+MEDIA_URL = '/licenses/'
+MEDIA_ROOT = BASE_DIR + '/licenses/'
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]

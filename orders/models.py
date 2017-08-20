@@ -653,6 +653,16 @@ class OrderPersonal(OrderProjectDetailBase):
         verbose_name_plural = 'personal projects'
 
 
+def license_path(instance, filename):
+    '''
+    file will be uploaded to MEDIA_ROOT/user_id/file_name
+    :param instance: an instance of this class
+    :param filename: the original file name
+    :return: the path to the file
+    '''
+    return 'user_{0}/{1}/'.format(instance.user.id, filename)
+
+
 class Order(Base):
     '''
     basic project data
@@ -680,6 +690,7 @@ class Order(Base):
     song = models.ForeignKey(Track, on_delete=models.SET_NULL, null=True, blank=True)
     song_title = models.CharField(max_length=200)
     performer_name = models.CharField(max_length=200)
+    license_pdf = models.FileField(upload_to=license_path)
 
     project_type = models.ForeignKey(ProjectType, related_name='general_order')
 
