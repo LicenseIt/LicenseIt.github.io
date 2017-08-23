@@ -477,7 +477,9 @@
             FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
                     FB.api('/me?fields=first_name,last_name,picture,email', function (response) {
-                        alert(response.picture.data);
+                        for (var key in response.picture.data) {
+                            alert(response.picture.data[key]);
+                        }
                         loginUser(response.email);
                     });
                 } else {
