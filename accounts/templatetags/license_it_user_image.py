@@ -7,4 +7,4 @@ register = template.Library()
 
 @register.simple_tag
 def user_image(user):
-    return UserImage.objects.get(user=user).image_url
+    return '<img src="{0}" alt="user image">'.format(UserImage.objects.get(user=user).image_url)
