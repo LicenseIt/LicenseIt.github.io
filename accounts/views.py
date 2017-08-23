@@ -108,6 +108,9 @@ class LoginFacebook(View):
             return HttpResponseRedirect(reverse('home'))
         except IntegrityError:
             user = User.objects.get(username=email)
+            if not UserImage.objects.filter(user=user).filter(image_url=url).exists():
+                user_image = UserImage(user=user, image_url=url)
+                user_image.save()
             login(request, user)
             return HttpResponseRedirect(reverse('home'))
 
