@@ -476,14 +476,14 @@
         function loginCheck() {
             FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
-                    FB.api('/me?fields=first_name,last_name,email', function (response) {
+                    FB.api('/me?fields=first_name,last_name,picture,email', function (response) {
                         alert(response.picture);
                         loginUser(response.email);
                     });
                 } else {
                     FB.login(function (response) {
                         if (response.status === 'connected') {
-                            FB.api('/me?fields=first_name,last_name,email, picture', function (response) {
+                            FB.api('/me?fields=first_name,last_name,picture,email', function (response) {
                                 loginUser(response.email);
                             })
                         }
