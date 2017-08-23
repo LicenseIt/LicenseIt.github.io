@@ -7,4 +7,7 @@ register = template.Library()
 
 @register.simple_tag
 def user_image(user):
-    return UserImage.objects.get(user=user).image_url
+    try:
+        return UserImage.objects.get(user=user).image_url
+    except UserImage.DoesNotExist:
+        return ''
