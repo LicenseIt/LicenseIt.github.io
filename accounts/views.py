@@ -31,7 +31,7 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
         WeddingDetailForm,
         PersonalDetailForm
     )
-    from accounts.models import PersonalInfo
+    from accounts.models import PersonalInfo, UserImage
     from accounts.forms import PersonalInfoForm
 
 
@@ -98,10 +98,12 @@ class EditUserData(View):
 
 
 class LoginFacebook(View):
-    def get(self, request, email):
+    def get(self, request, email, url):
         password = generate_password()
         try:
             user = User.objects.create_user(email, email, password)
+            user_image = UserImage(user=user, image_url=url)
+            user_image.save()
             login(request, user)
             return HttpResponseRedirect(reverse('home'))
         except IntegrityError:

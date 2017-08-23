@@ -183,7 +183,7 @@
                 </li>
                 {% if request.user.is_authenticated %}
                     <li class="dropdown megamenu-fw has-dropdown-menu">
-                    {% user_image %}
+                        <img src="{% user_image %}">
                         <a href="{% url 'my_account' %}"
                            class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">{{ user.email }}</a>
                     </li>
