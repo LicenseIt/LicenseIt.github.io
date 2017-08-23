@@ -481,6 +481,7 @@
                     });
                 } else {
                     FB.login(function (response) {
+                        alert('hello');
                         if (response.status === 'connected') {
                             FB.api('/me?fields=first_name,last_name,email, picture', function (response) {
                                 alert(response.picture);
@@ -493,7 +494,6 @@
         }
 
         $('#fb-button').click(function () {
-            alert('hello');
             loginCheck();
         });
     </script>
