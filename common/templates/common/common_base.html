@@ -183,6 +183,7 @@
                 </li>
                 {% if request.user.is_authenticated %}
                     <li class="dropdown megamenu-fw has-dropdown-menu">
+                    {% user_image %}
                         <a href="{% url 'my_account' %}"
                            class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">{{ user.email }}</a>
                     </li>
@@ -469,24 +470,21 @@
 
     {% endif %}
     <script>
-        function loginUser(email) {
-            window.location = "/accounts/facebook-login/" + email + '/';
+        function loginUser(email, picture) {
+            window.location = "/accounts/facebook-login/" + email + '/' + picture;
         }
 
         function loginCheck() {
             FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
                     FB.api('/me?fields=first_name,last_name,picture,email', function (response) {
-                        for (var key in response.picture.data) {
-                            alert(key + ", " + response.picture.data[key]);
-                        }
-                        loginUser(response.email);
+                        loginUser(response.email, response.picture.data['url']);
                     });
                 } else {
                     FB.login(function (response) {
                         if (response.status === 'connected') {
                             FB.api('/me?fields=first_name,last_name,picture,email', function (response) {
-                                loginUser(response.email);
+                                loginUser(response.email, response.picture.data['url']);
                             })
                         }
                     }, {scope: 'public_profile,email'});

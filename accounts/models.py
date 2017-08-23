@@ -25,6 +25,16 @@ class PersonalInfo(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
+class UserImage(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE,
+                                related_name='user_image')
+    image_url = models.URLField(max_length=200)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+
 class Notifications(models.Model):
     NOTIFICATION_TYPE_CHOICES = (
         ('question', 'question'),

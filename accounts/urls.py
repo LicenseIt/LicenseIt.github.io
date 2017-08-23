@@ -15,7 +15,7 @@ urlpatterns = [
     url('^signup/', SignupView.as_view(), name='signup_page'),
     url('^logout/', logout, {'next_page': '/'}, name='logout'),
     url('^edit_user/', login_required(EditUserData.as_view()), name='edit_user'),
-    url('^facebook-login/(?P<email>[A-z@.]+)', LoginFacebook.as_view(), name='facebook_login'),
+    url('^facebook-login/(?P<email>[A-z@.]+)/(?P<url>[A-z:/.0-9_?=-])', LoginFacebook.as_view(), name='facebook_login'),
     url('^my_account/order/(?P<order_id>[0-9]+)/', login_required(Account.as_view()), name='my_account_order'),
     url('^my_account/', login_required(Account.as_view()), name='my_account'),
 ]
