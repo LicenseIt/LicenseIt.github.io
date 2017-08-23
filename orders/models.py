@@ -690,7 +690,7 @@ class Order(Base):
     song = models.ForeignKey(Track, on_delete=models.SET_NULL, null=True, blank=True)
     song_title = models.CharField(max_length=200)
     performer_name = models.CharField(max_length=200)
-    license_pdf = models.FileField(upload_to=license_path)
+    license_pdf = models.FileField(upload_to=license_path, null=True, blank=True)
 
     project_type = models.ForeignKey(ProjectType, related_name='general_order')
 
