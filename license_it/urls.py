@@ -24,6 +24,7 @@ from about.views import AboutView
 from how_it_works.views import HowItWorks
 from contact.views import ContactUs
 from faq.views import Faq
+from licensing.views import Licensing
 from pricing.views import Pricing
 from team.views import Team
 from terms.views import Terms
@@ -37,6 +38,7 @@ urlpatterns = [
     url('^how_it_works/', HowItWorks.as_view(), name='how_it_works'),
     url('^contact/', ContactUs.as_view(), name='contact_us'),
     url('^faq/', Faq.as_view(), name='faq'),
+    url('^licensing/', Licensing.as_view(), name='licensing'),
     url('^pricing/', Pricing.as_view(), name='pricing'),
     url('^team/', Team.as_view(), name='team'),
     url('^terms/', Terms.as_view(), name='terms'),

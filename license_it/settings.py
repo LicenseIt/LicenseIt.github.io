@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'terms',
     'common',
     'home',
+    'licensing',
     'owners',
 ]
 

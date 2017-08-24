@@ -1,853 +1,308 @@
 {% extends 'common/common_base.html' %}
 {% load staticfiles %}
 {% block content %}
-        <!-- Intro Area
-        ===================================== -->
-        <header class="intro pt75 pb100" style="background: url('{% static 'common/assets/img/bg/img-bg-9.jpg' %}') no-repeat 70% 0; background-size:cover;">
-            <div class="intro-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12 text-left">
-                            <h1 class="brand-heading font-pacifico text-capitalize fs-75 color-light animated" data-animation="fadeInUp" data-animation-delay="100">I am Pasific H.</h1>
-                            <p class="intro-text mt50 text-uppercase color-light mb50 animated" data-animation="fadeInUp" data-animation-delay="200">
-                                A Man with 5 Years Code Experience.<br><br>
-                                <span class="text-capitalize">
-                                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit<br>
-                                    sed quia consequuntur magni dolores eos qui ratione<br>voluptatem sequi nesciun
-                                </span>
-                            </p>
-                            <a class="button button-md button-gray animated" data-animation="fadeInUp" data-animation-delay="700">Hire Me Now <i class="fa fa-download ml10"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="intro-direction">
-                        <a href="#welcome">
-                            <div class="mouse-icon"><div class="wheel"></div></div>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </header>
-
-
-
-
-        <!-- Welcome Area
-        ===================================== -->
-        <div id="welcome" class="pt75">
+    <header class="intro pt75 pb100"
+            style="background: url('{% static "common/assets/img/bg/img-bg-9.jpg" %}') no-repeat 70% 0; background-size:cover;">
+        <div class="intro-body">
             <div class="container">
-                <div class="row mb30">
-                    <h3 class="text-center">
-                        Welcome to My Site
-                        <small class="heading-desc">
-                            Lorem ipsum dolor sit amet consectetur adipiscing elit morbi sagittis.
-                        </small>
-                        <small class="heading heading-solid center-block"> </small>
-                    </h3>
-                </div>
                 <div class="row">
+                    <div class="col-md-12 text-left">
+                        <h1 class="brand-heading font-pacifico text-capitalize fs-75 color-light animated"
+                            data-animation="fadeInUp" data-animation-delay="100">License music for your <br> visual
+                            media</h1>
+                        <h3 class="intro-text mt50 text-uppercase color-light mb50 animated" data-animation="fadeInUp"
+                            data-animation-delay="200">
+                            <h3 class="text-capitalize color-light">You relax. We take care of the paperwork</h3>
+                            <br><br>
+                            <span class="text-capitalize color-light">
 
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="content-box content-box-center">
-                            <span class="icon-layers color-pasific"></span>
-                                <h4>Senior Programmer</h4>
-                            <p>Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.</p>
+                                <ul class="icon-list color-light">
+                            <li><i class="fa fa-check"></i>Tell us how you plan to use the music
+                                                                                        </li>
+                            <li><i class="fa fa-check"></i>Legally release your song!
+                                                                                             </li>
 
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="content-box content-box-center">
-                            <span class="icon-bike color-pasific"></span>
-                                <h4>Bike Lover</h4>
-                            <p>Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.</p>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="content-box content-box-center">
-                            <span class="icon-camera color-pasific"></span>
-                                <h4>Photographer</h4>
-                            <p>Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.</p>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="content-box content-box-center">
-                            <span class="icon-briefcase color-pasific"></span>
-                                <h4>Co-Founder</h4>
-                            <p>Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.</p>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Portfolio Area
-        ===================================== -->
-        <div id="portfolioGrid">
-            <div class="pt50">&nbsp;</div>
-            <div class="container pb75">
-                <div class="row">
-                    <div class="col-md-12">
-                        <ul class="filters text-center  mt25 mb50">
-                            <li><a class="active" data-filter="*">All Projects</a></li>
-                            <li><a class="" data-filter=".html">HTMl</a></li>
-                            <li><a class="" data-filter=".wordpress">Wordpress</a></li>
-                            <li><a class="" data-filter=".woocommerce">WooCommerce</a></li>
-                            <li><a class="" data-filter=".joomla">Joomla</a></li>
-                            <li><a class="" data-filter=".magento">Magento</a></li>
-                            <li><a class="" data-filter=".shopify">Shopify</a></li>
                         </ul>
 
-                        <div class="portfolio center-block">
-
-                            <div class="portfolio-item col-md-4 col-sm-4 col-xs-4 wordpress woocommerce" data-category="">
-                                <a href="{% static 'common/assets/img/portfolio/preview/1.jpg' %}" class="magnific-popup">
-                                    <span class="glyphicon glyphicon-search hover-bounce-out"></span>
-                                </a>
-                                <img src="{% static 'common/assets/img/portfolio/thumbs/img-550x350-1.jpg' %}" alt="portfolio woocommerce" class="img-responsive">
-                            </div>
-
-                            <div class="portfolio-item col-md-4 col-sm-4 col-xs-4 joomla html">
-                                <a href="{% static 'common/assets/img/portfolio/preview/2.jpg' %}" class="magnific-popup">
-                                    <span class="glyphicon glyphicon-search hover-bounce-out"></span>
-                                </a>
-                                <img src="{% static 'common/assets/img/portfolio/thumbs/img-550x350-3.jpg' %}" alt="portfolio woocommerce" class="img-responsive">
-                            </div>
-
-                            <div class="portfolio-item col-md-4 col-sm-4 col-xs-4 wordpress joomla">
-                                <a href="{% static 'common/assets/img/portfolio/preview/img-370x165-1.jpg' %}" class="magnific-popup">
-                                    <span class="glyphicon glyphicon-search hover-bounce-out"></span>
-                                </a>
-                                <img src="{% static 'common/assets/img/portfolio/thumbs/img-550x350-2.jpg' %}" alt="portfolio woocommerce" class="img-responsive">
-                            </div>
-
-                            <div class="portfolio-item col-md-4 col-sm-4 col-xs-4 html wordpress">
-                                <a href="{% static 'common/assets/img/portfolio/preview/3.jpg' %}" class="magnific-popup">
-                                    <span class="glyphicon glyphicon-search hover-bounce-out"></span>
-                                </a>
-                                <img src="{% static 'common/assets/img/portfolio/thumbs/img-550x350-4.jpg' %}" alt="portfolio woocommerce" class="img-responsive">
-                            </div>
-
-                            <div class="portfolio-item col-md-4 col-sm-4 col-xs-4 html joomla wordpress">
-                                <a href="{% static 'common/assets/img/portfolio/preview/4.jpg' %}" class="magnific-popup">
-                                    <span class="glyphicon glyphicon-search hover-bounce-out"></span>
-                                </a>
-                                <img src="{% static 'common/assets/img/portfolio/thumbs/img-550x350-6.jpg' %}" alt="portfolio woocommerce" class="img-responsive">
-                            </div>
-
-                            <div class="portfolio-item col-md-4 col-sm-4 col-xs-4 html joomla">
-                                <a href="{% static 'common/assets/img/portfolio/preview/5.jpg' %}" class="magnific-popup">
-                                    <span class="glyphicon glyphicon-search hover-bounce-out"></span>
-                                </a>
-                                <img src="{% static 'common/assets/img/portfolio/thumbs/img-550x350-5.jpg' %}" alt="portfolio woocommerce" class="img-responsive">
-                            </div>
-
-                            <div class="portfolio-item col-md-4 col-sm-4 col-xs-4 wordpress woocommerce">
-                                <a href="{% static 'common/assets/img/portfolio/preview/6.jpg' %}" class="magnific-popup">
-                                    <span class="glyphicon glyphicon-search hover-bounce-out"></span>
-                                </a>
-                                <img src="{% static 'common/assets/img/portfolio/thumbs/img-550x350-7.jpg' %}" alt="portfolio woocommerce" class="img-responsive">
-                            </div>
-
-                            <div class="portfolio-item col-md-4 col-sm-4 col-xs-4 joomla html">
-                                <a href="{% static 'common/assets/img/portfolio/preview/7.jpg' %}" class="magnific-popup">
-                                    <span class="glyphicon glyphicon-search hover-bounce-out"></span>
-                                </a>
-                                <img src="{% static 'common/assets/img/portfolio/thumbs/img-550x350-8.jpg' %}" alt="portfolio woocommerce" class="img-responsive">
-                            </div>
-
-                            <div class="portfolio-item col-md-4 col-sm-4 col-xs-4 wordpress woocommerce">
-                                <a href="{% static 'common/assets/img/portfolio/preview/1.jpg' %}" class="magnific-popup">
-                                    <span class="glyphicon glyphicon-search hover-bounce-out"></span>
-                                </a>
-                                <img src="{% static 'common/assets/img/portfolio/thumbs/img-550x350-1.jpg' %}" alt="portfolio woocommerce" class="img-responsive">
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Fun Fact Area
-        ===================================== -->
-        <div id="fact" class="pt75 pb75">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 text-center mb25">
-                        <h3 class="text-center">
-                            Better Solution for Web HTML5 Template
-                            <small class="heading-desc text-lowercase">
-                                Lorem ipsum dolor sit amet consectetur adipiscing.
-                            </small>
-                        </h3>
-
+                                </span>
+                            </p>
+                            <a class="button button-md button-gray animated" data-animation="fadeInUp"
+                               data-animation-delay="700" href="{% url "search" %}">Get license now<i
+                                    class="fa fa-file-text-o ml10"></i></a>
                     </div>
                 </div>
 
-                <div class="row">
-
-                    <div class="col-md-3">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-6 col-xs-6">
-                                <div class="fact">
-                                    <div class="fact-number timer" data-perc="387">
-                                        <span class="factor color-black"></span>
-                                    </div>
-                                    <span class="fact-title">Projects Completed</span>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-sm-6 col-xs-6">
-                                <div class="fact">
-                                    <div class="fact-number timer" data-perc="578">
-                                        <span class="factor color-black"></span>
-                                    </div>
-                                    <span class="fact-title">Happy Clients</span>
-                                </div>
-                            </div>
+                <div class="intro-direction">
+                    <a href="#welcome">
+                        <div class="mouse-icon">
+                            <div class="wheel"></div>
                         </div>
-                    </div>
-
-                    <div class="col-md-3 col-md-push-6">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-6 col-xs-6">
-                                <div class="fact">
-                                    <div class="fact-number timer" data-perc="175">
-                                        <span class="factor color-black"></span>
-                                    </div>
-                                    <span class="fact-title">Coffee Cups</span>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-sm-6 col-xs-6">
-                                <div class="fact">
-                                    <div class="fact-number timer" data-perc="350">
-                                        <span class="factor color-black"></span>
-                                    </div>
-                                    <span class="fact-title">Cupcakes</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-md-pull-3 text-center">
-                        <img src="{% static 'common/assets/img/other/img-other-8.png' %}" alt="macbook" class="img-responsive">
-                        <a href="#" class="button button-md button-pasific hover-ripple-out">Hire Me Now</a>
-                        <a href="#" class="button button-md button-dark hover-ripple-out">Download Cv</a>
-                    </div>
-
+                    </a>
                 </div>
 
             </div>
         </div>
+    </header>
 
 
-        <!-- Price Area
-        ===================================== -->
-        <div id="price" class="bg-gray pt75 pb75">
-            <div class="container text-center">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 text-center mb50">
-                        <h3 class="text-center">
-                           Family Price for Premium Service
-                            <small class="heading-desc text-lowercase">
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit morbi sagittis.
-                            </small>
-                            <small class="heading heading-solid center-block"> </small>
-                        </h3>
-                    </div>
-                </div>
 
-                <div class="row">
-					<div class="col-md-3 col-sm-6 col-xs-12 animated" data-animation="pulse" data-animation-delay="500">
-						<div class="price price-one bg-light">
-							<div class="price-header">
-								<h4>Design</h4>
-								<span><sup>$</sup>49</span>
-							</div>
-							<div class="price-body">
-								<ul>
-									<li>Logo Design</li>
-									<li>Web Design</li>
-								</ul>
-							</div>
-							<div class="price-footer">
-								<a href="#" class="button button-sm button-rounded button-pasific hover-ripple-out">Order Now</a>
-							</div>
-						</div>
-					</div>
 
-					<div class="col-md-3 col-sm-6 col-xs-12 animated" data-animation="pulse" data-animation-delay="1000">
-						<div class="price price-one active">
-							<div class="price-header">
-								<h4>Website</h4>
-								<span><sup>$</sup>59</span>
-							</div>
-							<div class="price-body">
-								<ul>
-									<li>HTML/CSS</li>
-									<li>Wordpress</li>
-								</ul>
-							</div>
-							<div class="price-footer">
-								<a href="#" class="button button-sm button-rounded button-purple hover-ripple-out">Order Now</a>
-							</div>
-						</div>
-					</div>
+    <!-- Welcome Area
+    ===================================== -->
+    <div id="welcome" class="pt75">
+        <div class="container">
+            <div class="row mb30">
+                <h3 class="text-center">
+                    WHY LICENSE WITH LICENSE IT?
 
-					<div class="col-md-3 col-sm-6 col-xs-12 animated" data-animation="pulse" data-animation-delay="700">
-						<div class="price price-one bg-light">
-							<div class="price-header">
-								<h4>eCommerce</h4>
-								<span><sup>$</sup>69</span>
-							</div>
-							<div class="price-body">
-								<ul>
-									<li>WooCommerce</li>
-									<li>Shopify</li>
-								</ul>
-							</div>
-							<div class="price-footer">
-								<a href="#" class="button button-sm button-rounded button-blue hover-ripple-out">Order Now</a>
-							</div>
-						</div>
-					</div>
 
-					<div class="col-md-3 col-sm-6 col-xs-12 animated" data-animation="pulse" data-animation-delay="900">
-						<div class="price price-one bg-light">
-							<div class="price-header">
-								<h4>Custom</h4>
-								<span><sup>$</sup>79</span>
-							</div>
-							<div class="price-body">
-								<ul>
-									<li>Website</li>
-									<li>Graphic</li>
-								</ul>
-							</div>
-							<div class="price-footer">
-								<a href="#" class="button button-sm button-rounded button-cyan hover-ripple-out">Order Now</a>
-							</div>
-						</div>
-					</div>
-
-				</div>
-
+                    <small class="heading heading-solid center-block"></small>
+                </h3>
             </div>
-        </div>
+            <div class="row">
 
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="content-box content-box-center">
+                        <span class="icon-shield color-pasific"></span>
+                        <h4>Get Legal</h4>
+                        <p>Let us deal with the legalities of researching, filing paperwork, and managing.</p>
 
-        <!-- General Content Area
-        ===================================== -->
-        <div id="general-content-1" class="pt75 pb50">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="general-content">
-                            <h3 class="mb25">
-                                Mobile Optimized
-                            </h3>
-                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-                                ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia
-                                non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-                            <a class="button button-md button-pasific hover-ripple-out">Purchase Now</a>
-
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <img src="{% static 'common/assets/img/other/img-other-13.png' %}" alt="browser iphone" class="img-responsive pull-right">
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        <!-- General Content Area
-        ===================================== -->
-        <div id="general-content-2" class="pt50 pb50 bt-solid-1">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <img src="{% static 'common/assets/img/other/img-other-15.png' %}" alt="browser iphone" class="img-responsive pull-left">
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="general-content">
-                            <h3 class="mb25">
-                                Online Store Ready
-                            </h3>
-                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-                                ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia
-                                non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-                            <a class="button button-md button-pasific hover-ripple-out">Purchase Now</a>
-
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Skill Area
-        ===================================== -->
-        <div id="skills"  class="pt50 pb50" style="background:url({% static 'common/assets/img/bg/bg-parallax-1.jpg' %})">
-            <div class="container">
-                <div class="row">
-                    <h3 class="text-center color-light mt35 mb35">My Coding Skills</h3>
-
-                    <div class="col-md-3 -col-sm-6 col-xs-12">
-                        <div class="circle-progress circle-progress-bg-grad-violet center-block" data-value=".65" data-size="150" data-thickness="20">
-                            <span class="circle-progress-value color-light"></span>
-                            <span class="circle-progress-title">HTML</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 -col-sm-6 col-xs-12">
-                        <div class="circle-progress circle-progress-bg-grad-blood-mary center-block" data-value=".8" data-size="150" data-thickness="20">
-                            <span class="circle-progress-value color-light"></span>
-                            <span class="circle-progress-title">CSS</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 -col-sm-6 col-xs-12">
-                        <div class="circle-progress circle-progress-bg-grad-mojito center-block" data-value=".75" data-size="150" data-thickness="20">
-                            <span class="circle-progress-value color-light"></span>
-                            <span class="circle-progress-title">PHP</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 -col-sm-6 col-xs-12">
-                        <div class="circle-progress circle-progress-bg-grad-tripper center-block" data-value=".7" data-size="150" data-thickness="20">
-                            <span class="circle-progress-value color-light"></span>
-                            <span class="circle-progress-title">Wordpress</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Service Area
-        ===================================== -->
-        <div id="service" class="pt75">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="text-center">
-                           I Develope Modern Website &amp; App.
-                            <small class="heading-desc text-lowercase">
-                               We design and developer html, wordpress, shopify, mobile app, etc.
-                            </small>
-                            <small class="heading heading-solid center-block"> </small>
-                        </h3>
                     </div>
                 </div>
 
-                <div class="row mt30">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="content-box content-box-center">
+                        <span class="icon-document color-pasific"></span>
+                        <h4>Simple and Fast</h4>
+                        <p>Request a song in under 10 minutes. Bonus! - your licenses never expire.</p>
 
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="content-box content-box-center">
-                            <i class="fa fa-wordpress"></i>
-                            <h4>Wordpress</h4>
-                            <p>Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.</p>
-
-                        </div>
                     </div>
-
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="content-box content-box-center">
-                            <i class="fa fa-joomla"></i>
-                            <h4>Joomla</h4>
-                            <p>Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.</p>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="content-box content-box-center">
-                            <i class="fa fa-drupal"></i>
-                            <h4>Drupal</h4>
-                            <p>Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.</p>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="content-box content-box-center">
-                            <i class="fa fa-html5"></i>
-                            <h4>HTML5</h4>
-                            <p>Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.</p>
-
-                        </div>
-                    </div>
-
                 </div>
 
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1 mt50">
-                        <img src="{% static 'common/assets/img/other/img-other-11.png' %}" alt="web browser" class="img-responsive">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="content-box content-box-center">
+                        <span class="icon-lifesaver color-pasific"></span>
+                        <h4>Save More</h4>
+                        <p>Receive our bulk licensing discount when you purchase more than 5 licenses.</p>
+
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="content-box content-box-center">
+                        <span class="icon-happy color-pasific"></span>
+                        <h4>Everyone Wins!</h4>
+                        <p>You're safe to use the music on your visual media output while we make sure the rightowners
+                            receive their fair share.</p>
+
                     </div>
                 </div>
 
             </div>
         </div>
+    </div>
 
 
-        <!-- Clients Area
-        ===================================== -->
-        <div id="client" class="bg-dark2 pt50 pb25 bb-solid-1">
-            <div class="container">
 
-                <div class="row">
 
-                    <div class="col-md-2 col-sm-3 col-xs-4">
-                        <img src="{% static 'common/assets/img/brand/paypal-gray.png' %}" alt="client logo" class="img-responsive center-block animated" data-animation="fadeIn" data-animation-delay="350">
+
+    <div id="price" class="bg-grad-stellar pt75 pb30 m50">
+        <div class="container pb50">
+
+            <!-- title start -->
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center mb50">
+                    <h1 class="font-size-normal color-light">
+                        <small class="color-light">Service Prices</small>
+                        Family Price for Premium Services
+                    </h1>
+
+                </div>
+            </div>
+            <!-- title start -->
+
+            <div class="row centered">
+
+                <!-- table price one start -->
+                <div class="col-md-4 col-sm-4 col-sm-push-1 col-xs-12 col-md-push-2 hover-float centered">
+                    <div class="price price-three p25">
+                        <div class="">
+                            <span class="color-green">4 Easy Steps</span>
+
+                        </div>
+                        <div class="price-body p25">
+                            <ul class="icon-list-underline underline-dotted text-left">
+                                <li class=" h5 p15 text-left"><i class="fa fa-check-square"></i> Search and select any
+                                    music out of our's 40 million songs catalouge
+                                </li>
+                                <li class=" h5 p15 text-left"><i class="fa fa-check-square"></i>Customize your license
+                                    by telling us how you plan to use the music on your visual output
+                                </li>
+                                <li class=" h5 p15 text-left"><i class="fa fa-check-square"></i>Submit your order and
+                                    pay %7 of the transaction. you pay only after you see the license
+
+                                    <p class="pt25 text-left">We'll process your information and use it to identify the
+                                        owner or owners of the song, secure the rights you've requested, and send
+                                        royalty payments to anyone that needs to receive them.</p>
+                                </li>
+
+                                <li class="h5 p15 text-left"><i class="fa fa-check-square"></i> Within 14 business days
+                                    or less you'll receive a notification that your license is available
+                                </li>
+
+                            </ul>
+                        </div>
+
                     </div>
-                    <div class="col-md-2 col-sm-3 col-xs-4">
-                        <img src="{% static 'common/assets/img/brand/evernote-gray.png' %}" alt="client logo" class="img-responsive center-block animated" data-animation="fadeIn" data-animation-delay="300">
-                    </div>
-                    <div class="col-md-2 col-sm-3 col-xs-4">
-                        <img src="{% static 'common/assets/img/brand/microsoft-gray.png' %}" alt="client logo" class="img-responsive center-block animated" data-animation="fadeIn" data-animation-delay="250">
-                    </div>
-                    <div class="col-md-2 col-sm-3 col-xs-4">
-                        <img src="{% static 'common/assets/img/brand/smashing-gray.png' %}" alt="client logo" class="img-responsive center-block animated" data-animation="fadeIn" data-animation-delay="200">
-                    </div>
-                    <div class="col-md-2 col-sm-3 col-xs-4">
-                        <img src="{% static 'common/assets/img/brand/mashable-gray.png' %}" alt="client logo" class="img-responsive center-block animated" data-animation="fadeIn" data-animation-delay="150">
-                    </div>
-                    <div class="col-md-2 col-sm-3 col-xs-4">
-                        <img src="{% static 'common/assets/img/brand/guardian-gray.png' %}" alt="client logo" class="img-responsive center-block animated" data-animation="fadeIn" data-animation-delay="100">
+                </div>
+                <!-- table price one end -->
+
+                <!-- table price two start -->
+                <div class="col-md-4 col-sm-4 col-xs-12 col-sm-push-1 col-md-push-2 hover-float centered">
+                    <div class="price price-three">
+
+                        <div class="price-header">
+                                <span class="color-success">How does <br> it work?
+</span>
+                        </div>
+                        <div class="price-body">
+                            <p class="h4 p10">
+                                License It takes all of the paper and work out of paperwork. With our online licensing
+                                tool, you can obtain a synch license in less than 10 minutes.
+
+                            </p> <br>
+
+                        </div>
+
+                        <p class="h4 p10">
+                            <span class="color-blue pt15"> Why license?</span> <br> <br>
+                            U.S. copyright law requires you to obtain permission (a license) from the owners of a song
+                            when used on a visual media output
+
+                        </p>
+
+
+                        <div class="price-footer p10">
+
+                            <a href="{% url 'licensing' %}"
+                               class="button button-sm button-rounded button-success hover-ripple-out">read more</a>
+                        </div>
                     </div>
 
                 </div>
+            </div>
+            <!-- table price two end -->
+
+
+        </div><!-- row end -->
+
+
+    </div><!-- container end -->
+    </div>
+
+
+
+
+    <!-- Welcome Area
+  ===================================== -->
+    <div id="howworks" id="welcome" class="pt15">
+        <div class="container">
+            <div class="row">
+
+                <!-- title start -->
+                <div class="col-md-12 text-center">
+                    <h1 class="font-size-normal">
+                        <small>We exist to help all creators use music in their projects</small>
+
+                        <small class="heading heading-solid center-block"></small>
+                    </h1>
+                </div>
+                <!-- title end -->
+
+                <!-- title description start -->
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <p>
+                        <span class="lead"><strong>We've built a platform based on thousands of databases, where creators can search for any song for their project and license it, all in one place.</strong></span><br><br>
+
+                        Every creator knows Music is universal – defying age, language, and culture. It’s shared, it’s
+                        talked about, it’s emotional, and that’s powerful. <b>License It</b> built the perfect platform
+                        to search and license almost every song – because we know there is no substitute for the music
+                        you have in mind.
+                    </p>
+                </div>
+                <!-- title description end -->
+            </div>
+
+            <div class="row mt50">
+
+                <!-- item one start -->
+                <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInLeft" data-animation-delay="100">
+                    <div class="content-box content-box-center">
+                        <span class="icon-search color-pasific"></span>
+                        <h5>Search</h5>
+                        <p>More than 40M musical works are now indexed in one place.</p>
+
+                    </div>
+                </div>
+                <!-- item one end -->
+
+                <!-- item two start -->
+                <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInLeft" data-animation-delay="200">
+                    <div class="content-box content-box-center">
+                        <span class="icon-layers color-pasific"></span>
+                        <h5>Owner Identification</h5>
+                        <p>Find all the right-holders you need for any project in one place.</p>
+
+                    </div>
+                </div>
+                <!-- item two end -->
+
+                <!-- item three start -->
+                <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInRight"
+                     data-animation-delay="300">
+                    <div class="content-box content-box-center">
+                        <span class="icon-pencil color-pasific"></span>
+                        <h5>License Inquiry</h5>
+                        <p>An easy license inquiry method. Fill it out once and automatically send to all relevant
+                            right-holders for their permission.</p>
+
+                    </div>
+                </div>
+                <!-- item three end -->
+
+                <!-- item four start -->
+                <div class="col-md-3 col-sm-6 col-xs-6 animated" data-animation="fadeInRight"
+                     data-animation-delay="400">
+                    <div class="content-box content-box-center">
+                        <span class="icon-flag color-pasific"></span>
+                        <h5>Done!</h5>
+                        <p>Now relax and wait for the parties' approval – we have shortened the waiting time by 50%.</p>
+
+                    </div>
+                </div>
+                <!-- item four start -->
 
             </div>
         </div>
+    </div>
 
 
-        <!-- Blog Area
-        ===================================== -->
-        <div id="blogs" class="bg-gray pt75 pb75">
-            <div class="container">
 
-                <div class="row mb25">
-                    <h3 class="text-center">
-                       Latest From Our Blog
-                        <small class="heading-desc text-lowercase">
-                            Lorem ipsum dolor sit amet consectetur adipiscing elit morbi sagittis.
-                        </small>
-                        <small class="heading heading-solid center-block"> </small>
+    <!-- Fun Fact Area
+    ===================================== -->
+    <div class="container-fluid bg-dark pb70 pt70"
+         style="background: url(assets/img/bg/bg-parallax-2.jpg) 50% 50% no-repeat;">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12 text-center">
+
+                    <a href="search-results.html" class="button-3d button-md button-circle button-green mt20">get your
+                        license now</a>
                     </h3>
                 </div>
 
-                <div class="row">
-
-                    <div class="col-md-4 col-sm-6 col-xs-12 mb50">
-                        <div class="blog-one">
-                            <div class="blog-one-header">
-                                <img src="{% static 'common/assets/img/blog/img-blog-2.jpg' %}" alt="blog image" class="img-responsive">
-                            </div>
-                            <div class="blog-one-attrib">
-                                <img src="{% static 'common/assets/img/other/photo-1.jpg' %}" alt="photo blog" class="blog-author-photo">
-                                <span class="blog-author-name">Harry Boo</span>
-                                <span class="blog-date">PEB. 14 2016</span>
-                            </div>
-                            <div class="blog-one-body">
-                                <h4 class="blog-title"><a href="#">Amazing Blog Post One</a></h4>
-                                <p class="">
-                                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.
-                                </p>
-                            </div>
-                            <div class="blog-one-footer">
-                                <a href="#">Read More</a>
-                                <i class="fa fa-heart"></i>59 Likes
-                                <i class="fa fa-comments"></i><a href="#">120 Comments</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 col-xs-12 mb50">
-                        <div class="blog-one">
-                            <div class="blog-one-header">
-                                <img src="{% static 'common/assets/img/blog/img-blog-4.jpg' %}" alt="blog image" class="img-responsive">
-                            </div>
-                            <div class="blog-one-attrib">
-                                <img src="{% static 'common/assets/img/other/photo-4.jpg' %}" alt="photo blog" class="blog-author-photo">
-                                <span class="blog-author-name">Melanie Boo</span>
-                                <span class="blog-date">PEB. 14 2016</span>
-                            </div>
-                            <div class="blog-one-body">
-                                <h4 class="blog-title"><a href="#">Amazing Blog Post One</a></h4>
-                                <p class="">
-                                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.
-                                </p>
-                            </div>
-                            <div class="blog-one-footer">
-                                <a href="#">Read More</a>
-                                <i class="fa fa-heart"></i>59 Likes
-                                <i class="fa fa-comments"></i><a href="#">120 Comments</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 col-xs-12 mb50">
-                        <div class="blog-one">
-                            <div class="blog-one-header">
-                                <img src="{% static 'common/assets/img/blog/img-blog-3.jpg' %}" alt="blog image" class="img-responsive">
-                            </div>
-                            <div class="blog-one-attrib">
-                                <img src="{% static 'common/assets/img/other/photo-2.jpg' %}" alt="photo blog" class="blog-author-photo">
-                                <span class="blog-author-name">Harry Boo</span>
-                                <span class="blog-date">PEB. 14 2016</span>
-                            </div>
-                            <div class="blog-one-body">
-                                <h4 class="blog-title"><a href="#">Amazing Blog Post One</a></h4>
-                                <p class="">
-                                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.
-                                </p>
-                            </div>
-                            <div class="blog-one-footer">
-                                <a href="#">Read More</a>
-                                <i class="fa fa-heart"></i>59 Likes
-                                <i class="fa fa-comments"></i><a href="#">120 Comments</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-
             </div>
         </div>
-
-
-        <!-- Contact Us Area
-        =====================================-->
-        <div id="contact" class="pt75 pb75 bt-solid-1">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="text-center">
-                           Get In Touch With Us.
-                            <small class="heading-desc text-lowercase">
-                               Please feel free to say anything here. Our staff will reply as soon as possible. Anything!
-                            </small>
-                            <small class="heading heading-solid center-block"> </small>
-                        </h3>
-                    </div>
-                </div>
-
-                <div class="row mt50">
-                    <form name="contactform" id="contactForm" method="post" action="assets/php/send.php">
-
-                        <!-- sender name start -->
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="form-group">
-                                <input type="text" name="senderName" id="senderName" class="input-md input-rounded form-control" placeholder="fullname" maxlength="100" required>
-                            </div>
-                        </div>
-                        <!-- sender name end -->
-
-                        <!-- sender email start -->
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="form-group">
-                                <input type="email" name="senderEmail" id="senderEmail" class="input-md input-rounded form-control" placeholder="email address" maxlength="100" required>
-                            </div>
-                        </div>
-                        <!-- sender email end -->
-
-                        <!-- sender website start -->
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="form-group">
-                                <input type="url" name="senderWebsite" id="senderWebsite" class="input-md input-rounded form-control" placeholder="http://" maxlength="100">
-                            </div>
-                        </div>
-                        <!-- sender website end -->
-
-                        <!-- security check human start -->
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="form-group">
-                                <input type="text" name="senderHuman" id="senderHuman" class="input-md input-rounded form-control" placeholder="" required>
-                                <input type="hidden" name="checkHuman_a" id="checkHuman_a">
-                                <input type="hidden" name="checkHuman_b" id="checkHuman_b">
-                            </div>
-                        </div>
-                        <!-- security check human end -->
-
-                        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                            <textarea class="form-control" name="message" id="message" rows="7" required></textarea>
-                            <button type="submit" name="sendMessage" id="sendMessage" class="button-3d button-md button-pasific hover-ripple-out mt20 center-block">Send Message</button>
-                        </div>
-
-                        <div id="sendingMessage" class="statusMessage sending-message"><p>Sending your message. Please wait...</p></div>
-                        <div id="successMessage" class="statusMessage success-message"><p>Thanks for sending your message! We'll get back to you shortly.</p></div>
-                        <div id="failureMessage" class="statusMessage failure-message"><p>There was a problem sending your message. Please try again.</p></div>
-                        <div id="incompleteMessage" class="statusMessage"><p>Please complete all the fields in the form before sending.</p></div>
-
-                    </form>
-                </div>
-
-            </div>
-        </div>
-
-
-        <!-- Testimonial Area
-        ===================================== -->
-        <div id="testimonial" class="bg-gray pt50 pb25 bb-solid-1">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div id="owlSectionThreeItem" class="owl-carousel">
-
-                            <!-- Testimonial Item -->
-                            <div class="testimonial testimonial-center">
-                                <div class="testimonial-header">
-                                    <img src="{% static 'common/assets/img/other/photo-1.jpg' %}" alt="testimonial author" class="img-responsive img-circle">
-                                </div>
-                                <div class="testimonial-body">
-                                    <p>
-                                        Pasific template is the best template so far. So easy to customize and clean code. Recommended!
-                                    </p>
-                                </div>
-                                <div class="testimonial-footer">
-                                    <i class="fa fa-quote-left"></i>
-                                    Martin Smith <a href="#">Smashingmagazine.com   </a>
-                                </div>
-                            </div>
-
-                            <!-- Testimonial Item -->
-                            <div class="testimonial testimonial-center">
-                                <div class="testimonial-header">
-                                    <img src="{% static 'common/assets/img/other/photo-2.jpg' %}" alt="testimonial author" class="img-responsive img-circle">
-                                </div>
-                                <div class="testimonial-body">
-                                    <p>
-                                        Quisque mollis lacus augue, a hendrerit leo tristique vitae. Mauris non ipsum molestie sagittis elit ac vulputate odio.
-                                    </p>
-                                </div>
-                                <div class="testimonial-footer">
-                                    <i class="fa fa-quote-left"></i>
-                                    Steve Austin <a href="#">envato.com   </a>
-                                </div>
-                            </div>
-
-                            <!-- Testimonial Item -->
-                            <div class="testimonial testimonial-center">
-                                <div class="testimonial-header">
-                                    <img src="{% static 'common/assets/img/other/photo-3.jpg' %}" alt="testimonial author" class="img-responsive img-circle">
-                                </div>
-                                <div class="testimonial-body">
-                                    <p>
-                                        Fusce quam augue, gravida tincidunt dui nec, tempor iaculis justo.
-                                    </p>
-                                </div>
-                                <div class="testimonial-footer">
-                                    <i class="fa fa-quote-left"></i>
-                                    Johny English <a href="#">themeforest.net   </a>
-                                </div>
-                            </div>
-
-                            <!-- Testimonial Item -->
-                            <div class="testimonial testimonial-center">
-                                <div class="testimonial-header">
-                                    <img src="{% static 'common/assets/img/other/photo-1.jpg' %}" alt="testimonial author" class="img-responsive img-circle">
-                                </div>
-                                <div class="testimonial-body">
-                                    <p>
-                                        Pasific template is the best template so far. So easy to customize and clean code. Recommended!
-                                    </p>
-                                </div>
-                                <div class="testimonial-footer">
-                                    <i class="fa fa-quote-left"></i>
-                                    Martin Smith <a href="#">Smashingmagazine.com   </a>
-                                </div>
-                            </div>
-
-                            <!-- Testimonial Item -->
-                            <div class="testimonial testimonial-center">
-                                <div class="testimonial-header">
-                                    <img src="{% static 'common/assets/img/other/photo-2.jpg' %}" alt="testimonial author" class="img-responsive img-circle">
-                                </div>
-                                <div class="testimonial-body">
-                                    <p>
-                                        Quisque mollis lacus augue, a hendrerit leo tristique vitae. Mauris non ipsum molestie sagittis elit ac vulputate odio.
-                                    </p>
-                                </div>
-                                <div class="testimonial-footer">
-                                    <i class="fa fa-quote-left"></i>
-                                    Steve Austin <a href="#">envato.com   </a>
-                                </div>
-                            </div>
-
-                            <!-- Testimonial Item -->
-                            <div class="testimonial testimonial-center">
-                                <div class="testimonial-header">
-                                    <img src="{% static 'common/assets/img/other/photo-3.jpg' %}" alt="testimonial author" class="img-responsive img-circle">
-                                </div>
-                                <div class="testimonial-body">
-                                    <p>
-                                        Fusce quam augue, gravida tincidunt dui nec, tempor iaculis justo.
-                                    </p>
-                                </div>
-                                <div class="testimonial-footer">
-                                    <i class="fa fa-quote-left"></i>
-                                    Johny English <a href="#">themeforest.net   </a>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Newsletter Area
-        =====================================-->
-        <div id="newsletter" class="bg-dark2 pt75 pb75">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-md-2">
-                        <h4 class="color-light">
-                            Newsletter
-                        </h4>
-                    </div>
-
-                    <div class="col-md-10">
-                        <form name="newsletter">
-                            <div class="input-newsletter-container">
-                                <input type="text" name="email" class="input-newsletter" placeholder="enter your email address">
-                            </div>
-                            <a href="#" class="button button-sm button-pasific hover-ripple-out">Subscribe<i class="fa fa-envelope"></i></a>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
 {% endblock %}
