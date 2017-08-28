@@ -143,8 +143,5 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-#SECURE_SSL_REDIRECT = True
-
-#SESSION_COOKIE_SECURE = True
-
-#CSRF_COOKIE_SECURE = True
+EMAIL_HOST = 'licenseit.net'
+EMAIL_PORT = 25
