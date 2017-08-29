@@ -1,9 +1,9 @@
 import logging
 import traceback
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.db import IntegrityError
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
@@ -32,7 +32,7 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
         WeddingDetailForm,
         PersonalDetailForm
     )
-    from accounts.models import PersonalInfo, UserImage
+    from accounts.models import PersonalInfo, UserImage, ResetPassword
     from accounts.forms import PersonalInfoForm
 
 
@@ -69,11 +69,51 @@ class ForgotPassword(View):
             return render(request,
                           'home/index.html',
                           context={'error_forgot_password': "we don't have this user on the system"})
+        reset_token = generate_password(50)
+        reset_pass = ResetPassword()
+        reset_pass.reset_token = reset_token
+        reset_pass.user = user
+        reset_pass.save()
         send_mail('licenseit reset password',
-                  'reset your password via this link: ',
+                  'reset your password via this link: {0}/accounts/{1}/'.format(request.get_host(), reset_token),
                   'cdo@licenseit.net',
                   [user.email])
         return render(request, 'home/index.html')
+
+
+class ChangePassword(View):
+    def is_valid(self, string=None):
+        if not string:
+            return False
+        try:
+            reset_pass = ResetPassword.objects.get(reset_token=string)
+        except ResetPassword.DoesNotExist:
+            return False
+        if datetime.now() - reset_pass.created <= timedelta(1):
+            return True
+
+    def get(self, request, string=None):
+        if self.is_valid(string):
+            return render(request,
+                          'accounts/reset_password.html',
+                          context={'string': string})
+        return HttpResponseRedirect(reverse('home'))
+
+    def post(self, request, string=None):
+        if self.is_valid(string) and 'password' in request.POST and 'confirm_pass' in request.POST:
+            if request.POST['password'] == request.POST['confirm_pass']:
+                reset_pass = ResetPassword.objects.get(reset_token=string).select_related()
+                user = reset_pass.user
+                user.set_password(request.POST['password'])
+                user.save()
+                return HttpResponseRedirect(reverse('home'))
+            return render(request,
+                          'accounts/reset_password.html',
+                          context={
+                              'error': 'password and confirm password were not identical',
+                              'string': string
+                          })
+        return HttpResponseRedirect(reverse('home'))
 
 
 class EditUserData(View):
