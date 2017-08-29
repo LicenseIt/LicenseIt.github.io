@@ -89,7 +89,9 @@ class ChangePassword(View):
             reset_pass = ResetPassword.objects.get(reset_token=string)
         except ResetPassword.DoesNotExist:
             return False
-        if datetime.now() - reset_pass.created <= timedelta(1):
+        now = datetime.now()
+        margin = timedelta(1)
+        if now - margin < reset_pass.created:
             return True
 
     def get(self, request, string=None):
