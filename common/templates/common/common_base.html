@@ -84,6 +84,15 @@
         {% if url == 'results' %}
             <link rel="stylesheet" href="{% static 'common/assets/css/loading.css' %}">
         {% endif %}
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="{% static 'common/assets/css/main/main.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/main/setting.css' %}">
+        <link rel="stylesheet" href="{% static 'common/assets/css/main/hover.css' %}">
+
+        <link rel="stylesheet" href="{% static 'common/assets/css/resetLR.css' %}"> <!-- CSS reset -->
+        <link rel="stylesheet" href="{% static 'common/assets/css/styleLR.css' %}"> <!-- Gem style -->
+
         <!-- Load JS
         HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
         WARNING: Respond.js doesn't work if you view the page via file://
@@ -148,6 +157,123 @@
         </div>
     {% endif %}
 
+    <div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
+        <div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+            <ul class="cd-switcher font-montserrat text-capitalize">
+                <li><a href="#0">Sign in</a></li>
+                <li><a href="#0">Sign up</a></li>
+            </ul>
+
+            <div id="cd-login"> <!-- log in form -->
+                <form action="{% url 'login' %}" method="post" class="cd-form font-montserrat">
+                    <div>{% csrf_token %}
+                        <div style="float: left; width: 45%">
+                            <input id="fb-button" class="full-width button button-md button-rounded button-primary"
+                                   type="submit" value="Sign in with Facebook">
+                        </div>
+                        <div style="float: right; width: 45%">
+                            <input class="full-width button button-md button-rounded button-red" type="submit"
+                                   value="Sign in with Google">
+                        </div>
+
+                    </div>
+                    <br><br>
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="signin-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="signin-email" type="email"
+                               placeholder="E-mail" name="username" required>
+                        <span class="cd-error-message">{{ error }}</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signin-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signin-password" type="password"
+                               placeholder="Password" name="password" required>
+                        <a href="#0" class="hide-password">Hide</a>
+                        <span class="cd-error-message">{{ error }}</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" id="remember-me" checked>
+                        <label for="remember-me">Remember me</label>
+                    </p>
+
+                    <p class="fieldset">
+                        <button class="full-width button-3d button-md button-rounded button-green">Login</button>
+
+                    </p>
+                </form>
+
+                <p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
+                <!-- <a href="#0" class="cd-close-form">Close</a> -->
+            </div> <!-- cd-login -->
+
+            <div id="cd-signup"> <!-- sign up form -->
+                <form action="{% url 'signup_page' %}" method="post" class="cd-form font-montserrat">
+
+                    <div>{% csrf_token %}
+                        <div style="float: left; width: 45%">
+                            <input class="full-width button button-md button-rounded button-primary" type="submit"
+                                   value="Sign up with Facebook">
+                        </div>
+                        <div style="float: right; width: 45%">
+                            <input class="full-width button button-md button-rounded button-red" type="submit"
+                                   value="Sign up with Google">
+                        </div>
+
+                    </div>
+                    <br><br>
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="signup-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="signup-email" type="email"
+                               placeholder="E-mail" name="email" required>
+                        <span class="cd-error-message">{{ error }}</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signup-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signup-password" type="password"
+                               placeholder="Password" name="password">
+                        <a href="#0" class="hide-password">Hide</a>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" id="accept-terms">
+                        <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+                    </p>
+
+                    <p class="fieldset ">
+                        <button class="full-width has-padding button-3d button-md button-rounded button-blue"
+                                value="Register">Register</button>
+                    </p>
+                </form>
+
+                <!-- <a href="#0" class="cd-close-form">Close</a> -->
+            </div> <!-- cd-signup -->
+
+            <div id="cd-reset-password"> <!-- reset password form -->
+                <p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link
+                    to create a new password.</p>
+
+                <form class="cd-form" action="{% url 'forgot-password' %}" method="post">
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="reset-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="reset-email" type="email"
+                               placeholder="E-mail" name="email" required>
+                        <span class="cd-error-message">{{ error_forgot_pass }}</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <button class="full-width has-padding" value="Reset password">Submit</button>
+                    </p>
+                </form>
+
+                <p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+            </div> <!-- cd-reset-password -->
+            <a href="#0" class="cd-close-form">Close</a>
+        </div> <!-- cd-user-modal-container -->
+    </div> <!-- cd-user-modal -->
+
     <a href="#page-top" class="go-to-top">
         <i class="fa fa-long-arrow-up"></i>
     </a>
@@ -200,62 +326,16 @@
                                 <a href="#" class="dropdown-toggle" id="notifications">{{ notif }}</a>
                             </li>
                         {% endif %}
-                        <li>
+                        <li class="dropdown megamenu-fw has-dropdown-menu">
                             <a href="{% url 'logout' %}"
                                class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">signout</a>
                         </li>
                     {% else %}
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle color-light">Sign in </a>
-                            <ul class="dropdown-menu has-submenu" role="menu">
-                                <li>
-                                    <div class="row p15">
-                                        <div class="col-md-12">
-                                            Login via
-                                            <div class="social-buttons pb5">
-                                                <a id="fb-button" class="btn btn-fb"><i class="fa fa-facebook"></i>
-                                                    Facebook</a>
-                                                <a href="#" class="btn btn-tw"><i class="fa fa-google"></i> Google</a>
-                                            </div>
-                                            or
-                                            <form class="form mt5" role="form" method="post" action="{% url 'login' %}"
-                                                  accept-charset="UTF-8" id="login-nav">
-                                                {% csrf_token %}
-                                                <div class="form-group">
-                                                    <label class="sr-only" for="exampleInputEmail2">Email
-                                                        address</label>
-                                                    <input type="email" name="username" class="form-control"
-                                                           id="exampleInputEmail2"
-                                                           placeholder="Email address" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                                    <input type="password" name="password" class="form-control"
-                                                           id="exampleInputPassword2"
-                                                           placeholder="Password" required>
-                                                    <div class="help-block text-right"><a href="">Forget the password
-                                                        ?</a>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group mt10">
-                                                    <button type="submit"
-                                                            class="button btn-block button-rounded button-success hover-ripple-out">
-                                                        Sign in
-                                                    </button>
-                                                </div>
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> keep me logged-in
-                                                    </label>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="bottom text-center mt5 font-size-normal">
-                                            New here ? <a href="#"><b>Join Us</b></a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                        <li class="dropdown megamenu-fw has-dropdown-menu">
+                            <a class="cd-signin dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}" href="#0">Sign in</a>
+                        </li>
+                        <li class="dropdown megamenu-fw has-dropdown-menu">
+                            <a class="cd-signup dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}" href="#0">Sign up</a>
                         </li>
                     {% endif %}
                     <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
@@ -509,6 +589,7 @@
             integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc="
             crossorigin="anonymous"></script>
 
+    <script src="{% static 'common/assets/js/mainLR.js' %}"></script> <!-- Gem jQuery -->
     <script>
         var countries = [];
 

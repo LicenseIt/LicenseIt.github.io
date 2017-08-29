@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
+from django.core.mail import send_mail
 
 from orders.models import Order
 from owners.models import Question, OrderOwnerRight, OwnerDatabase
@@ -36,9 +37,6 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
 
 
 class LoginView(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'accounts/login.html')
-
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
@@ -48,13 +46,10 @@ class LoginView(View):
             login(request, user)
             return HttpResponseRedirect(reverse('search'))
         else:
-            return render(request, 'accounts/login.html', context={'error': 'username or password is wrong'})
+            return render(request, 'home/index.html', context={'error': 'username or password is wrong'})
 
 
 class SignupView(View):
-    def get(self, request):
-        return render(request, 'accounts/signup.html')
-
     def post(self, request):
         email = request.POST['email']
         username = request.POST['email']
@@ -63,8 +58,21 @@ class SignupView(View):
             user = User.objects.create_user(username, email, password)
             login(request, user)
         except IntegrityError:
-            return render(request, 'accounts/signup.html', context={'error': 'this username is already taken'})
-        return HttpResponseRedirect(reverse('search_page'))
+            return render(request, 'home/index.html', context={'error': 'this username is already taken'})
+        return HttpResponseRedirect(reverse('search'))
+
+
+class ForgotPassword(View):
+    def post(self, request):
+        user = User.objects.get(email=request.POST['email'])
+        if not user:
+            return render(request,
+                          'home/index.html',
+                          context={'error_forgot_password': "we don't have this user on the system"})
+        send_mail('licenseit reset password',
+                  'reset your password via this link: ',
+                  'cdo@licenseit.net',
+                  [user.email])
 
 
 class EditUserData(View):
