@@ -105,7 +105,7 @@ class ChangePassword(View):
     def post(self, request, string=None):
         if self.is_valid(string) and 'password' in request.POST and 'confirm_pass' in request.POST:
             if request.POST['password'] == request.POST['confirm_pass']:
-                reset_pass = ResetPassword.objects.get(reset_token=string).select_related()
+                reset_pass = ResetPassword.objects.get(reset_token=string)
                 user = reset_pass.user
                 user.set_password(request.POST['password'])
                 user.save()
