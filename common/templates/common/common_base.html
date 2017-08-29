@@ -256,7 +256,7 @@
                     to create a new password.</p>
 
                 <form class="cd-form" action="{% url 'forgot_password' %}" method="post">
-                    <p class="fieldset">
+                    <p class="fieldset">{% csrf_token %}
                         <label class="image-replace cd-email" for="reset-email">E-mail</label>
                         <input class="full-width has-padding has-border" id="reset-email" type="email"
                                placeholder="E-mail" name="email" required>
