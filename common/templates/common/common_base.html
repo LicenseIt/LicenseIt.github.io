@@ -280,7 +280,7 @@
 
     <!-- Navigation Area
     ===================================== -->
-    <nav class="navbar navbar-pasific navbar-mp {% if url != 'home' %}navbar-standart{% endif %} megamenu navbar-fixed-top" {% if url != 'home' %}style="border-bottom:1px solid #fff;{% endif %}"{% endif %}>
+    <nav class="navbar navbar-pasific navbar-mp {% if url != 'home' %}navbar-standart{% endif %} megamenu navbar-fixed-top"{% if url != 'home' %} style="border-bottom:1px solid #fff;"{% endif %}>
         <div class="{% if url == 'home' %}container-fluid{% else %}container{% endif %}">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
