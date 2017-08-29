@@ -1,6 +1,6 @@
 import logging
 import traceback
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.db import IntegrityError
 from django.shortcuts import render, get_object_or_404
@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
 from django.core.mail import send_mail
+from django.utils import timezone
 
 from orders.models import Order
 from owners.models import Question, OrderOwnerRight, OwnerDatabase
@@ -89,7 +90,7 @@ class ChangePassword(View):
             reset_pass = ResetPassword.objects.get(reset_token=string)
         except ResetPassword.DoesNotExist:
             return False
-        now = datetime.now()
+        now = timezone.now()
         margin = timedelta(1)
         if now - margin < reset_pass.created:
             return True
