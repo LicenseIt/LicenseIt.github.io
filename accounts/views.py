@@ -60,6 +60,10 @@ class SignupView(View):
             login(request, user)
         except IntegrityError:
             return render(request, 'home/index.html', context={'error': 'this username is already taken'})
+        send_mail('licenseit- thanks for registering',
+                  'Thanks for registering to our site',
+                  'cdo@licenseit.net',
+                  [email])
         return HttpResponseRedirect(reverse('search'))
 
 
