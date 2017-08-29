@@ -73,6 +73,7 @@ class ForgotPassword(View):
                   'reset your password via this link: ',
                   'cdo@licenseit.net',
                   [user.email])
+        return render(request, 'home/index.html')
 
 
 class EditUserData(View):
