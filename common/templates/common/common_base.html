@@ -168,8 +168,9 @@
                 <form action="{% url 'login' %}" method="post" class="cd-form font-montserrat">
                     <div>{% csrf_token %}
                         <div style="float: left; width: 45%">
-                            <input id="fb-button" class="full-width button button-md button-rounded button-primary"
-                                   type="submit" value="Sign in with Facebook">
+                            <div id="fb-button" class="full-width button button-md button-rounded button-primary">
+                                Sign in with Facebook
+                            </div>
                         </div>
                         <div style="float: right; width: 45%">
                             <input class="full-width button button-md button-rounded button-red" type="submit"
@@ -214,7 +215,7 @@
                     <div>{% csrf_token %}
                         <div style="float: left; width: 45%">
                             <div class="full-width button button-md button-rounded button-primary"
-                                    id="fb-button">Sign up with Facebook</div>
+                                    >Sign up with Facebook</div>
                         </div>
                         <div style="float: right; width: 45%">
                             <div class="full-width button button-md button-rounded button-red"
