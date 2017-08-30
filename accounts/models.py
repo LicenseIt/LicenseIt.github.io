@@ -59,3 +59,14 @@ class ResetPassword(models.Model):
     reset_token = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+
+class CounterOffer(models.Model):
+    title = models.CharField(max_length=100)
+    offer = models.TextField()
+    order = models.ForeignKey(Order,
+                              on_delete=models.CASCADE,
+                              related_name='counter_offer_order')
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)

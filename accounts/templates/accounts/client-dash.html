@@ -267,16 +267,20 @@
                                         <div id="pilljustified4"
                                              class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
                                             <h5>Payment</h5>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro,
-                                                libero,
-                                                temporibus quam eaque numquam debitis excepturi assumenda
-                                                necessitatibus
-                                                dolore dolorum vero enim distinctio ipsa. Quod, dolorum, quidem eum
-                                                quisquam facilis nam molestias et voluptas omnis quibusdam
-                                                dignissimos
-                                                illum ullam.
-                                            </p>
+                                            <form action="{% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}" method="post">
+                                                <div>{% csrf_token %}
+                                                    <label for="id_title">title</label>
+                                                    {{ counter_offer_form.title }}
+                                                </div>
+                                                <div>
+                                                    <label for="id_offer">your offer</label>
+                                                    {{ counter_offer_form.offer }}
+                                                </div>
+                                                <input type="hidden" name="order" value="{{ order_data.id }}">
+                                                <div>
+                                                    <button class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
                                         </div>
                                         <div id="pilljustified5"
                                              class="tab-pane fade{% if order_data.state == 'done' %} in active{% endif %}">

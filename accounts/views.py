@@ -31,10 +31,10 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
         ProgramDetailForm,
         AdvertisingDetailForm,
         WeddingDetailForm,
-        PersonalDetailForm
+        PersonalDetailForm,
     )
-    from accounts.models import PersonalInfo, UserImage, ResetPassword
-    from accounts.forms import PersonalInfoForm
+    from accounts.models import PersonalInfo, UserImage, ResetPassword, CounterOffer
+    from accounts.forms import PersonalInfoForm, CounterOfferForm
 
 
 class LoginView(View):
@@ -197,6 +197,12 @@ class Account(View):
 
         user_data = User.objects.get(username=user.email)
 
+        if CounterOffer.objects.filter(order=order_data.id).exists():
+            counter_offer = CounterOffer.objects.filter(order=order_data.id)[0]
+            counter = CounterOfferForm(instance=counter_offer)
+        else:
+            counter = CounterOfferForm()
+
         context = {
             'url': 'client_dash',
             'orders_list': orders_list,
@@ -208,6 +214,7 @@ class Account(View):
             'personal_info': personal_info_form,
             'user_data': UserChangeForm(instance=user_data),
             'user': user,
+            'counter_offer_form': counter
         }
 
         if order_data and order_data.project_type.name.lower() == 'film making':
@@ -283,7 +290,7 @@ class Account(View):
     def get(self, request, order_id=None):
         context = self.data(request.user, order_id)
         return render(request,
-                      'accounts/client-dash.html',
+                      self.template_name,
                       context=context)
 
     def post(self, request, order_id=None):
@@ -415,3 +422,22 @@ class Account(View):
             order_form.save()
 
         return render(request, self.template_name, context)
+
+
+class CounterOfferView(View):
+    def post(self, request, order_id=None):
+        if order_id:
+            counter_offer = CounterOffer.objects.filter(order=order_id)
+        else:
+            order_id = Order.objects.filter(user=request.user).first().id
+            counter_offer = CounterOffer.objects.filter(order=order_id)
+        if counter_offer.exists():
+            form = CounterOfferForm(request.POST, instance=counter_offer)
+        else:
+            form = CounterOfferForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors)
+        return HttpResponseRedirect(reverse('my_account'))
