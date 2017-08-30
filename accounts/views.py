@@ -179,8 +179,10 @@ class Account(View):
 
         if order_id:
             order_data = Order.objects.get(pk=order_id)
-        else:
+        elif orders_list:
             order_data = orders_list.first()
+        else:
+            order_data = False
 
         if order_data:
             owners = OrderOwnerRight.objects.filter(order=order_data.id)
