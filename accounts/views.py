@@ -197,7 +197,7 @@ class Account(View):
         else:
             personal_info_form = PersonalInfoForm()
 
-        user_data = User.objects.get(username=user.email)
+        user_data = User.objects.get(username=user.username)
 
         if CounterOffer.objects.filter(order=order_data.id).exists():
             counter_offer = CounterOffer.objects.filter(order=order_data.id)[0]
