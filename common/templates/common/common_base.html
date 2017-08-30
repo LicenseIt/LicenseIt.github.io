@@ -247,6 +247,11 @@
                                 value="Register">Register</button>
                     </p>
                 </form>
+                <script>
+                    $('#fb-button').click(function () {
+                        loginCheck();
+                    });
+                </script>
 
                 <!-- <a href="#0" class="cd-close-form">Close</a> -->
             </div> <!-- cd-signup -->
@@ -578,10 +583,6 @@
                 }
             });
         }
-
-        $('#fb-button').click(function () {
-            loginCheck();
-        });
     </script>
     <script
             src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"
