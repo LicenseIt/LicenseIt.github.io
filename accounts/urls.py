@@ -21,6 +21,7 @@ urlpatterns = [
     url('^change_password/(?P<string>[A-z]+)/', ChangePassword.as_view(), name='change_password'),
     url('^edit_user/', login_required(EditUserData.as_view()), name='edit_user'),
     url('^counter-offer/(?P<order_id>[0-9]+)/', login_required(CounterOfferView.as_view()), name='counter_offer'),
+    url('^counter-offer/', login_required(CounterOfferView.as_view()), name='counter_offer'),
     url('^facebook-login/(?P<email>[A-z@.]+)/(?P<url>[A-z:/.0-9_?=-]+)', LoginFacebook.as_view(), name='facebook_login'),
     url('^my_account/order/(?P<order_id>[0-9]+)/', login_required(Account.as_view()), name='my_account_order'),
     url('^my_account/', login_required(Account.as_view()), name='my_account'),
