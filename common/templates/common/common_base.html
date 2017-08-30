@@ -563,6 +563,7 @@
         }
 
         function loginCheck() {
+            alert('hello');
             FB.getLoginStatus(function (response) {
                 alert(response.status);
                 if (response.status === 'connected') {
