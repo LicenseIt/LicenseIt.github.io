@@ -205,11 +205,16 @@ class Account(View):
         else:
             counter = CounterOfferForm()
 
+        if order_data:
+            order_form = OrderForm(instance=order_data)
+        else:
+            order_form = OrderForm()
+
         context = {
             'url': 'client_dash',
             'orders_list': orders_list,
             'order_data': order_data,
-            'order_form': OrderForm(instance=order_data),
+            'order_form': order_form,
             'ask_user': ask_user,
             'owners': owners,
             'is_form': True,
