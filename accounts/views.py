@@ -197,10 +197,7 @@ class Account(View):
         else:
             personal_info_form = PersonalInfoForm()
 
-        # if User.objects.filter(username=user.email).exists():
         user_data = User.objects.get(username=user.email)
-        # else:
-
 
         if CounterOffer.objects.filter(order=order_data.id).exists():
             counter_offer = CounterOffer.objects.filter(order=order_data.id)[0]
@@ -293,7 +290,6 @@ class Account(View):
         return context
 
     def get(self, request, order_id=None):
-        print(request.user.username)
         context = self.data(request.user, order_id)
         return render(request,
                       self.template_name,
