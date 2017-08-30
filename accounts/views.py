@@ -199,7 +199,7 @@ class Account(View):
 
         user_data = User.objects.get(username=user.username)
 
-        if CounterOffer.objects.filter(order=order_data.id).exists():
+        if order_data and CounterOffer.objects.filter(order=order_data.id).exists():
             counter_offer = CounterOffer.objects.filter(order=order_data.id)[0]
             counter = CounterOfferForm(instance=counter_offer)
         else:
