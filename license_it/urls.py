@@ -42,5 +42,6 @@ urlpatterns = [
     url('^pricing/', Pricing.as_view(), name='pricing'),
     url('^team/', Team.as_view(), name='team'),
     url('^terms/', Terms.as_view(), name='terms'),
+    url('', include('social_django.urls', namespace='social')),
     url('', include('home.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

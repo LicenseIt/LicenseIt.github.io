@@ -214,8 +214,8 @@
 
                     <div>{% csrf_token %}
                         <div style="float: left; width: 45%">
-                            <div class="full-width button button-md button-rounded button-primary"
-                                    >Sign up with Facebook</div>
+                            <a href="{% url 'social:begin' 'facebook-oauth2' %}" class="full-width button button-md button-rounded button-primary"
+                                    >Sign up with Facebook</a>
                         </div>
                         <div style="float: right; width: 45%">
                             <div class="full-width button button-md button-rounded button-red"
