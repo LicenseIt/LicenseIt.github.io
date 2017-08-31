@@ -123,29 +123,29 @@
         {% endif %}
     </head>
     <body id="topPage" data-spy="scroll" data-target=".navbar" data-offset="100">
-    <script>
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '135135447098057',
-                autoLogAppEvents : true,
-                xfbml: true,
-                version: 'v2.10'
-            });
-
-            FB.AppEvents.logPageView();
-        };
-
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
+{#    <script>#}
+{#        window.fbAsyncInit = function () {#}
+{#            FB.init({#}
+{#                appId: '135135447098057',#}
+{#                autoLogAppEvents : true,#}
+{#                xfbml: true,#}
+{#                version: 'v2.10'#}
+{#            });#}
+{##}
+{#            FB.AppEvents.logPageView();#}
+{#        };#}
+{##}
+{#        (function (d, s, id) {#}
+{#            var js, fjs = d.getElementsByTagName(s)[0];#}
+{#            if (d.getElementById(id)) {#}
+{#                return;#}
+{#            }#}
+{#            js = d.createElement(s);#}
+{#            js.id = id;#}
+{#            js.src = "//connect.facebook.net/en_US/sdk.js";#}
+{#            fjs.parentNode.insertBefore(js, fjs);#}
+{#        }(document, 'script', 'facebook-jssdk'));#}
+{#    </script>#}
 
     {% if url != 'results' %}
         <!-- Page Loader
@@ -557,34 +557,34 @@
         <script src="{% static 'common/assets/js/main/googlemap.js' %}"></script>
 
     {% endif %}
-    <script>
-        function loginUser(email, picture) {
-            window.location = "/accounts/facebook-login/" + email + '/' + picture;
-        }
-
-        function loginCheck() {
-            alert('hello');
-            FB.getLoginStatus(function (response) {
-                alert(response.status);
-                if (response.status === 'connected') {
-                    FB.api('/me?fields=first_name,last_name,picture,email', function (response) {
-                        loginUser(response.email, response.picture.data['url']);
-                    });
-                } else {
-                    FB.login(function (response) {
-                        if (response.status === 'connected') {
-                            FB.api('/me?fields=first_name,last_name,picture,email', function (response) {
-                                loginUser(response.email, response.picture.data['url']);
-                            })
-                        }
-                    }, {scope: 'public_profile,email'});
-                }
-            });
-        }
-        $('#fb-button').click(function () {
-            loginCheck();
-        });
-    </script>
+{#    <script>#}
+{#        function loginUser(email, picture) {#}
+{#            window.location = "/accounts/facebook-login/" + email + '/' + picture;#}
+{#        }#}
+{##}
+{#        function loginCheck() {#}
+{#            alert('hello');#}
+{#            FB.getLoginStatus(function (response) {#}
+{#                alert(response.status);#}
+{#                if (response.status === 'connected') {#}
+{#                    FB.api('/me?fields=first_name,last_name,picture,email', function (response) {#}
+{#                        loginUser(response.email, response.picture.data['url']);#}
+{#                    });#}
+{#                } else {#}
+{#                    FB.login(function (response) {#}
+{#                        if (response.status === 'connected') {#}
+{#                            FB.api('/me?fields=first_name,last_name,picture,email', function (response) {#}
+{#                                loginUser(response.email, response.picture.data['url']);#}
+{#                            })#}
+{#                        }#}
+{#                    }, {scope: 'public_profile,email'});#}
+{#                }#}
+{#            });#}
+{#        }#}
+{#        $('#fb-button').click(function () {#}
+{#            loginCheck();#}
+{#        });#}
+{#    </script>#}
     <script
             src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"
             integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc="
