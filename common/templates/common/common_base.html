@@ -168,9 +168,9 @@
                 <form action="{% url 'login' %}" method="post" class="cd-form font-montserrat">
                     <div>{% csrf_token %}
                         <div style="float: left; width: 45%">
-                            <div id="fb-button" class="full-width button button-md button-rounded button-primary">
+                            <a href="{% url 'social:begin' 'facebook' %}" class="full-width button button-md button-rounded button-primary">
                                 Sign in with Facebook
-                            </div>
+                            </a>
                         </div>
                         <div style="float: right; width: 45%">
                             <input class="full-width button button-md button-rounded button-red" type="submit"
