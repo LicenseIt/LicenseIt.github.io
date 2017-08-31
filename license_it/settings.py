@@ -149,7 +149,7 @@ EMAIL_PORT = 25
 
 # social auth- facebook
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.github.GithubOAuth2',
+    'social_auth.backends.facebook.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -158,3 +158,4 @@ SOCIAL_AUTH_EMAIL_FORM_URL = '/account/login/'
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'email']
 
+SOCIAL_AUTH_FACEBOOK_APP_ID = '135135447098057'
