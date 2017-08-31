@@ -39,6 +39,7 @@ class SearchView(View):
         :return:
         '''
         logger = logging.getLogger(__name__)
+        print(request.POST)
         search = request.POST['search']
         search_in_db = Search.objects.filter(search_term=search)
         print(search_in_db)
