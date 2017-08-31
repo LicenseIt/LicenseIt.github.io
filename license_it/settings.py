@@ -149,7 +149,7 @@ EMAIL_PORT = 25
 
 # social auth- facebook
 AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.facebook.FacebookBackend',
+    'social_django.backends.facebook.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
