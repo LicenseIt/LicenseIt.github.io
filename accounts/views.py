@@ -44,7 +44,7 @@ class LoginView(View):
         user = authenticate(username=username, password=password)
 
         if user is not None:
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return HttpResponseRedirect(reverse('search'))
         else:
             return render(request, 'home/index.html', context={'error': 'username or password is wrong'})

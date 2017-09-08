@@ -108,6 +108,12 @@
                 #id_youtube {
                     display: none;
                 }
+                #other_web {
+                    display: none;
+                }
+                #dist_other {
+                    display: none;
+                }
             </style>
         {% endif %}
         {% if url == 'details' %}
@@ -641,6 +647,22 @@
 
         $('#advertising').click(function () {
             $('#num_forms').html(4);
+        });
+
+        $('#other').change(function () {
+            if (this.checked) {
+                $('#other_web').show();
+            } else {
+                $('#other_web').hide();
+            }
+        });
+
+        $('#ext_other').change(function () {
+            if (this.checked) {
+                $('#dist_other').show();
+            } else {
+                $('#dist_other').hide();
+            }
         });
     </script>
     </body>

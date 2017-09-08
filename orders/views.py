@@ -515,15 +515,41 @@ class DetailBase(View):
         data = request.POST.copy()
         data['order'] = order_id
         form = detail_form(data)
-        data['start_duration'] = request.POST['min_start'] + ':' + request.POST['sec_start']
-        data['end_duration'] = request.POST['min_end'] + ':' + request.POST['sec_end']
 
         context = {
             'details_form': form,
             'order': order_id,
             'url': 'details',
-            'is_form': True
+            'is_form': True,
         }
+
+        not_valid = False
+
+        if 'min_start' in data:
+            context['min_start'] = request.POST['min_start']
+        else:
+            not_valid = True
+
+        if 'sec_start' in data:
+            context['sec_start'] = request.POST['sec_start']
+        else:
+            not_valid = True
+
+        if 'min_end' in data:
+            context['min_end'] = request.POST['min_end']
+        else:
+            not_valid = True
+
+        if 'sec_end' in data:
+            context['sec_end'] = request.POST['sec_end']
+        else:
+            not_valid = True
+
+        if not_valid:
+            return render(request, self.template_name, context=context)
+
+        data['start_duration'] = request.POST['min_start'] + ':' + request.POST['sec_start']
+        data['end_duration'] = request.POST['min_end'] + ':' + request.POST['sec_end']
 
         if 'rate' in request.POST:
             form_rate = RateUsForm(request.POST.copy())
@@ -553,7 +579,7 @@ class DetailBase(View):
 
             try:
                 user = User.objects.create_user(username, email, password)
-                login(request, user)
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 user.first_name = first_name
                 user.last_name = last_name
                 user.save()
@@ -569,6 +595,7 @@ class DetailBase(View):
                                   context=context)
 
             except IntegrityError:
+                context['error_user'] = 'there is already a user with this email'
                 return render(request,
                               self.template_name,
                               context=context)

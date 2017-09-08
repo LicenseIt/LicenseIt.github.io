@@ -1,11 +1,12 @@
 <div class="section">
     <label class="field-label" for="id_number_uses">number of uses</label>
     <label class="field">{{ details_form.number_uses }}</label>
+    <span>{{ details_form.errors.number_uses }}</span>
 </div>
 <div class="section">
     <label class="field-label">opening closing?</label>
 </div>
-
+<span>{{ details_form.errors.opening_closing }}</span>
 <div class="section">
     <div class="group-vertical">
         {% for check in details_form.opening_closing %}
@@ -21,6 +22,7 @@
     <div class="option-group field">
         <div class="group-vertical">
             <label class="field-label">featured or background?</label>
+        <span>{{ details_form.errors.featured_background }}</span>
             {% for check in details_form.featured_background %}
                 <label class="option" for="{{ check.id_for_label }}">
                     {{ check.tag }}
@@ -34,6 +36,7 @@
     <div class="option-group field">
         <div class="group-vertical">
             <label class="field-label">song version</label>
+        <span>details_form.errors.song_version</span>
             {% for check in details_form.song_version %}
                 <label class="option" for="{{ check.id_for_label }}">
                     {{ check.tag }}
@@ -43,6 +46,7 @@
         </div>
     </div>
 </div>
+<span>details_form.errors.start_duration</span>
 <div class="section">
     <label for="id_start_minutes" class="field-label">duration start at (minutes)</label>
     <input class="gui-input" name="min_start" type="number" required
@@ -55,6 +59,7 @@
            value="{% if sec_start %}{{ sec_start }}{% endif %}"
            id="id_start_seconds" min="00" max="59" placeholder="SS">
 </div>
+<span>details_form.errors.end_duration</span>
 <div class="section">
     <label for="id_end_minutes" class="field-label">duration end at (minutes)</label>
     <input class="gui-input" name="min_end" type="number" required
@@ -69,6 +74,7 @@
 </div>
 <div class="section">
     <label class="field-label">term</label>
+    <span>details_form.errors.term</span>
     <span>State how long you would like to license the song for your project</span>
     <div class="section colm colm6">
         <label class="field select">
@@ -79,7 +85,7 @@
 <div class="section">
     <label for="id_territory" class="field-label">
         territory <span>State where you would like the rights to use music in your project</span>
-    </label>
+    </label><span>{{ details_form.errors.territory }}</span>
     <input id="id_territory" name="territory"
            class="gui-input" value="{{ details_form.territory.value }}">
 </div>
@@ -89,11 +95,13 @@
 </div>
 <div class="section">
     <label class="field-label">release date</label>
+    <span>{{ details_form.errors.release_date }}</span>
     {{ details_form.release_date }}
 </div>
 <div title="Publishers and record companies use budget to estimate viewership"
      class="section">
     <label class="">budget</label>
+<span>{{ details_form.errors.budget }}</span>
     <div class="option-group field">
         <div class="group-vertical">
             {% for radio in details_form.budget %}
@@ -107,14 +115,17 @@
 </div>
 <div class="section">
     <label class="field-label">synopsis</label>
+    <span>{{ details_form.errors.synopsis }}</span>
     {{ details_form.synopsis }}
 </div>
 <div class="section">
     <label class="field-label">description</label>
+    <span>{{ details_form.errors.description }}</span>
     {{ details_form.description }}
 </div>
 <div class="section">
     <label class="field-label">purpose?</label>
+<span>{{ details_form.errors.is_non_profit }}</span>
     <div class="option-group field">
         <div class="group-vertical">
             {% for radio in details_form.is_non_profit %}
@@ -145,6 +156,7 @@
     {{ details_form.comments }}
 </div>
 {% if not request.user.is_authenticated %}
+    <span>{{ error_user }}</span>
         <div class="section">
             <label class="field-label" for="id_first_name">first name</label>
             <input class="gui-input" type="text" id="id_first_name" name="first_name"

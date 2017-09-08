@@ -15,7 +15,7 @@
                 <label class="option" for="other">
                     <input id="other" name="web_other" type="checkbox">
                     <span class="checkbox"></span>other
-                    <label class="field">
+                    <label id="other_web" class="field">
                         <input class="gui-input" type="text" name="distribute_new" value="">
                     </label>
 
@@ -43,10 +43,10 @@
                         <span class="checkbox"></span>{{ check.choice_label }}
                     </label>
                 {% endfor %}
-                <label class="option" for="other">
-                    <input id="other" name="ext_other" type="checkbox">
+                <label class="option" for="ext_other">
+                    <input id="ext_other" name="ext_other" type="checkbox">
                     <span class="checkbox"></span>other
-                    <label class="field">
+                    <label id="dist_other" class="field">
                         <input class="gui-input" type="text" name="dist_new" value="">
                     </label>
                 </label>
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="section">
-        <label class="field-label" for="id_youtube_id">number of people</label>
+        <label class="field-label" for="id_num_people">number of people</label>
         {{ ext.num_people }}
     </div>
 {% endif %}
