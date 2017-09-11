@@ -35,6 +35,21 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
     )
     from accounts.models import PersonalInfo, UserImage, ResetPassword, CounterOffer
     from accounts.forms import PersonalInfoForm, CounterOfferForm
+    from orders.models import (
+    OrderFilmMaking,
+    OrderProgramming,
+    OrderAdvertising,
+    OrderWedding,
+    OrderPersonal,
+    OrderDistributionIndie,
+    OrderDistributionProgramming,
+    ExternalDistribution,
+    WebDistribution,
+    TvDistribution,
+    OrderIndieProjectDetail,
+    OrderProgrammingDetail,
+    OrderAdvertisingDetail
+    )
 
 
 class LoginView(View):
@@ -236,13 +251,18 @@ class Account(View):
             context['min_end'] = end[0]
             context['sec_end'] = end[1]
 
+            context['film_making'] = OrderFilmMaking.objects.get(order=order_data.id)
+            context['details'] = OrderIndieProjectDetail.objects.get(order=order_data.id)
+
             context['order_details'] = details
             if order_data.order_project_orderfilmmaking.filter(distribution__name='web/streaming').exists():
                 web = order_data.order_dist_web.get(order=order_data.id)
                 context['web'] = IndieWebDistribution(instance=web)
+                context['web_dist'] = web
             if order_data.order_project_orderfilmmaking.filter(distribution__name='externally').exists():
                 ext = order_data.order_dist_ext.get(order=order_data.id)
                 context['ext'] = IndieExtDistribution(instance=ext)
+                context['ext_dist'] = ext
         if order_data and order_data.project_type.name.lower() == 'programming':
             prog_data = order_data.order_project_orderprogramming.get(order=order_data.id)
             context['program_form'] = OrderProgramForm(instance=prog_data)
@@ -255,15 +275,22 @@ class Account(View):
             context['sec_start'] = start[1]
             context['min_end'] = end[0]
             context['sec_end'] = end[1]
+
+            context['programming'] = OrderProgramming.objects.get(order=order_data.id)
+            context['details'] = OrderProgrammingDetail.objects.get(order=order_data.id)
+
             if order_data.order_project_orderprogramming.filter(distribution__name='web/streaming').exists():
                 web = order_data.order_dist_web.get(order=order_data.id)
                 context['web'] = IndieWebDistribution(instance=web)
+                context['web_dist'] = web
             if order_data.order_project_orderprogramming.filter(distribution__name='externally').exists():
                 ext = order_data.order_dist_ext.get(order=order_data.id)
                 context['ext'] = IndieExtDistribution(instance=ext)
+                context['ext_dist'] = ext
             if order_data.order_project_orderprogramming.filter(distribution__name='tv').exists():
                 tv = order_data.order_tv_dist.get(order=order_data.id)
                 context['tv'] = TvDistributionForm(instance=tv)
+                context['tv_dist'] = tv
         elif order_data and order_data.project_type.name.lower() == 'advertising':
             ad_data = order_data.order_project_orderadvertising.get(order=order_data.id)
             context['advertising_form'] = OrderAdvertisingForm(instance=ad_data)
@@ -275,13 +302,20 @@ class Account(View):
             context['sec_start'] = start[1]
             context['min_end'] = end[0]
             context['sec_end'] = end[1]
+
+            context['advertising'] = OrderAdvertising.objects.get(order=order_data.id)
+            context['details'] = OrderAdvertisingDetail.objects.get(order=order_data.id)
+
             context['details_form'] = AdvertisingDetailForm(instance=details)
+
             if order_data.order_project_orderadvertising.filter(distribution__name='web/streaming').exists():
                 web = order_data.order_dist_web.get(order=order_data.id)
                 context['web'] = IndieWebDistribution(instance=web)
+                context['web_dist'] = web
             if order_data.order_project_orderadvertising.filter(distribution__name='externally'):
                 ext = order_data.order_dist_ext.get(order=order_data.id)
                 context['ext'] = IndieExtDistribution(instance=ext)
+                context['ext_dist'] = ext
             # if order_data.order_project_orderadvertising.filter(distribution__name='tv').exists():
                 # tv = order_data.order_tv_dist.get(order=order_data.id)
                 # context['tv'] = TvDistributionForm(instance=tv)

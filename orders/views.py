@@ -436,10 +436,11 @@ class AdvertisingDistribution(View):
         }
 
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
+        print(dist_list)
 
         if 'web/streaming' in dist_list:
             context['web'] = web_form
-        if 'external' in dist_list:
+        if 'externally' in dist_list:
             context['ext'] = ext_form
         # if 'tv' in dist_list:
         #     context['tv'] = tv_form

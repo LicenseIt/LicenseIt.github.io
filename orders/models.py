@@ -420,7 +420,7 @@ class OrderProjectDetailBase(Base):
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='%(class)s_details')
 
     def __str__(self):
-        return '%(class)s: ' + self.order.song_title
+        return self.order.song_title
 
     class Meta:
         abstract = True

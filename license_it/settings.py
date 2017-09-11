@@ -150,12 +150,14 @@ EMAIL_PORT = 25
 # social auth- facebook
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_EMAIL_FORM_URL = '/account/login/'
-SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'email']
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
@@ -165,3 +167,6 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 #SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.10'
 
 SOCIAL_AUTH_FACEBOOK_APP_ID = '135135447098057'
+
+SOCIAL_AUTH_GOOGLE_KEY = '541028679854-kk8e5eml60rfjbn2afisjpem1aq4s3nh.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_SECRET = 'Yn0wn9ZL8nwBY6KKf0FaipBL'

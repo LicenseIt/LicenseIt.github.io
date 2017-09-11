@@ -27,7 +27,13 @@ class SearchView(View):
         :param request: the request object
         :return:
         '''
-        return render(request, self.template_name, context={'url': 'search'})
+        results = Track.objects.all()[:10]
+        return render(request,
+                      self.template_name,
+                      context={
+                          'url': 'search',
+                          'results': results
+                      })
 
     def post(self, request, *args, **kwargs):
         '''
