@@ -25,7 +25,7 @@ SECRET_KEY = '8)di#-4k7i_$%vh*qndob49_id@lua+q0x17%^0ofqpw891#y2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['45.79.64.198', 'localhost', '.licenseit.net']
+ALLOWED_HOSTS = ['*', '45.79.64.198', 'localhost', '.licenseit.net']
 
 ADMINS = [('moshe', 'moshegrey@gmail.com')]
 
@@ -154,7 +154,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/login/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/accounts/login/'
 
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 

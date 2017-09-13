@@ -190,7 +190,7 @@ class Account(View):
     template_name = 'accounts/client-dash.html'
 
     def data(self, user, order_id=None):
-        orders_list = Order.objects.filter(user=user).select_related()
+        orders_list = Order.objects.filter(user=user).filter(is_done=True).select_related()
 
         if order_id:
             order_data = Order.objects.get(pk=order_id)

@@ -51,7 +51,7 @@ class OrderForm(OrderFormBase):
 
     class Meta:
         model = Order
-        exclude = ['user', 'state']
+        exclude = ['user', 'state', 'is_done']
         widgets = {
             'song': forms.HiddenInput(),
             'song_title': forms.HiddenInput(),

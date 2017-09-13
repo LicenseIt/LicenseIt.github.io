@@ -603,6 +603,9 @@ class DetailBase(View):
 
         if form.is_valid():
             form.save()
+            order = Order.objects.get(order_id)
+            order.is_done = True
+            order.save()
         else:
             return render(request,
                           self.template_name,
