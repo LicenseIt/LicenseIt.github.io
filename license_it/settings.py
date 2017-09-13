@@ -154,6 +154,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/login/'
+
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
