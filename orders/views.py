@@ -244,7 +244,6 @@ class IndieDistribution(View):
         }
 
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
-        print(dist_list)
 
         if 'web/streaming' in dist_list:
             context['web'] = web_form
@@ -436,7 +435,6 @@ class AdvertisingDistribution(View):
         }
 
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
-        print(dist_list)
 
         if 'web/streaming' in dist_list:
             context['web'] = web_form
@@ -559,51 +557,9 @@ class DetailBase(View):
             if form_rate.is_valid():
                 form_rate.save()
 
-        if not request.user.is_authenticated():
-            email = request.POST['email']
-            username = request.POST['email']
-            password = request.POST['password']
-            confirm_password = request.POST['confirm_password']
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-
-            context['first_name'] = first_name
-            context['last_name'] = last_name
-            context['email'] = email
-            personal_info = PersonalInfoForm(data)
-            context['personal_info'] = personal_info
-
-            if not password or not confirm_password or password != confirm_password:
-                return render(request,
-                              self.template_name,
-                              context=context)
-
-            try:
-                user = User.objects.create_user(username, email, password)
-                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                user.first_name = first_name
-                user.last_name = last_name
-                user.save()
-                data['user'] = user.id
-                personal_info = PersonalInfoForm(data)
-                context['personal_info'] = personal_info
-
-                if personal_info.is_valid():
-                    personal_info.save()
-                else:
-                    return render(request,
-                                  self.template_name,
-                                  context=context)
-
-            except IntegrityError:
-                context['error_user'] = 'there is already a user with this email'
-                return render(request,
-                              self.template_name,
-                              context=context)
-
         if form.is_valid():
             form.save()
-            order = Order.objects.get(order_id)
+            order = Order.objects.get(pk=order_id)
             order.is_done = True
             order.save()
         else:
@@ -614,12 +570,13 @@ class DetailBase(View):
         order = Order.objects.get(pk=order_id)
         if request.user.is_authenticated() and not order.user:
             order.user = request.user
-        elif not order.user:
-            order.user = data['user']
-        order.save()
+            order.save()
+            if 'rate' in request.POST:
+                return HttpResponseRedirect(reverse('my_account'))
 
         if 'rate' in request.POST:
-            return HttpResponseRedirect(reverse('my_account'))
+            request.session['order_id'] = order_id
+            return HttpResponseRedirect(reverse('login'))
         else:
             return HttpResponseRedirect(reverse('rate_us', args=[order_id]))
 
@@ -644,8 +601,6 @@ class IndieDetail(DetailBase):
             'url': 'details',
             'is_form': True
         }
-        if not request.user.is_authenticated():
-            context['personal_info'] = PersonalInfoForm()
 
         order_dist = OrderFilmMaking.objects.filter(order=order_id)[0]
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
@@ -684,14 +639,12 @@ class ProgramDetail(DetailBase):
         :return:
         '''
         form = ProgramDetailForm()
-        personal_info = PersonalInfoForm()
 
         order_dist = OrderProgramming.objects.filter(order=order_id)[0]
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
 
         context = {
             'details_form': form,
-            'personal_info': personal_info,
             'order': order_id,
             'url': 'details',
             'is_form': True,
@@ -731,11 +684,9 @@ class AdvertisingDetail(DetailBase):
         :return:
         '''
         form = AdvertisingDetailForm()
-        personal_info = PersonalInfoForm()
 
         context = {
             'details_form': form,
-            'personal_info': personal_info,
             'order': order_id,
             'url': 'details',
             'is_form': True,
@@ -768,11 +719,12 @@ class RateUsView(View):
     '''
     the view for a rate us page if we have only 3 forms on indie, programming or advertising
     '''
+    template_name = 'orders/rate_us_form.html'
 
     def get(self, request, order_id):
         rate_form = RateUsForm()
         return render(request,
-                      'orders/rate_us_form.html',
+                      self.template_name,
                       context={'rate_form': rate_form, 'order': order_id, 'is_form': True})
 
     def post(self, request, order_id):
@@ -781,10 +733,19 @@ class RateUsView(View):
 
         if rate_form.is_valid():
             rate_form.save()
+        else:
+            return render(request,
+                          self.template_name,
+                          context={'rate_form': rate_form, 'order': order_id, 'is_form': True})
+
+        if request.user.is_authenticated():
+            order = Order.objects.get(pk=order_id)
+            order.user = request.user
+            order.save()
             return HttpResponseRedirect(reverse('my_account'))
-        return render(request,
-                      'orders/rate_us_form.html',
-                      context={'rate_form': rate_form, 'order': order_id, 'is_form': True})
+        else:
+            request.session['order_id'] = order_id
+            return HttpResponseRedirect(reverse('login'))
 
 
 class WeddingDetails(View):
@@ -801,13 +762,11 @@ class WeddingDetails(View):
         :return:
         '''
         form = WeddingDetailForm()
-        personal_info = PersonalInfoForm()
 
         return render(request,
                       self.template_name,
                       context={
                           'wedding_form': form,
-                          'personal_info': personal_info,
                           'order': order_id,
                           'url': 'details',
                           'is_form': True,
@@ -831,48 +790,6 @@ class WeddingDetails(View):
             'is_form': True,
         }
 
-        if not request.user.is_authenticated():
-            email = request.POST['email']
-            context['email'] = email
-            username = request.POST['email']
-            password = request.POST['password']
-            confirm_password = request.POST['confirm_password']
-            first_name = request.POST['first_name']
-            context['first_name'] = first_name
-            last_name = request.POST['last_name']
-            context['last_name'] = last_name
-
-            personal_info = PersonalInfoForm(request.POST.copy())
-            context['personal_info'] = personal_info
-
-            if not password or not confirm_password:
-                return render(request,
-                              self.template_name,
-                              context=context)
-
-            if password != confirm_password:
-                return render(request,
-                              self.template_name,
-                              context=context)
-
-            try:
-                user = User.objects.create_user(username, email, password)
-                login(request, user)
-                data['user'] = user.id
-                personal_info.data['user'] = user
-
-                if personal_info.is_valid():
-                    personal_info.save()
-
-                order = Order.objects.get(pk=order_id)
-                order.user = user
-                order.save()
-
-            except IntegrityError:
-                return render(request,
-                              self.template_name,
-                              context=context)
-
         if form.is_valid():
             form.save()
         else:
@@ -880,7 +797,16 @@ class WeddingDetails(View):
                           self.template_name,
                           context=context)
 
-        return HttpResponseRedirect(reverse('my_account'))
+        order = Order.objects.get(pk=order_id)
+        if request.user.is_authenticated():
+            order.user = request.user
+            order.save()
+            return HttpResponseRedirect(reverse('my_account'))
+
+        request.session['order_id'] = order_id
+        order.is_done = True
+        order.save()
+        return HttpResponseRedirect(reverse('login'))
 
 
 class PersonalDetails(View):
@@ -897,13 +823,11 @@ class PersonalDetails(View):
         :return:
         '''
         form = PersonalDetailForm()
-        personal_info = PersonalInfoForm()
 
         return render(request,
                       self.template_name,
                       context={
                           'personal_form': form,
-                          'personal_info': personal_info,
                           'order': order_id,
                           'url': 'details',
                           'is_form': True,
@@ -928,57 +852,24 @@ class PersonalDetails(View):
             'is_form': True
         }
 
-        if not request.user.is_authenticated():
-            personal_info = PersonalInfoForm(data)
-            context['personal_info'] = personal_info
-            email = request.POST['email']
-            context['email'] = email
-            username = request.POST['email']
-            password = request.POST['password']
-            confirm_password = request.POST['confirm_password']
-            first_name = request.POST['first_name']
-            context['first_name'] = first_name
-            last_name = request.POST['last_name']
-            context['last_name'] = last_name
-            personal_info = PersonalInfoForm(data)
-
-            if not password or not confirm_password or password != confirm_password:
-                return render(request,
-                              self.template_name,
-                              context=context)
-
-            try:
-                user = User.objects.create_user(username, email, password)
-                data['user'] = user.id
-                if personal_info.is_valid():
-                    personal_info.save()
-                else:
-                    return render(request,
-                                  self.template_name,
-                                  context=context)
-
-                login(request, user)
-
-                order = Order.objects.get(pk=order_id)
-                order.user = user
-                order.save()
-
-            except IntegrityError:
-                return render(request,
-                              self.template_name,
-                              context=context)
-
         if form.is_valid():
             form.save()
         else:
             return render(request,
                           self.template_name,
                           context=context)
+
         order = Order.objects.get(pk=order_id)
-        order.user = request.user
+        if request.user.is_authenticated():
+            order.user = request.user
+            order.save()
+            return HttpResponseRedirect(reverse('my_account'))
+
+        order.is_done = True
         order.save()
 
-        return HttpResponseRedirect(reverse('my_account'))
+        request.session['order_id'] = order_id
+        return HttpResponseRedirect(reverse('login'))
 
 
 class DeleteOrder(View):

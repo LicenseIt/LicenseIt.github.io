@@ -53,6 +53,22 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
 
 
 class LoginView(View):
+    def get(self, request):
+        if 'order_id' in request.session:
+            order_id = request.session['order_id']
+            detail_forms = [
+                request.build_absolute_uri(reverse('indie_details', args={order_id})),
+                request.build_absolute_uri(reverse('program_details', args={order_id})),
+                request.build_absolute_uri(reverse('advertising_details', args={order_id})),
+                request.build_absolute_uri(reverse('personal_use', args={order_id})),
+                request.build_absolute_uri(reverse('wedding', args={order_id})),
+            ]
+
+            if 'HTTP_REFERER' in request.META and request.META['HTTP_REFERER'] in detail_forms:
+                request.session['order_user'] = True
+
+        return render(request, 'accounts/login.html')
+
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
@@ -60,7 +76,13 @@ class LoginView(View):
 
         if user is not None:
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return HttpResponseRedirect(reverse('search'))
+            if 'order_user' in request.session.keys():
+                order = Order.objects.get(pk=request.session['order_id'])
+                order.user = user
+                order.save()
+                del request.session['order_user']
+                del request.session['order_id']
+            return HttpResponseRedirect(reverse('my_account'))
         else:
             return render(request, 'home/index.html', context={'error': 'username or password is wrong'})
 
