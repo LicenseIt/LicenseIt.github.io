@@ -67,7 +67,9 @@ class LoginView(View):
             if 'HTTP_REFERER' in request.META and request.META['HTTP_REFERER'] in detail_forms:
                 request.session['order_user'] = True
 
-        return render(request, 'accounts/login.html')
+        return render(request,
+                      'accounts/login.html',
+                      context={'is_form': True})
 
     def post(self, request):
         username = request.POST['username']

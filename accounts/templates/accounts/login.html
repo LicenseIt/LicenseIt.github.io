@@ -1,17 +1,54 @@
-{% extends 'search/base.html' %}
+{% extends 'common/common_base.html' %}
 {% block content %}
-    <form action="{% url 'login' %}" method="post">{% csrf_token %}
-        {% if error %}
-        <span>{{ error }}</span>
-        {% endif %}
-        <div>
-            <label for="username">username</label>
-            <input id="username" type="text" name="username" value="" required placeholder="your username" />
+    <br><br><br><br><br><br><br><br><br>
+    <div class="smart-wrap">
+        <div class="smart-forms smart-container wrap-2">
+            <div class="form-header header-yellow">
+                <h4><i class="fa fa-pencil-square"></i>login</h4>
+            </div>
+            <form action="{% url 'login' %}" method="post">{% csrf_token %}
+                {% if error %}
+                    <span>{{ error }}</span>
+                {% endif %}
+                <div class="form-body theme-yellow">
+                    <div class="section">
+                        <label class="field-label" for="username">username</label>
+                        <input class="gui-input" id="username" type="text" name="username" value="" required
+                               placeholder="your username"/>
+                    </div>
+                    <div>
+                        <label class="field-label" for="password">password</label>
+                        <input class="gui-input" id="password" type="password" name="password" value="" required>
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button class="btn btn-success">login</button>
+                </div>
+            </form>
         </div>
-        <div>
-            <label for="password">password</label>
-            <input id="password" type="password" name="password" value="" required >
+        <div class="smart-forms smart-container wrap-2">
+            <div class="form-header header-yellow">
+                <h4><i class="fa fa-pencil-square"></i>signup</h4>
+            </div>
+            <form action="{% url 'signup_page' %}" method="post">{% csrf_token %}
+                {% if error %}
+                    <span>{{ error }}</span>
+                {% endif %}
+                <div class="form-body theme-yellow">
+                    <div class="section">
+                        <label class="field-label" for="email">email</label>
+                        <input class="gui-input" id="email" type="email" name="email" value="" required
+                               placeholder="username@example.com"/>
+                    </div>
+                    <div>
+                        <label class="field-label" for="password">password</label>
+                        <input class="gui-input" id="password" type="password" name="password" value="" required>
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button class="btn btn-success">signup</button>
+                </div>
+            </form>
         </div>
-        <button>login</button>
-    </form>
+    </div>
 {% endblock %}
