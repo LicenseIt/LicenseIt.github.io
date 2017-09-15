@@ -52,7 +52,17 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
     )
 
 
-class LoginView(View):
+class ConnectBase(View):
+    def add_order_user(self, request, user):
+        if 'order_user' in request.session.keys():
+            order = Order.objects.get(pk=request.session['order_id'])
+            order.user = user
+            order.save()
+            del request.session['order_user']
+            del request.session['order_id']
+
+
+class LoginView(ConnectBase):
     def get(self, request):
         if 'order_id' in request.session:
             order_id = request.session['order_id']
@@ -78,18 +88,13 @@ class LoginView(View):
 
         if user is not None:
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            if 'order_user' in request.session.keys():
-                order = Order.objects.get(pk=request.session['order_id'])
-                order.user = user
-                order.save()
-                del request.session['order_user']
-                del request.session['order_id']
+            self.add_order_user(request, user)
             return HttpResponseRedirect(reverse('my_account'))
         else:
             return render(request, 'home/index.html', context={'error': 'username or password is wrong'})
 
 
-class SignupView(View):
+class SignupView(ConnectBase):
     def post(self, request):
         email = request.POST['email']
         username = request.POST['email']
@@ -97,6 +102,7 @@ class SignupView(View):
         try:
             user = User.objects.create_user(username, email, password)
             login(request, user)
+            self.add_order_user(request, user)
         except IntegrityError:
             return render(request, 'home/index.html', context={'error': 'this username is already taken'})
         send_mail('licenseit- thanks for registering',
