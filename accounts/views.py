@@ -223,7 +223,7 @@ class LoginFacebook(View):
             return HttpResponseRedirect(reverse('home'))
 
 
-class Account(View):
+class Account(ConnectBase):
     template_name = 'accounts/client-dash.html'
 
     def data(self, user, order_id=None):
@@ -366,6 +366,7 @@ class Account(View):
         return context
 
     def get(self, request, order_id=None):
+        self.add_order_user(request, request.user)
         context = self.data(request.user, order_id)
         return render(request,
                       self.template_name,
