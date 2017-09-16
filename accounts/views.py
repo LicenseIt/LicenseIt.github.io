@@ -91,7 +91,12 @@ class LoginView(ConnectBase):
             self.add_order_user(request, user)
             return HttpResponseRedirect(reverse('my_account'))
         else:
-            return render(request, 'home/index.html', context={'error': 'username or password is wrong'})
+            return render(request,
+                          'accounts/login.html',
+                          context={
+                              'error': 'username or password is wrong',
+                              'is_form': True
+                          })
 
 
 class SignupView(ConnectBase):
@@ -104,7 +109,9 @@ class SignupView(ConnectBase):
             login(request, user)
             self.add_order_user(request, user)
         except IntegrityError:
-            return render(request, 'home/index.html', context={'error': 'this username is already taken'})
+            return render(request,
+                          'home/index.html',
+                          context={'error': 'this email is already registered'})
         send_mail('licenseit- thanks for registering',
                   'Thanks for registering to our site',
                   'cdo@licenseit.net',
