@@ -21,34 +21,3 @@
     <label for="id_states" class="field-label">states</label>
     {{ wedding_form.territory_usa }}
 </div>
-{% if not request.user.is_authenticated %}
-        <div class="section">
-            <label class="field-label" for="id_first_name">first name</label>
-            <input class="gui-input" type="text" id="id_first_name" name="first_name"
-                   value="{{ first_name }}" placeholder="first name" required>
-        </div>
-        <div class="section">
-            <label class="field-label" for="id_last_name">last name</label>
-            <input class="gui-input" type="text" id="id_last_name" name="last_name"
-                   value="{{ last_name }}" placeholder="last name" required>
-        </div>
-        <div class="section">
-            <label class="field-label" for="id_email">email</label>
-            <input class="gui-input" type="email" id="id_email" name="email"
-                   value="{{ email }}" placeholder="username@example.com" required>
-        </div>
-        <div class="section">
-            <label class="field-label" for="id_address">address</label>
-            {{ personal_info.address }}
-        </div>
-        <div class="section">
-            <label class="field-label" for="id_password">password</label>
-            <input class="gui-input" type="password" id="id_password" name="password"
-                   value="" required>
-        </div>
-        <div class="section">
-            <label class="field-label" for="id_confirm_password">confirm password</label>
-            <input class="gui-input" type="password" id="id_confirm_password" name="confirm_password"
-                   value="" required>
-        </div>
-{% endif %}

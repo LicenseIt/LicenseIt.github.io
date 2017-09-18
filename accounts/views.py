@@ -52,7 +52,35 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
     )
 
 
-class LoginView(View):
+class ConnectBase(View):
+    def add_order_user(self, request, user):
+        if 'order_user' in request.session.keys():
+            order = Order.objects.get(pk=request.session['order_id'])
+            order.user = user
+            order.save()
+            del request.session['order_user']
+            del request.session['order_id']
+
+
+class LoginView(ConnectBase):
+    def get(self, request):
+        if 'order_id' in request.session:
+            order_id = request.session['order_id']
+            detail_forms = [
+                request.build_absolute_uri(reverse('indie_details', args={order_id})),
+                request.build_absolute_uri(reverse('program_details', args={order_id})),
+                request.build_absolute_uri(reverse('advertising_details', args={order_id})),
+                request.build_absolute_uri(reverse('personal_use', args={order_id})),
+                request.build_absolute_uri(reverse('wedding', args={order_id})),
+            ]
+
+            if 'HTTP_REFERER' in request.META and request.META['HTTP_REFERER'] in detail_forms:
+                request.session['order_user'] = True
+
+        return render(request,
+                      'accounts/login.html',
+                      context={'is_form': True})
+
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
@@ -60,12 +88,18 @@ class LoginView(View):
 
         if user is not None:
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return HttpResponseRedirect(reverse('search'))
+            self.add_order_user(request, user)
+            return HttpResponseRedirect(reverse('my_account'))
         else:
-            return render(request, 'home/index.html', context={'error': 'username or password is wrong'})
+            return render(request,
+                          'accounts/login.html',
+                          context={
+                              'error': 'username or password is wrong',
+                              'is_form': True
+                          })
 
 
-class SignupView(View):
+class SignupView(ConnectBase):
     def post(self, request):
         email = request.POST['email']
         username = request.POST['email']
@@ -73,8 +107,11 @@ class SignupView(View):
         try:
             user = User.objects.create_user(username, email, password)
             login(request, user)
+            self.add_order_user(request, user)
         except IntegrityError:
-            return render(request, 'home/index.html', context={'error': 'this username is already taken'})
+            return render(request,
+                          'home/index.html',
+                          context={'error': 'this email is already registered'})
         send_mail('licenseit- thanks for registering',
                   'Thanks for registering to our site',
                   'cdo@licenseit.net',
@@ -186,11 +223,11 @@ class LoginFacebook(View):
             return HttpResponseRedirect(reverse('home'))
 
 
-class Account(View):
+class Account(ConnectBase):
     template_name = 'accounts/client-dash.html'
 
     def data(self, user, order_id=None):
-        orders_list = Order.objects.filter(user=user).select_related()
+        orders_list = Order.objects.filter(user=user).filter(is_done=True).select_related()
 
         if order_id:
             order_data = Order.objects.get(pk=order_id)
@@ -329,6 +366,7 @@ class Account(View):
         return context
 
     def get(self, request, order_id=None):
+        self.add_order_user(request, request.user)
         context = self.data(request.user, order_id)
         return render(request,
                       self.template_name,

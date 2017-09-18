@@ -25,7 +25,7 @@ SECRET_KEY = '8)di#-4k7i_$%vh*qndob49_id@lua+q0x17%^0ofqpw891#y2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['45.79.64.198', 'localhost', '.licenseit.net']
+ALLOWED_HOSTS = ['*', '45.79.64.198', 'localhost', '.licenseit.net']
 
 ADMINS = [('moshe', 'moshegrey@gmail.com')]
 
@@ -154,7 +154,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/login/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/my_account/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/accounts/login/'
 
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 
@@ -170,5 +171,5 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 
 SOCIAL_AUTH_FACEBOOK_APP_ID = '135135447098057'
 
-SOCIAL_AUTH_GOOGLE_KEY = '541028679854-kk8e5eml60rfjbn2afisjpem1aq4s3nh.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_SECRET = 'Yn0wn9ZL8nwBY6KKf0FaipBL'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '541028679854-ulvh72m7of533u0ldqf77kb74l3khd1a.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'uovaKBOF-W_facpaaWaeHQPQ'

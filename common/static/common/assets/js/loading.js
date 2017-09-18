@@ -81,6 +81,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     return {check: document.getElementById(checkmarkIdPrefix + i), circle: document.getElementById(checkmarkCircleIdPrefix + i)};
   });
   setTimeout(function () {
-    document.getElementById('page').style.display = 'none';
+    document.getElementById('loading-page').style.display = 'none';
   }, 11000);
 });

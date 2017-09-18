@@ -180,9 +180,8 @@
                                                 <h5>License Inquiry</h5>
                                                 <div class="smart-wrap" id="license-form">
                                                     <div class="smart-forms smart-container wrap-4">
-                                                        <form method="post" action="
-
-                                                                {% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
+                                                        <form method="post"
+                                                              action="{% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
                                                             {% csrf_token %}
                                                             {% include 'orders/order_form_fields.html' %}
                                                             {% if advertising_form %}

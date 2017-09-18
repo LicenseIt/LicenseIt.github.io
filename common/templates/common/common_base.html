@@ -510,7 +510,7 @@ confirm_password.onkeyup = validatePassword;
     <!-- footer end -->
 
     {% if url == 'results' and first %}
-        <div id="page">
+        <div id="loading-page">
             <div id="phrase_box">
                 <svg width="100%" height="100%">
                     <defs>
@@ -541,6 +541,9 @@ confirm_password.onkeyup = validatePassword;
     =====================================-->
     <script src="{% static 'common/assets/js/core/jquery.min.js' %}"></script>
     <script src="{% static 'common/assets/js/core/bootstrap.min.js' %}"></script>
+    {% if url == 'client_dash' %}
+        <script src="{% static 'accounts/client_dash.js' %}"></script>
+    {% endif %}
 
     {% if url != 'pricing' %}
         <!-- Magnific Popup
@@ -587,9 +590,6 @@ confirm_password.onkeyup = validatePassword;
         <script src="{% static 'orders/states_show_hide.js' %}"></script>
     {% endif %}
 
-    {% if url == 'client_dash' %}
-        <script src="{% static 'accounts/client_dash.js' %}"></script>
-    {% endif %}
     {% if url == 'works' %}
         <!-- Google Map
         =====================================-->
@@ -629,7 +629,7 @@ confirm_password.onkeyup = validatePassword;
             src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"
             integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc="
             crossorigin="anonymous"></script>
-
+    <script src="{% static 'common/assets/js/modernizrLR.js' %}"></script>
     <script src="{% static 'common/assets/js/mainLR.js' %}"></script> <!-- Gem jQuery -->
     <script>
         var countries = [];
