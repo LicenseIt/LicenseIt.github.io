@@ -23,6 +23,8 @@
 
         <!-- Load Core CSS
         =====================================-->
+        <link rel="stylesheet" href="{% static 'common/assets/css/resetLR.css' %}"> <!-- CSS reset -->
+        <link rel="stylesheet" href="{% static 'common/assets/css/styleLR.css' %}"> <!-- Gem style -->
         <link rel="stylesheet" href="{% static 'common/assets/css/core/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/core/animate.min.css' %}">
 
@@ -91,12 +93,13 @@
         {% endif %}
         <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
+
+
         <link rel="stylesheet" href="{% static 'common/assets/css/main/main.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/main/setting.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/main/hover.css' %}">
 
-        <link rel="stylesheet" href="{% static 'common/assets/css/resetLR.css' %}"> <!-- CSS reset -->
-        <link rel="stylesheet" href="{% static 'common/assets/css/styleLR.css' %}"> <!-- Gem style -->
+
 
         <!-- Load JS
         HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
@@ -168,7 +171,7 @@
         </div>
     {% endif %}
 
-    <div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
+    <div class="cd-user-modal" style="z-index: 1200;"> <!-- this is the entire modal form, including the background -->
         <div class="cd-user-modal-container"> <!-- this is the container wrapper -->
             <ul class="cd-switcher font-montserrat text-capitalize">
                 <li><a href="#0">Sign in</a></li>
@@ -198,17 +201,20 @@
                     </p>
 
                     <p class="fieldset">
-                        <label class="image-replace cd-password" for="signin-password">Password</label>
-                        <input class="full-width has-padding has-border" id="signin-password" type="password"
+                        <label class="image-replace cd-password" for="signin_password">Password</label>
+                        <input class="full-width has-padding has-border" id="signin_password" type="password"
                                placeholder="Password" name="password" required>
-                        <a href="#0" class="hide-password">Hide</a>
+                        <a href="#0" class="hide-password">Show</a>
                         <span class="cd-error-message">{{ error }}</span>
                     </p>
+
+
 
                     <p class="fieldset">
                         <input type="checkbox" id="remember-me" checked>
                         <label for="remember-me">Remember me</label>
                     </p>
+
 
                     <p class="fieldset">
                         <button class="full-width button-3d button-md button-rounded button-green">Login</button>
@@ -243,15 +249,22 @@
                     </p>
 
                     <p class="fieldset">
-                        <label class="image-replace cd-password" for="signup-password">Password</label>
-                        <input class="full-width has-padding has-border" id="signup-password" type="password"
+                        <label class="image-replace cd-password" for="signup_password">Password</label>
+                        <input class="full-width has-padding has-border" id="signup_password" type="password"
                                placeholder="Password" name="password">
-                        <a href="#0" class="hide-password">Hide</a>
+                        <a href="#0" class="hide-password">Show</a>
                     </p>
 
                     <p class="fieldset">
-                        <input type="checkbox" id="accept-terms">
-                        <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+                        <label class="image-replace cd-password" for="signup_confirm_password">Confrim Password</label>
+                        <input class="full-width has-padding has-border" id="signup_confirm_password" type="password"
+                               placeholder="Confrim Password" name="password">
+                        <a href="#0" class="hide-password">Show</a>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" id="accept-terms" required>
+                        <label for="accept-terms">I agree to the <a href="{% url 'terms' %}">Terms</a></label>
                     </p>
 
                     <p class="fieldset ">
@@ -259,6 +272,22 @@
                                 value="Register">Register</button>
                     </p>
                 </form>
+
+                 <script type="text/javascript">
+                var password = document.getElementById("signup_password")
+  , confirm_password = document.getElementById("signup_confirm_password");
+
+function validatePassword(){
+  if(password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirm_password.setCustomValidity('');
+  }
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+                    </script>
 
                 <!-- <a href="#0" class="cd-close-form">Close</a> -->
             </div> <!-- cd-signup -->
@@ -350,8 +379,9 @@
                         </li>
                     {% endif %}
                     <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
-                                                                          class="dropdown-toggle color-dark">Contact
-                        Us</a></li>
+                                                                          class="dropdown-toggle color-dark">
+                        Need Help?
+                    </a></li>
 
                 </ul>
             </div>
@@ -398,8 +428,7 @@
                     <!-- footer about start -->
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <h6 class="font-montserrat text-uppercase color-dark">About Us</h6>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit morbi sagittis.
-                            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+                        <p>LicenseIt builds products and technologies that help creators use music in videos on secure, affordable and legal way.</p>
                     </div>
                     <!-- footer about end -->
 
@@ -443,8 +472,8 @@
                     <div class="col-md-2 col-sm-3 col-xs-12">
                         <h6 class="font-montserrat text-uppercase color-dark">Social Media</h6>
                         <div class="social social-two">
-                            <a href="#"><i class="fa fa-twitter color-blue"></i></a>
-                            <a href="#"><i class="fa fa-facebook color-primary"></i></a>
+                            <a href="https://twitter.com/License_It"><i class="fa fa-twitter color-blue"></i></a>
+                            <a href="https://www.facebook.com/LicenseItteam/"><i class="fa fa-facebook color-primary"></i></a>
 
                         </div>
                     </div>

@@ -24,7 +24,6 @@
                                 class="fa fa-search"></i></button>
                     </form>
                 </div>
-                <a href="{% url 'manual_order' %}" class="button button-sm button-green mt5 hover-icon-pulse">Couldn't find it, I will enter manually</a>
             </div>
 
 
@@ -91,12 +90,15 @@
 
                     </div>
 
+
+
                     <!-- Item END
                      ======================== -->
                 {% endfor %}
 
                 <!-- Next pages
                          ======================== -->
+
 
                 <div class="row mt50 mb25 animated" data-animation="fadeInUp" data-animation-delay="700">
                     <div class="col-md-12 text-center">
@@ -130,6 +132,10 @@
 
             <!-- Nwxt pages End
            ======================== -->
+
+               <div class="container">
+                                                <a href="{% url 'manual_order' %}" class="button button-md button-yellow mt5 hover-grow">Couldn't find it? enter manually</a>
+</div>
 
 
             <!-- Shopping Method

@@ -2315,7 +2315,7 @@ table th.bg-pasific {
         color: rgba(255,255,255,.7) !important;
     }
     .navbar-mp .navbar-nav > li > a:hover {
-        color: rgba(255,255,255,1) !important;
+        color: rgba(255,81,47,1) !important;
     }
 }
 @media (max-width: 766px) {
