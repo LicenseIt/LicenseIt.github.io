@@ -696,7 +696,7 @@ class Order(Base):
     project_type = models.ForeignKey(ProjectType, related_name='general_order')
 
     def __str__(self):
-        return str(self.user) + ': ' + self.song_title
+        return str(self.id) + '- ' + str(self.user) + ': ' + self.song_title
 
     class Meta:
         verbose_name = 'order'
