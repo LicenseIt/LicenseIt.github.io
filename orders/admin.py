@@ -25,7 +25,7 @@ from .models import ProjectType
 
 # Register your models here.
 class MailChangeStatus(admin.ModelAdmin):
-    list_display = ['user', 'song_title', 'state', 'project_type']
+    list_display = ['id', 'user', 'song_title', 'state', 'project_type', 'created', 'updated']
     actions = ['update_status_user']
 
     def update_status_user(self, request, queryset):
