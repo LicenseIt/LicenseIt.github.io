@@ -860,6 +860,19 @@ class PersonalDetails(View):
                           context=context)
 
         order = Order.objects.get(pk=order_id)
+        order_rights = {
+            'composition': 'composition owner',
+            'lirics': 'lirics owner',
+            'performance': 'performance owner'
+        }
+
+        for right, owner in order_rights.items():
+            order_owner_right = OrderOwnerRight()
+            order_owner_right.order = order
+            order_owner_right.right_type = right
+            order_owner_right.owner = owner
+            order_owner_right.save()
+
         if request.user.is_authenticated():
             order.user = request.user
             order.save()
