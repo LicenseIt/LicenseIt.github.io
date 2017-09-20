@@ -692,8 +692,12 @@ class Order(Base):
     performer_name = models.CharField(max_length=200)
     is_done = models.BooleanField(default=False)
     license_pdf = models.FileField(upload_to=license_path, null=True, blank=True)
-    supporter = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
-                                  limit_choices_to={'is_staff': True})
+    supporter = models.ForeignKey(User,
+                                  on_delete=models.SET_NULL,
+                                  null=True,
+                                  blank=True,
+                                  limit_choices_to={'is_staff': True},
+                                  related_name='supporter')
 
     project_type = models.ForeignKey(ProjectType, related_name='general_order')
 
