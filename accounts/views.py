@@ -89,6 +89,13 @@ class LoginView(ConnectBase):
         if user is not None:
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             self.add_order_user(request, user)
+            send_mail('licenseit- thanks for ordering',
+                      'thanks for ordering, here is a link for your order {0}'
+                      .format(request.META['HTTP_HOST'] + reverse('my_account_order',
+                                                                  args=[order.id])),
+                      'support@licenseit.net',
+                      [user.email],
+                      html_message='')
             return HttpResponseRedirect(reverse('my_account'))
         else:
             return render(request,
