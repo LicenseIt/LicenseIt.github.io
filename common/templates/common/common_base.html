@@ -632,6 +632,11 @@ confirm_password.onkeyup = validatePassword;
     <script src="{% static 'common/assets/js/modernizrLR.js' %}"></script>
     <script src="{% static 'common/assets/js/mainLR.js' %}"></script> <!-- Gem jQuery -->
     <script>
+    $('.back-btn').click(function () {
+        window.history.back();
+    });
+    </script>
+    <script>
         var countries = [];
 
         {% if details_form %}
