@@ -598,7 +598,7 @@ class ProjectDetailBase(OrderProjectDetailBase):
 
 
 class RateUs(Base):
-    rate = models.SmallIntegerField()
+    rate = models.SmallIntegerField(null=True, blank=True)
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_rate_us')
 
 
