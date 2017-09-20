@@ -38,6 +38,9 @@
 
             <div class="row mt20 animated" data-animation="fadeInDown" data-animation-delay="100">
                 {% for result in results %}
+                    {% if forloop.counter == results_count %}
+                    <h3>top results</h3>
+                    {% endif %}
                     <!-- Item START
                     ======================== -->
                     <div class="row bb-dashed-1 pt00 pb25">

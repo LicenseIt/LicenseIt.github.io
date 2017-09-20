@@ -163,6 +163,7 @@ class ResultsView(View):
             'next': _next,
             'next_next': next_next,
             'url': 'results',
+            'results_count': results_count + 1,
             'num_pages': paginator.num_pages
         }
 
