@@ -37,6 +37,9 @@
         <div class="container">
 
             <div class="row mt20 animated" data-animation="fadeInDown" data-animation-delay="100">
+            {% if results_count == 10 and current == 2 %}
+                <h3>top results</h3>
+            {% endif %}
                 {% for result in results %}
                     {% if forloop.counter == results_count %}
                     <h3>top results</h3>
