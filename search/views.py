@@ -131,10 +131,23 @@ class SearchView(View):
 
 
 class ResultsView(View):
+    '''
+    results view
+    '''
     template_name = 'search/results.html'
     results_per_page = 10
 
     def get(self, request, pk, *args, **kwargs):
+        '''
+        the results page
+
+        if the number of results is less then 11 we add the top results from the db.
+        :param request: request object
+        :param pk: the search id
+        :param args:
+        :param kwargs:
+        :return: the results page with results of search pk
+        '''
         results = Track.objects.filter(search=pk)
         results_count = len(results)
         if results_count < 11:
