@@ -11,7 +11,7 @@ from search.models import Track
 from accounts.forms import PersonalInfoForm
 from .models import *
 
-from owners.models import OrderOwnerRight, OwnerDatabase
+from owners.models import OrderOwnerRight, OwnerDatabase, RightType
 
 import sys
 if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
@@ -510,6 +510,22 @@ class AdvertisingDistribution(View):
 
 
 class DetailBase(View):
+    def add_onwners(self, order=None):
+        order_rights = {
+            'composition': 'composition owner',
+            'lirics': 'lirics owner',
+            'performance': 'performance owner'
+        }
+
+        for right, owner in order_rights.items():
+            order_owner_right = OrderOwnerRight()
+            order_owner_right.order = order
+            right = RightType.objects.get(name=right)
+            order_owner_right.right_type = right
+            owner = OwnerDatabase.objects.get(name=owner)
+            order_owner_right.owner = owner
+            order_owner_right.save()
+
     def func(self, request, order_id, detail_form):
         data = request.POST.copy()
         data['order'] = order_id
@@ -622,6 +638,7 @@ class IndieDetail(DetailBase):
         :param order_id: the order id
         :return:
         '''
+        self.add_onwners(order_id)
         return self.func(request, order_id, IndieDetailForm)
 
 
@@ -667,6 +684,7 @@ class ProgramDetail(DetailBase):
         :param order_id: the order id
         :return:
         '''
+        self.add_onwners(order_id)
         return self.func(request, order_id, ProgramDetailForm)
 
 
@@ -712,6 +730,7 @@ class AdvertisingDetail(DetailBase):
         :param order_id: the order id
         :return:
         '''
+        self.add_onwners(order_id)
         return self.func(request, order_id, AdvertisingDetailForm)
 
 
@@ -766,6 +785,22 @@ class WeddingDetails(View):
     '''
     template_name = 'orders/wedding_detail.html'
 
+    def add_onwners(self, order=None):
+        order_rights = {
+            'composition': 'composition owner',
+            'lirics': 'lirics owner',
+            'performance': 'performance owner'
+        }
+
+        for right, owner in order_rights.items():
+            order_owner_right = OrderOwnerRight()
+            order_owner_right.order = order
+            right = RightType.objects.get(name=right)
+            order_owner_right.right_type = right
+            owner = OwnerDatabase.objects.get(name=owner)
+            order_owner_right.owner = owner
+            order_owner_right.save()
+
     def get(self, request, order_id):
         '''
         get the page
@@ -804,20 +839,22 @@ class WeddingDetails(View):
 
         if form.is_valid():
             form.save()
+            order = Order.objects.get(pk=order_id)
+            order.is_done = True
+            order.save()
         else:
             return render(request,
                           self.template_name,
                           context=context)
 
         order = Order.objects.get(pk=order_id)
+        self.add_onwners(order)
         if request.user.is_authenticated():
             order.user = request.user
             order.save()
             return HttpResponseRedirect(reverse('my_account'))
 
         request.session['order_id'] = order_id
-        order.is_done = True
-        order.save()
         return HttpResponseRedirect(reverse('login'))
 
 
@@ -826,6 +863,22 @@ class PersonalDetails(View):
     the personal details form view
     '''
     template_name = 'orders/personal_detail.html'
+
+    def add_onwners(self, order=None):
+        order_rights = {
+            'composition': 'composition owner',
+            'lirics': 'lirics owner',
+            'performance': 'performance owner'
+        }
+
+        for right, owner in order_rights.items():
+            order_owner_right = OrderOwnerRight()
+            order_owner_right.order = order
+            right = RightType.objects.get(name=right)
+            order_owner_right.right_type = right
+            owner = OwnerDatabase.objects.get(name=owner)
+            order_owner_right.owner = owner
+            order_owner_right.save()
 
     def get(self, request, order_id):
         '''
@@ -872,26 +925,15 @@ class PersonalDetails(View):
                           context=context)
 
         order = Order.objects.get(pk=order_id)
-        order_rights = {
-            'composition': 'composition owner',
-            'lirics': 'lirics owner',
-            'performance': 'performance owner'
-        }
+        order.is_done = True
+        order.save()
 
-        for right, owner in order_rights.items():
-            order_owner_right = OrderOwnerRight()
-            order_owner_right.order = order
-            order_owner_right.right_type = right
-            order_owner_right.owner = owner
-            order_owner_right.save()
+        self.add_onwners(order)
 
         if request.user.is_authenticated():
             order.user = request.user
             order.save()
             return HttpResponseRedirect(reverse('my_account'))
-
-        order.is_done = True
-        order.save()
 
         request.session['order_id'] = order_id
         return HttpResponseRedirect(reverse('login'))

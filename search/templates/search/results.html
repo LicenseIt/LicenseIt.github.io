@@ -77,9 +77,9 @@
                         <!-- Item Soundwave
                         ======================== -->
                         <div class="col-md-3 col-sm-2 col-xs-0 hidden-xs hidden-sm">
-                            <img src="{% static 'common/assets/img/shop/wave.png' %}" alt="shop item"
-                                 class="img-responsive center-block shop-item-img-list-view">
-
+                            <audio class="img-responsive center-block shop-item-img-list-view" src="{{ result.preview_url }}" controls></audio>
+{#                            <img src="{% static 'common/assets/img/shop/wave.png' %}" alt="shop item"#}
+{#                                 class="img-responsive center-block shop-item-img-list-view">#}
                         </div>
 
                         <!-- Item Price
@@ -89,8 +89,7 @@
 
                             <a href="{% url 'order' result.id %}"
                                class="button button-md button-pasific hover-icon-wobble-horizontal mt25">License<i
-                                    class="fa fa-file-text-o"></i></a> <br>
-                            <audio src="{{ result.preview_url }}" controls></audio>
+                                    class="fa fa-file-text-o"></i></a>
 {#                            <a href="{{ result.preview_url }}" class="button-o button-sm button-dark mt25 hover-sweep-to-left">Play<i#}
 {#                                    class="fa fa-play"></i></a>#}
                         </div>
