@@ -69,6 +69,7 @@ class ConnectBase(View):
             order.save()
             del request.session['order_user']
             del request.session['order_id']
+            return order.id
 
 
 class LoginView(ConnectBase):
@@ -113,11 +114,12 @@ class LoginView(ConnectBase):
 
         if user is not None:
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            self.add_order_user(request, user)
-            send_mail('licenseit- thanks for ordering',
-                      'thanks for ordering, here is a link for your order {0}'
-                      .format(request.META['HTTP_HOST'] + reverse('my_account_order',
-                                                                  args=[order.id])),
+            order = self.add_order_user(request, user)
+            if order:
+                send_mail('licenseit- thanks for ordering',
+                          'thanks for ordering, here is a link for your order {0}'
+                          .format(request.META['HTTP_HOST'] + reverse('my_account_order',
+                                                                      args=[order])),
                       'support@licenseit.net',
                       [user.email],
                       html_message='')
@@ -146,7 +148,7 @@ class SignupView(ConnectBase):
         password = request.POST['password']
         try:
             user = User.objects.create_user(username, email, password)
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             self.add_order_user(request, user)
         except IntegrityError:
             return render(request,
