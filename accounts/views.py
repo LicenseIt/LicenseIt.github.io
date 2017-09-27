@@ -33,8 +33,8 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
         WeddingDetailForm,
         PersonalDetailForm,
     )
-    from accounts.models import PersonalInfo, UserImage, ResetPassword, CounterOffer
-    from accounts.forms import PersonalInfoForm, CounterOfferForm
+    from accounts.models import UserQuestion, AskUser, PersonalInfo, UserImage, ResetPassword, CounterOffer
+    from accounts.forms import PersonalInfoForm, CounterOfferForm, UserQuestionForm
     from orders.models import (
     OrderFilmMaking,
     OrderProgramming,
@@ -445,6 +445,11 @@ class Account(ConnectBase):
         '''
         self.add_order_user(request, request.user)
         context = self.data(request.user, order_id)
+        context['user_question_form'] = UserQuestionForm()
+        order = context['order_data']
+        context['user_question_history'] = UserQuestion.objects.filter(order=order.id)
+        context['owner_questions'] = Question.objects.filter(order=order.id)
+
         return render(request,
                       self.template_name,
                       context=context)
@@ -612,4 +617,24 @@ class CounterOfferView(View):
 
         if form.is_valid():
             form.save()
+        return HttpResponseRedirect(reverse('my_account'))
+
+
+class UserQuestionView(View):
+    def post(self, request):
+        form = UserQuestionForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect(reverse('my_account'))
+
+
+class AskUserView(View):
+    def post(self, request):
+        for question, answer in request.POST.items():
+            if question == 'csrfmiddlewaretoken':
+                continue
+            question = question.split('ion')[1]
+            ask = Question.objects.get(pk=question)
+            ask.answer = answer
+            ask.save()
         return HttpResponseRedirect(reverse('my_account'))

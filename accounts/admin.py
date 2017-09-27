@@ -4,7 +4,8 @@ from .models import (
     Notifications,
     UserImage,
     ResetPassword,
-    CounterOffer
+    CounterOffer,
+    UserQuestion,
 )
 
 # Register your models here.
@@ -13,3 +14,4 @@ admin.site.register(Notifications)
 admin.site.register(UserImage)
 admin.site.register(ResetPassword)
 admin.site.register(CounterOffer)
+admin.site.register(UserQuestion)

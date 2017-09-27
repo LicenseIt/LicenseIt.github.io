@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import PersonalInfo, CounterOffer
+from .models import PersonalInfo, CounterOffer, UserQuestion
 
 
 class PersonalInfoForm(forms.ModelForm):
@@ -14,6 +14,7 @@ class PersonalInfoForm(forms.ModelForm):
                 }
             )
         }
+
 
 class CounterOfferForm(forms.ModelForm):
     class Meta:
@@ -31,3 +32,9 @@ class CounterOfferForm(forms.ModelForm):
                 }
             )
         }
+
+
+class UserQuestionForm(forms.ModelForm):
+    class Meta:
+        model = UserQuestion
+        fields = '__all__'

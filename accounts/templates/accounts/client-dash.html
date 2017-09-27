@@ -182,6 +182,7 @@
                                                     <div class="smart-forms smart-container wrap-4">
                                                         <form method="post"
                                                               action="
+
                                                                       {% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
                                                             {% csrf_token %}
                                                             {% include 'orders/order_form_fields.html' %}
@@ -487,7 +488,14 @@
                                     <div id="pilljustified3"
                                          class="tab-pane fade in{% if order_data.state == 'sent' or order_data.state == 'attention' %} active{% endif %}">
                                         <h5>Clrearance Request</h5>
-                                        <form action="ask_user" method="post">
+                                        <p>
+                                            <button class="button button-xs button-square button-yellow">Status:
+                                                pending
+                                            </button>
+                                        </p>
+                                        <h3>contact licenseit</h3>
+                                        <form action="{% url 'ask_user' %}" method="post">
+                                        {% csrf_token %}
                                             {% for question in ask_user %}
                                                 <div class="form-group">
                                                     <label class="control-label"
@@ -495,21 +503,48 @@
                                                         {{ question.question }} asked by {{ question.owner }}
                                                     </label>
                                                     <textarea id="question{{ question.id }}"
-                                                              name="{{ question.answer }}"
+                                                              name="question{{ question.id }}"
+                                                              value=""
                                                               class="form-control"></textarea>
                                                 </div>
                                             {% endfor %}
+                                        <button>submit</button>
                                         </form>
-                                        <p>
-                                            <button class="button button-xs button-square button-yellow">Status:
-                                                pending
-                                            </button>
-                                        </p>
+                                        <form action="{% url 'user_question' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="order" value="{{ order_data.id }}">
+                                            <label for="user_question">your question</label>
+                                            {{ user_question_form.question }}
+                                            <button>submit question</button>
+                                        </form>
+                                    <div>
+                                    <h4>user questions and answers</h4>
+                                        {% for question in user_question_history %}
+                                            <p>
+                                            {{ question.question }}
+                                            </p>
+                                            <p>
+                                            {{ question.answer }}
+                                            </p>
+                                        {% endfor %}
+                                    </div>
+                                    <div>
+                                    <h4>owners questions and answers</h4>
+                                        {% for question in owner_questions %}
+                                            <p>
+                                            {{ question.question }}
+                                            </p>
+                                            <p>
+                                            {{ question.answer }}
+                                            </p>
+                                        {% endfor %}
+                                    </div>
                                     </div>
                                     <div id="pilljustified4"
                                          class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
                                         <h5>Payment</h5>
                                         <form action="
+
 
                                                 {% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
                                               method="post">
@@ -572,7 +607,8 @@
                         <form action="{% url 'search' %}" method="post">{% csrf_token %}
                             <div class="form-group">
                                 <label class="sr-only">Search</label>
-                                <input name="search" type="text" class="form-control" id="searchshop" placeholder="Search">
+                                <input name="search" type="text" class="form-control" id="searchshop"
+                                       placeholder="Search">
                             </div>
                             <button type="submit" class="button button-sm button-block button-blue mt-10">Search
                             </button>
