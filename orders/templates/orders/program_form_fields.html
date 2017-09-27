@@ -1,15 +1,33 @@
-<div class="row">
+ <div class="row">
     {{ program_form.errors }}
 </div>
+
+  <div class="spacer-t20 spacer-b20">
+                        <div class="tagline"><span> Production Name </span></div><!-- .tagline -->
+                    </div><!-- end section -->
 <div class="section">
-    <label class="field" for="id_production_name">
-        {{ program_form.production_name }}
-    </label>
+    <div class="smart-widget sm-left sml-120">
+    <label class="field-label" for="id_production_name"></label>
+    {{ program_form.production_name }}
+        <label for="sm" class="button"> Name </label>
+    </div>
 </div>
+
+<div class="spacer-t40 spacer-b20">
+                        <div class="tagline"><span> distribution </span></div><!-- .tagline -->
+                    </div><!-- end section -->
+
+                    <div class="section">
+                        <p class="small-text fine-grey align-center"> Pure CSS3 Button Radios + Checkboxes </p>
+                    </div><!-- end section -->
+
+<label class="field-label" for="id_distribution">
+
+</label>
 <div class="option-group field">
     <div class="smart-option-group smart-option-list group-vertical">
-        {% for option in program_form.distribution.field.choices.queryset %}
-            <label title="{{ option.explanation }}" class="option">
+ {% for option in program_form.distribution.field.choices.queryset %}
+        <label title="{{ option.explanation }}" class="option" >
                 <input type="checkbox" name="distribution"
                        value="{{ option.id }}">
                 <span class="smart-option smart-checkbox">
@@ -22,3 +40,6 @@
         {% endfor %}
     </div>
 </div>
+
+
+

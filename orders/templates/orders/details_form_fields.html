@@ -1,27 +1,37 @@
-<div class="section">
-    <label class="field-label" for="id_number_uses">number of uses</label>
+ <div class="spacer-t20 spacer-b20">
+                        <div class="tagline"><span> Project details </span></div><!-- .tagline -->
+</div><!-- end section -->
+<div class="frm-row align-center">
+
+<div class="section colm colm6 pad-r40 bdr">
+    <label class="field-label" for="id_number_uses" style="color:#ff7363">number of uses</label>
     <label class="field">{{ details_form.number_uses }}</label>
     <span>{{ details_form.errors.number_uses }}</span>
 </div>
-<div class="section">
-    <label class="field-label">opening closing?</label>
+
+
+<div class="section colm colm6 pad-140">
+    <label class="field-label" style="color:#ff7363">opening closing?</label>
 </div>
 <span>{{ details_form.errors.opening_closing }}</span>
-<div class="section">
+<div class="section colm colm6 pad-r40 bdr">
     <div class="group-vertical">
         {% for check in details_form.opening_closing %}
-            <label class="option" for="{{ check.id_for_label }}">
+            <label class="switch block" for="{{ check.id_for_label }}">
                 {{ check.tag }}
-                <span class="radio"></span>{{ check.choice_label }}
+                <span class="switch-label" data-on="NO" data-off="YES"></span>{{ check.choice_label }}
             </label>
         {% endfor %}
     </div>
 </div>
+</div>
+
+<div class="frm-row align-center spacer-t20 spacer-b20">
 <div title="Is the song being sung by one of your characters? Is it playing without any voiceover? That is likely a featured use. However, a song is playing in the background at low volume with narration over the top, that is likely background use"
-     class="section">
+     class="section colm colm6 pad-140 bdr">
     <div class="option-group field">
         <div class="group-vertical">
-            <label class="field-label">featured or background?</label>
+            <label class="field-label align-center" style="color:#ff7363">featured or background?</label>
         <span>{{ details_form.errors.featured_background }}</span>
             {% for check in details_form.featured_background %}
                 <label class="option" for="{{ check.id_for_label }}">
@@ -32,11 +42,13 @@
         </div>
     </div>
 </div>
-<div class="section">
+<div class="section colm colm6 pad-140">
     <div class="option-group field">
         <div class="group-vertical">
-            <label class="field-label">song version</label>
+            <label class="field-label align-center" style="uppercase; color:#ff7363">song version</label>
+<!--
         <span>details_form.errors.song_version</span>
+-->
             {% for check in details_form.song_version %}
                 <label class="option" for="{{ check.id_for_label }}">
                     {{ check.tag }}
@@ -46,36 +58,57 @@
         </div>
     </div>
 </div>
+<!--
 <span>details_form.errors.start_duration</span>
-<div class="section">
-    <label for="id_start_minutes" class="field-label">duration start at (minutes)</label>
+-->
+
+
+</div>
+
+  <div class="spacer-t40 spacer-b40">
+                        <div class="tagline"><span>DURATION TERM & TERRITORY </span></div><!-- .tagline -->
+</div><!-- end section -->
+
+ <h5 style="text-transform: uppercase; color:#ff4530"> DUration</h5>
+ <div class="section">
+                        <p class="small-text fine-grey">State where you would like the rights to use music in your project</p>
+</div><!-- end section -->
+<div class="frm-row align-center">
+<div class="section section colm colm3 pad-140">
+    <label for="id_start_minutes" class="field-label">duration start at </label>
     <input class="gui-input" name="min_start" type="number" required
            value="{% if min_start %}{{ min_start }}{% endif %}"
            id="id_start_minutes" min="00" max="59" placeholder="MM">
 </div>
-<div class="section">
-    <label for="id_start_seconds" class="field-label">duration start at (seconds)</label>
+<div class="section section colm colm3 pad-140 bdr">
+    <label for="id_start_seconds" class="field-label">.</label>
     <input class="gui-input" name="sec_start" type="number" required
            value="{% if sec_start %}{{ sec_start }}{% endif %}"
            id="id_start_seconds" min="00" max="59" placeholder="SS">
 </div>
+<!--
 <span>details_form.errors.end_duration</span>
-<div class="section">
-    <label for="id_end_minutes" class="field-label">duration end at (minutes)</label>
+-->
+<div class="section section colm colm3 pad-140">
+    <label for="id_end_minutes" class="field-label">duration end at </label>
     <input class="gui-input" name="min_end" type="number" required
            value="{% if min_end %}{{ min_end }}{% endif %}"
            id="id_end_minutes" min="00" max="59" placeholder="MM">
 </div>
-<div class="section">
-    <label for="id_end_seconds" class="field-label">duration end at (seconds)</label>
+<div class="section section colm colm3 pad-140">
+    <label for="id_end_seconds" class="field-label">.</label>
     <input class="gui-input" name="sec_end" type="number" required
            value="{% if sec_end %}{{ sec_end }}{% endif %}"
            id="id_end_seconds" min="00" max="59" placeholder="SS">
 </div>
+
+</div>
 <div class="section">
-    <label class="field-label">term</label>
-    <span>details_form.errors.term</span>
-    <span>State how long you would like to license the song for your project</span>
+    <label class="field-label spacer-t20" style="text-transform: uppercase; color:#ff4530">term</label>
+    <div class="section">
+                        <p class="small-text fine-grey">State how long you would like to license the song for your project</p>
+</div><!-- end section -->
+
     <div class="section colm colm6">
         <label class="field select">
             {{ details_form.term }}
@@ -83,29 +116,45 @@
     </div>
 </div>
 <div class="section">
-    <label for="id_territory" class="field-label">
-        territory <span>State where you would like the rights to use music in your project</span>
-    </label><span>{{ details_form.errors.territory }}</span>
+    <label for="id_territory" class="field-label spacer-t20" style="text-transform: uppercase; color:#ff4530">
+        territory
+    </label>
+
+        <div class="section">
+                        <p class="small-text fine-grey">State where you would like the rights to use music in your project</p>
+</div><!-- end section -->
+
+
     <input id="id_territory" name="territory"
            class="gui-input" value="{{ details_form.territory.value }}">
 </div>
-<div id="usa_states" class="section">
-    <label for="id_states" class="field-label">states</label>
+<div id="usa_states" class="section colm colm6 spacer-t20 spacer-b20">
+    <label for="id_states" class="field-label small-text fine-grey" style="text-transform: uppercase; color:#ff4530">Specify which states, if all write all</label>
     {{ details_form.territory_usa }}
 </div>
 <div class="section">
-    <label class="field-label">release date</label>
+    <label class="field-label spacer-t20" style="text-transform: uppercase; color:#ff4530">release date</label>
+    <div class="section">
+                        <p class="small-text fine-grey"> Pure CSS3 Button Radios + Checkboxes </p>
+    </div><!-- end section -->
+
     <span>{{ details_form.errors.release_date }}</span>
     {{ details_form.release_date }}
 </div>
+
+
+  <div class="spacer-t40 spacer-b40">
+                        <div class="tagline"><span>Budjet </span></div><!-- .tagline -->
+</div><!-- end section -->
+
 <div title="Publishers and record companies use budget to estimate viewership"
      class="section">
-    <label class="">budget</label>
+    <label class=""></label>
 <span>{{ details_form.errors.budget }}</span>
     <div class="option-group field">
-        <div class="group-vertical">
+        <div class="group">
             {% for radio in details_form.budget %}
-                <label class="option" for="{{ radio.id_for_label }}">
+                <label class="option" for="{{ radio.id_for_label }}" style="margin:7px;">
                     {{ radio.tag }}
                     <span class="radio"></span>{{ radio.choice_label }}
                 </label>
@@ -113,33 +162,49 @@
         </div>
     </div>
 </div>
+
+   <div class="spacer-t40 spacer-b40">
+                        <div class="tagline"><span>Synopsis & Scene Description </span></div><!-- .tagline -->
+</div><!-- end section -->
+
+
 <div class="section">
-    <label class="field-label">synopsis</label>
+    <label class="field-label">synopsis</label><br>
     <span>{{ details_form.errors.synopsis }}</span>
     {{ details_form.synopsis }}
-</div>
+</div><br>
 <div class="section">
-    <label class="field-label">description</label>
+    <label class="field-label">description</label><br>
     <span>{{ details_form.errors.description }}</span>
     {{ details_form.description }}
 </div>
-<div class="section">
-    <label class="field-label">purpose?</label>
+
+    <div class="spacer-t40 spacer-b40">
+                        <div class="tagline spacer-t10 spacer-b10"><span>non profit organization</span></div><!-- .tagline -->
+         <p class="small-text fine-grey align-center"> Pure CSS3 Button Radios + Checkboxes </p>
+</div><!-- end section -->
+
+ <div class="frm-row align-center">
+<div class="section colm colm6">
+
 <span>{{ details_form.errors.is_non_profit }}</span>
     <div class="option-group field">
         <div class="group-vertical">
             {% for radio in details_form.is_non_profit %}
                 <label id="{% if radio.choice_label == 'profit' %}is-non-profit{% else %}is-not-non-profit{% endif %}"
-                       class="option" for="{{ radio.id_for_label }}">
+                       class="modern-switch morph-switch" for="{{ radio.id_for_label }}">
                     {{ radio.tag }}
-                    <span class="radio"></span>{{ radio.choice_label }}
+                    <span class="switch-toggle"></span>{{ radio.choice_label }}
                 </label>
             {% endfor %}
         </div>
     </div>
 </div>
-<div id="non-profit" class="section">
+
+<div id="non-profit" class="section colm colm6">
     <label class="field-label">non profit</label>
+
+
     <div class="option-group field">
         <div class="group-vertical">
             {% for radio in details_form.non_profit %}
@@ -151,7 +216,11 @@
         </div>
     </div>
 </div>
+</div>
+     <div class="spacer-t40 spacer-b40">
+                        <div class="tagline"><span>comments? (Optional)</span></div><!-- .tagline -->
+</div><!-- end section -->
 <div class="section">
-    <label class="field-label">comments?</label>
+    <label class="field-label"></label>
     {{ details_form.comments }}
 </div>

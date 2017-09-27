@@ -1,19 +1,37 @@
 {% extends 'common/common_base.html' %}
 {% block content %}
     <div class="container">
-    <br><br><br><br><br>
+     <br><br><br><br><br><br>
+           <div class="col-md-12">
+                        <h4 class="text-center text-uppercase">
+                            <small class="heading heading-icon-o heading-icon-rounded center-block">
+                                <i class="fa fa-music"></i>
+                            </small>
+                            <small>{{ song_title }}</small>
+                           {{ artist }}
+
+                        </h4>
+                    </div>
         <div class="smart-wrap">
-            <div class="smart-forms smart-container wrap-4">
-                <div class="form-header header-yellow">
-                    <h4><i class="fa fa-pencil-square"></i>order for advertising</h4>
-                </div>
+             <div class="smart-forms smart-container wrap-2" style="box-shadow:none; background:none; margin:0px auto;">
+                <div class="">
+                    <h3 class="text-center text-uppercase">
+                               Advertising iquiry
+                                <small class="heading heading-solid center-block"></small>
+                            </h3>
                 <form action="{% url 'advertising' order %}" method="post">
                     {% csrf_token %}
                     {% include 'orders/advertising_form_fields.html' %}
                     <div class="form-footer">
-                        <button class="btn btn-success">continue</button>
-                        <a href="#" class="back-btn btn btn-warning">back</a>
-                        <span>part 2 of 4</span>
+
+                    <div class="col-md-8">
+                        <button type="submit" class="button-o button-sm button-square button-pasific hover-shutter-out-vertical">continue</button>
+                        <button type="reset" class="button-o button-sm button-square button-dark hover-fade">reset</button>
+
+                    </div>
+                    <div class="col-md-3 font-pacifico text-capitalize mr40">
+                        part 2 of <span id="num_forms">4</span>
+                    </div>
                     </div>
                 </form>
             </div>

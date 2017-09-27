@@ -2,24 +2,38 @@
 {% block content %}
     <div class="container">
         <br><br><br><br><br>
-        <div class="smart-wrap">
-        <div class="smart-forms wrap-4">
-        <div class="form-header header-yellow">
-            <h4><i class="fa fa-pencil-square"></i>Your order</h4>
-            <span style="display:inline-block;width:200px;text-align: center;">{{ song_title }}</span>
-            <span>{{ artist }}</span>
-        </div>
+         <div class="col-md-12">
+                        <h4 class="text-center text-uppercase">
+                            <small class="heading heading-icon-o heading-icon-rounded center-block">
+                                <i class="fa fa-music"></i>
+                            </small>
+                            <small>{{ song_title }}</small>
+                           {{ artist }}
+
+                        </h4>
+                    </div>
+       <div class="smart-wrap">
+            <div class="smart-forms smart-container wrap-2" style="box-shadow:none; background:none; margin:0px auto;">
+
+
+
+                <div class="">
+                    <h3 class="text-center text-uppercase">
+                                license iquiry
+                                <small class="heading heading-solid center-block"></small>
+                            </h3>
+                </div><!-- end .form-header section -->
             <form action="{% if song_id %}{% url 'order' song_id %}{% else %}{% url 'manual_order' %}{% endif %}" method="post">
                 {% csrf_token %}
                 <div class="form-body theme-yellow">
                     {% include 'orders/order_form_fields.html' %}
                 </div>
                 <div class="form-footer">
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-yellow">continue</button>
-                        <button type="reset" class="btn btn-warning">reset</button>
+                    <div class="col-md-8">
+                        <button type="submit" class="button-o button-sm button-square button-pasific hover-shutter-out-vertical">continue</button>
+                        <button type="reset" class="button-o button-sm button-square button-dark hover-fade">reset</button>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 font-pacifico text-capitalize mr40">
                         part 1 of <span id="num_forms">4</span>
                     </div>
                 </div>

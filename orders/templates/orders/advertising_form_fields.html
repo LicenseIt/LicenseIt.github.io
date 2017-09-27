@@ -1,20 +1,47 @@
 <div class="row">
     {{ advertising_form.errors }}
 </div>
+
+
+  <div class="spacer-t20 spacer-b20">
+                        <div class="tagline"><span> Production Name </span></div><!-- .tagline -->
+                    </div><!-- end section -->
 <div class="section">
-    <label class="field-label" for="id_production_name">production name</label>
+    <div class="smart-widget sm-left sml-120">
+    <label class="field-label" for="id_production_name"></label>
     {{ advertising_form.production_name }}
-</div>
-<div class="section">
-    <label class="field-label" for="id_distribution">distribution</label>
-    <div class="option-group field">
-        <div class="group-vertical">
-            {% for option in advertising_form.distribution %}
-                <label class="option">
-                {{ option.tag }}
-                <span class="checkbox"></span>{{ option.choice_label }}
-                </label>
-            {% endfor %}
-        </div>
+        <label for="sm" class="button"> Name </label>
     </div>
 </div>
+
+
+
+
+<div class="spacer-t40 spacer-b20">
+                        <div class="tagline"><span> distribution </span></div><!-- .tagline -->
+                    </div><!-- end section -->
+
+                    <div class="section">
+                        <p class="small-text fine-grey align-center"> Pure CSS3 Button Radios + Checkboxes </p>
+                    </div><!-- end section -->
+
+<label class="field-label" for="id_distribution">
+
+</label>
+<div class="option-group field">
+    <div class="smart-option-group smart-option-list group-vertical">
+{% for option in advertising_form.distribution.field.choices.queryset %}
+        <label title="{{ option.explanation }}" class="option" >
+                <input type="checkbox" name="distribution"
+                       value="{{ option.id }}">
+                <span class="smart-option smart-checkbox">
+                    <span class="smart-option-ui">
+                        {{ option.name }}
+                        <span class="iconc-pos"> <i class="fa fa-check"></i> </span>
+                    </span>
+                </span>
+            </label>
+        {% endfor %}
+    </div>
+</div>
+

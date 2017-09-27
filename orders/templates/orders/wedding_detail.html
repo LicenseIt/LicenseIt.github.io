@@ -1,22 +1,41 @@
 {% extends 'common/common_base.html' %}
 {% block content %}
     <div class="container">
-        <br><br><br><br><br>
-        <div class="smart-wrap">
-            <div class="smart-forms smart-container wrap-4">
-                <div class="form-header header-yellow">
-                    <h4><i class="fa fa-pencil-square"></i>order for wedding</h4>
-                </div>
+        <br><br><br><br><br><br><br>
+          <div class="col-md-12">
+                        <h4 class="text-center text-uppercase">
+                            <small class="heading heading-icon-o heading-icon-rounded center-block">
+                                <i class="fa fa-music"></i>
+                            </small>
+                            <small>{{ song_title }}</small>
+                           {{ artist }}
+
+                        </h4>
+                    </div>
+         <div class="smart-wrap">
+            <div class="smart-wrap">
+             <div class="smart-forms smart-container wrap-2" style="box-shadow:none; background:none; margin:0px auto;">
+                <div class="">
+                    <h3 class="text-center text-uppercase">
+                                Weding - inquiry
+                                <small class="heading heading-solid center-block"></small>
+                            </h3>
                 <form action="{% url 'wedding' order %}" method="post">
                     {% csrf_token %}
                     <div class="form-body theme-yellow">
                         {% include 'orders/wedding_form_fields.html' %}
                     </div>
-                    <div class="form-footer">
-                        <button type="submit" class="btn btn-success">submit</button>
-                        <a href="#" class="btn btn-warning back-btn">back</a>
-                        part 2 of 2
+                     <div class="form-footer">
+
+                    <div class="col-md-8">
+                        <button type="submit" class="button-o button-sm button-square button-pasific hover-shutter-out-vertical">continue</button>
+                        <button type="reset" class="button-o button-sm button-square button-dark hover-fade">reset</button>
+
                     </div>
+                    <div class="col-md-3 font-pacifico text-capitalize mr40">
+                        part 2 of <span id="num_forms">2</span>
+                    </div>
+                </div>
                 </form>
             </div>
         </div>
