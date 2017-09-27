@@ -569,10 +569,10 @@
                     <!-- Search
                     ===================================== -->
                     <div class="mt20 pt20 clearfix">
-                        <form>
+                        <form action="{% url 'search' %}" method="post">{% csrf_token %}
                             <div class="form-group">
-                                <label class="sr-only">Email address</label>
-                                <input type="text" class="form-control" id="searchshop" placeholder="Search">
+                                <label class="sr-only">Search</label>
+                                <input name="search" type="text" class="form-control" id="searchshop" placeholder="Search">
                             </div>
                             <button type="submit" class="button button-sm button-block button-blue mt-10">Search
                             </button>
