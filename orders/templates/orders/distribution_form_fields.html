@@ -3,11 +3,18 @@
         {{ web.errors }}
     </div>
     <div class="section">
+        <div class="spacer-t20 spacer-b20">
+                    	<div class="tagline"><span> where exactly online? </span></div><!-- .tagline -->
+                    </div><!-- end section -->
+
+                    <div class="section">
+                    	<p class="small-text fine-grey align-center">Inline options - choose a method of payment below </p>
+                    </div><!-- end section -->
         <div class="option-group field">
-            <div class="group-vertical">
-                <label class="field-label">where exactly online?</label>
+            <div">
+                <label class="field-label"></label>
                 {% for check in web.distribute_on %}
-                    <label class="option">
+                    <label class="option" style="margin: 7px;">
                         {{ check.tag }}
                         <span class="checkbox"></span>{{ check.choice_label }}
                     </label>
@@ -16,7 +23,7 @@
                     <input id="other" name="web_other" type="checkbox">
                     <span class="checkbox"></span>other
                     <label id="other_web" class="field">
-                        <input class="gui-input" type="text" name="distribute_new" value="">
+                        <input class="gui-input inline" style="display: inline-flex; vertical-align:baseline;" type="text" name="distribute_new" value="">
                     </label>
 
                 </label>
@@ -24,7 +31,7 @@
         </div>
         <div id="id_youtube" class="section">
             <div class="option-group field">
-                <label class="field" for="id_youtube_id">
+                <label class="field" style="margin: 10px; width: 40%;" for="id_youtube_id">
                     youtube id
                     {{ web.youtube_id }}
                 </label>
@@ -34,11 +41,18 @@
 {% endif %}
 {% if ext %}
     <div class="section">
+        <div class="spacer-t20 spacer-b20">
+                    	<div class="tagline"><span> where exactly externally? </span></div><!-- .tagline -->
+                    </div><!-- end section -->
+
+                    <div class="section">
+                    	<p class="small-text fine-grey align-center">Inline options - choose a method of payment below </p>
+                    </div><!-- end section -->
         <div class="option-group field">
-            <div class="group-vertical">
-                <label class="field-label">where exactly externally?</label>
+            <div>
+                <label class="field-label"></label>
                 {% for check in ext.name %}
-                    <label class="option">
+                    <label class="option" style="margin: 12px;">
                         {{ check.tag }}
                         <span class="checkbox"></span>{{ check.choice_label }}
                     </label>
@@ -47,14 +61,14 @@
                     <input id="ext_other" name="ext_other" type="checkbox">
                     <span class="checkbox"></span>other
                     <label id="dist_other" class="field">
-                        <input class="gui-input" type="text" name="dist_new" value="">
+                        <input class="gui-input" style="display: inline-flex; vertical-align:baseline;" type="text" name="dist_new" value="">
                     </label>
                 </label>
             </div>
         </div>
     </div>
     <div class="section">
-        <label class="field-label" for="id_num_people">number of people</label>
+        <label class="field-label spacer-t20 spacer-b20" style="text-transform: uppercase; color:#ff4530" for="id_num_people">number of people</label>
         {{ ext.num_people }}
     </div>
 {% endif %}

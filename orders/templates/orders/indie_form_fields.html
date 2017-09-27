@@ -1,51 +1,117 @@
+
 <div class="row">
     {{ indie_form.errors }}
 </div>
+
+ <div class="spacer-t20 spacer-b20">
+                        <div class="tagline"><span> Prosuction Name </span></div><!-- .tagline -->
+                    </div><!-- end section -->
 <div class="section">
-    <label class="field-label" for="id_production_name">production name</label>
+    <div class="smart-widget sm-left sml-120">
+    <label class="field-label" for="id_production_name"></label>
     {{ indie_form.production_name }}
+        <label for="sm" class="button"> Name </label>
+    </div>
 </div>
+
+
+   <div class="spacer-t40 spacer-b40">
+                        <div class="tagline"><span> Review &amp; Rating Widget </span></div><!-- .tagline -->
+
+                    </div><!-- end .spacer section -->
 <div class="section">
-    <label class="field-label" for="id_film_length">film length</label>
+                        <p class="small-text fine-grey align-center"> Pure CSS3 Button Radios + Checkboxes </p>
+</div><!-- end section -->
+
+                    <div class="frm-row align-center">
+                        <div class="section colm colm4 pad-r40 bdr">
+
+                            <h5 class="text-center">
+                        film length
+                            </h5>
+
+   <label class="field-label" for="id_film_length"></label>
     <div class="option-group field">
-        <div class="group-vertical">
+       <div class="group-vertical">
             {% for radio in indie_form.film_length %}
-                <label class="option" for="{{ radio.id_for_label }}">
+                <label class="switch block" for="{{ radio.id_for_label }}">
                     {{ radio.tag }}
-                    <span class="radio"></span>{{ radio.choice_label }}
+                    <span class="switch-label" data-on="YES" data-off="NO"></span>{{ radio.choice_label }}
                 </label>
             {% endfor %}
         </div>
     </div>
-</div>
-<div class="section">
-    <label class="field-label" for="id_film_programming">film programming</label>
+                        </div>
+ <div class="section colm colm5 pad-l40 bdr">
+       <h5 class="text-center">
+                        Film Programming
+
+
+       </h5>
+    <label class="field-label" for="id_film_programming"></label>
     <div class="option-group field">
         <div class="group-vertical">
             {% for radio in indie_form.film_programming %}
-                <label class="option" for="{{ radio.id_for_label }}">
+                <label class="switch block" for="{{ radio.id_for_label }}">
                     {{ radio.tag }}
-                    <span class="radio"></span>{{ radio.choice_label }}
+                    <span class="switch-label" data-on="YES" data-off="NO"></span>{{ radio.choice_label }}
                 </label>
             {% endfor %}
         </div>
     </div>
 </div>
-<div class="section">
-    <label class="field-label" for="id_film_trailer">film trailer</label>
+
+ <div class="section colm colm3 pad-l40">
+     <h5 class="text-center">
+                        Film trailer
+
+
+       </h5>
+    <label class="field-label" for="id_film_trailer"></label>
     <div class="option-group field">
         <div class="group-vertical">
             {% for radio in indie_form.film_trailer %}
-                <label class="option" for="{{ radio.id_for_label }}">
+                <label class="switch block" for="{{ radio.id_for_label }}">
                     {{ radio.tag }}
-                    <span class="radio"></span>{{ radio.choice_label }}
+                    <span class="switch-label" data-on="YES" data-off="NO"></span>{{ radio.choice_label }}
                 </label>
             {% endfor %}
         </div>
     </div>
 </div>
-<div class="section">
-    <label class="field-label" for="id_distribution">distribution</label>
+      </div>
+<div class="spacer-t40 spacer-b20">
+                        <div class="tagline"><span> distribution </span></div><!-- .tagline -->
+                    </div><!-- end section -->
+
+                    <div class="section">
+                        <p class="small-text fine-grey align-center"> Pure CSS3 Button Radios + Checkboxes </p>
+                    </div><!-- end section -->
+
+<label class="field-label" for="id_distribution">
+
+</label>
+<div class="option-group field">
+    <div class="smart-option-group smart-option-list group-vertical">
+        {% for option in indie_form.distribution.field.choices.queryset %}
+            <label title="{{ option.explanation }}" class="option" >
+                <input type="checkbox" name="distribution"
+                       value="{{ option.id }}">
+                <span class="smart-option smart-checkbox">
+                    <span class="smart-option-ui">
+                        {{ option.name }}
+                        <span class="iconc-pos"> <i class="fa fa-check"></i> </span>
+                    </span>
+                </span>
+            </label>
+        {% endfor %}
+    </div>
+</div>
+
+
+<!-- <div class="frm-row">
+ <div class="section colm colm12">
+    <label class="field-label" for="id_distribution"></label>
     <div class="option-group field">
         <div class="group-vertical">
             {% for check in indie_form.distribution %}
@@ -56,4 +122,5 @@
             {% endfor %}
         </div>
     </div>
-</div>
+</div>-->
+ </div>
