@@ -1,5 +1,10 @@
 from django.contrib import admin
 from .models import ContactData
 
+
 # Register your models here.
-admin.site.register(ContactData)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['full_name', 'email', 'created']
+
+
+admin.site.register(ContactData, ContactAdmin)

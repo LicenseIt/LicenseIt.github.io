@@ -37,7 +37,13 @@
         <div class="container">
 
             <div class="row mt20 animated" data-animation="fadeInDown" data-animation-delay="100">
+            {% if results_count == 10 and current == 2 %}
+                <h3>top results</h3>
+            {% endif %}
                 {% for result in results %}
+                    {% if forloop.counter == results_count %}
+                    <h3>top results</h3>
+                    {% endif %}
                     <!-- Item START
                     ======================== -->
                     <div class="row bb-dashed-1 pt00 pb25">
@@ -84,14 +90,12 @@
                             <a href="{% url 'order' result.id %}"
                                class="button button-md button-pasific hover-icon-wobble-horizontal mt25">License<i
                                     class="fa fa-file-text-o"></i></a> <br>
-                            <a href="{{ result.preview_url }}" class="button-o button-sm button-dark mt25 hover-sweep-to-left">Play<i
-                                    class="fa fa-play"></i></a>
+                            <audio src="{{ result.preview_url }}" controls></audio>
+{#                            <a href="{{ result.preview_url }}" class="button-o button-sm button-dark mt25 hover-sweep-to-left">Play<i#}
+{#                                    class="fa fa-play"></i></a>#}
                         </div>
 
                     </div>
-
-
-
                     <!-- Item END
                      ======================== -->
                 {% endfor %}

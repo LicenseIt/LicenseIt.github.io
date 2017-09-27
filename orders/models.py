@@ -598,7 +598,7 @@ class ProjectDetailBase(OrderProjectDetailBase):
 
 
 class RateUs(Base):
-    rate = models.SmallIntegerField()
+    rate = models.SmallIntegerField(null=True, blank=True)
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_rate_us')
 
 
@@ -692,11 +692,17 @@ class Order(Base):
     performer_name = models.CharField(max_length=200)
     is_done = models.BooleanField(default=False)
     license_pdf = models.FileField(upload_to=license_path, null=True, blank=True)
+    supporter = models.ForeignKey(User,
+                                  on_delete=models.SET_NULL,
+                                  null=True,
+                                  blank=True,
+                                  limit_choices_to={'is_staff': True},
+                                  related_name='supporter')
 
     project_type = models.ForeignKey(ProjectType, related_name='general_order')
 
     def __str__(self):
-        return str(self.user) + ': ' + self.song_title
+        return str(self.id) + '- ' + str(self.user) + ': ' + self.song_title
 
     class Meta:
         verbose_name = 'order'

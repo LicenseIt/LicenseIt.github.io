@@ -45,10 +45,8 @@ class SearchView(View):
         :return:
         '''
         logger = logging.getLogger(__name__)
-        print(request.POST)
         search = request.POST['search']
         search_in_db = Search.objects.filter(search_term=search)
-        print(search_in_db)
         if search_in_db.exists():
             return HttpResponseRedirect(reverse('results_page', args=(search_in_db[0].id,)))
         search_db = Search()
@@ -133,10 +131,23 @@ class SearchView(View):
 
 
 class ResultsView(View):
+    '''
+    results view
+    '''
     template_name = 'search/results.html'
     results_per_page = 10
 
     def get(self, request, pk, *args, **kwargs):
+        '''
+        the results page
+
+        if the number of results is less then 11 we add the top results from the db.
+        :param request: request object
+        :param pk: the search id
+        :param args:
+        :param kwargs:
+        :return: the results page with results of search pk
+        '''
         results = Track.objects.filter(search=pk)
         results_count = len(results)
         if results_count < 11:
@@ -165,6 +176,7 @@ class ResultsView(View):
             'next': _next,
             'next_next': next_next,
             'url': 'results',
+            'results_count': results_count + 1,
             'num_pages': paginator.num_pages
         }
 

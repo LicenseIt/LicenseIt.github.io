@@ -181,7 +181,8 @@
                                                 <div class="smart-wrap" id="license-form">
                                                     <div class="smart-forms smart-container wrap-4">
                                                         <form method="post"
-                                                              action="{% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
+                                                              action="
+                                                                      {% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
                                                             {% csrf_token %}
                                                             {% include 'orders/order_form_fields.html' %}
                                                             {% if advertising_form %}
@@ -423,14 +424,14 @@
                                                                 </span>
                                                             </div>
                                                             {% if wedding_form.territory_states %}
-                                                            <div class="row">
+                                                                <div class="row">
                                                                 <span class="col-md-3">
                                                                     USA states
                                                                 </span>
-                                                                <span class="col-md-7">
+                                                                    <span class="col-md-7">
                                                                     {{ wedding_form.territory_states.value }}
                                                                 </span>
-                                                            </div>
+                                                                </div>
                                                             {% endif %}
                                                         {% endif %}
                                                         {% if personal_form %}
@@ -509,6 +510,7 @@
                                          class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
                                         <h5>Payment</h5>
                                         <form action="
+
                                                 {% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
                                               method="post">
                                             <div>{% csrf_token %}
@@ -523,6 +525,19 @@
                                             <div>
                                                 <button class="btn btn-primary">Submit</button>
                                             </div>
+                                        </form>
+                                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post"
+                                              target="_top">
+                                            <input type="hidden" name="cmd" value="_s-xclick">
+                                            <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+">
+                                            <input type="image"
+                                                   src="https://www.paypalobjects.com/he_IL/IL/i/btn/btn_buynowCC_LG.gif"
+                                                   border="0" name="submit"
+                                                   alt="PayPal - הדרך הקלה והבטוחה יותר לשלם באינטרנט!">
+                                            <img alt="" border="0"
+                                                 src="https://www.paypalobjects.com/he_IL/i/scr/pixel.gif" width="1"
+                                                 height="1">
                                         </form>
                                     </div>
                                     <div id="pilljustified5"
@@ -554,10 +569,10 @@
                     <!-- Search
                     ===================================== -->
                     <div class="mt20 pt20 clearfix">
-                        <form>
+                        <form action="{% url 'search' %}" method="post">{% csrf_token %}
                             <div class="form-group">
-                                <label class="sr-only">Email address</label>
-                                <input type="text" class="form-control" id="searchshop" placeholder="Search">
+                                <label class="sr-only">Search</label>
+                                <input name="search" type="text" class="form-control" id="searchshop" placeholder="Search">
                             </div>
                             <button type="submit" class="button button-sm button-block button-blue mt-10">Search
                             </button>

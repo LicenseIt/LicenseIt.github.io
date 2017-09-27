@@ -722,12 +722,24 @@ class RateUsView(View):
     template_name = 'orders/rate_us_form.html'
 
     def get(self, request, order_id):
+        '''
+        rate us page
+        :param request: request object
+        :param order_id: the order id
+        :return: rate us page
+        '''
         rate_form = RateUsForm()
         return render(request,
                       self.template_name,
                       context={'rate_form': rate_form, 'order': order_id, 'is_form': True})
 
     def post(self, request, order_id):
+        '''
+        save the data of rate us form
+        :param request: request object
+        :param order_id: order id
+        :return: login page or client dash page
+        '''
         rate_form = RateUsForm(request.POST.copy())
         rate_form.data['order'] = order_id
 
@@ -860,6 +872,19 @@ class PersonalDetails(View):
                           context=context)
 
         order = Order.objects.get(pk=order_id)
+        order_rights = {
+            'composition': 'composition owner',
+            'lirics': 'lirics owner',
+            'performance': 'performance owner'
+        }
+
+        for right, owner in order_rights.items():
+            order_owner_right = OrderOwnerRight()
+            order_owner_right.order = order
+            order_owner_right.right_type = right
+            order_owner_right.owner = owner
+            order_owner_right.save()
+
         if request.user.is_authenticated():
             order.user = request.user
             order.save()
@@ -873,7 +898,16 @@ class PersonalDetails(View):
 
 
 class DeleteOrder(View):
+    '''
+    delete order from client dash
+    '''
     def get(self, request, order_id=None):
+        '''
+        deleting order from client dash page
+        :param request: request object
+        :param order_id: order id (to delete)
+        :return: client dash if successful, 404 otherwise
+        '''
         order = get_object_or_404(Order, id=order_id)
         if request.user != order.user and not request.user.is_superuser:
             return Http404()

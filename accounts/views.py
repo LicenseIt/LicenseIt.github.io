@@ -53,17 +53,38 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
 
 
 class ConnectBase(View):
+    '''
+    base class for login and signup classes
+    '''
     def add_order_user(self, request, user):
+        '''
+        adding the order to the newly connected user
+        :param request: the request object
+        :param user: the user object
+        :return:
+        '''
         if 'order_user' in request.session.keys():
             order = Order.objects.get(pk=request.session['order_id'])
             order.user = user
             order.save()
             del request.session['order_user']
             del request.session['order_id']
+            return order.id
 
 
 class LoginView(ConnectBase):
+    '''
+    login cloass to handle http methods for login
+    '''
     def get(self, request):
+        '''
+        showing the login page with a bit of logic.
+
+        if we have an order id in the session it means the user did an order and we
+        didn't handle it yet, so we handle what needs to
+        :param request: the request object
+        :return: the login page
+        '''
         if 'order_id' in request.session:
             order_id = request.session['order_id']
             detail_forms = [
@@ -82,13 +103,26 @@ class LoginView(ConnectBase):
                       context={'is_form': True})
 
     def post(self, request):
+        '''
+        check if the user is registered and act accordingly
+        :param request: the request object
+        :return: redirect to the appropriate page
+        '''
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            self.add_order_user(request, user)
+            order = self.add_order_user(request, user)
+            if order:
+                send_mail('licenseit- thanks for ordering',
+                          'thanks for ordering, here is a link for your order {0}'
+                          .format(request.META['HTTP_HOST'] + reverse('my_account_order',
+                                                                      args=[order])),
+                      'support@licenseit.net',
+                      [user.email],
+                      html_message='')
             return HttpResponseRedirect(reverse('my_account'))
         else:
             return render(request,
@@ -100,13 +134,21 @@ class LoginView(ConnectBase):
 
 
 class SignupView(ConnectBase):
+    '''
+    handling the signup
+    '''
     def post(self, request):
+        '''
+        signup the user
+        :param request: the request object
+        :return: redirect to the appropriate page
+        '''
         email = request.POST['email']
         username = request.POST['email']
         password = request.POST['password']
         try:
             user = User.objects.create_user(username, email, password)
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             self.add_order_user(request, user)
         except IntegrityError:
             return render(request,
@@ -121,6 +163,11 @@ class SignupView(ConnectBase):
 
 class ForgotPassword(View):
     def post(self, request):
+        '''
+        handling the data when wanting to reset the password
+        :param request: the request object
+        :return: redirecting the user to the home page
+        '''
         user = User.objects.get(email=request.POST['email'])
         if not user:
             return render(request,
@@ -139,7 +186,15 @@ class ForgotPassword(View):
 
 
 class ChangePassword(View):
+    '''
+    handling changing password
+    '''
     def is_valid(self, string=None):
+        '''
+        checking if the link was entered within allowed time and resetting password
+        :param string: the reset token
+        :return: boolean, True if valid, False otherwise
+        '''
         if not string:
             return False
         try:
@@ -152,6 +207,12 @@ class ChangePassword(View):
             return True
 
     def get(self, request, string=None):
+        '''
+        the page for changing password on reset password
+        :param request: request object
+        :param string: the reset token
+        :return: reset password if string is valid, home page otherwise
+        '''
         if self.is_valid(string):
             return render(request,
                           'accounts/reset_password.html',
@@ -159,6 +220,12 @@ class ChangePassword(View):
         return HttpResponseRedirect(reverse('home'))
 
     def post(self, request, string=None):
+        '''
+        actually changing the password if all is valid
+        :param request: request object
+        :param string: reset token
+        :return: redirect to home if all is well, if not staying on the page with error massage
+        '''
         if self.is_valid(string) and 'password' in request.POST and 'confirm_pass' in request.POST:
             if request.POST['password'] == request.POST['confirm_pass']:
                 reset_pass = ResetPassword.objects.get(reset_token=string)
@@ -176,7 +243,15 @@ class ChangePassword(View):
 
 
 class EditUserData(View):
+    '''
+    edit user data on the client dash page
+    '''
     def post(self, request):
+        '''
+        edit the user data according to the data we receive
+        :param request: request object
+        :return: the page of my account
+        '''
         data = request.POST.copy()
 
         user = User.objects.get(username=request.user.username)
@@ -205,28 +280,19 @@ class EditUserData(View):
         return HttpResponseRedirect(reverse('my_account'))
 
 
-class LoginFacebook(View):
-    def get(self, request, email, url):
-        password = generate_password()
-        try:
-            user = User.objects.create_user(email, email, password)
-            user_image = UserImage(user=user, image_url=url)
-            user_image.save()
-            login(request, user)
-            return HttpResponseRedirect(reverse('home'))
-        except IntegrityError:
-            user = User.objects.get(username=email)
-            if not UserImage.objects.filter(user=user).filter(image_url=url).exists():
-                user_image = UserImage(user=user, image_url=url)
-                user_image.save()
-            login(request, user)
-            return HttpResponseRedirect(reverse('home'))
-
-
 class Account(ConnectBase):
+    '''
+    client dash page
+    '''
     template_name = 'accounts/client-dash.html'
 
     def data(self, user, order_id=None):
+        '''
+        getting all the data for the client dash page
+        :param user:
+        :param order_id:
+        :return:
+        '''
         orders_list = Order.objects.filter(user=user).filter(is_done=True).select_related()
 
         if order_id:
@@ -276,6 +342,7 @@ class Account(ConnectBase):
             'counter_offer_form': counter
         }
 
+        # check the type of the project, since it affects the model we need to work with
         if order_data and order_data.project_type.name.lower() == 'film making':
             indie_data = order_data.order_project_orderfilmmaking.get(order=order_data.id)
             context['indie_form'] = OrderIndieForm(instance=indie_data)
@@ -292,6 +359,7 @@ class Account(ConnectBase):
             context['details'] = OrderIndieProjectDetail.objects.get(order=order_data.id)
 
             context['order_details'] = details
+            # check which type of distribution and act accordingly
             if order_data.order_project_orderfilmmaking.filter(distribution__name='web/streaming').exists():
                 web = order_data.order_dist_web.get(order=order_data.id)
                 context['web'] = IndieWebDistribution(instance=web)
@@ -300,6 +368,7 @@ class Account(ConnectBase):
                 ext = order_data.order_dist_ext.get(order=order_data.id)
                 context['ext'] = IndieExtDistribution(instance=ext)
                 context['ext_dist'] = ext
+
         if order_data and order_data.project_type.name.lower() == 'programming':
             prog_data = order_data.order_project_orderprogramming.get(order=order_data.id)
             context['program_form'] = OrderProgramForm(instance=prog_data)
@@ -316,6 +385,7 @@ class Account(ConnectBase):
             context['programming'] = OrderProgramming.objects.get(order=order_data.id)
             context['details'] = OrderProgrammingDetail.objects.get(order=order_data.id)
 
+            # check which type of distribution and act accordingly
             if order_data.order_project_orderprogramming.filter(distribution__name='web/streaming').exists():
                 web = order_data.order_dist_web.get(order=order_data.id)
                 context['web'] = IndieWebDistribution(instance=web)
@@ -345,6 +415,7 @@ class Account(ConnectBase):
 
             context['details_form'] = AdvertisingDetailForm(instance=details)
 
+            # check which type of distribution and act accordingly
             if order_data.order_project_orderadvertising.filter(distribution__name='web/streaming').exists():
                 web = order_data.order_dist_web.get(order=order_data.id)
                 context['web'] = IndieWebDistribution(instance=web)
@@ -366,6 +437,12 @@ class Account(ConnectBase):
         return context
 
     def get(self, request, order_id=None):
+        '''
+        the page of client dash
+        :param request: request object
+        :param order_id: the order id
+        :return: client dash page
+        '''
         self.add_order_user(request, request.user)
         context = self.data(request.user, order_id)
         return render(request,
@@ -373,7 +450,12 @@ class Account(ConnectBase):
                       context=context)
 
     def post(self, request, order_id=None):
-        # context = self.data(request.user, order_id)
+        '''
+        process the data and save if all is well.
+        :param request: request object
+        :param order_id: order id
+        :return: client dash page
+        '''
         data = request.POST.copy()
         data['start_duration'] = request.POST['min_start'] + ':' + request.POST['sec_start']
         data['end_duration'] = request.POST['min_end'] + ':' + request.POST['sec_end']
@@ -396,11 +478,13 @@ class Account(ConnectBase):
             'is_form': True,
         }
 
+        # we need to check the project type to be able to work with the right model
         if order_data.project_type.name.lower() == 'film making':
             indie_form = OrderIndieForm(request.POST)
             indie_details_form = IndieDetailForm(data)
             context['indie_form'] = indie_form
             context['details_form'] = indie_details_form
+            # need to check which distribution was selected to make sure on the right model
             if order_data.order_project_orderfilmmaking.filter(distribution__name='web/streaming').exists():
                 web = IndieWebDistribution(request.POST)
                 context['web'] = web
@@ -427,6 +511,7 @@ class Account(ConnectBase):
             prog_details_form = ProgramDetailForm(data)
             context['details_form'] = prog_details_form
 
+            # need to check which distribution was selected to make sure on the right model
             if order_data.order_project_orderprogramming.filter(distribution__name='web/streaming').exists():
                 web = IndieWebDistribution(request.POST)
                 context['web'] = web
@@ -457,6 +542,7 @@ class Account(ConnectBase):
             ad_details_form = AdvertisingDetailForm(data)
             context['details_form'] = ad_details_form
 
+            # need to check which distribution was selected to make sure on the right model
             if order_data.order_project_orderadvertising.filter(distribution__name='web/streaming').exists():
                 web = IndieWebDistribution(request.POST)
                 context['web'] = web
@@ -504,7 +590,16 @@ class Account(ConnectBase):
 
 
 class CounterOfferView(View):
+    '''
+    counter offer logic
+    '''
     def post(self, request, order_id=None):
+        '''
+        here we are going to handle the counter offer data after submitting on client dash
+        :param request: request object
+        :param order_id: order id
+        :return: client dash page
+        '''
         if order_id:
             counter_offer = CounterOffer.objects.filter(order=order_id)
         else:
@@ -517,6 +612,4 @@ class CounterOfferView(View):
 
         if form.is_valid():
             form.save()
-        else:
-            print(form.errors)
         return HttpResponseRedirect(reverse('my_account'))

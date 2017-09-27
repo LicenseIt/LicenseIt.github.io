@@ -19,7 +19,7 @@
         {% for check in details_form.opening_closing %}
             <label class="switch block" for="{{ check.id_for_label }}">
                 {{ check.tag }}
-                <span class="switch-label" data-on="YES" data-off="NO"></span>{{ check.choice_label }}
+                <span class="switch-label" data-on="NO" data-off="YES"></span>{{ check.choice_label }}
             </label>
         {% endfor %}
     </div>
@@ -169,23 +169,24 @@
 
 
 <div class="section">
-    <label class="field-label">synopsis</label>
+    <label class="field-label">synopsis</label><br>
     <span>{{ details_form.errors.synopsis }}</span>
     {{ details_form.synopsis }}
-</div>
+</div><br>
 <div class="section">
-    <label class="field-label">description</label>
+    <label class="field-label">description</label><br>
     <span>{{ details_form.errors.description }}</span>
     {{ details_form.description }}
 </div>
 
     <div class="spacer-t40 spacer-b40">
-                        <div class="tagline"><span>non profit organization</span></div><!-- .tagline -->
+                        <div class="tagline spacer-t10 spacer-b10"><span>non profit organization</span></div><!-- .tagline -->
+         <p class="small-text fine-grey align-center"> Pure CSS3 Button Radios + Checkboxes </p>
 </div><!-- end section -->
 
  <div class="frm-row align-center">
 <div class="section colm colm6">
-    <label class="field-label">purpose?</label>
+
 <span>{{ details_form.errors.is_non_profit }}</span>
     <div class="option-group field">
         <div class="group-vertical">
@@ -202,6 +203,8 @@
 
 <div id="non-profit" class="section colm colm6">
     <label class="field-label">non profit</label>
+
+
     <div class="option-group field">
         <div class="group-vertical">
             {% for radio in details_form.non_profit %}
