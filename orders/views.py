@@ -804,6 +804,9 @@ class WeddingDetails(View):
 
         if form.is_valid():
             form.save()
+            order = Order.objects.get(pk=order_id)
+            order.is_done = True
+            order.save()
         else:
             return render(request,
                           self.template_name,
@@ -816,8 +819,6 @@ class WeddingDetails(View):
             return HttpResponseRedirect(reverse('my_account'))
 
         request.session['order_id'] = order_id
-        order.is_done = True
-        order.save()
         return HttpResponseRedirect(reverse('login'))
 
 
@@ -872,6 +873,8 @@ class PersonalDetails(View):
                           context=context)
 
         order = Order.objects.get(pk=order_id)
+        order.is_done = True
+        order.save()
         order_rights = {
             'composition': 'composition owner',
             'lirics': 'lirics owner',
@@ -889,9 +892,6 @@ class PersonalDetails(View):
             order.user = request.user
             order.save()
             return HttpResponseRedirect(reverse('my_account'))
-
-        order.is_done = True
-        order.save()
 
         request.session['order_id'] = order_id
         return HttpResponseRedirect(reverse('login'))
