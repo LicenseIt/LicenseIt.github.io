@@ -132,36 +132,19 @@
                 }
             </style>
         {% endif %}
+
+        {# for paypal api #}
+        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+{#        <!-- Load the required components for braintree api. -->#}
+{#        <script src="https://js.braintreegateway.com/web/3.22.2/js/client.min.js"></script>#}
+{#        <script src="https://js.braintreegateway.com/web/3.22.2/js/paypal-checkout.min.js"></script>#}
+
         {% if is_form %}
             <link rel="stylesheet" type="text/css" href="{% static 'common/assets/css-form/smart-forms.css' %}">
             <link rel="stylesheet" type="text/css" href="{% static 'common/assets/css-form/smart-themes/yellow.css' %}">
         {% endif %}
     </head>
     <body id="topPage" data-spy="scroll" data-target=".navbar" data-offset="100">
-{#    <script>#}
-{#        window.fbAsyncInit = function () {#}
-{#            FB.init({#}
-{#                appId: '135135447098057',#}
-{#                autoLogAppEvents : true,#}
-{#                xfbml: true,#}
-{#                version: 'v2.10'#}
-{#            });#}
-{##}
-{#            FB.AppEvents.logPageView();#}
-{#        };#}
-{##}
-{#        (function (d, s, id) {#}
-{#            var js, fjs = d.getElementsByTagName(s)[0];#}
-{#            if (d.getElementById(id)) {#}
-{#                return;#}
-{#            }#}
-{#            js = d.createElement(s);#}
-{#            js.id = id;#}
-{#            js.src = "//connect.facebook.net/en_US/sdk.js";#}
-{#            fjs.parentNode.insertBefore(js, fjs);#}
-{#        }(document, 'script', 'facebook-jssdk'));#}
-{#    </script>#}
-
     {% if url != 'results' %}
         <!-- Page Loader
         ===================================== -->

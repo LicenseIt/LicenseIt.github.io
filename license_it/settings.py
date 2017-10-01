@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'home',
     'licensing',
     'owners',
+    'payments',
 ]
 
 MIDDLEWARE = [

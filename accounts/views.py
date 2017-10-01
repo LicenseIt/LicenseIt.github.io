@@ -436,7 +436,7 @@ class Account(ConnectBase):
 
         return context
 
-    def get(self, request, order_id=None):
+    def get(self, request, order_id=None, payment_id=None):
         '''
         the page of client dash
         :param request: request object
@@ -449,6 +449,8 @@ class Account(ConnectBase):
         order = context['order_data']
         context['user_question_history'] = UserQuestion.objects.filter(order=order.id)
         context['owner_questions'] = Question.objects.filter(order=order.id)
+        if payment_id:
+            context['payment_id'] = payment_id
 
         return render(request,
                       self.template_name,
