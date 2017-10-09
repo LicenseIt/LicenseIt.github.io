@@ -563,10 +563,12 @@
                                                 <button class="btn btn-primary">Submit</button>
                                             </div>
                                         </form>
+                                    {% if order_data %}
                                     <form action="{% url 'create_payment' order_data.id %}" method="post">
                                         {% csrf_token %}
                                         <button>pay</button>
                                     </form>
+                                    {% endif %}
 
                                     </div>
                                     <div id="pilljustified5"
