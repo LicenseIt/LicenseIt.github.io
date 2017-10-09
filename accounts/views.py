@@ -447,8 +447,9 @@ class Account(ConnectBase):
         context = self.data(request.user, order_id)
         context['user_question_form'] = UserQuestionForm()
         order = context['order_data']
-        context['user_question_history'] = UserQuestion.objects.filter(order=order.id)
-        context['owner_questions'] = Question.objects.filter(order=order.id)
+        if order:
+            context['user_question_history'] = UserQuestion.objects.filter(order=order.id)
+            context['owner_questions'] = Question.objects.filter(order=order.id)
         if payment_id:
             context['payment_id'] = payment_id
 
