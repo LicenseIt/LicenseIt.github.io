@@ -660,7 +660,7 @@ def license_path(instance, filename):
     :param filename: the original file name
     :return: the path to the file
     '''
-    return 'user_{0}/{1}/'.format(instance.user.id, filename)
+    return 'licenses/user_{0}/{1}/'.format(instance.user.id, filename)
 
 
 class Order(Base):

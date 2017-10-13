@@ -142,8 +142,8 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR + '/static/'
 
-MEDIA_URL = '/licenses/'
-MEDIA_ROOT = BASE_DIR + '/licenses/'
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = BASE_DIR + '/uploads/'
 
 EMAIL_HOST = 'licenseit.net'
 EMAIL_PORT = 25
