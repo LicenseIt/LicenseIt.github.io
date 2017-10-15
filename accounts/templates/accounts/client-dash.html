@@ -186,6 +186,7 @@
 
 
 
+
                                                                       {% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
                                                             {% csrf_token %}
                                                             {% include 'orders/order_form_fields.html' %}
@@ -529,7 +530,8 @@
                                                             <div class="msj macro">
                                                                 {% user_image user as image %}
                                                                 <div class="avatar"><img class="img-circle"
-                                                                                         style="width:100%;" src="{{ image }}"
+                                                                                         style="width:100%;"
+                                                                                         src="{{ image }}"
                                                                                          alt="avatar"></div>
                                                                 <div class="text text-left">
                                                                     <p>{{ question.question }}</p>
@@ -547,7 +549,10 @@
                                                                         <small>{{ question.updated }}</small>
                                                                     </p>
                                                                 </div>
-                                                                <div class="avatar" style="padding:0 0 0 10px !important"><img class="img-circle" style="width:100%;" src="" alt="avatar" /></div>
+                                                                <div class="avatar"
+                                                                     style="padding:0 0 0 10px !important"><img
+                                                                        class="img-circle" style="width:100%;" src=""
+                                                                        alt="avatar"/></div>
                                                             </div>
                                                         </li>
                                                     {% endfor %}
@@ -556,20 +561,52 @@
                                         </div>
                                         <div>
                                             <h4>owners questions and answers</h4>
-                                            {% for question in owner_questions %}
-                                                <p>
-                                                    {{ question.question }}
-                                                </p>
-                                                <p>
-                                                    {{ question.answer }}
-                                                </p>
-                                            {% endfor %}
+                                            <div class="col-sm-12 frame">
+                                                <ul class="whatsapp-style">
+                                                    {% for question in owner_questions %}
+                                                        <li style="width:100%;">
+                                                            <div class="msj macro">
+                                                                <div class="avatar"><img class="img-circle"
+                                                                                         style="width:100%;"
+                                                                                         src=""
+                                                                                         alt="avatar"></div>
+                                                                <div class="text text-left">
+                                                                    <p>
+                                                                        {{ question.question }}
+                                                                    </p>
+                                                                    <p>
+                                                                        <small>{{ question.created }}</small>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li style="width: 100%;">
+                                                            <div class="msj-rta macro">
+                                                                <div class="text text-right">
+                                                                    <p>
+                                                                        {{ question.answer }}
+                                                                    </p>
+                                                                    <p>
+                                                                        <small>{{ question.updated }}</small>
+                                                                    </p>
+                                                                </div>
+                                                                {% user_image user as image %}
+                                                                <div class="avatar"
+                                                                     style="padding:0 0 0 10px !important"><img
+                                                                        class="img-circle" style="width:100%;" src="{{ image }}"
+                                                                        alt="avatar"/></div>
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div id="pilljustified4"
                                          class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
                                         <h5>Payment</h5>
                                         <form action="
+
                                                 {% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
                                               method="post">
                                             <div>{% csrf_token %}
