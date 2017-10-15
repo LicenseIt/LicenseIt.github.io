@@ -71,9 +71,118 @@
         {% else %}
             <link rel="stylesheet" href="{% static 'common/assets/css/color/blue.css' %}">
             <style>
-            #license-form {
-                display: none;
-            }
+                #license-form {
+                    display: none;
+                }
+
+                .text {
+                    width: 75%;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .text > p:first-of-type {
+                    width: 100%;
+                    margin-top: 0;
+                    margin-bottom: auto;
+                    line-height: 13px;
+                    font-size: 12px;
+                }
+
+                .text > p:last-of-type {
+                    width: 100%;
+                    text-align: right;
+                    color: silver;
+                    margin-bottom: -7px;
+                    margin-top: auto;
+                }
+
+                .avatar {
+                    justify-content: center;
+                    align-items: center;
+                    width: 25%;
+                    float: left;
+                    padding-right: 10px;
+                }
+
+                .macro {
+                    margin-top: 5px;
+                    width: 85%;
+                    border-radius: 5px;
+                    padding: 5px;
+                    display: flex;
+                }
+
+                .msj-rta {
+                    float: right;
+                    background: whitesmoke;
+                }
+
+                .msj {
+                    float: left;
+                    background: white;
+                }
+
+                .frame {
+                    background: #e0e0de;
+                    height: 450px;
+                    overflow: hidden;
+                    padding: 0;
+                }
+
+                .frame > div:last-of-type {
+                    position: absolute;
+                    bottom: 5px;
+                    width: 100%;
+                    display: flex;
+                }
+
+                .whatsapp-style {
+                    width: 100%;
+                    list-style-type: none;
+                    padding: 18px;
+                    position: absolute;
+                    bottom: 32px;
+                    display: flex;
+                    flex-direction: column;
+
+                }
+
+                .msj:before {
+                    width: 0;
+                    height: 0;
+                    content: "";
+                    top: -5px;
+                    left: -14px;
+                    position: relative;
+                    border-style: solid;
+                    border-width: 0 13px 13px 0;
+                    border-color: transparent #ffffff transparent transparent;
+                }
+
+                .msj-rta:after {
+                    width: 0;
+                    height: 0;
+                    content: "";
+                    top: -5px;
+                    left: 14px;
+                    position: relative;
+                    border-style: solid;
+                    border-width: 13px 13px 0 0;
+                    border-color: whitesmoke transparent transparent transparent;
+                }
+
+                ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                    color: #d4d4d4;
+                }
+
+                ::-moz-placeholder { /* Firefox 19+ */
+                    color: #d4d4d4;
+                }
+
+                :-ms-input-placeholder { /* IE 10+ */
+                    color: #d4d4d4;
+                }
             </style>
         {% endif %}
 
@@ -95,11 +204,9 @@
         <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
 
-
         <link rel="stylesheet" href="{% static 'common/assets/css/main/main.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/main/setting.css' %}">
         <link rel="stylesheet" href="{% static 'common/assets/css/main/hover.css' %}">
-
 
 
         <!-- Load JS
@@ -117,9 +224,11 @@
                 #id_youtube {
                     display: none;
                 }
+
                 #other_web {
                     display: none;
                 }
+
                 #dist_other {
                     display: none;
                 }
@@ -135,9 +244,9 @@
 
         {# for paypal api #}
         <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-{#        <!-- Load the required components for braintree api. -->#}
-{#        <script src="https://js.braintreegateway.com/web/3.22.2/js/client.min.js"></script>#}
-{#        <script src="https://js.braintreegateway.com/web/3.22.2/js/paypal-checkout.min.js"></script>#}
+        {#        <!-- Load the required components for braintree api. -->#}
+        {#        <script src="https://js.braintreegateway.com/web/3.22.2/js/client.min.js"></script>#}
+        {#        <script src="https://js.braintreegateway.com/web/3.22.2/js/paypal-checkout.min.js"></script>#}
 
         {% if is_form %}
             <link rel="stylesheet" type="text/css" href="{% static 'common/assets/css-form/smart-forms.css' %}">
@@ -166,13 +275,14 @@
                 <form action="{% url 'login' %}" method="post" class="cd-form font-montserrat">
                     <div>{% csrf_token %}
                         <div style="float: left; width: 45%">
-                            <a href="{% url 'social:begin' 'facebook' %}" class="full-width button button-md button-rounded button-primary">
+                            <a href="{% url 'social:begin' 'facebook' %}"
+                               class="full-width button button-md button-rounded button-primary">
                                 Sign in with Facebook
                             </a>
                         </div>
                         <div style="float: right; width: 45%">
                             <a class="full-width button button-md button-rounded button-red"
-                                href="{% url 'social:begin' 'google-oauth2' %}">Sign in with Google</a>
+                               href="{% url 'social:begin' 'google-oauth2' %}">Sign in with Google</a>
                         </div>
 
                     </div>
@@ -191,7 +301,6 @@
                         <a href="#0" class="hide-password">Show</a>
                         <span class="cd-error-message">{{ error }}</span>
                     </p>
-
 
 
                     <p class="fieldset">
@@ -216,11 +325,13 @@
                     <div>{% csrf_token %}
                         <div style="float: left; width: 45%">
                             <a href="{% url 'social:begin' 'facebook' %}"
-                               class="full-width button button-md button-rounded button-primary">Sign up with Facebook</a>
+                               class="full-width button button-md button-rounded button-primary">Sign up with
+                                Facebook</a>
                         </div>
                         <div style="float: right; width: 45%">
                             <a href="{% url 'social:begin' 'google-oauth2' %}"
-                               class="full-width button button-md button-rounded button-red" id="google-button">Sign up with Google</a>
+                               class="full-width button button-md button-rounded button-red" id="google-button">Sign up
+                                with Google</a>
                         </div>
 
                     </div>
@@ -253,25 +364,26 @@
 
                     <p class="fieldset ">
                         <button class="full-width has-padding button-3d button-md button-rounded button-blue"
-                                value="Register">Register</button>
+                                value="Register">Register
+                        </button>
                     </p>
                 </form>
 
-                 <script type="text/javascript">
-                var password = document.getElementById("signup_password")
-  , confirm_password = document.getElementById("signup_confirm_password");
+                <script type="text/javascript">
+                    var password = document.getElementById("signup_password")
+                        , confirm_password = document.getElementById("signup_confirm_password");
 
-function validatePassword(){
-  if(password.value != confirm_password.value) {
-    confirm_password.setCustomValidity("Passwords Don't Match");
-  } else {
-    confirm_password.setCustomValidity('');
-  }
-}
+                    function validatePassword() {
+                        if (password.value != confirm_password.value) {
+                            confirm_password.setCustomValidity("Passwords Don't Match");
+                        } else {
+                            confirm_password.setCustomValidity('');
+                        }
+                    }
 
-password.onchange = validatePassword;
-confirm_password.onkeyup = validatePassword;
-                    </script>
+                    password.onchange = validatePassword;
+                    confirm_password.onkeyup = validatePassword;
+                </script>
 
                 <!-- <a href="#0" class="cd-close-form">Close</a> -->
             </div> <!-- cd-signup -->
@@ -305,7 +417,8 @@ confirm_password.onkeyup = validatePassword;
 
     <!-- Navigation Area
     ===================================== -->
-    <nav class="navbar navbar-pasific navbar-mp {% if url != 'home' %}navbar-standart{% endif %} megamenu navbar-fixed-top"{% if url != 'home' %} style="border-bottom:1px solid #fff;"{% endif %}>
+    <nav class="navbar navbar-pasific navbar-mp {% if url != 'home' %}navbar-standart{% endif %} megamenu navbar-fixed-top"
+            {% if url != 'home' %} style="border-bottom:1px solid #fff;"{% endif %}>
         <div class="{% if url == 'home' %}container-fluid{% else %}container{% endif %}">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
@@ -337,7 +450,7 @@ confirm_password.onkeyup = validatePassword;
                         {% user_image user as image %}
                         {% if image %}
                             <li class="dropdown megamenu-fw has-dropdown-menu">
-                                <img src="{{ image }}">
+                                <img width="50" src="{{ image }}">
                             </li>
                         {% endif %}
                         <li class="dropdown megamenu-fw has-dropdown-menu">
@@ -356,10 +469,12 @@ confirm_password.onkeyup = validatePassword;
                         </li>
                     {% else %}
                         <li class="dropdown megamenu-fw has-dropdown-menu">
-                            <a class="cd-signin dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}" href="#0">Sign in</a>
+                            <a class="cd-signin dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}"
+                               href="#0">Sign in</a>
                         </li>
                         <li class="dropdown megamenu-fw has-dropdown-menu">
-                            <a class="cd-signup dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}" href="#0">Sign up</a>
+                            <a class="cd-signup dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}"
+                               href="#0">Sign up</a>
                         </li>
                     {% endif %}
                     <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
@@ -412,7 +527,8 @@ confirm_password.onkeyup = validatePassword;
                     <!-- footer about start -->
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <h6 class="font-montserrat text-uppercase color-dark">About Us</h6>
-                        <p>LicenseIt builds products and technologies that help creators use music in videos on secure, affordable and legal way.</p>
+                        <p>LicenseIt builds products and technologies that help creators use music in videos on secure,
+                            affordable and legal way.</p>
                     </div>
                     <!-- footer about end -->
 
@@ -457,7 +573,8 @@ confirm_password.onkeyup = validatePassword;
                         <h6 class="font-montserrat text-uppercase color-dark">Social Media</h6>
                         <div class="social social-two">
                             <a href="https://twitter.com/License_It"><i class="fa fa-twitter color-blue"></i></a>
-                            <a href="https://www.facebook.com/LicenseItteam/"><i class="fa fa-facebook color-primary"></i></a>
+                            <a href="https://www.facebook.com/LicenseItteam/"><i
+                                    class="fa fa-facebook color-primary"></i></a>
 
                         </div>
                     </div>
@@ -581,34 +698,34 @@ confirm_password.onkeyup = validatePassword;
         <script src="{% static 'common/assets/js/main/googlemap.js' %}"></script>
 
     {% endif %}
-{#    <script>#}
-{#        function loginUser(email, picture) {#}
-{#            window.location = "/accounts/facebook-login/" + email + '/' + picture;#}
-{#        }#}
-{##}
-{#        function loginCheck() {#}
-{#            alert('hello');#}
-{#            FB.getLoginStatus(function (response) {#}
-{#                alert(response.status);#}
-{#                if (response.status === 'connected') {#}
-{#                    FB.api('/me?fields=first_name,last_name,picture,email', function (response) {#}
-{#                        loginUser(response.email, response.picture.data['url']);#}
-{#                    });#}
-{#                } else {#}
-{#                    FB.login(function (response) {#}
-{#                        if (response.status === 'connected') {#}
-{#                            FB.api('/me?fields=first_name,last_name,picture,email', function (response) {#}
-{#                                loginUser(response.email, response.picture.data['url']);#}
-{#                            })#}
-{#                        }#}
-{#                    }, {scope: 'public_profile,email'});#}
-{#                }#}
-{#            });#}
-{#        }#}
-{#        $('#fb-button').click(function () {#}
-{#            loginCheck();#}
-{#        });#}
-{#    </script>#}
+    {#    <script>#}
+    {#        function loginUser(email, picture) {#}
+    {#            window.location = "/accounts/facebook-login/" + email + '/' + picture;#}
+    {#        }#}
+    {##}
+    {#        function loginCheck() {#}
+    {#            alert('hello');#}
+    {#            FB.getLoginStatus(function (response) {#}
+    {#                alert(response.status);#}
+    {#                if (response.status === 'connected') {#}
+    {#                    FB.api('/me?fields=first_name,last_name,picture,email', function (response) {#}
+    {#                        loginUser(response.email, response.picture.data['url']);#}
+    {#                    });#}
+    {#                } else {#}
+    {#                    FB.login(function (response) {#}
+    {#                        if (response.status === 'connected') {#}
+    {#                            FB.api('/me?fields=first_name,last_name,picture,email', function (response) {#}
+    {#                                loginUser(response.email, response.picture.data['url']);#}
+    {#                            })#}
+    {#                        }#}
+    {#                    }, {scope: 'public_profile,email'});#}
+    {#                }#}
+    {#            });#}
+    {#        }#}
+    {#        $('#fb-button').click(function () {#}
+    {#            loginCheck();#}
+    {#        });#}
+    {#    </script>#}
     <script
             src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"
             integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc="
@@ -619,9 +736,9 @@ confirm_password.onkeyup = validatePassword;
 
 
     <script>
-    $('.back-btn').click(function () {
-        window.history.back();
-    });
+        $('.back-btn').click(function () {
+            window.history.back();
+        });
     </script>
     <script>
         var countries = [];
