@@ -12,7 +12,6 @@ from orders.models import Order
 class CreatePayment(View):
     def post(self, request, order_id=None):
         order_price = Order.objects.get(pk=order_id).price
-        print(order_price)
         paypal = {
             'intent': 'sale',
             'redirect_urls': {
@@ -52,8 +51,7 @@ class CreatePayment(View):
         res = requests.post('https://api.sandbox.paypal.com/v1/payments/payment',
                             data=paypal,
                             headers=headers)
-        print(res)
-        return JsonResponse(res.json())
+        return JsonResponse(res.json)
 
 
 class ExecutePayment(View):
