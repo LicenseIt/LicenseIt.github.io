@@ -12,6 +12,7 @@ from orders.models import Order
 class CreatePayment(View):
     def post(self, request, order_id=None):
         order_price = Order.objects.get(pk=order_id).price
+        print(order_price)
         paypal = {
             'intent': 'sale',
             'redirect_urls': {
@@ -24,7 +25,7 @@ class CreatePayment(View):
             'transactions': [
                 {
                     'ammount': {
-                        'total': '0.01',
+                        'total': order_price,
                         'currency': 'USD'
                     },
                     'items_list': {
@@ -32,7 +33,7 @@ class CreatePayment(View):
                             {
                                 'quantity': 1,
                                 'name': 'license',
-                                'price': '0.01',
+                                'price': order_price,
                                 'currency': 'USD',
                                 'description': 'license price',
                                 'tax': '0'
