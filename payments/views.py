@@ -14,7 +14,7 @@ from orders.models import Order
 class BasePayment(View):
     base_url = 'https://api.sandbox.paypal.com/v1/'
 
-    def get_access_token(self, request, base_url):
+    def get_access_token(self, request):
         if 'expires_at' in request.session.keys() and \
                 datetime.now() > request.session['expires_at'] + request.session['last_token'] or \
                 'expires_at' not in request.session.keys():
@@ -23,10 +23,11 @@ class BasePayment(View):
                 'Accept-Language': 'en_US',
             }
 
-            auth = {os.environ.get('PAYPAL_APP_ID'): os.environ.get('PAYPAL_SECRET')}
+            auth = (os.environ.get('PAYPAL_APP_ID'), os.environ.get('PAYPAL_SECRET'))
 
             auth_result = requests.get(self.base_url + '/oauth2/token',
                                        auth=auth,
+                                       data={'grant_type': 'client_credentials'},
                                        headers=access_headers)
             result_json = auth_result.json()
             request.session['access_token'] = result_json['access_token']
@@ -67,9 +68,12 @@ class CreatePayment(BasePayment):
             ]
         }
 
+        self.get_access_token(request)
+        access_token = "Bearer {0}".format(request.session['access_token'])
+
         headers = {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer'
+            'Authorization': access_token
         }
 
         res = requests.post(self.base_url + 'payments/payment',
@@ -82,13 +86,16 @@ class ExecutePayment(BasePayment):
     def post(self, request):
         url = self.base_url + 'payments/payment/{0}/execute/'.format(request.POST['paymentID'])
 
+        self.get_access_token(request)
+        access_token = "Bearer {0}".format(request.session['access_token'])
+
         payment = {
             'payer_id': request.POST['payerID']
         }
 
         headers = {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer access_token$production$6xzb7s8y9ngf8mh9$76e737512b53650362681e5022a93946'
+            'Authorization': access_token
         }
 
         res = requests.post(url, data=payment, headers=headers)
