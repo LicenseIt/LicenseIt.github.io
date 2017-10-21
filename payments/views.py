@@ -27,8 +27,14 @@ class BasePayment(View):
                 'Accept-Language': 'en_US',
             }
 
-            auth = (base64.b64encode(bytearray(settings.PAYPAL_APP_ID, 'utf-8')),
-                    base64.b64encode(bytearray(settings.PAYPAL_SECRET, 'utf-8')))
+            paypal_id = bytearray(settings.PAYPAL_APP_ID, 'utf-8')
+            paypal_secret = bytearray(settings.PAYPAL_SECRET, 'utf-8')
+
+            log.info('id: {0}'.format(paypal_id))
+            log.info('secret: {0}'.format(paypal_secret))
+
+            auth = (base64.b64encode(paypal_id),
+                    base64.b64encode(paypal_secret))
 
             url = self.base_url + 'oauth2/token'
 
