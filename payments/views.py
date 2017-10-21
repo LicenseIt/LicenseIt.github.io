@@ -12,7 +12,7 @@ from orders.models import Order
 from license_it import settings
 
 logging.basicConfig(level=logging.DEBUG,
-                    filename='/home/licenseit/license_it/log.txt',
+                    # filename='/home/licenseit/license_it/log.txt',
                     format='%(levelname): %(name)s- %(asctime)-15s: %(message)s')
 log = logging.getLogger('payments')
 
