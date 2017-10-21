@@ -1,6 +1,7 @@
 import requests
 import os
 from datetime import datetime, timedelta
+import logging
 
 from django.shortcuts import render
 from django.urls import reverse
@@ -10,8 +11,12 @@ from django.http import HttpResponseRedirect, JsonResponse
 from orders.models import Order
 from license_it import settings
 
+logging.basicConfig(level=logging.DEBUG,
+                    filename='/home/licenseit/log.txt',
+                    format='%(levelname): %(name)s- %(asctime)-15s: %(message)s')
+log = logging.getLogger('payments')
 
-# Create your views here.
+
 class BasePayment(View):
     base_url = 'https://api.sandbox.paypal.com/v1/'
 
@@ -25,6 +30,7 @@ class BasePayment(View):
             }
 
             auth = (settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
+            log.debug('%s, %s', auth[0], auth[1])
 
             auth_result = requests.get(self.base_url + '/oauth2/token',
                                        auth=auth,
