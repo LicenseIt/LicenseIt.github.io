@@ -94,7 +94,9 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'format': '%(levelname)s: %(asctime)s- %(module)s %(message)s'
+        'simple': {
+            'format': '%(levelname)s: %(asctime)s- %(module)s %(message)s'
+        }
     },
     'handlers': {
         'file': {
