@@ -93,6 +93,9 @@ WSGI_APPLICATION = 'license_it.wsgi.application'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'format': '%(levelname)s: %(asctime)s- %(module)s %(message)s'
+    },
     'handlers': {
         'file': {
             'level': 'DEBUG',
@@ -101,7 +104,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django': {
+        'payments': {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': True,
