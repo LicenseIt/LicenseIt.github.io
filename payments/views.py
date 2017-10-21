@@ -21,6 +21,7 @@ class BasePayment(View):
     base_url = 'https://api.sandbox.paypal.com/v1/'
 
     def get_access_token(self, request):
+        log.info('in access payment')
         if 'expires_at' in request.session.keys() and \
                 datetime.now() > request.session['expires_at'] + request.session['last_token'] or \
                 'expires_at' not in request.session.keys():
