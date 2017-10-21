@@ -74,7 +74,8 @@ class CreatePayment(BasePayment):
             ]
         }
 
-        self.get_access_token(request)
+        # self.get_access_token(request)
+        request.session['access_token'] = 'A21AAFyBQiIlZPekK_U7qTZwB1bNLdgso6FvYIO0auzMBgTuHabEFdvY6GaTXZRaES-qQb-35VTjX7K1JncKfqlgfYgeuUXmA'
         access_token = "Bearer {0}".format(request.session['access_token'])
 
         headers = {
