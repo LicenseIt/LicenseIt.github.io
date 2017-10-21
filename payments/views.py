@@ -2,6 +2,7 @@ import requests
 import os
 from datetime import datetime, timedelta
 import logging
+import base64
 
 from django.shortcuts import render
 from django.urls import reverse
@@ -26,11 +27,9 @@ class BasePayment(View):
                 'Accept-Language': 'en_US',
             }
 
-            auth = (settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
-            log.debug('%s, %s', auth[0], auth[1])
+            auth = (base64.encode(settings.PAYPAL_APP_ID), base64.encode(settings.PAYPAL_SECRET))
 
             url = self.base_url + 'oauth2/token'
-            log.info(url)
 
             auth_result = requests.get(url,
                                        auth=auth,
