@@ -8,6 +8,7 @@ from django.views import View
 from django.http import HttpResponseRedirect, JsonResponse
 
 from orders.models import Order
+from license_it import settings
 
 
 # Create your views here.
@@ -23,7 +24,7 @@ class BasePayment(View):
                 'Accept-Language': 'en_US',
             }
 
-            auth = (os.environ.get('PAYPAL_APP_ID'), os.environ.get('PAYPAL_SECRET'))
+            auth = (settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
 
             auth_result = requests.get(self.base_url + '/oauth2/token',
                                        auth=auth,
