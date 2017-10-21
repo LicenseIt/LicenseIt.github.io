@@ -66,7 +66,7 @@ class CreatePayment(BasePayment):
                                 'price': order_price,
                                 'currency': 'USD',
                                 'description': 'license price',
-                                'tax': '0'
+                                'tax': 0
                             }
                         ]
                     }
