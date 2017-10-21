@@ -11,9 +11,6 @@ from django.http import HttpResponseRedirect, JsonResponse
 from orders.models import Order
 from license_it import settings
 
-# logging.basicConfig(level=logging.DEBUG,
-#                     # filename='/home/licenseit/license_it/log.txt',
-#                     format='%(levelname): %(name)s- %(asctime)-15s: %(message)s')
 log = logging.getLogger('payments')
 
 
@@ -21,7 +18,6 @@ class BasePayment(View):
     base_url = 'https://api.sandbox.paypal.com/v1/'
 
     def get_access_token(self, request):
-        log.info('in access payment')
         if 'expires_at' in request.session.keys() and \
                 datetime.now() > request.session['expires_at'] + request.session['last_token'] or \
                 'expires_at' not in request.session.keys():
@@ -33,7 +29,10 @@ class BasePayment(View):
             auth = (settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
             log.debug('%s, %s', auth[0], auth[1])
 
-            auth_result = requests.get(self.base_url + '/oauth2/token',
+            url = self.base_url + 'oauth2/token'
+            log.info(url)
+
+            auth_result = requests.get(url,
                                        auth=auth,
                                        data={'grant_type': 'client_credentials'},
                                        headers=access_headers)
