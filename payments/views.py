@@ -22,19 +22,17 @@ class BasePayment(View):
         if 'expires_at' in request.session.keys() and \
                 datetime.now() > request.session['expires_at'] + request.session['last_token'] or \
                 'expires_at' not in request.session.keys():
-            a = '%s:%s' % (settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
             access_headers = {
                 'Accept': 'application/json',
-                'Accept-Language': 'en_US',
-                'Authorization': a
+                'Accept-Language': 'en_US'
             }
 
-            # auth = (settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
+            auth = (settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
 
             url = self.base_url + 'oauth2/token'
 
             auth_result = requests.get(url,
-                                       # auth=auth,
+                                       auth=auth,
                                        data={'grant_type': 'client_credentials'},
                                        headers=access_headers)
             result_json = auth_result.json()
