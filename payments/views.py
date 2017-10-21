@@ -38,7 +38,7 @@ class BasePayment(View):
             log.info('id: {0}'.format(pay_id))
             log.info('secret: {0}'.format(pay_sec))
 
-            auth = (pay_id, pay_sec)
+            auth = (settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
 
             url = self.base_url + 'oauth2/token'
 
