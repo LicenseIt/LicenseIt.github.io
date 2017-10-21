@@ -33,8 +33,12 @@ class BasePayment(View):
             log.info('id: {0}'.format(paypal_id))
             log.info('secret: {0}'.format(paypal_secret))
 
-            auth = (base64.b64encode(paypal_id),
-                    base64.b64encode(paypal_secret))
+            pay_id = base64.b64encode(paypal_id)
+            pay_sec = base64.b64encode(paypal_secret)
+            log.info('id: {0}'.format(pay_id))
+            log.info('secret: {0}'.format(pay_sec))
+
+            auth = (pay_id, pay_sec)
 
             url = self.base_url + 'oauth2/token'
 
