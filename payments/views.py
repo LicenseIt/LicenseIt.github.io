@@ -33,8 +33,8 @@ class BasePayment(View):
             log.info('id: {0}'.format(paypal_id))
             log.info('secret: {0}'.format(paypal_secret))
 
-            pay_id = base64.b64encode(paypal_id)
-            pay_sec = base64.b64encode(paypal_secret)
+            pay_id = base64.urlsafe_b64encode(paypal_id)
+            pay_sec = base64.urlsafe_b64encode(paypal_secret)
             log.info('id: {0}'.format(pay_id))
             log.info('secret: {0}'.format(pay_sec))
 
