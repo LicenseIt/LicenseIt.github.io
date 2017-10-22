@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 from django.http import HttpResponseRedirect, JsonResponse
+from django.utils.decorators import method_decorator
 
 from orders.models import Order
 from .models import PaypalTokenData
@@ -50,6 +51,7 @@ class BasePayment(View):
 
 
 class CreatePayment(BasePayment):
+    @method_decorator(csrf_exempt)
     def post(self, request, order_id=None):
         order = Order.objects.get(pk=order_id)
         order_price = str(order.price)
@@ -118,6 +120,7 @@ class CreatePayment(BasePayment):
 
 
 class ExecutePayment(BasePayment):
+    @method_decorator(csrf_exempt)
     def post(self, request):
         url = self.base_url + 'payments/payment/{0}/execute/'.format(request.POST['paymentID'])
 
