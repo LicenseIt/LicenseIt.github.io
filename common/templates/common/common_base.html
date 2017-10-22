@@ -764,12 +764,12 @@
     }
     var csrftoken = getCookie('csrftoken');
 
-    var CREATE_PAYMENT_URL  = {% url 'create_payment' order_data.id %};
-    var EXECUTE_PAYMENT_URL = {% url 'execute_payment' order_data.id %};
+    var CREATE_PAYMENT_URL  = 'https://www.licenseit.net' + "{% url 'create_payment' order_data.id %}";
+    var EXECUTE_PAYMENT_URL = 'https://www.licenseit.net' + "{% url 'execute_payment' order_data.id %}";
 
     paypal.Button.render({
 
-        env: 'sandbox', // Or 'sandbox' 'production'
+        env: 'production', // Or 'sandbox' 'production'
 
         commit: true, // Show a 'Pay Now' button
 
