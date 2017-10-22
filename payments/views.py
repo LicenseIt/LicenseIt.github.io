@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.views import View
 from django.http import HttpResponseRedirect, JsonResponse
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from orders.models import Order
 from .models import PaypalTokenData
