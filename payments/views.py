@@ -77,6 +77,11 @@ class CreatePayment(BasePayment):
                             "insurance": "0"
                         }
                     },
+                    'description': 'license order',
+                    'invoice_number': 'order{0}'.format(order_id),
+                    "payment_options": {
+                        "allowed_payment_method": "INSTANT_FUNDING_SOURCE"
+                    },
                     'items_list': {
                         'items': [
                             {
