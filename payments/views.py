@@ -91,7 +91,7 @@ class CreatePayment(BasePayment):
             'Authorization': access_token
         }
 
-        log.info(json.dumps(paypal))
+        log.info(headers)
 
         res = requests.post(self.base_url + 'payments/payment',
                             data=paypal,
