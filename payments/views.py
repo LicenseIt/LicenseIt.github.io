@@ -1,4 +1,5 @@
-import requests
+from oauthlib.oauth2 import BackendApplicationClient
+from requests.auth import HTTPBasicAuth
 import os
 from datetime import datetime, timedelta
 import logging
@@ -27,25 +28,25 @@ class BasePayment(View):
                 'Accept-Language': 'en_US'
             }
 
-            auth = (settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
+            auth = HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
+            client = BackendApplicationClient(client_id=settings.PAYPAL_APP_ID)
+            oauth = OAuth2Session(client=client)
 
             url = self.base_url + 'oauth2/token'
 
-            auth_result = requests.get(url,
-                                       auth=auth,
-                                       data={'grant_type': 'client_credentials'},
-                                       headers=access_headers)
-            result_json = auth_result.json()
-            if token:
-                token = token[0]
-                token.access_token = result_json['access_token']
-                token.expires_at = result_json['expires_in']
-                token.save()
-            else:
-                token = PaypalTokenData()
-                token.access_token = result_json['access_token']
-                token.expires_in = result_json['expires_in']
-                token.save()
+            token = oauth.fetch_token(token_url=url, auth=auth)
+            log.info(token)
+
+            # if token:
+            #     token = token[0]
+            #     token.access_token = result_json['access_token']
+            #     token.expires_at = result_json['expires_in']
+            #     token.save()
+            # else:
+            #     token = PaypalTokenData()
+            #     token.access_token = result_json['access_token']
+            #     token.expires_in = result_json['expires_in']
+            #     token.save()
 
 
 class CreatePayment(BasePayment):
