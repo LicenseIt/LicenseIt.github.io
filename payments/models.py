@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from django.db import models
 
@@ -11,4 +11,4 @@ class PaypalTokenData(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def is_expired(self):
-        return datetime.now() > self.updated + timedelta(seconds=self.expires_in)
+        return datetime.now(timezone.utc) > self.updated + timedelta(seconds=self.expires_in)
