@@ -698,34 +698,6 @@
         <script src="{% static 'common/assets/js/main/googlemap.js' %}"></script>
 
     {% endif %}
-    {#    <script>#}
-    {#        function loginUser(email, picture) {#}
-    {#            window.location = "/accounts/facebook-login/" + email + '/' + picture;#}
-    {#        }#}
-    {##}
-    {#        function loginCheck() {#}
-    {#            alert('hello');#}
-    {#            FB.getLoginStatus(function (response) {#}
-    {#                alert(response.status);#}
-    {#                if (response.status === 'connected') {#}
-    {#                    FB.api('/me?fields=first_name,last_name,picture,email', function (response) {#}
-    {#                        loginUser(response.email, response.picture.data['url']);#}
-    {#                    });#}
-    {#                } else {#}
-    {#                    FB.login(function (response) {#}
-    {#                        if (response.status === 'connected') {#}
-    {#                            FB.api('/me?fields=first_name,last_name,picture,email', function (response) {#}
-    {#                                loginUser(response.email, response.picture.data['url']);#}
-    {#                            })#}
-    {#                        }#}
-    {#                    }, {scope: 'public_profile,email'});#}
-    {#                }#}
-    {#            });#}
-    {#        }#}
-    {#        $('#fb-button').click(function () {#}
-    {#            loginCheck();#}
-    {#        });#}
-    {#    </script>#}
     <script
             src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"
             integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc="
@@ -771,6 +743,59 @@
             dateFormat: 'yy-mm-dd'
         });
     </script>
+    {% if url == 'client_dash' %}
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    var CREATE_PAYMENT_URL  = {% url 'create_payment' order_data.id %};
+    var EXECUTE_PAYMENT_URL = {% url 'execute_payment' order_data.id %};
+
+    paypal.Button.render({
+
+        env: 'sandbox', // Or 'sandbox' 'production'
+
+        commit: true, // Show a 'Pay Now' button
+
+        payment: function() {
+            return paypal.request.post(CREATE_PAYMENT_URL, {
+                csrftoken: csrftoken
+            }).then(function(data) {
+                return data.id;
+            });
+        },
+
+        onAuthorize: function(data) {
+            return paypal.request.post(EXECUTE_PAYMENT_URL, {
+                paymentID: data.paymentID,
+                payerID:   data.payerID,
+                csrftoken: csrftoken
+            }).then(function() {
+
+                // The payment is complete!
+                // You can now show a confirmation message to the customer
+            });
+        }
+
+    }, '#paypal-button');
+</script>
+    {% endif %}
     <script>
         $('#wedding').click(function () {
             $('#num_forms').html(2);

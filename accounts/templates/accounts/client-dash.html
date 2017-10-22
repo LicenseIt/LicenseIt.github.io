@@ -623,10 +623,10 @@
                                             </div>
                                         </form>
                                         {% if order_data %}
-                                            <form action="{% url 'create_payment' order_data.id %}" method="post">
-                                                {% csrf_token %}
-                                                <button>pay</button>
-                                            </form>
+{#                                            <form action="{% url 'create_payment' order_data.id %}" method="post">#}
+{#                                                {% csrf_token %}#}
+                                                <div id="paypal-button">pay</div>
+{#                                            </form>#}
                                         {% endif %}
 
                                     </div>
