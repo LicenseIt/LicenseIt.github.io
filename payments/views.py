@@ -67,7 +67,15 @@ class CreatePayment(BasePayment):
                 {
                     'ammount': {
                         'total': order_price,
-                        'currency': 'USD'
+                        'currency': 'USD',
+                        "details": {
+                            'subtotal': order_price,
+                            'tax': "0",
+                            'shipping': "0",
+                            'handling_fee': "0",
+                            "shipping_discount": "0",
+                            "insurance": "0"
+                        }
                     },
                     'items_list': {
                         'items': [
