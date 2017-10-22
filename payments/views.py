@@ -93,6 +93,8 @@ class CreatePayment(BasePayment):
         res = requests.post(self.base_url + 'payments/payment',
                             data=paypal,
                             headers=headers)
+        log.info(res.json)
+        log.info(res.json())
         return JsonResponse(res.json)
 
 
