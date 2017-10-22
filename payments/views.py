@@ -10,6 +10,7 @@ from django.views import View
 from django.http import HttpResponseRedirect, JsonResponse
 
 from orders.models import Order
+from .models import PaypalTokenData
 from license_it import settings
 
 log = logging.getLogger('payments')
@@ -19,9 +20,8 @@ class BasePayment(View):
     base_url = 'https://api.sandbox.paypal.com/v1/'
 
     def get_access_token(self, request):
-        if 'expires_at' in request.session.keys() and \
-                datetime.now() > request.session['expires_at'] + request.session['last_token'] or \
-                'expires_at' not in request.session.keys():
+        token = PaypalTokenData.objects.all()
+        if not token or token[0].is_expired():
             access_headers = {
                 'Accept': 'application/json',
                 'Accept-Language': 'en_US'
@@ -36,8 +36,16 @@ class BasePayment(View):
                                        data={'grant_type': 'client_credentials'},
                                        headers=access_headers)
             result_json = auth_result.json()
-            request.session['access_token'] = result_json['access_token']
-            request.session['expires_at'] = timedelta(seconds=result_json['expires_in'])
+            if token:
+                token = token[0]
+                token.access_token = result_json['access_token']
+                token.expires_at = result_json['expires_in']
+                token.save()
+            else:
+                token = PaypalTokenData()
+                token.access_token = result_json['access_token']
+                token.expires_in = result_json['expires_in']
+                token.save()
 
 
 class CreatePayment(BasePayment):
@@ -74,9 +82,8 @@ class CreatePayment(BasePayment):
             ]
         }
 
-        # self.get_access_token(request)
-        request.session['access_token'] = 'A21AAFyBQiIlZPekK_U7qTZwB1bNLdgso6FvYIO0auzMBgTuHabEFdvY6GaTXZRaES-qQb-35VTjX7K1JncKfqlgfYgeuUXmA'
-        access_token = "Bearer A21AAFyBQiIlZPekK_U7qTZwB1bNLdgso6FvYIO0auzMBgTuHabEFdvY6GaTXZRaES-qQb-35VTjX7K1JncKfqlgfYgeuUXmA" #.format(request.session['access_token'])
+        self.get_access_token(request)
+        access_token = 'Bearer {0}'.format(PaypalTokenData.objects.first().access_token)
 
         headers = {
             'Content-Type': 'application/json',

@@ -102,7 +102,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/home/licenseit/license_it/debug.log',
+            'filename': BASE_DIR + '/debug.log',
         },
     },
     'loggers': {
