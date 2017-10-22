@@ -3,6 +3,7 @@ from requests_oauthlib import OAuth2Session
 import requests
 from requests.auth import HTTPBasicAuth
 import logging
+import json
 
 from django.shortcuts import render
 from django.urls import reverse
@@ -82,7 +83,7 @@ class CreatePayment(BasePayment):
             ]
         }
 
-        self.get_access_token(request)
+        self.get_access_token(json.dumps(request))
         access_token = 'Bearer {0}'.format(PaypalTokenData.objects.first().access_token)
 
         headers = {
@@ -90,7 +91,6 @@ class CreatePayment(BasePayment):
             'Authorization': access_token
         }
 
-        log.info(access_token)
         log.info(paypal)
 
         res = requests.post(self.base_url + 'payments/payment',
