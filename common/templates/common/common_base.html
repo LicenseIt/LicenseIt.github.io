@@ -763,6 +763,7 @@
         return cookieValue;
     }
     var csrftoken = getCookie('csrftoken');
+    alert(csrftoken);
 
     var CREATE_PAYMENT_URL  = 'https://www.licenseit.net' + "{% url 'create_payment' order_data.id %}";
     var EXECUTE_PAYMENT_URL = 'https://www.licenseit.net' + "{% url 'execute_payment' order_data.id %}";
