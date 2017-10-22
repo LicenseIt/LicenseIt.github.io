@@ -51,9 +51,8 @@ class BasePayment(View):
 
 class CreatePayment(BasePayment):
     def post(self, request, order_id=None):
-        order_price = float(Order.objects.get(pk=order_id).price)
+        order_price = str(Order.objects.get(pk=order_id).price)
         return_url = 'https://' + request.get_host() + reverse('my_account')
-        log.info(return_url)
 
         paypal = {
             'intent': 'sale',
