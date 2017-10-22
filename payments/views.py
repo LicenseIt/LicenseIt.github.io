@@ -83,7 +83,7 @@ class CreatePayment(BasePayment):
             ]
         }
 
-        self.get_access_token(json.dumps(request))
+        self.get_access_token(request)
         access_token = 'Bearer {0}'.format(PaypalTokenData.objects.first().access_token)
 
         headers = {
@@ -91,7 +91,7 @@ class CreatePayment(BasePayment):
             'Authorization': access_token
         }
 
-        log.info(paypal)
+        log.info(json.dumps(paypal))
 
         res = requests.post(self.base_url + 'payments/payment',
                             data=paypal,
