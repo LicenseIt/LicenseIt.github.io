@@ -1,4 +1,4 @@
-from oauthlib.oauth2 import BackendApplicationClient
+from oauthlib.oauth2 import BackendApplicationClient, OAuth2Session
 from requests.auth import HTTPBasicAuth
 import os
 from datetime import datetime, timedelta
