@@ -56,48 +56,93 @@ class CreatePayment(BasePayment):
         return_url = 'https://' + request.get_host() + reverse('my_account')
 
         paypal = {
-            'intent': 'sale',
-            'redirect_urls': {
-                'return_url': return_url,
-                'cancel_url': return_url
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
             },
-            'payer': {
-                'payment_method': 'paypal'
-            },
-            'transactions': [
+            "transactions": [
                 {
-                    'ammount': {
-                        'total': order_price,
-                        'currency': 'USD',
+                    "amount": {
+                        "total": order_price, # 1.01
+                        "currency": "USD",
                         "details": {
-                            'subtotal': order_price,
-                            'tax': "0.00",
-                            'shipping': "0.00",
-                            'handling_fee': "0.00",
+                            "subtotal": order_price,
+                            "tax": "0.00",
+                            "shipping": "0.00",
+                            "handling_fee": "0.00",
                             "shipping_discount": "0.00",
                             "insurance": "0.00"
                         }
                     },
-                    'description': 'license order',
-                    'invoice_number': 'order{0}'.format(order_id),
-                    'payment_options': {
+                    "description": "The payment transaction description.",
+                    "invoice_number": "order{0}".format(order.id),
+                    "payment_options": {
                         "allowed_payment_method": "INSTANT_FUNDING_SOURCE"
                     },
-                    'item_list': {
-                        'items': [
+                    "item_list": {
+                        "items": [
                             {
-                                'name': 'license for {0}'.format(order.song_title),
-                                'description': 'the license for your order.',
-                                'quantity': '1',
-                                'price': order_price,
+                                "name": "license",
+                                "description": "license for {0}.".format(order.song_title),
+                                "quantity": "1",
+                                "price": order_price,
                                 "tax": "0.00",
                                 "currency": "USD"
                             }
                         ]
                     }
                 }
-            ]
+            ],
+            "note_to_payer": "Contact us for any questions on your order.",
+            "redirect_urls": {
+                "return_url": "https://www.licenseit.net/accounts/my_account/",
+                "cancel_url": "https://www.licenseit.net/accounts/my_account/"
+            }
         }
+
+        # paypal = {
+        #     'intent': 'sale',
+        #     'redirect_urls': {
+        #         'return_url': return_url,
+        #         'cancel_url': return_url
+        #     },
+        #     'payer': {
+        #         'payment_method': 'paypal'
+        #     },
+        #     'transactions': [
+        #         {
+        #             'ammount': {
+        #                 'total': order_price,
+        #                 'currency': 'USD',
+        #                 "details": {
+        #                     'subtotal': order_price,
+        #                     'tax': "0.00",
+        #                     'shipping': "0.00",
+        #                     'handling_fee': "0.00",
+        #                     "shipping_discount": "0.00",
+        #                     "insurance": "0.00"
+        #                 }
+        #             },
+        #             'description': 'license order',
+        #             'invoice_number': 'order{0}'.format(order_id),
+        #             'payment_options': {
+        #                 "allowed_payment_method": "INSTANT_FUNDING_SOURCE"
+        #             },
+        #             'item_list': {
+        #                 'items': [
+        #                     {
+        #                         'name': 'license for {0}'.format(order.song_title),
+        #                         'description': 'the license for your order.',
+        #                         'quantity': '1',
+        #                         'price': order_price,
+        #                         "tax": "0.00",
+        #                         "currency": "USD"
+        #                     }
+        #                 ]
+        #             }
+        #         }
+        #     ]
+        # }
 
         self.get_access_token(request)
         access_token = 'Bearer {0}'.format(PaypalTokenData.objects.first().access_token)
