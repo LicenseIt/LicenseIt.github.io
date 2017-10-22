@@ -27,7 +27,7 @@ class BasePayment(View):
                 'Accept-Language': 'en_US'
             }
 
-            auth = str(settings.PAYPAL_APP_ID) + str(settings.PAYPAL_SECRET)
+            auth = (settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
 
             url = self.base_url + 'oauth2/token'
 
