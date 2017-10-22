@@ -63,39 +63,6 @@ class CreatePayment(BasePayment):
             'payer': {
                 'payment_method': 'paypal'
             },
-            'transactions': [
-                {
-                    'ammount': {
-                        'total': order_price,
-                        'currency': 'USD',
-                        "details": {
-                            'subtotal': order_price,
-                            'tax': "0",
-                            'shipping': "0",
-                            'handling_fee': "0",
-                            "shipping_discount": "0",
-                            "insurance": "0"
-                        }
-                    },
-                    'description': 'license order',
-                    'invoice_number': 'order{0}'.format(order_id),
-                    "payment_options": {
-                        "allowed_payment_method": "INSTANT_FUNDING_SOURCE"
-                    },
-                    'items_list': {
-                        'items': [
-                            {
-                                'quantity': 1,
-                                'name': 'license',
-                                'price': order_price,
-                                'currency': 'USD',
-                                'description': 'license price',
-                                'tax': 0
-                            }
-                        ]
-                    }
-                }
-            ]
         }
 
         self.get_access_token(request)
