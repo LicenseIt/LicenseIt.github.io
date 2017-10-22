@@ -51,7 +51,7 @@ class BasePayment(View):
 
 class CreatePayment(BasePayment):
     def post(self, request, order_id=None):
-        order_price = Order.objects.get(pk=order_id).price
+        order_price = float(Order.objects.get(pk=order_id).price)
         paypal = {
             'intent': 'sale',
             'redirect_urls': {
