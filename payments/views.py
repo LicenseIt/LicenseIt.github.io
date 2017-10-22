@@ -1,10 +1,8 @@
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
+import requests
 from requests.auth import HTTPBasicAuth
-import os
-from datetime import datetime, timedelta
 import logging
-import base64
 
 from django.shortcuts import render
 from django.urls import reverse
