@@ -51,7 +51,8 @@ class BasePayment(View):
 
 class CreatePayment(BasePayment):
     def post(self, request, order_id=None):
-        order_price = str(Order.objects.get(pk=order_id).price)
+        order = Order.objects.get(pk=order_id)
+        order_price = str(order.price)
         return_url = 'https://' + request.get_host() + reverse('my_account')
 
         paypal = {
@@ -70,15 +71,30 @@ class CreatePayment(BasePayment):
                         'currency': 'USD',
                         "details": {
                             'subtotal': order_price,
-                            'tax': "0",
-                            'shipping': "0",
-                            'handling_fee': "0",
-                            "shipping_discount": "0",
-                            "insurance": "0"
+                            'tax': "0.00",
+                            'shipping': "0.00",
+                            'handling_fee': "0.00",
+                            "shipping_discount": "0.00",
+                            "insurance": "0.00"
                         }
                     },
                     'description': 'license order',
                     'invoice_number': 'order{0}'.format(order_id),
+                    'payment_options': {
+                        "allowed_payment_method": "INSTANT_FUNDING_SOURCE"
+                    },
+                    'item_list': {
+                        'items': [
+                            {
+                                'name': 'license for {0}'.format(order.song_title),
+                                'description': 'the license for your order.',
+                                'quantity': '1',
+                                'price': order_price,
+                                "tax": "0.00",
+                                "currency": "USD"
+                            }
+                        ]
+                    }
                 }
             ]
         }
@@ -91,7 +107,7 @@ class CreatePayment(BasePayment):
             'Authorization': access_token
         }
 
-        log.info(headers)
+        log.info(json.dumps(paypal))
 
         res = requests.post(self.base_url + 'payments/payment',
                             data=paypal,
