@@ -90,12 +90,14 @@ class CreatePayment(BasePayment):
             'Authorization': access_token
         }
 
+        log.info(access_token)
+        log.info(paypal)
+
         res = requests.post(self.base_url + 'payments/payment',
                             data=paypal,
                             headers=headers)
-        log.info(res.json)
         log.info(res.json())
-        return JsonResponse(res.json)
+        return JsonResponse(res.json())
 
 
 class ExecutePayment(BasePayment):
