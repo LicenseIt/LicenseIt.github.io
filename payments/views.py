@@ -51,8 +51,8 @@ class BasePayment(View):
                 token.save()
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class CreatePayment(BasePayment):
-    @method_decorator(csrf_exempt)
     def post(self, request, order_id=None):
         order = Order.objects.get(pk=order_id)
         order_price = str(order.price)
