@@ -44,17 +44,22 @@ class BasePayment(View):
             url = self.base_url + 'oauth2/token'
 
             token_json = oauth.fetch_token(token_url=url, auth=auth)
-            log.info(token)
+            log.info(token_json)
 
             if token:
+                log.info('in token')
                 token = token[0]
                 token.access_token = token_json['access_token']
                 token.expires_at = token_json['expires_in']
                 token.save()
             else:
+                log.info('in else')
                 token = PaypalTokenData()
+                log.info('create token')
                 token.access_token = token_json['access_token']
+                log.info('access')
                 token.expires_in = token_json['expires_in']
+                log.info('expire')
                 token.save()
 
 
