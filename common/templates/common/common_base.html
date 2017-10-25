@@ -767,9 +767,8 @@
             return paypal.request.post(EXECUTE_PAYMENT_URL, {
                 paymentID: data.paymentID,
                 payerID:   data.payerID,
-                csrftoken: csrftoken
             }).then(function() {
-
+                alert('done')
                 // The payment is complete!
                 // You can now show a confirmation message to the customer
             });
