@@ -34,21 +34,17 @@ class BasePayment(View):
             auth = HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
             client = BackendApplicationClient(client_id=settings.PAYPAL_APP_ID)
             oauth = OAuth2Session(client=client)
-            log.info('oauth')
 
             url = self.base_url + 'oauth2/token'
 
             token_json = oauth.fetch_token(token_url=url, auth=auth)
-            log.info(token_json)
 
             if token:
-                log.info('in token')
                 token = token[0]
                 token.access_token = token_json['access_token']
                 token.expires_at = token_json['expires_in']
                 token.save()
             else:
-                log.info('in else')
                 token = PaypalTokenData()
                 log.info('create token')
                 token.access_token = token_json['access_token']
@@ -111,23 +107,18 @@ class CreatePayment(BasePayment):
         }
 
         self.get_access_token(request)
-        log.info('after access token func')
         access_token = 'Bearer {0}'.format(PaypalTokenData.objects.first().access_token)
-        log.info('have access token')
 
         headers = {
             'Content-Type': 'application/json',
             'Authorization': access_token
         }
 
-        log.info('before payment request')
-
         url = self.base_url + 'payments/payment'
 
         res = requests.post(url,
                             data=json.dumps(paypal),
                             headers=headers)
-        log.info('after payment request: {0}'.format(res.status_code))
         res_json = res.json()
 
         request.session['payment_id'] = res_json['id']
