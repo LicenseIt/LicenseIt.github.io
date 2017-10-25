@@ -20,24 +20,18 @@ log = logging.getLogger('payments')
 
 
 class BasePayment(View):
-    base_url = 'https://api.paypal.com/v1/'
+    base_url = 'https://api.sandbox.paypal.com/v1/'
 
     def get_access_token(self, request):
-        log.warning('start of get access token')
         token = PaypalTokenData.objects.all()
-        log.warning('after db query')
         if not token or token[0].is_expired():
             access_headers = {
                 'Accept': 'application/json',
                 'Accept-Language': 'en_US'
             }
 
-            log.info('in if')
-
             auth = HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
-            log.info('after auth')
             client = BackendApplicationClient(client_id=settings.PAYPAL_APP_ID)
-            log.info('client')
             oauth = OAuth2Session(client=client)
             log.info('oauth')
 
