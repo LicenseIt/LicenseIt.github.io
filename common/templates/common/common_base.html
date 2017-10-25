@@ -764,9 +764,13 @@
         },
 
         onAuthorize: function(data) {
-            return paypal.request.post(EXECUTE_PAYMENT_URL, {
-                paymentID: data.paymentID,
-                payerID:   data.payerID
+            return paypal.request({
+                url:EXECUTE_PAYMENT_URL,
+                method: 'post',
+                json: {
+                    paymentID: data.paymentID,
+                    payerID:   data.payerID
+                }
             }).then(function() {
                 alert('done')
                 // The payment is complete!
