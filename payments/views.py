@@ -30,7 +30,7 @@ class BasePayment(View):
             client = BackendApplicationClient(client_id=settings.PAYPAL_APP_ID)
             oauth = OAuth2Session(client=client)
 
-            url = self.base_url + 'oauth2/token'
+            url = self.base_live + 'oauth2/token'
 
             token_json = oauth.fetch_token(token_url=url, auth=auth)
 
@@ -41,13 +41,9 @@ class BasePayment(View):
                 token.save()
             else:
                 token = PaypalTokenData()
-                log.info('create token')
                 token.access_token = token_json['access_token']
-                log.info('access')
                 token.expires_in = token_json['expires_in']
-                log.info('expire')
                 token.save()
-                log.info('after save')
 
 
 @method_decorator(csrf_exempt, name='dispatch')
