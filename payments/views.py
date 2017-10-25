@@ -120,7 +120,7 @@ class CreatePayment(BasePayment):
         res_json = res.json()
 
         request.session['payment_id'] = res_json['id']
-        return JsonResponse({'paymentID': res_json['id']})
+        return JsonResponse(res_json)
 
 
 class ExecutePayment(BasePayment):

@@ -764,6 +764,7 @@
         },
 
         onAuthorize: function(data) {
+            alert('on authorize');
             return paypal.request.post(EXECUTE_PAYMENT_URL, {
                 paymentID: data.paymentID,
                 payerID:   data.payerID
