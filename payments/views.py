@@ -27,6 +27,7 @@ class BasePayment(View):
         log.info('in get access token')
         token = PaypalTokenData.objects.all()
         if not token or token[0].is_expired():
+            log.info('in if')
             auth = HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
             client = BackendApplicationClient(client_id=settings.PAYPAL_APP_ID)
             oauth = OAuth2Session(client=client)
