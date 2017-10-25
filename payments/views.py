@@ -125,7 +125,7 @@ class CreatePayment(BasePayment):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class ExecutePayment(BasePayment):
-    def post(self, request):
+    def post(self, request, order_id):
         log.info('get here!')
         url = self.base_live + 'payments/payment/{0}/execute/'.format(request.POST['paymentID'])
         log.info(url)
