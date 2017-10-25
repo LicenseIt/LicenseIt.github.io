@@ -749,7 +749,7 @@
 <script>
     var CREATE_PAYMENT_URL  = 'https://www.licenseit.net' + "{% url 'create_payment' order_data.id %}";
     var EXECUTE_PAYMENT_URL = 'https://www.licenseit.net' + "{% url 'execute_payment' order_data.id %}";
-alert(EXECUTE_PAYMENT_URL);
+
     paypal.Button.render({
 
         env: 'production', // Or 'sandbox' 'production'
@@ -764,7 +764,6 @@ alert(EXECUTE_PAYMENT_URL);
         },
 
         onAuthorize: function(data) {
-            alert('on authorize');
             return paypal.request.post(EXECUTE_PAYMENT_URL, {
                 paymentID: data.paymentID,
                 payerID:   data.payerID
