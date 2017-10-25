@@ -47,6 +47,7 @@ class BasePayment(View):
                 token.expires_in = token_json['expires_in']
                 log.info('expire')
                 token.save()
+                log.info('after save')
 
 
 @method_decorator(csrf_exempt, name='dispatch')
