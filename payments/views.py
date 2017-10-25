@@ -58,6 +58,7 @@ class CreatePayment(BasePayment):
         order = Order.objects.get(pk=order_id)
         order_price = str(order.price)
         return_url = 'https://' + request.get_host() + reverse('my_account')
+        log.info(return_url)
 
         paypal = {
             "intent": "sale",
@@ -104,8 +105,12 @@ class CreatePayment(BasePayment):
             }
         }
 
+        log.info(paypal)
+
         self.get_access_token(request)
+        log.info('after access token func')
         access_token = 'Bearer {0}'.format(PaypalTokenData.objects.first().access_token)
+        log.info('have access token')
 
         headers = {
             'Content-Type': 'application/json',
