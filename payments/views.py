@@ -117,7 +117,7 @@ class CreatePayment(BasePayment):
                             headers=headers)
         log.info('after post')
         res_json = res.json()
-        log.info('after json')
+        log.info(res_json)
 
         request.session['payment_id'] = res_json['id']
         log.info(res_json['id'])
