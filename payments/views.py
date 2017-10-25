@@ -34,8 +34,16 @@ class BasePayment(View):
 
             url = self.base_live + 'oauth2/token'
 
-            token_json = oauth.fetch_token(token_url=url, auth=auth)
-            # token_json = requests.get(url, auth=HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)).json()
+            headers = {
+                'Accept': 'application/json',
+                'Accept-Language': 'en_US'
+            }
+
+            # token_json = oauth.fetch_token(token_url=url, auth=auth)
+            token_json = requests.get(url,
+                                      headers=headers,
+                                      data={'grant_type': 'client_credentials'},
+                                      auth=HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)).json()
             log.info(token_json)
             log.info('after fe')
 
