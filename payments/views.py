@@ -126,6 +126,7 @@ class ExecutePayment(BasePayment):
     @method_decorator(csrf_exempt)
     def post(self, request):
         url = self.base_url + 'payments/payment/{0}/execute/'.format(request.POST['paymentID'])
+        log.info(url)
 
         self.get_access_token(request)
         access_token = "Bearer {0}".format(request.session['access_token'])
