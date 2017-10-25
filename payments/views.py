@@ -8,7 +8,7 @@ import json
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
@@ -132,7 +132,7 @@ class CreatePayment(BasePayment):
 
         request.session['payment_id'] = res_json['id']
         log.info(res_json['id'])
-        return JsonResponse(res_json['id'])
+        return HttPResponse(res_json['id'])
 
 
 class ExecutePayment(BasePayment):
