@@ -35,7 +35,7 @@ class BasePayment(View):
             client = BackendApplicationClient(client_id=settings.PAYPAL_APP_ID)
             oauth = OAuth2Session(client=client)
 
-            url = self.base_url + 'oauth2/token'
+            url = self.base_live + 'oauth2/token'
 
             token_json = oauth.fetch_token(token_url=url, auth=auth)
 
@@ -114,7 +114,7 @@ class CreatePayment(BasePayment):
             'Authorization': access_token
         }
 
-        url = self.base_url + 'payments/payment'
+        url = self.base_live + 'payments/payment'
 
         res = requests.post(url,
                             data=json.dumps(paypal),
@@ -130,7 +130,7 @@ class ExecutePayment(BasePayment):
     @method_decorator(csrf_exempt)
     def post(self, request):
         log.info('get here!')
-        url = self.base_url + 'payments/payment/{0}/execute/'.format(request.POST['paymentID'])
+        url = self.base_live + 'payments/payment/{0}/execute/'.format(request.POST['paymentID'])
         log.info(url)
 
         self.get_access_token(request)
