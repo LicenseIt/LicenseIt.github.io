@@ -131,7 +131,7 @@ class ExecutePayment(BasePayment):
         log.info(url)
 
         self.get_access_token(request)
-        access_token = "Bearer {0}".format(request.session['access_token'])
+        access_token = "Bearer {0}".format(PaypalTokenData.objects.first().access_token)
 
         payment = {
             'payer_id': request.POST['payerID']
