@@ -48,8 +48,11 @@ class BasePayment(View):
                 log.info('in else')
                 token = PaypalTokenData()
                 token.access_token = token_json['access_token']
+                log.info('access')
                 token.expires_in = token_json['expires_in']
+                log.info('expire')
                 token.save()
+                log.info('save')
 
 
 @method_decorator(csrf_exempt, name='dispatch')
