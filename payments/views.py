@@ -110,11 +110,14 @@ class CreatePayment(BasePayment):
         }
 
         url = self.base_live + 'payments/payment'
+        log.info('before post to paypal')
 
         res = requests.post(url,
                             data=json.dumps(paypal),
                             headers=headers)
+        log.info('after post')
         res_json = res.json()
+        log.info('after json')
 
         request.session['payment_id'] = res_json['id']
         log.info(res_json['id'])
