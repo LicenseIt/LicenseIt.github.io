@@ -99,7 +99,7 @@ class CreatePayment(BasePayment):
             "note_to_payer": "Contact us for any questions on your order.",
             "redirect_urls": {
                 "return_url": return_url,
-                "cancel_url": return_url
+                "cancel_url": return_url + '/cancel'
             }
         }
 
