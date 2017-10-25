@@ -112,9 +112,12 @@ class CreatePayment(BasePayment):
             'Authorization': access_token
         }
 
+        log.info('before payment request')
+
         res = requests.post(self.base_url + 'payments/payment',
                             data=json.dumps(paypal),
                             headers=headers)
+        log.info('after payment request: {0}'.format(res.status_code))
         res_json = res.json()
 
         request.session['payment_id'] = res_json['id']
