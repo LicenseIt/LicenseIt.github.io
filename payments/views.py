@@ -132,7 +132,7 @@ class CreatePayment(BasePayment):
 
         request.session['payment_id'] = res_json['id']
         log.info(res_json['id'])
-        return JsonResponse({'paymentID': res_json['id'])
+        return JsonResponse({'paymentID': res_json['id']})
 
 
 class ExecutePayment(BasePayment):
