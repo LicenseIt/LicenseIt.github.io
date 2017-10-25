@@ -39,6 +39,9 @@ class BasePayment(View):
                 'Accept-Language': 'en_US'
             }
 
+            log.info(settings.PAYPAL_APP_ID)
+            log.info(settings.PAYPAL_SECRET)
+
             token_json = requests.post(url,
                                        headers=headers,
                                        params={'grant_type': 'client_credentials'},
