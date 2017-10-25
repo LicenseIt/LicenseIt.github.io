@@ -54,6 +54,7 @@ class BasePayment(View):
 @method_decorator(csrf_exempt, name='dispatch')
 class CreatePayment(BasePayment):
     def post(self, request, order_id=None):
+        log.info('hello')
         order = Order.objects.get(pk=order_id)
         order_price = str(order.price)
         return_url = 'https://' + request.get_host() + reverse('my_account')
