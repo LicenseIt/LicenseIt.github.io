@@ -34,8 +34,8 @@ class BasePayment(View):
 
             url = self.base_live + 'oauth2/token'
 
-            # token_json = oauth.fetch_token(token_url=url, auth=auth)
-            token_json = requests.get(url, auth=HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)).json()
+            token_json = oauth.fetch_token(token_url=url, auth=auth)
+            # token_json = requests.get(url, auth=HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)).json()
             log.info(token_json)
             log.info('after fe')
 
