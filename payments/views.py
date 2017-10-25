@@ -98,7 +98,10 @@ class CreatePayment(BasePayment):
             }
         }
 
+        log.info('before access token')
+
         self.get_access_token(request)
+        log.info('after access token')
         access_token = 'Bearer {0}'.format(PaypalTokenData.objects.first().access_token)
 
         headers = {
