@@ -41,7 +41,7 @@ class BasePayment(View):
 
             token_json = requests.post(url,
                                        headers=headers,
-                                       data={'grant_type': 'client_credentials'},
+                                       params={'grant_type': 'client_credentials'},
                                        auth=HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)).json()
             log.info(token_json)
             log.info('after fe')
