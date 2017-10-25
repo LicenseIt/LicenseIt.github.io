@@ -26,12 +26,6 @@ class BasePayment(View):
     def get_access_token(self, request):
         token = PaypalTokenData.objects.all()
         if not token or token[0].is_expired():
-            log.info('in if')
-            auth = HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
-            client = BackendApplicationClient(client_id=settings.PAYPAL_APP_ID)
-            oauth = OAuth2Session(client=client)
-            log.info('before url')
-
             url = self.base_live + 'oauth2/token'
 
             headers = {
@@ -39,31 +33,22 @@ class BasePayment(View):
                 'Accept-Language': 'en_US'
             }
 
-            log.info(settings.PAYPAL_APP_ID)
-            log.info(settings.PAYPAL_SECRET)
-
             token_json = requests.post(url,
                                        headers=headers,
                                        params={'grant_type': 'client_credentials'},
                                        auth=(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)).json()
             log.info(token_json)
-            log.info('after fe')
 
             if token:
-                log.info('in token')
                 token = token[0]
                 token.access_token = token_json['access_token']
                 token.expires_at = token_json['expires_in']
                 token.save()
             else:
-                log.info('in else')
                 token = PaypalTokenData()
                 token.access_token = token_json['access_token']
-                log.info('access')
                 token.expires_in = token_json['expires_in']
-                log.info('expire')
                 token.save()
-                log.info('save')
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -118,10 +103,7 @@ class CreatePayment(BasePayment):
             }
         }
 
-        log.info('before access token')
-
         self.get_access_token(request)
-        log.info('after access token')
         access_token = 'Bearer {0}'.format(PaypalTokenData.objects.first().access_token)
 
         headers = {
@@ -130,17 +112,14 @@ class CreatePayment(BasePayment):
         }
 
         url = self.base_live + 'payments/payment'
-        log.info('before post to paypal')
 
         res = requests.post(url,
                             data=json.dumps(paypal),
                             headers=headers)
         log.info('after post')
         res_json = res.json()
-        log.info(res_json)
 
         request.session['payment_id'] = res_json['id']
-        log.info(res_json['id'])
         return JsonResponse(res_json)
 
 
