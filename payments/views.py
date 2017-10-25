@@ -30,7 +30,7 @@ class BasePayment(View):
             client = BackendApplicationClient(client_id=settings.PAYPAL_APP_ID)
             oauth = OAuth2Session(client=client)
 
-            url = self.base_live + 'oauth2/token'
+            url = self.base_url + 'oauth2/token'
 
             token_json = oauth.fetch_token(token_url=url, auth=auth)
 
