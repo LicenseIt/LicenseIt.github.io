@@ -26,16 +26,11 @@ class BasePayment(View):
     def get_access_token(self, request):
         token = PaypalTokenData.objects.all()
         if not token or token[0].is_expired():
-            access_headers = {
-                'Accept': 'application/json',
-                'Accept-Language': 'en_US'
-            }
-
             auth = HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
             client = BackendApplicationClient(client_id=settings.PAYPAL_APP_ID)
             oauth = OAuth2Session(client=client)
 
-            url = self.base_live + 'oauth2/token'
+            url = self.base_url + 'oauth2/token'
 
             token_json = oauth.fetch_token(token_url=url, auth=auth)
 
