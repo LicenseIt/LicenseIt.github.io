@@ -114,7 +114,7 @@ class CreatePayment(BasePayment):
             'Authorization': access_token
         }
 
-        url = self.base_live + 'payments/payment'
+        url = self.base_url + 'payments/payment'
 
         res = requests.post(url,
                             data=json.dumps(paypal),
@@ -130,7 +130,7 @@ class ExecutePayment(BasePayment):
     @method_decorator(csrf_exempt)
     def post(self, request):
         log.info('get here!')
-        url = self.base_live + 'payments/payment/{0}/execute/'.format(request.POST['paymentID'])
+        url = self.base_url + 'payments/payment/{0}/execute/'.format(request.POST['paymentID'])
         log.info(url)
 
         self.get_access_token(request)
