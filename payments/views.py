@@ -98,8 +98,8 @@ class CreatePayment(BasePayment):
             ],
             "note_to_payer": "Contact us for any questions on your order.",
             "redirect_urls": {
-                "return_url": "https://www.licenseit.net/accounts/my_account/",
-                "cancel_url": "https://www.licenseit.net/accounts/my_account/"
+                "return_url": return_url,
+                "cancel_url": return_url
             }
         }
 
@@ -119,7 +119,7 @@ class CreatePayment(BasePayment):
         res_json = res.json()
         log.info(res_json)
         request.session['payment_id'] = res_json['id']
-        return JsonResponse(res.json())
+        return JsonResponse(res_json)
 
 
 class ExecutePayment(BasePayment):
@@ -134,6 +134,8 @@ class ExecutePayment(BasePayment):
         payment = {
             'payer_id': request.POST['payerID']
         }
+
+        log.info(request.POST['payerID'])
 
         headers = {
             'Content-Type': 'application/json',
