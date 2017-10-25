@@ -119,7 +119,7 @@ class CreatePayment(BasePayment):
         res_json = res.json()
 
         request.session['payment_id'] = res_json['id']
-        log.info('return')
+        log.info(paypal['redirect_urls']['cancel_url'])
         return JsonResponse(res_json)
 
 
