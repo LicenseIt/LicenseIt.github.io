@@ -35,8 +35,11 @@ class BasePayment(View):
             log.info('in if')
 
             auth = HTTPBasicAuth(settings.PAYPAL_APP_ID, settings.PAYPAL_SECRET)
+            log.info('after auth')
             client = BackendApplicationClient(client_id=settings.PAYPAL_APP_ID)
+            log.info('client')
             oauth = OAuth2Session(client=client)
+            log.info('oauth')
 
             url = self.base_url + 'oauth2/token'
 
@@ -58,11 +61,9 @@ class BasePayment(View):
 @method_decorator(csrf_exempt, name='dispatch')
 class CreatePayment(BasePayment):
     def post(self, request, order_id=None):
-        log.info('hello')
         order = Order.objects.get(pk=order_id)
         order_price = str(order.price)
         return_url = 'https://' + request.get_host() + reverse('my_account')
-        log.info(return_url)
 
         paypal = {
             "intent": "sale",
@@ -108,8 +109,6 @@ class CreatePayment(BasePayment):
                 "cancel_url": return_url
             }
         }
-
-        log.info(paypal)
 
         self.get_access_token(request)
         log.info('after access token func')
