@@ -20,7 +20,7 @@ log = logging.getLogger('payments')
 
 
 class BasePayment(View):
-    base_url = 'https://api.sandbox.paypal.com/v1/'
+    base_url = 'https://api.paypal.com/v1/'
 
     def get_access_token(self, request):
         token = PaypalTokenData.objects.all()
