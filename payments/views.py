@@ -116,7 +116,9 @@ class CreatePayment(BasePayment):
         res = requests.post(self.base_url + 'payments/payment',
                             data=json.dumps(paypal),
                             headers=headers)
-        log.info(res.json())
+        res_json = res.json()
+        log.info(res_json)
+        request.session['payment_id'] = res_json['id']
         return JsonResponse(res.json())
 
 
