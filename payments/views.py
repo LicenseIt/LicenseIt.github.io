@@ -21,6 +21,7 @@ log = logging.getLogger('payments')
 
 class BasePayment(View):
     base_url = 'https://api.sandbox.paypal.com/v1/'
+    base_live = 'https://api.paypal.com/v1/'
 
     def get_access_token(self, request):
         token = PaypalTokenData.objects.all()
@@ -121,7 +122,9 @@ class CreatePayment(BasePayment):
 
         log.info('before payment request')
 
-        res = requests.post(self.base_url + 'payments/payment',
+        url = self.base_url + 'payments/payment'
+
+        res = requests.post(url,
                             data=json.dumps(paypal),
                             headers=headers)
         log.info('after payment request: {0}'.format(res.status_code))
@@ -129,7 +132,7 @@ class CreatePayment(BasePayment):
 
         request.session['payment_id'] = res_json['id']
         log.info(res_json['id'])
-        return JsonResponse(res_json)
+        return JsonResponse(res_json['id'])
 
 
 class ExecutePayment(BasePayment):
