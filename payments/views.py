@@ -123,8 +123,8 @@ class CreatePayment(BasePayment):
         return JsonResponse(res_json)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class ExecutePayment(BasePayment):
-    @method_decorator(csrf_exempt)
     def post(self, request):
         log.info('get here!')
         url = self.base_live + 'payments/payment/{0}/execute/'.format(request.POST['paymentID'])
