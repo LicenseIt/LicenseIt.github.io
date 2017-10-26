@@ -145,4 +145,5 @@ class ExecutePayment(BasePayment):
         }
 
         res = requests.post(url, data=payment, headers=headers)
+        log.info(res.json())
         return JsonResponse(res.json())
