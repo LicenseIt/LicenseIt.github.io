@@ -455,7 +455,7 @@
                         {% endif %}
                         <li class="dropdown megamenu-fw has-dropdown-menu">
                             <a href="{% url 'my_account' %}"
-                               class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">{{ user.email }}</a>
+                               class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">my dashboard</a>
                         </li>
                         {% notifications user as notif %}
                         {% if notif %}
