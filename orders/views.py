@@ -528,7 +528,7 @@ class DetailBase(View):
 
     def func(self, request, order_id, detail_form):
         data = request.POST.copy()
-        data['order'] = order_id
+        data['order'] = Order.objects.get(pk=order_id)
         form = detail_form(data)
 
         context = {
