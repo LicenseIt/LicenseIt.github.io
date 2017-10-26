@@ -137,13 +137,11 @@ class ExecutePayment(BasePayment):
             'payer_id': request.POST['payerID']
         }
 
-        log.info(request.POST['payerID'])
-
         headers = {
             'Content-Type': 'application/json',
             'Authorization': access_token
         }
 
-        res = requests.post(url, data=payment, headers=headers)
+        res = requests.post(url, data=json.dumps(payment), headers=headers)
         log.info(res.json())
         return JsonResponse(res.json())
