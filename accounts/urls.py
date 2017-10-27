@@ -10,6 +10,8 @@ from .views import (
     ForgotPassword,
     ChangePassword,
     CounterOfferView,
+    UserQuestionView,
+    AskUserView,
 )
 
 urlpatterns = [
@@ -21,6 +23,9 @@ urlpatterns = [
     url('^edit_user/', login_required(EditUserData.as_view()), name='edit_user'),
     url('^counter-offer/(?P<order_id>[0-9]+)/', login_required(CounterOfferView.as_view()), name='counter_offer'),
     url('^counter-offer/', login_required(CounterOfferView.as_view()), name='counter_offer'),
+    url('^user-question/', UserQuestionView.as_view(), name='user_question'),
+    url('^my_account/order/(?P<order_id>[0-9]+)/payment/(?P<payment>[0-9]+)/', login_required(Account.as_view()), name='payment_created'),
     url('^my_account/order/(?P<order_id>[0-9]+)/', login_required(Account.as_view()), name='my_account_order'),
+    url('^ask_user/', AskUserView.as_view(), name='ask_user'),
     url('^my_account/', login_required(Account.as_view()), name='my_account'),
 ]

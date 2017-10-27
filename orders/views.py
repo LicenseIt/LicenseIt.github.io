@@ -510,12 +510,14 @@ class AdvertisingDistribution(View):
 
 
 class DetailBase(View):
-    def add_onwners(self, order=None):
+    def add_onwners(self, order_id=None):
         order_rights = {
             'composition': 'composition owner',
             'lirics': 'lirics owner',
             'performance': 'performance owner'
         }
+
+        order = Order.objects.get(pk=order_id)
 
         for right, owner in order_rights.items():
             order_owner_right = OrderOwnerRight()

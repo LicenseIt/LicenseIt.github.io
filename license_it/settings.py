@@ -25,7 +25,7 @@ SECRET_KEY = '8)di#-4k7i_$%vh*qndob49_id@lua+q0x17%^0ofqpw891#y2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', '45.79.64.198', 'localhost', '.licenseit.net']
+ALLOWED_HOSTS = ['*']
 
 ADMINS = [('moshe', 'moshegrey@gmail.com')]
 
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'home',
     'licensing',
     'owners',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -89,6 +90,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'license_it.wsgi.application'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s: %(asctime)s- %(module)s %(message)s'
+        }
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR + '/debug.log',
+        },
+    },
+    'loggers': {
+        'payments': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -141,8 +165,8 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR + '/static/'
 
-MEDIA_URL = '/licenses/'
-MEDIA_ROOT = BASE_DIR + '/licenses/'
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = BASE_DIR + '/uploads/'
 
 EMAIL_HOST = 'licenseit.net'
 EMAIL_PORT = 25
@@ -174,3 +198,6 @@ SOCIAL_AUTH_FACEBOOK_SECRET = 'e53bc33956b35cf56b0a26b5dc46af5b'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '541028679854-ulvh72m7of533u0ldqf77kb74l3khd1a.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'uovaKBOF-W_facpaaWaeHQPQ'
+
+PAYPAL_APP_ID = os.environ.get('PAYPAL_APP_ID')
+PAYPAL_SECRET = os.environ.get('PAYPAL_SECRET')

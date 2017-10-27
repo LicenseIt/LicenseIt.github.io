@@ -33,8 +33,8 @@ if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
         WeddingDetailForm,
         PersonalDetailForm,
     )
-    from accounts.models import PersonalInfo, UserImage, ResetPassword, CounterOffer
-    from accounts.forms import PersonalInfoForm, CounterOfferForm
+    from accounts.models import UserQuestion, AskUser, PersonalInfo, UserImage, ResetPassword, CounterOffer
+    from accounts.forms import PersonalInfoForm, CounterOfferForm, UserQuestionForm
     from orders.models import (
     OrderFilmMaking,
     OrderProgramming,
@@ -146,8 +146,20 @@ class SignupView(ConnectBase):
         email = request.POST['email']
         username = request.POST['email']
         password = request.POST['password']
+        first_name = request.POST['first']
+        last_name = request.POST['last']
+        confirm = request.POST['confirm']
+
+        if password != confirm:
+            return render(request,
+                          'home/index.html',
+                          context={'error': 'this email is already registered'})
+
         try:
             user = User.objects.create_user(username, email, password)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             self.add_order_user(request, user)
         except IntegrityError:
@@ -436,7 +448,7 @@ class Account(ConnectBase):
 
         return context
 
-    def get(self, request, order_id=None):
+    def get(self, request, order_id=None, payment_id=None):
         '''
         the page of client dash
         :param request: request object
@@ -445,6 +457,14 @@ class Account(ConnectBase):
         '''
         self.add_order_user(request, request.user)
         context = self.data(request.user, order_id)
+        context['user_question_form'] = UserQuestionForm()
+        order = context['order_data']
+        if order:
+            context['user_question_history'] = UserQuestion.objects.filter(order=order.id)
+            context['owner_questions'] = Question.objects.filter(order=order.id)
+        if payment_id:
+            context['payment_id'] = payment_id
+
         return render(request,
                       self.template_name,
                       context=context)
@@ -612,4 +632,24 @@ class CounterOfferView(View):
 
         if form.is_valid():
             form.save()
+        return HttpResponseRedirect(reverse('my_account'))
+
+
+class UserQuestionView(View):
+    def post(self, request):
+        form = UserQuestionForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect(reverse('my_account'))
+
+
+class AskUserView(View):
+    def post(self, request):
+        for question, answer in request.POST.items():
+            if question == 'csrfmiddlewaretoken':
+                continue
+            question = question.split('ion')[1]
+            ask = Question.objects.get(pk=question)
+            ask.answer = answer
+            ask.save()
         return HttpResponseRedirect(reverse('my_account'))

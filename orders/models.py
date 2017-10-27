@@ -660,7 +660,7 @@ def license_path(instance, filename):
     :param filename: the original file name
     :return: the path to the file
     '''
-    return 'user_{0}/{1}/'.format(instance.user.id, filename)
+    return 'licenses/user_{0}/{1}/'.format(instance.user.id, filename)
 
 
 class Order(Base):
@@ -690,6 +690,7 @@ class Order(Base):
     song = models.ForeignKey(Track, on_delete=models.SET_NULL, null=True, blank=True)
     song_title = models.CharField(max_length=200)
     performer_name = models.CharField(max_length=200)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     is_done = models.BooleanField(default=False)
     license_pdf = models.FileField(upload_to=license_path, null=True, blank=True)
     supporter = models.ForeignKey(User,

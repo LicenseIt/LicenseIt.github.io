@@ -70,3 +70,13 @@ class CounterOffer(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+
+class UserQuestion(models.Model):
+    question = models.CharField(max_length=300)
+    answer = models.TextField(null=True, blank=True)
+    order = models.ForeignKey(Order,
+                              on_delete=models.CASCADE,
+                              related_name='user_inquiries')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
