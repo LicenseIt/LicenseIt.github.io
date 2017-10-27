@@ -344,12 +344,15 @@ confirm_password.onkeyup = validatePassword;
                     <li class="dropdown megamenu-fw has-dropdown-menu">
                         <a href="{% url 'how_it_works' %}"
                            class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">How
-                            it
-                            works </a></li>
+                            it works </a></li>
                     <li class="dropdown megamenu-fw has-dropdown-menu">
                         <a href="{% url 'search' %}"
                            class="dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}">Search </a>
                     </li>
+                    <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
+                                                                          class="dropdown-toggle color-dark" style="border-right: solid 1px;">
+                        Need Help?
+                    </a></li>
                     {% if request.user.is_authenticated %}
                         {% user_image user as image %}
                         {% if image %}
@@ -373,16 +376,14 @@ confirm_password.onkeyup = validatePassword;
                         </li>
                     {% else %}
                         <li class="dropdown megamenu-fw has-dropdown-menu">
-                            <a class="cd-signin dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}" href="#0">Sign in</a>
+
+                            <a class="cd-signin dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}" href="#0"> <i class="fa fa-lock fa-fw"></i>Sign in</a>
                         </li>
                         <li class="dropdown megamenu-fw has-dropdown-menu">
                             <a class="cd-signup dropdown-toggle {% if url == 'home' %}color-light{% else %}color-dark{% endif %}" href="#0">Sign up</a>
                         </li>
                     {% endif %}
-                    <li class="dropdown megamenu-fw has-dropdown-menu"><a href="{% url 'contact_us' %}"
-                                                                          class="dropdown-toggle color-dark">
-                        Need Help?
-                    </a></li>
+
 
                 </ul>
             </div>

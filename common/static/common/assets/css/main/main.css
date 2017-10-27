@@ -4491,3 +4491,7 @@ ul.pagination.pagination-pasific li.active a {
     max-width: 1920px;
     background: transparent;
 }
+
+.mainheroimage {
+background-image:url('{% static 'common/assets/img/bg/music2.jpg' %}');
+}
