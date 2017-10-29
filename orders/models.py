@@ -663,6 +663,16 @@ def license_path(instance, filename):
     return 'licenses/user_{0}/{1}/'.format(instance.user.id, filename)
 
 
+def clearance_path(instance, filename):
+    '''
+    file will be uploaded to MEDIA_ROOT/user_id/file_name
+    :param instance: an instance of this class
+    :param filename: the original file name
+    :return: the path to the file
+    '''
+    return 'clearance/user_{0}/{1}/'.format(instance.user.id, filename)
+
+
 class Order(Base):
     '''
     basic project data
@@ -692,6 +702,7 @@ class Order(Base):
     performer_name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     is_done = models.BooleanField(default=False)
+    clearance = models.FileField(upload_to=clearance_path, null=True, blank=True)
     license_pdf = models.FileField(upload_to=license_path, null=True, blank=True)
     supporter = models.ForeignKey(User,
                                   on_delete=models.SET_NULL,

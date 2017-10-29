@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 
 from orders.models import Order
-from owners.models import OwnerDatabase
+from owners.models import OrderOwnerRight
 
 
 class AskUser(models.Model):
@@ -65,7 +65,7 @@ class ResetPassword(models.Model):
 class CounterOffer(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
     offer = models.TextField(null=True, blank=True)
-    owner = models.ForeignKey(OwnerDatabase,
+    owner = models.ForeignKey(OrderOwnerRight,
                               on_delete=models.CASCADE,
                               related_name='owner_counter')
     order = models.ForeignKey(Order,

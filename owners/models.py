@@ -52,13 +52,12 @@ class OrderOwnerRight(Base):
     owner = models.ForeignKey(OwnerDatabase, on_delete=models.SET_NULL, null=True, blank=True)
     right_type = models.ForeignKey(RightType, on_delete=models.SET_NULL, null=True, blank=True)
     order = models.ForeignKey(Order,
-                              on_delete=models.SET_NULL,
-                              null=True,
-                              blank=True,
+                              on_delete=models.CASCADE,
                               related_name='order_owner')
+    price = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.owner.name + ', ' + self.right_type.name + ', ' + self.order.song_title
+        return self.owner.name + ', ' + self.right_type.name
 
     class Meta:
         verbose_name = 'owner right'
