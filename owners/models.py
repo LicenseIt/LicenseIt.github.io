@@ -22,11 +22,22 @@ class RightType(Base):
         verbose_name_plural = 'right types'
 
 
+def image_path(instance, filename):
+    '''
+    file will be uploaded to MEDIA_ROOT/user_id/file_name
+    :param instance: an instance of this class
+    :param filename: the original file name
+    :return: the path to the file
+    '''
+    return 'images/{0}/'.format(filename)
+
+
 class OwnerDatabase(Base):
     name = models.CharField(max_length=200)
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=30, null=True, blank=True)
     contact = models.CharField(max_length=200, null=True, blank=True)
+    image = models.FileField(upload_to=image_path, null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
 
     def __str__(self):
