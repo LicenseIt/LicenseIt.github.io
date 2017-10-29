@@ -170,7 +170,8 @@ class SignupView(ConnectBase):
         send_mail('licenseit- thanks for registering',
                   'Thanks for registering to our site',
                   'cdo@licenseit.net',
-                  [email])
+                  [email],
+                  html_message='<h3>hello</h3>')
         return HttpResponseRedirect(reverse('search'))
 
 
