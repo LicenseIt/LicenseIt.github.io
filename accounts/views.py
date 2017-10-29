@@ -636,10 +636,8 @@ class CounterOfferView(View):
         data = request.POST.copy()
         data['owner'] = owner.id
         form = CounterOfferForm(data, instance=counter_offer)
-        print(form.errors)
 
         if form.is_valid():
-            print('in valid')
             form.save()
         return HttpResponseRedirect(reverse('my_account'))
 
