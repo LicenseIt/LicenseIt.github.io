@@ -498,9 +498,10 @@
                                             </button>
                                         </p>
                                         <h3>contact licenseit</h3>
+                                            {% for question in ask_user %}
+                                                {% if not question.answer %}
                                         <form action="{% url 'ask_user' %}" method="post">
                                             {% csrf_token %}
-                                            {% for question in ask_user %}
                                                 <div class="form-group">
                                                     <label class="control-label"
                                                            for="question{{ question.id }}">
@@ -511,9 +512,10 @@
                                                               value=""
                                                               class="form-control"></textarea>
                                                 </div>
-                                            {% endfor %}
                                             <button>submit</button>
                                         </form>
+                                                {% endif %}
+                                            {% endfor %}
                                         <form action="{% url 'user_question' %}" method="post">
                                             {% csrf_token %}
                                             <input type="hidden" name="order" value="{{ order_data.id }}">
@@ -541,6 +543,7 @@
                                                                 </div>
                                                             </div>
                                                         </li>
+                                                        {% if question.answer %}
                                                         <li style="width: 100%;">
                                                             <div class="msj-rta macro">
                                                                 <div class="text text-right">
@@ -555,6 +558,7 @@
                                                                         alt="avatar"/></div>
                                                             </div>
                                                         </li>
+                                                        {% endif %}
                                                     {% endfor %}
                                                 </ul>
                                             </div>
@@ -572,6 +576,7 @@
                                                                                          alt="avatar"></div>
                                                                 <div class="text text-left">
                                                                     <p>
+                                                                        {{ question.owner }}-
                                                                         {{ question.question }}
                                                                     </p>
                                                                     <p>
@@ -580,6 +585,7 @@
                                                                 </div>
                                                             </div>
                                                         </li>
+                                                        {% if question.answer %}
                                                         <li style="width: 100%;">
                                                             <div class="msj-rta macro">
                                                                 <div class="text text-right">
@@ -597,6 +603,7 @@
                                                                         alt="avatar"/></div>
                                                             </div>
                                                         </li>
+                                                        {% endif %}
                                                     {% endfor %}
                                                 </ul>
                                             </div>
