@@ -555,6 +555,7 @@ $(window).load(function() {
         // 1. Display the success message
         // 2. Clear the form fields
         // 3. Fade the content back in
+        alert($('#senderName').val() + ' thanks for contacting us, we will get back to you soon!');
 
         $('#successMessage').fadeIn().delay(messageDelay).fadeOut();
         $('#senderName').val( "" );
