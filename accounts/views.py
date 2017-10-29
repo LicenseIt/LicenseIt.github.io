@@ -146,8 +146,8 @@ class SignupView(ConnectBase):
         email = request.POST['email']
         username = request.POST['email']
         password = request.POST['password']
-        first_name = request.POST['first']
-        last_name = request.POST['last']
+        # first_name = request.POST['first']
+        # last_name = request.POST['last']
         confirm = request.POST['confirm']
 
         if password != confirm:
@@ -157,9 +157,9 @@ class SignupView(ConnectBase):
 
         try:
             user = User.objects.create_user(username, email, password)
-            user.first_name = first_name
-            user.last_name = last_name
-            user.save()
+            # user.first_name = first_name
+            # user.last_name = last_name
+            # user.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             self.add_order_user(request, user)
         except IntegrityError:
@@ -217,6 +217,7 @@ class ChangePassword(View):
         margin = timedelta(1)
         if now - margin < reset_pass.created:
             return True
+        return False
 
     def get(self, request, string=None):
         '''

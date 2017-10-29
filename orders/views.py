@@ -303,7 +303,7 @@ class IndieDistribution(View):
                 new_dist.full_clean()
                 new_dist.save()
                 dist = ExternalDistribution.objects.get(pk=done.id)
-                dist.distribute_on.add(new_dist.id)
+                dist.name.add(new_dist.id)
                 dist.save()
 
         return HttpResponseRedirect(reverse('indie_details', args=[order_id]))
@@ -367,7 +367,7 @@ class ProgramDistribution(View):
         if 'name' in request.POST:
             ext_form = IndieExtDistribution(request.POST.copy())
             ext_form.data['order'] = order_id
-        if 'tv_trailer' or 'tv_program' in request.POST:
+        if 'tv_trailer' in request.POST or 'tv_program' in request.POST:
             tv_form = TvDistributionForm(request.POST.copy())
             tv_form.data['order'] = order_id
 
@@ -460,13 +460,14 @@ class AdvertisingDistribution(View):
         web_form = None
         ext_form = None
         # tv_form = None
+        order = Order.objects.get(pk=order_id)
 
         if 'distribute_on' in request.POST:
             web_form = IndieWebDistribution(request.POST.copy())
-            web_form.data['order'] = order_id
+            web_form.data['order'] = order
         if 'name' in request.POST:
             ext_form = IndieExtDistribution(request.POST.copy())
-            ext_form.data['order'] = order_id
+            ext_form.data['order'] = order
         # if 'tv_trailer' or 'tv_program' in request.POST:
         #     tv_form = TvDistributionForm(request.POST.copy())
         #     tv_form.data['order'] = order_id
@@ -500,7 +501,7 @@ class AdvertisingDistribution(View):
                 new_dist.full_clean()
                 new_dist.save()
                 dist = ExternalDistribution.objects.get(pk=done.id)
-                dist.distribute_on.add(new_dist.id)
+                dist.name.add(new_dist.id)
                 dist.save()
 
         # if tv_form:
