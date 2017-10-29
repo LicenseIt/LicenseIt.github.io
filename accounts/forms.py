@@ -30,7 +30,7 @@ class CounterOfferForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control'
                 }
-            )
+            ),
         }
 
 

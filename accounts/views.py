@@ -464,6 +464,8 @@ class Account(ConnectBase):
         if order:
             context['user_question_history'] = UserQuestion.objects.filter(order=order.id)
             context['owner_questions'] = Question.objects.filter(order=order.id).select_related()
+            context['counter_owners'] = CounterOffer.objects.filter(order=order.id)
+
         if payment_id:
             context['payment_id'] = payment_id
         image = SiteFiles.objects.filter(file_name='default_image')
@@ -625,17 +627,19 @@ class CounterOfferView(View):
         :param order_id: order id
         :return: client dash page
         '''
+        owner = OwnerDatabase.objects.get(name=request.POST['owner'])
         if order_id:
-            counter_offer = CounterOffer.objects.filter(order=order_id)
+            counter_offer = CounterOffer.objects.filter(owner=owner.id).filter(order=order_id).first()
         else:
             order_id = Order.objects.filter(user=request.user).first().id
-            counter_offer = CounterOffer.objects.filter(order=order_id)
-        if counter_offer.exists():
-            form = CounterOfferForm(request.POST, instance=counter_offer)
-        else:
-            form = CounterOfferForm(request.POST)
+            counter_offer = CounterOffer.objects.filter(owner=owner.id).filter(order=order_id).first()
+        data = request.POST.copy()
+        data['owner'] = owner.id
+        form = CounterOfferForm(data, instance=counter_offer)
+        print(form.errors)
 
         if form.is_valid():
+            print('in valid')
             form.save()
         return HttpResponseRedirect(reverse('my_account'))
 

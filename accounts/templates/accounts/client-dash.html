@@ -622,6 +622,8 @@
                                         {% endif %}
 
                                         <h5>Payment</h5>
+                                    {% for owner in counter_owners %}
+                                        <h5>counter offer for {{ owner.owner }}</h5>
                                         <form action="
 
                                                 {% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
@@ -635,10 +637,12 @@
                                                 {{ counter_offer_form.offer }}
                                             </div>
                                             <input type="hidden" name="order" value="{{ order_data.id }}">
+                                            <input type="hidden" name="owner" value="{{ owner.owner }}">
                                             <div>
                                                 <button class="btn btn-primary">Submit</button>
                                             </div>
                                         </form>
+                                    {% endfor %}
 
                                     </div>
                                     <div id="pilljustified5"

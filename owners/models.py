@@ -51,7 +51,11 @@ class OwnerDatabase(Base):
 class OrderOwnerRight(Base):
     owner = models.ForeignKey(OwnerDatabase, on_delete=models.SET_NULL, null=True, blank=True)
     right_type = models.ForeignKey(RightType, on_delete=models.SET_NULL, null=True, blank=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
+    order = models.ForeignKey(Order,
+                              on_delete=models.SET_NULL,
+                              null=True,
+                              blank=True,
+                              related_name='order_owner')
 
     def __str__(self):
         return self.owner.name + ', ' + self.right_type.name + ', ' + self.order.song_title
