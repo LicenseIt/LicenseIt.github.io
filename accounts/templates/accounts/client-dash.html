@@ -470,190 +470,187 @@
                                                     </button>
                                                 </p>
                                             {% endif %}
-                                    </div>
-                                    <div id="pilljustified2" class="tab-pane fade">
-                                        <h5>Owner Identification</h5>
-                                        <h6>Synchronization license was requested from:</h6>
-                                        <div class="row">
-                                            {% for owner in owners %}
-                                                <div class="col-md-12">
-                                                    {{ owner.right_type }} - owned by {{ owner.owner }}
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-
-                                        <p>
-                                            <button class="button button-xs button-square button-success">
-                                                Status:
-                                                Completed
-                                            </button>
-                                        </p>
-
-                                    </div>
-                                    <div id="pilljustified3"
-                                         class="tab-pane fade in{% if order_data.state == 'sent' or order_data.state == 'attention' %} active{% endif %}">
-                                        <h5>Clrearance Request</h5>
-                                        <p>
-                                            <button class="button button-xs button-square button-yellow">Status:
-                                                pending
-                                            </button>
-                                        </p>
-                                        <h3>contact licenseit</h3>
-                                        {% for question in ask_user %}
-                                            {% if not question.answer %}
-                                                <form action="{% url 'ask_user' %}" method="post">
-                                                    {% csrf_token %}
-                                                    <div class="form-group">
-                                                        <label class="control-label"
-                                                               for="question{{ question.id }}">
-                                                            {{ question.question }} asked by {{ question.owner }}
-                                                        </label>
-                                                        <textarea id="question{{ question.id }}"
-                                                                  name="question{{ question.id }}"
-                                                                  value=""
-                                                                  class="form-control"></textarea>
+                                        <div id="pilljustified2" class="tab-pane fade">
+                                            <h5>Owner Identification</h5>
+                                            <h6>Synchronization license was requested from:</h6>
+                                            <div class="row">
+                                                {% for owner in owners %}
+                                                    <div class="col-md-12">
+                                                        {{ owner.right_type }} - owned by {{ owner.owner }}
                                                     </div>
-                                                    <button>submit</button>
-                                                </form>
-                                            {% endif %}
-                                        {% endfor %}
-                                        <form action="{% url 'user_question' %}" method="post">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="order" value="{{ order_data.id }}">
-                                            <label for="user_question">your question</label>
-                                            {{ user_question_form.question }}
-                                            <button>submit question</button>
-                                        </form>
-                                        <div>
-                                            <h4>user questions and answers</h4>
-                                            <div class="col-sm-12 frame">
-                                                <ul class="whatsapp-style">
-                                                    {% for question in user_question_history %}
-                                                        <li style="width:100%;">
-                                                            <div class="msj macro">
-                                                                {% user_image user as image %}
-                                                                <div class="avatar"><img class="img-circle"
-                                                                                         style="width:100%;"
-                                                                                         src="{{ image }}"
-                                                                                         alt="avatar"></div>
-                                                                <div class="text text-left">
-                                                                    <p>{{ question.question }}</p>
-                                                                    <p>
-                                                                        <small>{{ question.created }}</small>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        {% if question.answer %}
-                                                            <li style="width: 100%;">
-                                                                <div class="msj-rta macro">
-                                                                    <div class="text text-right">
-                                                                        <p>{{ question.answer }}</p>
-                                                                        <p>
-                                                                            <small>{{ question.updated }}</small>
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="avatar"
-                                                                         style="padding:0 0 0 10px !important"><img
-                                                                            class="img-circle" style="width:100%;"
-                                                                            src=""
-                                                                            alt="avatar"/></div>
-                                                                </div>
-                                                            </li>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </ul>
+                                                {% endfor %}
                                             </div>
-                                        </div>
-                                        <div>
-                                            <h4>owners questions and answers</h4>
-                                            <div class="col-sm-12 frame">
-                                                <ul class="whatsapp-style">
-                                                    {% for question in owner_questions %}
-                                                        <li style="width:100%;">
-                                                            <div class="msj macro">
-                                                                <div class="avatar"><img class="img-circle"
-                                                                                         style="width:100%;"
-                                                                                         src="{% if question.owner.image %}{{ question.owner.image.url }}{% else %}{{ image }}{% endif %}"
-                                                                                         alt="avatar"></div>
-                                                                <div class="text text-left">
-                                                                    <p>
-                                                                        {{ question.owner }}-
-                                                                        {{ question.question }}
-                                                                    </p>
-                                                                    <p>
-                                                                        <small>{{ question.created }}</small>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        {% if question.answer %}
-                                                            <li style="width: 100%;">
-                                                                <div class="msj-rta macro">
-                                                                    <div class="text text-right">
-                                                                        <p>
-                                                                            {{ question.answer }}
-                                                                        </p>
-                                                                        <p>
-                                                                            <small>{{ question.updated }}</small>
-                                                                        </p>
-                                                                    </div>
-                                                                    {% user_image user as image %}
-                                                                    <div class="avatar"
-                                                                         style="padding:0 0 0 10px !important"><img
-                                                                            class="img-circle" style="width:100%;"
-                                                                            src="{{ image }}"
-                                                                            alt="avatar"/></div>
-                                                                </div>
-                                                            </li>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="pilljustified4"
-                                         class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
-                                        {% if order_data %}
-                                            {#                                            <form action="{% url 'create_payment' order_data.id %}" method="post">#}
-                                            {#                                                {% csrf_token %}#}
-                                            <div id="paypal-button"></div>
-                                            {#                                            </form>#}
-                                        {% endif %}
 
-                                        <h5>Payment</h5>
-                                    {% for owner in counter_owners %}
-                                        <h5>counter offer for {{ owner.owner }}</h5>
-                                        <form action="
-
-                                                {% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
-                                              method="post">
-                                            <div>{% csrf_token %}
-                                                <p>price: {{ owner.owner.price }}</p>
-                                                <label for="id_title">title</label>
-                                                {{ counter_offer_form.title }}
-                                            </div>
-                                            <div>
-                                                <label for="id_offer">your offer</label>
-                                                {{ counter_offer_form.offer }}
-                                            </div>
-                                            <input type="hidden" name="order" value="{{ order_data.id }}">
-                                            <input type="hidden" name="owner" value="{{ owner.owner }}">
-                                            <div>
-                                                <button class="btn btn-primary">Submit</button>
-                                            </div>
-                                        </form>
-                                    {% endfor %}
-
-                                    </div>
-                                    <div id="pilljustified5"
-                                         class="tab-pane fade{% if order_data.state == 'done' %} in active{% endif %}">
-                                        <h5>Completed</h5>
-                                        {% if order_data.license_pdf %}
                                             <p>
-                                                <a href="{{ order_data.license_pdf.url }}">your license</a>
+                                                <button class="button button-xs button-square button-success">
+                                                    Status:
+                                                    Completed
+                                                </button>
                                             </p>
-                                        {% endif %}
+
+                                        </div>
+                                        <div id="pilljustified3"
+                                             class="tab-pane fade in{% if order_data.state == 'sent' or order_data.state == 'attention' %} active{% endif %}">
+                                            <h5>Clrearance Request</h5>
+                                            <p>
+                                                <button class="button button-xs button-square button-yellow">Status:
+                                                    pending
+                                                </button>
+                                            </p>
+                                            <h3>contact licenseit</h3>
+                                            {% for question in ask_user %}
+                                                {% if not question.answer %}
+                                                    <form action="{% url 'ask_user' %}" method="post">
+                                                        {% csrf_token %}
+                                                        <div class="form-group">
+                                                            <label class="control-label"
+                                                                   for="question{{ question.id }}">
+                                                                {{ question.question }} asked by {{ question.owner }}
+                                                            </label>
+                                                            <textarea id="question{{ question.id }}"
+                                                                      name="question{{ question.id }}"
+                                                                      value=""
+                                                                      class="form-control"></textarea>
+                                                        </div>
+                                                        <button>submit</button>
+                                                    </form>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <form action="{% url 'user_question' %}" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="order" value="{{ order_data.id }}">
+                                                <label for="user_question">your question</label>
+                                                {{ user_question_form.question }}
+                                                <button>submit question</button>
+                                            </form>
+                                            <div>
+                                                <h4>user questions and answers</h4>
+                                                <div class="col-sm-12 frame">
+                                                    <ul class="whatsapp-style">
+                                                        {% for question in user_question_history %}
+                                                            <li style="width:100%;">
+                                                                <div class="msj macro">
+                                                                    {% user_image user as image %}
+                                                                    <div class="avatar"><img class="img-circle"
+                                                                                             style="width:100%;"
+                                                                                             src="{{ image }}"
+                                                                                             alt="avatar"></div>
+                                                                    <div class="text text-left">
+                                                                        <p>{{ question.question }}</p>
+                                                                        <p>
+                                                                            <small>{{ question.created }}</small>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            {% if question.answer %}
+                                                                <li style="width: 100%;">
+                                                                    <div class="msj-rta macro">
+                                                                        <div class="text text-right">
+                                                                            <p>{{ question.answer }}</p>
+                                                                            <p>
+                                                                                <small>{{ question.updated }}</small>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="avatar"
+                                                                             style="padding:0 0 0 10px !important"><img
+                                                                                class="img-circle" style="width:100%;"
+                                                                                src=""
+                                                                                alt="avatar"/></div>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h4>owners questions and answers</h4>
+                                                <div class="col-sm-12 frame">
+                                                    <ul class="whatsapp-style">
+                                                        {% for question in owner_questions %}
+                                                            <li style="width:100%;">
+                                                                <div class="msj macro">
+                                                                    <div class="avatar"><img class="img-circle"
+                                                                                             style="width:100%;"
+                                                                                             src="{% if question.owner.image %}{{ question.owner.image.url }}{% else %}{{ image }}{% endif %}"
+                                                                                             alt="avatar"></div>
+                                                                    <div class="text text-left">
+                                                                        <p>
+                                                                            {{ question.owner }}-
+                                                                            {{ question.question }}
+                                                                        </p>
+                                                                        <p>
+                                                                            <small>{{ question.created }}</small>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            {% if question.answer %}
+                                                                <li style="width: 100%;">
+                                                                    <div class="msj-rta macro">
+                                                                        <div class="text text-right">
+                                                                            <p>
+                                                                                {{ question.answer }}
+                                                                            </p>
+                                                                            <p>
+                                                                                <small>{{ question.updated }}</small>
+                                                                            </p>
+                                                                        </div>
+                                                                        {% user_image user as image %}
+                                                                        <div class="avatar"
+                                                                             style="padding:0 0 0 10px !important"><img
+                                                                                class="img-circle" style="width:100%;"
+                                                                                src="{{ image }}"
+                                                                                alt="avatar"/></div>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="pilljustified4"
+                                             class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
+                                            {% if order_data and order_data.price %}
+                                                <div id="paypal-button"></div>
+                                            {% endif %}
+
+                                            <h5>Payment</h5>
+                                        {% for owner in counter_owners %}
+                                            <h5>counter offer for {{ owner.owner }}</h5>
+                                            <form action="
+
+                                                    {% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
+                                                  method="post">
+                                                <div>{% csrf_token %}
+                                                    <p>price: {{ owner.owner.price }}</p>
+                                                    <label for="id_title">title</label>
+                                                    {{ counter_offer_form.title }}
+                                                </div>
+                                                <div>
+                                                    <label for="id_offer">your offer</label>
+                                                    {{ counter_offer_form.offer }}
+                                                </div>
+                                                <input type="hidden" name="order" value="{{ order_data.id }}">
+                                                <input type="hidden" name="owner" value="{{ owner.owner }}">
+                                                <div>
+                                                    <button class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
+                                        {% endfor %}
+
+                                        </div>
+                                        <div id="pilljustified5"
+                                             class="tab-pane fade{% if order_data.state == 'done' %} in active{% endif %}">
+                                            <h5>Completed</h5>
+                                            {% if order_data.license_pdf %}
+                                                <p>
+                                                    <a href="{{ order_data.license_pdf.url }}">your license</a>
+                                                </p>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

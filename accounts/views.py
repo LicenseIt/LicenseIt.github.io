@@ -465,13 +465,13 @@ class Account(ConnectBase):
             context['user_question_history'] = UserQuestion.objects.filter(order=order.id)
             context['owner_questions'] = Question.objects.filter(order=order.id).select_related()
             context['counter_owners'] = CounterOffer.objects.filter(order=order.id)
-            print(context['counter_owners'][0].owner.price)
 
         if payment_id:
             context['payment_id'] = payment_id
         image = SiteFiles.objects.filter(file_name='default_image')
         if image:
             context['image'] = image[0].file.url
+        print(order.price)
 
         return render(request,
                       self.template_name,
