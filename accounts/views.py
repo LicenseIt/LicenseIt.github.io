@@ -471,7 +471,6 @@ class Account(ConnectBase):
         image = SiteFiles.objects.filter(file_name='default_image')
         if image:
             context['image'] = image[0].file.url
-        print(order.price)
 
         return render(request,
                       self.template_name,
