@@ -582,7 +582,7 @@ class ProjectDetailBase(OrderProjectDetailBase):
     synopsis = models.CharField(max_length=1000)
     description = models.TextField()
 
-    is_non_profit = models.CharField(max_length=3, choices=IS_NON_PROFIT_CHOICES, default='no')
+    is_non_profit = models.CharField(max_length=3, choices=IS_NON_PROFIT_CHOICES, default='yes')
     non_profit = models.CharField(max_length=3, choices=NON_PROFIT_CHOICES,
                                   null=True, blank=True)
 
