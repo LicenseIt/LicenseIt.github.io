@@ -26,7 +26,7 @@ if (territory_elem.val() === 'United States') {
     $('#usa_states').hide();
 }
 
-if (is_non_profit.val() !== 'selected') {
+if (is_non_profit.val() === 'selected') {
     $('#non-profit').show();
 } else {
     $('#non-profit').hide();
