@@ -464,10 +464,10 @@ class AdvertisingDistribution(View):
 
         if 'distribute_on' in request.POST:
             web_form = IndieWebDistribution(request.POST.copy())
-            web_form.data['order'] = order
+            web_form.data['order'] = order_id
         if 'name' in request.POST:
             ext_form = IndieExtDistribution(request.POST.copy())
-            ext_form.data['order'] = order
+            ext_form.data['order'] = order_id
         # if 'tv_trailer' or 'tv_program' in request.POST:
         #     tv_form = TvDistributionForm(request.POST.copy())
         #     tv_form.data['order'] = order_id
