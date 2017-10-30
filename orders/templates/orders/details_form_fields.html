@@ -22,7 +22,7 @@
         {% for check in details_form.opening_closing %}
             <label class="switch block" for="{{ check.id_for_label }}">
                 {{ check.tag }}
-                <span class="switch-label" data-on="NO" data-off="YES"></span>{{ check.choice_label }}
+                <span class="switch-label" data-on="" data-off=""></span><span class="p10">{{ check.choice_label }}</span>
             </label>
         {% endfor %}
     </div>
@@ -39,7 +39,7 @@
             {% for check in details_form.featured_background %}
                 <label class="option" for="{{ check.id_for_label }}">
                     {{ check.tag }}
-                    <span class="checkbox"></span>{{ check.choice_label }}
+                    <span class="checkbox"></span><span class="p10">{{ check.choice_label }}</span>
                 </label>
             {% endfor %}
         </div>
@@ -55,7 +55,7 @@
             {% for check in details_form.song_version %}
                 <label class="option" for="{{ check.id_for_label }}">
                     {{ check.tag }}
-                    <span class="radio"></span>{{ check.choice_label }}
+                    <span class="radio"></span><span class="p10">{{ check.choice_label }}</span>
                 </label>
             {% endfor %}
         </div>
@@ -158,7 +158,7 @@
             {% for radio in details_form.budget %}
                 <label class="option" for="{{ radio.id_for_label }}" style="margin:7px;">
                     {{ radio.tag }}
-                    <span class="radio"></span>{{ radio.choice_label }}
+                    <span class="radio"></span><span class="p10">{{ radio.choice_label }}</span>
                 </label>
             {% endfor %}
         </div>

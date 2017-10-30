@@ -634,7 +634,7 @@ class OrderWedding(OrderProjectDetailBase):
     data about wedding project
     '''
     platform = models.CharField(max_length=1000)
-    num_uses = models.PositiveIntegerField()
+    num_uses = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'wedding project'

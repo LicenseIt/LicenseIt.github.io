@@ -36,7 +36,7 @@
             {% for radio in indie_form.film_length %}
                 <label class="switch block" for="{{ radio.id_for_label }}">
                     {{ radio.tag }}
-                    <span class="switch-label" data-on="YES" data-off="NO"></span>{{ radio.choice_label }}
+                    <span class="switch-label" data-on="" data-off=""></span><span class="p10">{{ radio.choice_label }}</span>
                 </label>
             {% endfor %}
         </div>
@@ -54,7 +54,7 @@
             {% for radio in indie_form.film_programming %}
                 <label class="switch block" for="{{ radio.id_for_label }}">
                     {{ radio.tag }}
-                    <span class="switch-label" data-on="YES" data-off="NO"></span>{{ radio.choice_label }}
+                    <span class="switch-label" data-on="" data-off=""></span><span class="p10">{{ radio.choice_label }}</span>
                 </label>
             {% endfor %}
         </div>
@@ -73,7 +73,7 @@
             {% for radio in indie_form.film_trailer %}
                 <label class="switch block" for="{{ radio.id_for_label }}">
                     {{ radio.tag }}
-                    <span class="switch-label" data-on="YES" data-off="NO"></span>{{ radio.choice_label }}
+                    <span class="switch-label" data-on="" data-off=""></span><span class="p10">{{ radio.choice_label }}</span>
                 </label>
             {% endfor %}
         </div>
