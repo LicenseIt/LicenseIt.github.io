@@ -6,3 +6,8 @@ from django.views import View
 class LPYoutubeView(View):
     def get(self, request):
         return render(request, 'static_pages/index.html')
+
+class youtube(View):
+     def get(self, request):
+          return render(request, 'static_pages/youtube.html')
+
