@@ -58,7 +58,7 @@ a:hover {
 }
 .tab-group li a:hover {
   background: #e31700;
-  color: #ffffff;
+  color: #747474;
 }
 .tab-group .active a {
   background: #ff4530;
@@ -104,7 +104,7 @@ label.active .req {
 }
 
 label.highlight {
-  color: #ffffff;
+  color: #747474;
 }
 
 input, textarea {
