@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'team',
     'terms',
     'common',
+    'static_pages',
     'home',
     'licensing',
     'owners',
