@@ -702,7 +702,7 @@
                                     <a href="{% url 'my_account_order' order.id %}">
                                                                         <button class="button button-xs button-info hover-icon-forward"><i class="fa fa-long-arrow-right"></i></button>
                                     </a>
-                                    <span class="sidebar-cart-remove" style="color: #efefef;"><a href="remove_song"><i
+                                    <span class="sidebar-cart-remove" style="color: #efefef;"><a href="{% url 'delete_order' order_data.id %}"><i
                                             class="fa fa-times-circle fa-fw" style="color: #efefef;"></i>Remove</a></span>
                                 </div>
                             {% endfor %}
