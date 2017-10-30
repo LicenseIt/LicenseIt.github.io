@@ -191,7 +191,7 @@
     <div class="option-group field">
         <div class="group-vertical">
             {% for radio in details_form.is_non_profit %}
-                <label id="{% if radio.choice_label == 'profit' %}is-non-profit{% else %}is-not-non-profit{% endif %}"
+                <label id="{% if radio.choice_label == 'profit' %}is-not-non-profit{% else %}is-non-profit{% endif %}"
                        class="modern-switch morph-switch" for="{{ radio.id_for_label }}">
                     {{ radio.tag }}
                     <span class="switch-toggle"></span>{{ radio.choice_label }}
