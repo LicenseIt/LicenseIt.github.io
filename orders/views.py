@@ -587,7 +587,7 @@ class DetailBase(View):
                           context=context)
 
         order = Order.objects.get(pk=order_id)
-        if request.user.is_authenticated() and not order.user:
+        if request.user.is_authenticated():
             order.user = request.user
             order.save()
             if 'rate' in request.POST:
