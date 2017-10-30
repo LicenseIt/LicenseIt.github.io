@@ -1,6 +1,8 @@
- <div class="row alert alert-danger">
+ {% if program_form.errors %}
+<div class="row alert alert-danger">
     {{ program_form.errors }}
 </div>
+ {% endif %}
 
   <div class="spacer-t20 spacer-b20">
                         <div class="tagline"><span> Production Name </span></div><!-- .tagline -->

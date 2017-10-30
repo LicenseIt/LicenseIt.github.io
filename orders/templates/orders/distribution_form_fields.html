@@ -1,7 +1,9 @@
 {% if web %}
+{% if web.error.errors %}
     <div class="row alert alert-danger">
         {{ web.errors }}
     </div>
+{% endif %}
     <div class="section">
         <div class="spacer-t30 spacer-b30">
                     	<div class="tagline"><span> where exactly online? </span></div><!-- .tagline -->
