@@ -688,17 +688,22 @@
                     <div class=" pb20 clearfix">
                         <h5 class="mt25 color-light">
                             Your Orders
-                            <span class="heading-divider mt10"></span>
                         </h5>
+                        <p class="color-light">click the song to view the order</p>
+                        <span class="heading-divider mt10"></span>
+
                         <div class="shop-sidebar-cart">
                             {% for order in orders_list %}
                                 <div class="sidebar-cart-container">
 
                                     <h6><a href="{% url 'my_account_order' order.id %}"
-                                           class="color-blue">{{ order.song_title }}</a></h6>
+                                           class="color-blue" style="font-size: 14px">{{ order.song_title }}</a></h6>
                                     <span class="sidebar-cart-price color-light">{{ order.performer_name }}</span>
-                                    <span class="sidebar-cart-remove color-light"><a href="remove_song"><i
-                                            class="fa fa-times-circle fa-fw"></i>Remove</a></span>
+                                    <a href="{% url 'my_account_order' order.id %}">
+                                                                        <button class="button button-xs button-info hover-icon-forward"><i class="fa fa-long-arrow-right"></i></button>
+                                    </a>
+                                    <span class="sidebar-cart-remove" style="color: #efefef;"><a href="remove_song"><i
+                                            class="fa fa-times-circle fa-fw" style="color: #efefef;"></i>Remove</a></span>
                                 </div>
                             {% endfor %}
                         </div>

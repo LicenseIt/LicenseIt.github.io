@@ -1,9 +1,10 @@
+{% if personal_form.errors %}
 <div class="row alert alert-danger">
     {{ personal_form.errors }}
 </div>
-<div class="row">
-    {{ personal_info.errors }}
-</div>
+{% endif %}
+
+
 
 <div class="spacer-t40 spacer-b20">
                         <div class="tagline"><span> Platforms</span></div><!-- .tagline -->
