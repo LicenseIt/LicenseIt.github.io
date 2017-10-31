@@ -7,8 +7,13 @@ from .models import (
     OrderOwnerRight,
 )
 
+
+class OwnerRight(admin.ModelAdmin):
+    list_display = ['owner', 'right_type', 'order']
+
+
 # Register your models here.
 admin.site.register(OwnerDatabase)
 admin.site.register(Question)
 admin.site.register(RightType)
-admin.site.register(OrderOwnerRight)
+admin.site.register(OrderOwnerRight, OwnerRight)
