@@ -166,19 +166,26 @@
                                     <div class="tab-content">
                                         <div id="pilljustifiedHome" class="tab-pane fade">
                                             <h5>Music Selection</h5>
+                                                <p>
+                                                    <button class="button button-xs button-square button-success">
+                                                        Status:
+                                                        Completed
+                                                    </button>
+                                                </p>
                                             <p>song title: {{ order_data.song_title }}</p>
                                             <p>performer name: {{ order_data.performer_name }}</p>
                                             <p>date of order: {{ order_data.created }}</p>
                                             <p>order state: {{ order_data.state }}</p>
-                                            <p>
-                                                <button class="button button-xs button-square button-success">Status:
-                                                    Completed
-                                                </button>
-                                            </p>
                                         </div>
                                         <div id="pilljustified1" class="tab-pane fade">
-                                            {% if order_data %}
                                                 <h5>License Inquiry</h5>
+                                                <p>
+                                                    <button class="button button-xs button-square button-success">
+                                                        Status:
+                                                        Completed
+                                                    </button>
+                                                </p>
+                                            {% if order_data %}
                                                 <div class="smart-wrap" id="license-form">
                                                     <div class="smart-forms smart-container wrap-4">
                                                         <form method="post"
@@ -457,15 +464,15 @@
                                                     </div>
                                                 </div>
                                                 </div>
+                                            {% endif %}
+                                        <div id="pilljustified2" class="tab-pane fade">
+                                            <h5>Owner Identification</h5>
                                                 <p>
                                                     <button class="button button-xs button-square button-success">
                                                         Status:
                                                         Completed
                                                     </button>
                                                 </p>
-                                            {% endif %}
-                                        <div id="pilljustified2" class="tab-pane fade">
-                                            <h5>Owner Identification</h5>
                                             <h6>Synchronization license was requested from:</h6>
                                             <div class="row">
                                                 {% for owner in owners %}
@@ -474,23 +481,24 @@
                                                     </div>
                                                 {% endfor %}
                                             </div>
-
-                                            <p>
-                                                <button class="button button-xs button-square button-success">
-                                                    Status:
-                                                    Completed
-                                                </button>
-                                            </p>
-
                                         </div>
                                         <div id="pilljustified3"
                                              class="tab-pane fade in{% if order_data.state == 'sent' or order_data.state == 'attention' %} active{% endif %}">
                                             <h5>Clrearance Request</h5>
+                                        {% if order_data.state == 'sent' or order_data.state == 'attention' %}
                                             <p>
                                                 <button class="button button-xs button-square button-yellow">Status:
                                                     pending
                                                 </button>
                                             </p>
+                                        {% else %}
+                                                <p>
+                                                    <button class="button button-xs button-square button-success">
+                                                        Status:
+                                                        Completed
+                                                    </button>
+                                                </p>
+                                        {% endif %}
                                             <h3>contact licenseit</h3>
                                             {% for question in ask_user %}
                                                 {% if not question.answer %}
@@ -607,16 +615,27 @@
                                         </div>
                                         <div id="pilljustified4"
                                              class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
+                                            <h5>Payment</h5>
+                                        {% if order_data.state == 'done' %}
+                                                <p>
+                                                    <button class="button button-xs button-square button-success">
+                                                        Status:
+                                                        Completed
+                                                    </button>
+                                                </p>
+                                        {% else %}
+                                            <p>
+                                                <button class="button button-xs button-square button-yellow">Status:
+                                                    pending
+                                                </button>
+                                            </p>
+                                        {% endif %}
                                             {% if order_data and order_data.price %}
                                                 <div id="paypal-button"></div>
                                             {% endif %}
-
-                                            <h5>Payment</h5>
                                         {% for owner in counter_owners %}
                                             <h5>counter offer for {{ owner.owner }}</h5>
-                                            <form action="
-
-                                                    {% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
+                                            <form action="{% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
                                                   method="post">
                                                 <div>{% csrf_token %}
                                                     <p>price: {{ owner.owner.price }}</p>
