@@ -287,24 +287,10 @@ class IndieDistribution(View):
                           })
 
         if web_form:
-            done = web_form.save()
-            if web_form.data['distribute_new']:
-                new_dist = WebEntry(name=web_form.data['distribute_new'])
-                new_dist.full_clean()
-                new_dist.save()
-                dist = WebDistribution.objects.get(pk=done.id)
-                dist.distribute_on.add(new_dist.id)
-                dist.save()
+            web_form.save()
 
         if ext_form:
-            done = ext_form.save()
-            if ext_form.data['dist_new']:
-                new_dist = ExternalEntry(name=ext_form.data['dist_new'])
-                new_dist.full_clean()
-                new_dist.save()
-                dist = ExternalDistribution.objects.get(pk=done.id)
-                dist.name.add(new_dist.id)
-                dist.save()
+            ext_form.save()
 
         return HttpResponseRedirect(reverse('indie_details', args=[order_id]))
 
@@ -384,24 +370,10 @@ class ProgramDistribution(View):
                           })
 
         if web_form:
-            done = web_form.save()
-            if web_form.data['distribute_new']:
-                new_dist = WebEntry(name=web_form.data['distribute_new'])
-                new_dist.full_clean()
-                new_dist.save()
-                dist = WebDistribution.objects.get(pk=done.id)
-                dist.distribute_on.add(new_dist.id)
-                dist.save()
+            web_form.save()
 
         if ext_form:
-            done = ext_form.save()
-            if ext_form.data['dist_new']:
-                new_dist = ExternalEntry(name=ext_form.data['dist_new'])
-                new_dist.full_clean()
-                new_dist.save()
-                dist = ExternalDistribution.objects.get(pk=done.id)
-                dist.name.add(new_dist.id)
-                dist.save()
+            ext_form.save()
 
         if tv_form:
             tv_form.save()
@@ -485,24 +457,10 @@ class AdvertisingDistribution(View):
                           })
 
         if web_form:
-            done = web_form.save()
-            if web_form.data['distribute_new']:
-                new_dist = WebEntry(name=web_form.data['distribute_new'])
-                new_dist.full_clean()
-                new_dist.save()
-                dist = WebDistribution.objects.get(pk=done.id)
-                dist.distribute_on.add(new_dist.id)
-                dist.save()
+            web_form.save()
 
         if ext_form:
-            done = ext_form.save()
-            if ext_form.data['dist_new']:
-                new_dist = ExternalEntry(name=ext_form.data['dist_new'])
-                new_dist.full_clean()
-                new_dist.save()
-                dist = ExternalDistribution.objects.get(pk=done.id)
-                dist.name.add(new_dist.id)
-                dist.save()
+            ext_form.save()
 
         # if tv_form:
         #     tv_form.save()

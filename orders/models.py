@@ -102,12 +102,13 @@ class WebDistribution(Base):
     '''
     distribute_on = models.ManyToManyField(WebEntry, related_name='dist_web')
     youtube_id = models.IntegerField(null=True, blank=True)
+    web_other = models.CharField(max_length=200, null=True, blank=True)
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_dist_web')
 
     def __str__(self):
-        ret = ''
-        for name in self.distribute_on.all():
-            ret += ', ' + name.name
+        ret = ', '.join(str(entry) for entry in self.distribute_on.all())
+        if self.web_other:
+            ret += ', ' + self.web_other
         return ret
 
     class Meta:
@@ -121,12 +122,13 @@ class ExternalDistribution(Base):
     '''
     name = models.ManyToManyField(ExternalEntry, related_name='ext_dist')
     num_people = models.IntegerField()
+    ext_other = models.CharField(max_length=200, null=True, blank=True)
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_dist_ext')
 
     def __str__(self):
-        ret = ''
-        for name in self.name.all():
-            ret += name.name + ' '
+        ret = ', '.join(str(entry) for entry in self.name.all())
+        if self.ext_other:
+            ret += ', ' + self.ext_other
         return ret
 
     class Meta:
