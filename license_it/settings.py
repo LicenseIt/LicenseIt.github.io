@@ -172,6 +172,9 @@ MEDIA_ROOT = BASE_DIR + '/uploads/'
 EMAIL_HOST = 'licenseit.net'
 EMAIL_PORT = 25
 
+# upload file size limit
+FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600
+
 # social auth- facebook
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',

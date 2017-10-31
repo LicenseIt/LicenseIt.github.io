@@ -54,7 +54,7 @@ class OrderOwnerRight(Base):
     order = models.ForeignKey(Order,
                               on_delete=models.CASCADE,
                               related_name='order_owner')
-    price = models.CharField(max_length=50)
+    price = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.owner.name + ', ' + self.right_type.name
