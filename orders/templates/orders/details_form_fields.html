@@ -1,6 +1,8 @@
-<div class="">
+{% if details_form.errors %}
+<div class="row alert alert-danger">
     {{ details_form.errors }}
 </div>
+{% endif %}
  <div class="spacer-t20 spacer-b20">
                         <div class="tagline"><span> Project details </span></div><!-- .tagline -->
 </div><!-- end section -->
