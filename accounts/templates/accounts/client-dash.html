@@ -530,6 +530,7 @@
 
                                             {% for question in ask_user %}
                                                 {% if not question.answer %}
+                                                    <div>
                                                     <form action="{% url 'ask_user' order_data.id %}" method="post">
                                                         {% csrf_token %}
                                                         <div class="form-group">
@@ -544,6 +545,7 @@
                                                         </div>
                                                         <button>submit your answer here for us</button>
                                                     </form>
+                                                    </div>
                                                 {% endif %}
                                             {% endfor %}
                                         {% if order_data %}
