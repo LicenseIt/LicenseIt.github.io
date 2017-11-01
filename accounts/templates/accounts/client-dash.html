@@ -126,29 +126,29 @@
                         <div class="container pt20 pb20">
                             <div class="row">
                                 <div class="col-md-9"
-                                     style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                                     style="box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
                                     <ul class="nav nav-pills nav-justified">
                                         <li>
-                                            <a data-toggle="pill" href="#pilljustifiedHome">Music selection
+                                            <a data-toggle="pill" href="#pilljustifiedHome">Music selection <br>
                                                 <i class="fa fa-check-circle fa-2x p5 color-success animated"
                                                    data-animation="fadeInUp" data-animation-delay="1200"></i>
                                             </a>
                                         </li>
                                         <li>
                                             <a id="link_inquiry" data-toggle="pill" href="#pilljustified1">License
-                                                inquiry
+                                                inquiry<br>
                                                 <i class="fa fa-check-circle fa-2x p5 color-success animated"
                                                    data-animation="fadeInUp" data-animation-delay="1600"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a data-toggle="pill" href="#pilljustified2">Owner identification
+                                            <a data-toggle="pill" href="#pilljustified2">Owner identification<br>
                                                 <i class="fa fa-check-circle fa-2x p5 color-success animated"
                                                    data-animation="fadeInUp" data-animation-delay="2000"></i>
                                             </a>
                                         </li>
                                         <li {% if order_data.state == 'sent' or order_data.state == 'attention' %}class="active"{% endif %}>
-                                            <a data-toggle="pill" href="#pilljustified3">Clrearance request
+                                            <a data-toggle="pill" href="#pilljustified3">Clrearance request<br>
                                                 <i class="fa {% if order_data.state == 'sent' or order_data.state == 'attention' %}fa-circle-thin{% else %} fa-check-circle color-success animated{% endif %} fa-2x p5"></i>
                                             </a>
                                         </li>
@@ -158,38 +158,48 @@
                                             </a>
                                         </li>
                                         <li {% if order_data.state == 'done' %}class="active"{% endif %}>
-                                            <a data-toggle="pill" href="#pilljustified5"> License Completed
+                                            <a data-toggle="pill" href="#pilljustified5"> License Completed<br>
                                                 <i class="fa {% if order_data.state == 'done' %} fa-check-circle color-success animated{% else %}fa-circle-thin{% endif %} fa-2x p5"></i>
                                             </a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
-                                        <div id="pilljustifiedHome" class="tab-pane fade">
-                                            <h5>Music Selection</h5>
-                                                <p>
+                                        <div id="pilljustifiedHome" class="tab-pane fade p20">
+                                            <div class="price price-four" style="border-style:none;">
+                                            <div class="price-body" style="border-style:none;">
+                                            <h4 class="text-uppercase color-info">Music Selection</h4>
+                                            <ul>
+                                                <li><i class="fa fa-check-circle color-pasific"></i>song title: <kbd>{{ order_data.song_title }}</kbd></li>
+                                                <li><i class="fa fa-check-circle color-pasific"></i>performer name: <kbd>{{ order_data.performer_name }}</kbd></li>
+                                                <li><i class="fa fa-check-circle color-pasific"></i>date of order: <kbd>{{ order_data.created }}</kbd></li>
+                                                <li><i class="fa fa-check-circle color-pasific"></i>order state: <kbd>{{ order_data.state }}</kbd></li>
+
+                                            </ul><br>
+<p>
                                                     <button class="button button-xs button-square button-success">
                                                         Status:
                                                         Completed
                                                     </button>
                                                 </p>
-                                            <p>song title: {{ order_data.song_title }}</p>
-                                            <p>performer name: {{ order_data.performer_name }}</p>
-                                            <p>date of order: {{ order_data.created }}</p>
-                                            <p>order state: {{ order_data.state }}</p>
+                                            </div>
+                                            </div>
+
                                         </div>
-                                        <div id="pilljustified1" class="tab-pane fade">
-                                                <h5>License Inquiry</h5>
-                                                <p>
-                                                    <button class="button button-xs button-square button-success">
-                                                        Status:
-                                                        Completed
-                                                    </button>
-                                                </p>
+                                        <div id="pilljustified1" class="tab-pane fade p20">
                                             {% if order_data %}
-                                                <div class="smart-wrap" id="license-form">
+                                            <div class="price price-four" style="border-style:none;">
+                                            <div class="price-body" style="border-style:none;">
+                                                <h4 class="text-uppercase color-info"> License Inquiry</h4>
+                                                <div    class="smart-wrap" id="license-form">
                                                     <div class="smart-forms smart-container wrap-4">
                                                         <form method="post"
-                                                              action="{% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
+                                                              action="
+
+
+
+
+
+                                                                      {% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
                                                             {% csrf_token %}
                                                             {% include 'orders/order_form_fields.html' %}
                                                             {% if advertising_form %}
@@ -223,286 +233,292 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                                <div class="row" id="license-data">
-                                                    <div class="col-md-10 col-md-offset-1">
+
+                                                <div class="row" id="license-data" style="width:500px;">
+                                                    <div class="col-md-12 col-md-offset-1 table table-striped">
                                                         <div class="row">
-                                                            <span class="col-md-3">
+                                                            <span class="col-md-5">
                                                                 song title
                                                             </span>
                                                             <span class="col-md-7">
-                                                                {{ order_data.song_title }}
+                                                                <kbd>  {{ order_data.song_title }}</kbd>
                                                             </span>
                                                         </div>
                                                         <div class="row">
-                                                            <span class="col-md-3">
+                                                            <span class="col-md-5">
                                                                 performer name
                                                             </span>
                                                             <span class="col-md-7">
-                                                                {{ order_data.performer_name }}
+                                                                <kbd>   {{ order_data.performer_name }}</kbd>
                                                             </span>
                                                         </div>
                                                         <div class="row">
-                                                            <span class="col-md-3">
+                                                            <span class="col-md-5">
                                                                 project type
                                                             </span>
                                                             <span class="col-md-7">
-                                                                {{ order_data.project_type }}
+                                                                <kbd>   {{ order_data.project_type }}</kbd>
                                                             </span>
                                                         </div>
                                                         {% if advertising %}
                                                             <div class="row">
-                                                                <span class="col-md-3">
+                                                                <span class="col-md-5">
                                                                     production name
                                                                 </span>
                                                                 <span class="col-md-7">
-                                                                    {{ advertising.production_name }}
+                                                                    <kbd>   {{ advertising.production_name }}</kbd>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">distribution</span>
+                                                                <span class="col-md-5">distribution</span>
                                                                 {% for dist in advertising.distribution.all %}
-                                                                    <span>{{ dist.name }}</span>
+                                                                <span><kbd>{{ dist.name }}</kbd></span>
                                                                 {% endfor %}
                                                             </div>
                                                         {% endif %}
                                                         {% if programming %}
                                                             <div class="row">
-                                                                <span class="col-md-3">
+                                                                <span class="col-md-5">
                                                                     production name
                                                                 </span>
                                                                 <span class="col-md-7">
-                                                                    {{ programming.production_name }}
+                                                                    <kbd>   {{ programming.production_name }}</kbd>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">distribution</span>
+                                                                <span class="col-md-5">distribution</span>
                                                                 {% for dist in programming.distribution.all %}
-                                                                    <span>{{ dist.name }}</span>
+                                                                <span><kbd>{{ dist.name }}</kbd></span>
                                                                 {% endfor %}
                                                             </div>
                                                         {% endif %}
                                                         {% if film_making %}
                                                             <div class="row">
-                                                                <span class="col-md-3">
+                                                                <span class="col-md-5">
                                                                     production name
                                                                 </span>
                                                                 <span class="col-md-7">
-                                                                    {{ film_making.production_name }}
+                                                                    <kbd> {{ film_making.production_name }}</kbd>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
-                                                            <span class="col-md-3">
+                                                            <span class="col-md-5">
                                                                 film length
                                                             </span>
-                                                                <span>{{ film_making.film_length }}</span>
+                                                                <span><kbd>{{ film_making.film_length }}</kbd></span>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">film programming</span>
-                                                                <span>{{ film_making.film_programming }}</span>
+                                                                <span class="col-md-5">film programming</span>
+                                                                <span><kbd>{{ film_making.film_programming }}</kbd></span>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">film trailer</span>
-                                                                <span>{{ film_making.film_trailer }}</span>
+                                                                <span class="col-md-5">film trailer</span>
+                                                                <span><kbd>{{ film_making.film_trailer }}</kbd></span>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">distribution</span>
+                                                                <span class="col-md-5">distribution</span>
                                                                 {% for dist in programming.distribution.all %}
-                                                                    <span>{{ dist.name }}</span>
+                                                                <span><kbd>{{ dist.name }}</kbd></span>
                                                                 {% endfor %}
                                                             </div>
                                                         {% endif %}
                                                         {% if web_dist %}
                                                             <div class="row">
-                                                                <span class="col-md-3">on the web</span>
-                                                                {{ web_dist }}
+                                                                <span class="col-md-5">on the web</span>
+                                                                <kbd> {{ web_dist }}</kbd>
                                                             </div>
                                                         {% endif %}
                                                         {% if ext_dist %}
                                                             <div class="row">
-                                                                <span class="col-md-3">externally</span>
-                                                                {{ ext_dist }}
+                                                                <span class="col-md-5">externally</span>
+                                                                <kbd>   {{ ext_dist }}</kbd>
                                                             </div>
                                                         {% endif %}
                                                         {% if tv_dist %}
                                                             <div class="row">
-                                                                <span class="col-md-3">tv</span>
-                                                                {{ tv_dist }}
+                                                                <span class="col-md-5">tv</span>
+                                                                <kbd>  {{ tv_dist }}</kbd>
                                                             </div>
                                                         {% endif %}
                                                         {% if details %}
                                                             <div class="row">
-                                                                <span class="col-md-3">number of uses</span>
-                                                                {{ details.number_uses }}
+                                                                <span class="col-md-5">number of uses</span>
+                                                                <kbd>  {{ details.number_uses }}</kbd>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">opening/closing</span>
-                                                                {{ details.opening_closing }}
+                                                                <span class="col-md-5">opening/closing</span>
+                                                                <kbd>    {{ details.opening_closing }}</kbd>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">featured/background?</span>
+                                                                <span class="col-md-5">featured/background?</span>
                                                                 {% for fb in details.featured_background.all %}
-                                                                    <span>{{ fb.name }}</span>
+                                                                <span><kbd>{{ fb.name }}</kbd></span>
                                                                 {% endfor %}
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">song version</span>
-                                                                {{ details.song_version }}
+                                                                <span class="col-md-5">song version</span>
+                                                                <kbd>   {{ details.song_version }}</kbd>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">start duration</span>
-                                                                {{ details.start_duration }}
+                                                                <span class="col-md-5">start duration</span>
+                                                                <kbd>   {{ details.start_duration }}</kbd>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">end duration</span>
-                                                                {{ details.end_duration }}
+                                                                <span class="col-md-5">end duration</span>
+                                                                <kbd> {{ details.end_duration }}</kbd>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">territory</span>
-                                                                {{ details.territory }}
+                                                                <span class="col-md-5">territory</span>
+                                                                <kbd> {{ details.territory }}</kbd>
                                                             </div>
                                                             {% if details.territory_usa %}
                                                                 <div class="row">
-                                                                    <span class="col-md-3">territory usa</span>
-                                                                    {{ details.territory_usa }}
+                                                                    <span class="col-md-5">territory usa</span>
+                                                                    <kbd>  {{ details.territory_usa }}</kbd>
                                                                 </div>
                                                             {% endif %}
                                                             <div class="row">
-                                                                <span class="col-md-3">term</span>
-                                                                {{ details.term }}
+                                                                <span class="col-md-5">term</span>
+                                                                <kbd>  {{ details.term }}</kbd>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">release date</span>
-                                                                {{ details.release_date }}
+                                                                <span class="col-md-5">release date</span>
+                                                                <kbd>  {{ details.release_date }}</kbd>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">budget</span>
-                                                                {{ details.budget }}
+                                                                <span class="col-md-5">budget</span>
+                                                                <kbd>  {{ details.budget }}</kbd>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">synopsis</span>
-                                                                {{ details.synopsis }}
+                                                                <span class="col-md-5">synopsis</span>
+                                                                <kbd>   {{ details.synopsis }}</kbd>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">description</span>
-                                                                {{ details.description }}
+                                                                <span class="col-md-5">description</span>
+                                                                <kbd>  {{ details.description }}</kbd>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">is non profit?</span>
-                                                                {{ details.is_non_profit }}
+                                                                <span class="col-md-5">is non profit?</span>
+                                                                <kbd> {{ details.is_non_profit }}</kbd>
                                                             </div>
                                                             {% if details.non_profit %}
                                                                 <div class="row">
-                                                                    <span class="col-md-3">non profit</span>
-                                                                    {{ details.non_profit }}
+                                                                    <span class="col-md-5">non profit</span>
+                                                                    <kbd> {{ details.non_profit }}</kbd>
                                                                 </div>
                                                             {% endif %}
                                                             <div class="row">
-                                                                <span class="col-md-3">comments</span>
-                                                                {{ details.comments }}
+                                                                <span class="col-md-5">comments</span>
+                                                                <kbd>  {{ details.comments }}</kbd>
                                                             </div>
                                                         {% endif %}
                                                         {% if wedding_form %}
                                                             <div class="row">
-                                                                <span class="col-md-3">
+                                                                <span class="col-md-5">
                                                                     platform
                                                                 </span>
                                                                 <span class="col-md-7">
-                                                                    {{ wedding_form.platform.value }}
+                                                                    <kbd>   {{ wedding_form.platform.value }}</kbd>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">
+                                                                <span class="col-md-5">
                                                                     number of uses
                                                                 </span>
                                                                 <span class="col-md-7">
-                                                                    {{ wedding_form.num_uses.value }}
+                                                                    <kbd>   {{ wedding_form.num_uses.value }}</kbd>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">
+                                                                <span class="col-md-5">
                                                                     platform
                                                                 </span>
-                                                                <span class="col-md-7">{{ wedding_form.platform.value }}</span>
+                                                                <span class="col-md-7"><kbd>{{ wedding_form.platform.value }}</kbd></span>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">territory</span>
+                                                                <span class="col-md-5">territory</span>
                                                                 <span class="col-md-7">
-                                                                    {{ wedding_form.territory.value }}
+                                                                    <kbd>  {{ wedding_form.territory.value }}</kbd>
                                                                 </span>
                                                             </div>
                                                             {% if wedding_form.territory_states %}
                                                                 <div class="row">
-                                                                <span class="col-md-3">
+                                                                <span class="col-md-5">
                                                                     USA states
                                                                 </span>
                                                                     <span class="col-md-7">
-                                                                    {{ wedding_form.territory_states.value }}
+                                                                        <kbd> {{ wedding_form.territory_states.value }}</kbd>
                                                                 </span>
                                                                 </div>
                                                             {% endif %}
                                                         {% endif %}
                                                         {% if personal_form %}
                                                             <div class="row">
-                                                                <span class="col-md-3">platform</span>
-                                                                <span class="col-md-7">{{ personal_form.platform.value }}</span>
+                                                                <span class="col-md-5">platform</span>
+                                                                <span class="col-md-7"><kbd>{{ personal_form.platform.value }}</kbd></span>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">purpose</span>
-                                                                <span class="col-md-7">{{ personal_form.purpose.value }}</span>
+                                                                <span class="col-md-5">purpose</span>
+                                                                <span class="col-md-7"><kbd>{{ personal_form.purpose.value }}</kbd></span>
                                                             </div>
                                                             <div class="row">
-                                                                <span class="col-md-3">territory</span>
-                                                                <span class="col-md-7">{{ personal_form.territory.value }}</span>
+                                                                <span class="col-md-5">territory</span>
+                                                                <span class="col-md-7"><kbd>{{ personal_form.territory.value }}</kbd></span>
                                                             </div>
                                                             {% if personal_form.territory_states %}
                                                                 <div class="row">
-                                                                    <span class="col-md-3">states</span>
-                                                                    <span class="col-md-7">{{ personal_form.territory_states.value }}</span>
+                                                                    <span class="col-md-5">states</span>
+                                                                    <span class="col-md-7"><kbd>{{ personal_form.territory_states.value }}</kbd></span>
                                                                 </div>
                                                             {% endif %}
                                                         {% endif %}
                                                     </div>
                                                 </div>
                                                 </div>
-                                            {% endif %}
-                                        <div id="pilljustified2" class="tab-pane fade">
-                                            <h5>Owner Identification</h5>
                                                 <p>
                                                     <button class="button button-xs button-square button-success">
                                                         Status:
                                                         Completed
                                                     </button>
                                                 </p>
-                                            <h6>Synchronization license was requested from:</h6>
-                                            <div class="row">
-                                                {% for owner in owners %}
-                                                    <div class="col-md-12">
-                                                        {{ owner.right_type }} - owned by {{ owner.owner }}
-                                                    </div>
-                                                {% endfor %}
+                                            {% endif %}
                                             </div>
                                         </div>
-                                        <div id="pilljustified3"
-                                             class="tab-pane fade in{% if order_data.state == 'sent' or order_data.state == 'attention' %} active{% endif %}">
-                                            <h5>Clrearance Request</h5>
-                                        {% if order_data.state == 'sent' or order_data.state == 'attention' %}
+                                        <div id="pilljustified2" style="text-align: center;" class="tab-pane fade p20">
+                                            <div class="price price-four" style="border-style:none;">
+                                            <div class="price-body" style="border-style:none;">
+                                            <h4 class="text-uppercase color-info">Owner Identification</h4>
+                                            <small>Synchronization license was requested from:</small> <br>
+                                            <div class="row">
+                                                <ul>
+                                                {% for owner in owners %}
+                                                    <li class="col-md-12"><i class="fa fa-check-circle color-pasific"></i>
+                                                        {{ owner.right_type }} - owned by <kbd>{{ owner.owner }}</kbd>
+                                                    </li>
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                            </div>
+                                            </div> <br>
+
                                             <p>
-                                                <button class="button button-xs button-square button-yellow">Status:
-                                                    pending
+                                                <button class="button button-xs button-square button-success">
+                                                    Status:
+                                                    Completed
                                                 </button>
                                             </p>
-                                        {% else %}
-                                                <p>
-                                                    <button class="button button-xs button-square button-success">
-                                                        Status:
-                                                        Completed
-                                                    </button>
-                                                </p>
-                                        {% endif %}
-                                            <h3>contact licenseit</h3>
+
+                                        </div>
+                                        <div id="pilljustified3" style="text-align: center;"
+                                             class="tab-pane fade in{% if order_data.state == 'sent' or order_data.state == 'attention' %} active{% endif %} p20">
+
+                                            <h4 class="text-uppercase color-info">Clrearance Request</h4> <br>
+
+
+
                                             {% for question in ask_user %}
                                                 {% if not question.answer %}
-                                                    <form action="{% url 'ask_user' %}" method="post">
+                                                    <form action="{% url 'ask_user' %}" method="post" >
                                                         {% csrf_token %}
                                                         <div class="form-group">
                                                             <label class="control-label"
@@ -518,16 +534,23 @@
                                                     </form>
                                                 {% endif %}
                                             {% endfor %}
-                                            <form action="{% url 'user_question' %}" method="post">
+                                            <form action="{% url 'user_question' %}" method="post" class="form-inline">
                                                 {% csrf_token %}
-                                                <input type="hidden" name="order" value="{{ order_data.id }}">
-                                                <label for="user_question">your question</label>
-                                                {{ user_question_form.question }}
-                                                <button>submit question</button>
+                                                   <div class="form-group">
+                                                <input  type="hidden" name="order" value="{{ order_data.id }}" placeholder="your question">
+                                                <label for="user_question" class="font-pacifico color-primary">Your question</label>
+                                                   </div>
+                                              {{ user_question_form.question }}
+
+
+                                                <button class="button-3d button-xs button-rounded button-blue">submit question</button>
                                             </form>
-                                            <div>
-                                                <h4>user questions and answers</h4>
-                                                <div class="col-sm-12 frame">
+
+<br>
+                                            <div class="center" style="margin:auto;">
+                                               <h5 class="col-sm-2 color-dark">User questions and answers</h5>
+                                                <div class="col-sm-10 frameuser m20">
+
                                                     <ul class="whatsapp-style">
                                                         {% for question in user_question_history %}
                                                             <li style="width:100%;">
@@ -567,8 +590,8 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <h4>owners questions and answers</h4>
-                                                <div class="col-sm-12 frame">
+
+                                                <div class="col-sm-10 frameowner m20">
                                                     <ul class="whatsapp-style">
                                                         {% for question in owner_questions %}
                                                             <li style="width:100%;">
@@ -611,31 +634,27 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
+                                                <h5 class="col-sm-2 color-dark">owners questions and answers</h5>
                                             </div>
+
                                         </div>
-                                        <div id="pilljustified4"
-                                             class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %}">
-                                            <h5>Payment</h5>
-                                        {% if order_data.state == 'done' %}
-                                                <p>
-                                                    <button class="button button-xs button-square button-success">
-                                                        Status:
-                                                        Completed
-                                                    </button>
-                                                </p>
-                                        {% else %}
-                                            <p>
+                                         <p class="p20">
                                                 <button class="button button-xs button-square button-yellow">Status:
                                                     pending
                                                 </button>
                                             </p>
-                                        {% endif %}
+                                        <div id="pilljustified4" style="text-align: center;"
+                                             class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %} p20">
                                             {% if order_data and order_data.price %}
                                                 <div id="paypal-button"></div>
                                             {% endif %}
+
+                                            <h4 class="text-uppercase color-info">Payment</h4>
                                         {% for owner in counter_owners %}
                                             <h5>counter offer for {{ owner.owner }}</h5>
-                                            <form action="{% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
+                                            <form action="
+
+                                                    {% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
                                                   method="post">
                                                 <div>{% csrf_token %}
                                                     <p>price: {{ owner.owner.price }}</p>
@@ -655,9 +674,9 @@
                                         {% endfor %}
 
                                         </div>
-                                        <div id="pilljustified5"
-                                             class="tab-pane fade{% if order_data.state == 'done' %} in active{% endif %}">
-                                            <h5>Completed</h5>
+                                        <div id="pilljustified5" style="text-align: center;"
+                                             class="tab-pane fade{% if order_data.state == 'done' %} in active{% endif %} p20">
+                                            <h4 class="text-uppercase color-info">Completed</h4>
                                             {% if order_data.license_pdf %}
                                                 <p>
                                                     <a href="{{ order_data.license_pdf.url }}">your license</a>
@@ -702,7 +721,7 @@
                         <h5 class="mt25 color-light">
                             Your Orders
                         </h5>
-                        <p class="color-light">click the song to view the order</p>
+
                         <span class="heading-divider mt10"></span>
 
                         <div class="shop-sidebar-cart">
@@ -713,7 +732,7 @@
                                            class="color-blue" style="font-size: 14px">{{ order.song_title }}</a></h6>
                                     <span class="sidebar-cart-price color-light">{{ order.performer_name }}</span>
                                     <a href="{% url 'my_account_order' order.id %}">
-                                                                        <button class="button button-xs button-info hover-icon-forward"><i class="fa fa-long-arrow-right"></i></button>
+                                                                        <button class="button button-xs button-circle button-info hover-icon-pulse-grow" style="padding:5px; margin:4px;"><i class="fa fa-cart-plus" style="margin:4px;"></i></button>
                                     </a>
                                     <span class="sidebar-cart-remove" style="color: #efefef;"><a href="{% url 'delete_order' order_data.id %}"><i
                                             class="fa fa-times-circle fa-fw" style="color: #efefef;"></i>Remove</a></span>
