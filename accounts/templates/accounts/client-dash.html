@@ -721,13 +721,18 @@
 
                                             <h4 class="text-uppercase color-info">Payment</h4>
                                         <h5>licenseit has negotiated the best prices as stipulated below</h5>
+                                        <div class="row">
+                                            <div class="col-md-4">owner</div>
+                                            <div class="col-md-2">price</div>
+                                            <div class="col-md-3">pdf</div>
+                                        </div>
                                             {% for owner in counter_owners %}
                                                 <h5></h5>
                                                 <div class="row">
                                                     <div class="col-md-4">{{ owner.owner }}</div>
-                                                    <div class="col-md-2">price: {{ owner.price }}</div>
+                                                    <div class="col-md-2">{{ owner.price }}</div>
                                                     {% if owner.owner_pdf %}
-                                                        <div class="col-md-3">pdf: <a href="{{ owner.owner_pdf.url }}">pdf</a></div>
+                                                        <div class="col-md-3"><a href="{{ owner.owner_pdf.url }}">pdf</a></div>
                                                     {% endif %}
                                                 </div>
                                             {% endfor %}
