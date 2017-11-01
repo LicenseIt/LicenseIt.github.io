@@ -500,7 +500,7 @@
                                             <h3>contact licenseit</h3>
                                             {% for question in ask_user %}
                                                 {% if not question.answer %}
-                                                    <form action="{% url 'ask_user' %}" method="post">
+                                                    <form action="{% url 'ask_user' order_data.id %}" method="post">
                                                         {% csrf_token %}
                                                         <div class="form-group">
                                                             <label class="control-label"
@@ -516,7 +516,7 @@
                                                     </form>
                                                 {% endif %}
                                             {% endfor %}
-                                            <form action="{% url 'user_question' %}" method="post">
+                                            <form action="{% url 'user_question' order_data.id %}" method="post">
                                                 {% csrf_token %}
                                                 <input type="hidden" name="order" value="{{ order_data.id }}">
                                                 <label for="user_question">your question</label>

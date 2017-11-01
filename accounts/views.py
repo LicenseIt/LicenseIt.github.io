@@ -640,19 +640,19 @@ class CounterOfferView(View):
 
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect(reverse('my_account'))
+        return HttpResponseRedirect(reverse('my_account', args=[order_id]))
 
 
 class UserQuestionView(View):
-    def post(self, request):
+    def post(self, request, order_id):
         form = UserQuestionForm(request.POST)
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect(reverse('my_account'))
+        return HttpResponseRedirect(reverse('my_account', args=[order_id]))
 
 
 class AskUserView(View):
-    def post(self, request):
+    def post(self, request, order_id):
         for question, answer in request.POST.items():
             if question == 'csrfmiddlewaretoken':
                 continue
@@ -660,4 +660,4 @@ class AskUserView(View):
             ask = Question.objects.get(pk=question)
             ask.answer = answer
             ask.save()
-        return HttpResponseRedirect(reverse('my_account'))
+        return HttpResponseRedirect(reverse('my_account', args=[order_id]))
