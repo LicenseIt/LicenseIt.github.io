@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 
 from orders.models import Order
@@ -66,6 +68,9 @@ class OrderOwnerRight(Base):
                               on_delete=models.CASCADE,
                               related_name='order_owner')
     price = models.CharField(max_length=50, null=True, blank=True)
+
+    def file_name(self):
+        return str(self.owner_pdf).split("/")[-1]
 
     def __str__(self):
         return self.owner.name + ', ' + self.right_type.name

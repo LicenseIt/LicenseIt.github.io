@@ -732,7 +732,7 @@
                                                     <div class="col-md-4">{{ owner.owner }}</div>
                                                     <div class="col-md-2">{{ owner.price }}</div>
                                                     {% if owner.owner_pdf %}
-                                                        <div class="col-md-3"><a href="{{ owner.owner_pdf.url }}">{{ owner.owner_pdf }}</a></div>
+                                                        <div class="col-md-3"><a href="{{ owner.owner_pdf.url }}">{{ owner.file_name }}</a></div>
                                                     {% endif %}
                                                 </div>
                                             {% endfor %}
