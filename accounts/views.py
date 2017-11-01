@@ -465,7 +465,7 @@ class Account(ConnectBase):
         if order:
             context['user_question_history'] = UserQuestion.objects.filter(order=order.id)
             context['owner_questions'] = Question.objects.filter(order=order.id).select_related()
-            context['counter_owners'] = CounterOffer.objects.filter(order=order.id)
+            context['counter_owners'] = OrderOwnerRight.objects.filter(order=order.id)
 
         if payment_id:
             context['payment_id'] = payment_id
