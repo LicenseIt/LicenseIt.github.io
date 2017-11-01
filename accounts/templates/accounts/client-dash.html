@@ -317,9 +317,21 @@
                                                             </div>
                                                             <div class="row">
                                                                 <span class="col-md-5">distribution</span>
+                                                            {% if film_making %}
+                                                                {% for dist in film_making.distribution.all %}
+                                                                <span><kbd>{{ dist.name }}</kbd></span>
+                                                                {% endfor %}
+                                                                {% endif %}
+                                                            {% if programming %}
                                                                 {% for dist in programming.distribution.all %}
                                                                 <span><kbd>{{ dist.name }}</kbd></span>
                                                                 {% endfor %}
+                                                                {% endif %}
+                                                            {% if advertising %}
+                                                                {% for dist in advertising.distribution.all %}
+                                                                <span><kbd>{{ dist.name }}</kbd></span>
+                                                                {% endfor %}
+                                                                {% endif %}
                                                             </div>
                                                         {% endif %}
                                                         {% if web_dist %}

@@ -33,6 +33,7 @@
 {% for option in advertising_form.distribution.field.choices.queryset %}
         <label title="{{ option.explanation }}" class="option" >
                 <input type="checkbox" name="distribution"
+                       {% if option in advertising.distribution.all %}checked{% endif %}
                        value="{{ option.id }}">
                 <span class="smart-option smart-checkbox">
                     <span class="smart-option-ui">

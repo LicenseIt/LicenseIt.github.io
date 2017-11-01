@@ -95,7 +95,7 @@
     <div class="smart-option-group smart-option-list group-vertical">
         {% for option in indie_form.distribution.field.choices.queryset %}
             <label title="{{ option.explanation }}" class="option" >
-                <input type="checkbox" name="distribution"
+                <input type="checkbox" name="distribution" {% if option in film_making.distribution.all %}checked{% endif %}
                        value="{{ option.id }}">
                 <span class="smart-option smart-checkbox">
                     <span class="smart-option-ui">
