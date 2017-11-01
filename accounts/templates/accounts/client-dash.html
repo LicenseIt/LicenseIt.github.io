@@ -708,7 +708,9 @@
                                                   method="post">
                                                 <div>{% csrf_token %}
                                                     <p>price: {{ owner.price }}</p>
+                                                    {% if owner.owner_pdf %}
                                                     <p>pdf: <a href="{{ owner.owner_pdf.url }}">pdf</a></p>
+                                                    {% endif %}
                                                     <label for="id_title">title</label>
                                                     {{ counter_offer_form.title }}
                                                 </div>
