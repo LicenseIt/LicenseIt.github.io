@@ -707,7 +707,7 @@
                                                     {% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
                                                   method="post">
                                                 <div>{% csrf_token %}
-                                                    <p>price: {{ owner.owner.price }}</p>
+                                                    <p>price: {{ owner.price }}</p>
                                                     <label for="id_title">title</label>
                                                     {{ counter_offer_form.title }}
                                                 </div>
