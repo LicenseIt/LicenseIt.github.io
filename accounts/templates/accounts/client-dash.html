@@ -659,6 +659,40 @@
                                                     pending
                                                 </button>
                                             </p>
+                                            {% for question in ask_user %}
+                                                {% if not question.answer %}
+                                                    <div>
+                                                    <form action="{% url 'ask_user' order_data.id %}" method="post">
+                                                        {% csrf_token %}
+                                                        <div class="form-group">
+                                                            <label class="control-label"
+                                                                   for="question{{ question.id }}">
+                                                                {{ question.question }} asked by {{ question.owner }}
+                                                            </label>
+                                                            <textarea id="question{{ question.id }}"
+                                                                      name="question{{ question.id }}"
+                                                                      value=""
+                                                                      class="form-control"></textarea>
+                                                        </div>
+                                                        <button>submit your answer here for us</button>
+                                                    </form>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% if order_data %}
+                                            <form action="{% url 'user_question' order_data.id %}" method="post" class="form-inline">
+                                                {% csrf_token %}
+                                                   <div class="form-group">
+                                                <input  type="hidden" name="order" value="{{ order_data.id }}" placeholder="your question">
+                                                <label for="user_question" class="font-pacifico color-primary">Your question</label>
+                                                   </div>
+                                              {{ user_question_form.question }}
+
+
+                                                <button class="button-3d button-xs button-rounded button-blue">submit question</button>
+                                            </form>
+                                        {% endif %}
+
                                         <div id="pilljustified4" style="text-align: center;"
                                              class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %} p20">
                                             {% if order_data and order_data.price %}
