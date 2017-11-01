@@ -657,7 +657,7 @@ class CounterOfferView(View):
 
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect(reverse('my_account', args={order_id}))
+        return HttpResponseRedirect(reverse('my_account_order', args={order_id}))
 
 
 class UserQuestionView(View):
@@ -665,7 +665,7 @@ class UserQuestionView(View):
         form = UserQuestionForm(request.POST)
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect(reverse('my_account', args={order_id}))
+        return HttpResponseRedirect(reverse('my_account_order', args={order_id}))
 
 
 class AskUserView(View):
@@ -677,4 +677,4 @@ class AskUserView(View):
             ask = Question.objects.get(pk=question)
             ask.answer = answer
             ask.save()
-        return HttpResponseRedirect(reverse('my_account', args={order_id}))
+        return HttpResponseRedirect(reverse('my_account_order', args={order_id}))
