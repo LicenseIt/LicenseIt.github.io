@@ -48,9 +48,20 @@ class OwnerDatabase(Base):
         verbose_name_plural = 'owners'
 
 
+def owner_pdf_path(instance, filename):
+    '''
+    file will be uploaded to MEDIA_ROOT/user_id/file_name
+    :param instance: an instance of this class
+    :param filename: the original file name
+    :return: the path to the file
+    '''
+    return 'owner_pdf/{0}/'.format(filename)
+
+
 class OrderOwnerRight(Base):
     owner = models.ForeignKey(OwnerDatabase, on_delete=models.SET_NULL, null=True, blank=True)
     right_type = models.ForeignKey(RightType, on_delete=models.SET_NULL, null=True, blank=True)
+    owner_pdf = models.FileField(upload_to=owner_pdf_path, null=True, blank=True)
     order = models.ForeignKey(Order,
                               on_delete=models.CASCADE,
                               related_name='order_owner')
