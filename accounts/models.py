@@ -15,6 +15,9 @@ class AskUser(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return '{0}: {1}- {2}'.format(self.question, self.order, self.updated)
+
 
 class PersonalInfo(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
@@ -75,6 +78,9 @@ class CounterOffer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return '{0}: {1}- {2}'.format(self.title, self.owner, self.order)
+
 
 class UserQuestion(models.Model):
     question = models.CharField(max_length=300)
@@ -84,3 +90,6 @@ class UserQuestion(models.Model):
                               related_name='user_inquiries')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '{0}: {1}- {2}'.format(self.question, self.order, self.updated)
