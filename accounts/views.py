@@ -313,7 +313,7 @@ class Account(ConnectBase):
         if order_id:
             order_data = Order.objects.get(pk=order_id)
         elif orders_list:
-            order_data = orders_list.first()
+            order_data = orders_list.last()
         else:
             order_data = False
 
@@ -484,12 +484,14 @@ class Account(ConnectBase):
         :param order_id: order id
         :return: client dash page
         '''
-        data = request.POST.copy()
-        data['start_duration'] = request.POST['min_start'] + ':' + request.POST['sec_start']
-        data['end_duration'] = request.POST['min_end'] + ':' + request.POST['sec_end']
-
         order_data = Order.objects.get(pk=order_id)
-        order_form = OrderForm(request.POST)
+
+        data = request.POST.copy()
+        if 'personal_use' != order_data.project_type.slug != 'wedding':
+            data['start_duration'] = request.POST['min_start'] + ':' + request.POST['sec_start']
+            data['end_duration'] = request.POST['min_end'] + ':' + request.POST['sec_end']
+
+        order_form = OrderForm(request.POST, instance=order_data)
 
         orders_list = Order.objects.filter(user=request.user).select_related()
         owners = OwnerDatabase.objects.all()
@@ -508,18 +510,22 @@ class Account(ConnectBase):
 
         # we need to check the project type to be able to work with the right model
         if order_data.project_type.name.lower() == 'film making':
-            indie_form = OrderIndieForm(request.POST)
-            indie_details_form = IndieDetailForm(data)
+            order_film = OrderFilmMaking.objects.get(order=order_data.id)
+            indie_form = OrderIndieForm(request.POST, instance=order_film)
+            indie_details = OrderIndieProjectDetail.objects.get(order=order_data.id)
+            indie_details_form = IndieDetailForm(data, instance=indie_details)
             context['indie_form'] = indie_form
             context['details_form'] = indie_details_form
             # need to check which distribution was selected to make sure on the right model
-            if order_data.order_project_orderfilmmaking.filter(distribution__name='web/streaming').exists():
-                web = IndieWebDistribution(request.POST)
+            web_distribution = order_data.order_project_orderfilmmaking.filter(distribution__name='web/streaming')
+            if web_distribution.exists():
+                web = IndieWebDistribution(request.POST, instance=web_distribution.first())
                 context['web'] = web
                 if web.is_valid():
                     web.save()
-            if order_data.order_project_orderfilmmaking.filter(distribution__name='externally').exists():
-                ext = IndieExtDistribution(request.POST)
+            ext_distribution = order_data.order_project_orderfilmmaking.filter(distribution__name='externally')
+            if ext_distribution.exists():
+                ext = IndieExtDistribution(request.POST, instance=ext_distribution)
                 context['ext'] = ext
                 if ext.is_valid():
                     ext.save()
@@ -534,23 +540,28 @@ class Account(ConnectBase):
                 context['order_details'] = order_data.order_details_orderindieprojectdetail.get(order=order_data.id)
 
         if order_data.project_type.name.lower() == 'programming':
-            program_form = OrderProgramForm(request.POST)
+            program = OrderProgramming.objects.get(order=order_data.id)
+            program_form = OrderProgramForm(request.POST, instance=program)
             context['program_form'] = program_form
-            prog_details_form = ProgramDetailForm(data)
+            prog_details = OrderProgrammingDetail.objects.get(order=order_data.id)
+            prog_details_form = ProgramDetailForm(data, instance=prog_details)
             context['details_form'] = prog_details_form
 
             # need to check which distribution was selected to make sure on the right model
-            if order_data.order_project_orderprogramming.filter(distribution__name='web/streaming').exists():
-                web = IndieWebDistribution(request.POST)
+            web_dist = order_data.order_project_orderprogramming.filter(distribution__name='web/streaming')
+            if web_dist.exists():
+                web = IndieWebDistribution(request.POST, instance=web_dist.first())
                 context['web'] = web
                 if web.is_valid():
                     web.save()
-            if order_data.order_project_orderprogramming.filter(distribution__name='externally').exists():
+            ext_dist = order_data.order_project_orderprogramming.filter(distribution__name='externally')
+            if ext_dist.exists():
                 ext = IndieExtDistribution(request.POST)
                 context['ext'] = ext
                 if ext.is_valid():
                     ext.save()
-            if order_data.order_project_orderprogramming.filter(distribution__name='tv').exists():
+            tv_dist = order_data.order_project_orderprogramming.filter(distribution__name='tv')
+            if tv_dist.exists():
                 tv = TvDistributionForm(request.POST)
                 context['tv'] = tv
                 if tv.is_valid():
@@ -565,19 +576,23 @@ class Account(ConnectBase):
                 context['order_details'] = order_data.order_details_orderprogrammingdetail.get(order=order_data.id)
 
         elif order_data and order_data.project_type.name.lower() == 'advertising':
-            ad_form = OrderAdvertisingForm(request.POST)
+            ads = OrderAdvertising.objects.get(order=order_data.id)
+            ad_form = OrderAdvertisingForm(request.POST, instance=ads)
             context['advertising_form'] = ad_form
-            ad_details_form = AdvertisingDetailForm(data)
+            ad_details = OrderAdvertisingDetail.objects.get(order=order_data.id)
+            ad_details_form = AdvertisingDetailForm(data, instance=ad_details)
             context['details_form'] = ad_details_form
 
             # need to check which distribution was selected to make sure on the right model
-            if order_data.order_project_orderadvertising.filter(distribution__name='web/streaming').exists():
-                web = IndieWebDistribution(request.POST)
+            web_distrib = order_data.order_project_orderadvertising.filter(distribution__name='web/streaming')
+            if web_distrib.exists():
+                web = IndieWebDistribution(request.POST, instance=web_distrib)
                 context['web'] = web
                 if web.is_valid():
                     web.save()
-            if order_data.order_project_orderadvertising.filter(distribution__name='externally'):
-                ext = IndieExtDistribution(request.POST)
+            ext_distrib = order_data.order_project_orderadvertising.filter(distribution__name='externally')
+            if ext_distrib.exists():
+                ext = IndieExtDistribution(request.POST, instance=ext_distrib.first())
                 context['ext'] = ext
                 if ext.is_valid():
                     ext.save()
@@ -594,7 +609,8 @@ class Account(ConnectBase):
                 # context['tv'] = TvDistributionForm(request.POST)
 
         elif order_data and order_data.project_type.name.lower() == 'wedding':
-            wedding_form = WeddingDetailForm(request.POST)
+            wedding = OrderWedding.objects.get(order=order_data.id)
+            wedding_form = WeddingDetailForm(request.POST, instance=wedding)
             context['wedding_form'] = wedding_form
             if wedding_form.is_valid():
                 details = wedding_form.save()
@@ -603,7 +619,8 @@ class Account(ConnectBase):
                 context['order_details'] = order_data.orderwedding_details.get(order=order_data.id)
 
         elif order_data and order_data.project_type.name.lower() == 'personal use':
-            personal_form = PersonalDetailForm(request.POST)
+            personal = OrderPersonal.objects.get(order=order_data.id)
+            personal_form = PersonalDetailForm(request.POST, instance=personal)
             context['personal_form'] = personal_form
             if personal_form.is_valid():
                 details = personal_form.save()

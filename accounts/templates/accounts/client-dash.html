@@ -546,6 +546,7 @@
                                                     </form>
                                                 {% endif %}
                                             {% endfor %}
+                                        {% if order_data %}
                                             <form action="{% url 'user_question' order_data.id %}" method="post" class="form-inline">
                                                 {% csrf_token %}
                                                    <div class="form-group">
@@ -557,6 +558,7 @@
 
                                                 <button class="button-3d button-xs button-rounded button-blue">submit question</button>
                                             </form>
+                                        {% endif %}
 
 <br>
                                             <div class="center" style="margin:auto;">
