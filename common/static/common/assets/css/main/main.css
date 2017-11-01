@@ -1503,8 +1503,7 @@ sup {
 .price-four {
     float: left;
     padding: 10px 0;
-    border-bottom: 4px solid #ccc;
-    -webkit-border-radius: 3px;
+=   -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
             border-radius: 3px;
 }
@@ -1677,14 +1676,16 @@ sup {
     background-color: #fff;
     padding-top: 20px;
     overflow-y: auto;
+
 }
 
-.tab-content .active { display: block; }
+.tab-content .active { display: block;}
 
 /* Tab Verticak */
 .nav-tabs-vertical {
     margin-top: 25px;
     border-bottom: 0;
+
 }
 .nav-tabs-vertical ul {
     float: left;
@@ -4037,9 +4038,9 @@ ul.pagination.pagination-pasific li.active a {
 }
 
 #shop .shop-sidebar-cart .sidebar-cart-container {
-    height: 90px;
+    height: 130px;
     border-bottom: 1px dotted #ccc;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 #shop .shop-sidebar-cart .sidebar-cart-container img {
     margin-right: 10px;
