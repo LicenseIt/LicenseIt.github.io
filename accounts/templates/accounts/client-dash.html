@@ -166,331 +166,338 @@
                                     <div class="tab-content">
                                         <div id="pilljustifiedHome" class="tab-pane fade p20">
                                             <div class="price price-four" style="border-style:none;">
-                                            <div class="price-body" style="border-style:none;">
-                                            <h4 class="text-uppercase color-info">Music Selection</h4>
-                                            <ul>
-                                                <li><i class="fa fa-check-circle color-pasific"></i>song title: <kbd>{{ order_data.song_title }}</kbd></li>
-                                                <li><i class="fa fa-check-circle color-pasific"></i>performer name: <kbd>{{ order_data.performer_name }}</kbd></li>
-                                                <li><i class="fa fa-check-circle color-pasific"></i>date of order: <kbd>{{ order_data.created }}</kbd></li>
-                                                <li><i class="fa fa-check-circle color-pasific"></i>order state: <kbd>{{ order_data.state }}</kbd></li>
+                                                <div class="price-body" style="border-style:none;">
+                                                    <h4 class="text-uppercase color-info">Music Selection</h4>
+                                                    <ul>
+                                                        <li><i class="fa fa-check-circle color-pasific"></i>song title:
+                                                            <kbd>{{ order_data.song_title }}</kbd></li>
+                                                        <li><i class="fa fa-check-circle color-pasific"></i>performer
+                                                            name: <kbd>{{ order_data.performer_name }}</kbd></li>
+                                                        <li><i class="fa fa-check-circle color-pasific"></i>date of
+                                                            order: <kbd>{{ order_data.created }}</kbd></li>
+                                                        <li><i class="fa fa-check-circle color-pasific"></i>order state:
+                                                            <kbd>{{ order_data.state }}</kbd></li>
 
-                                            </ul><br>
-<p>
-                                                    <button class="button button-xs button-square button-success">
-                                                        Status:
-                                                        Completed
-                                                    </button>
-                                                </p>
-                                            </div>
+                                                    </ul>
+                                                    <br>
+                                                    <p>
+                                                        <button class="button button-xs button-square button-success">
+                                                            Status:
+                                                            Completed1
+                                                        </button>
+                                                    </p>
+                                                </div>
                                             </div>
 
                                         </div>
                                         <div id="pilljustified1" class="tab-pane fade p20">
                                             {% if order_data %}
-                                            <div class="price price-four" style="border-style:none;">
-                                            <div class="price-body" style="border-style:none;">
-                                                <h4 class="text-uppercase color-info"> License Inquiry</h4>
-                                                <div    class="smart-wrap" id="license-form">
-                                                    <div class="smart-forms smart-container wrap-4">
-                                                        <form method="post"
-                                                              action="
+                                                <div class="price price-four" style="border-style:none;">
+                                                <div class="price-body" style="border-style:none;">
+                                                    <h4 class="text-uppercase color-info"> License Inquiry</h4>
+                                                    <div class="smart-wrap" id="license-form">
+                                                        <div class="smart-forms smart-container wrap-4">
+                                                            <form method="post"
+                                                                  action="
 
 
 
 
 
-                                                                      {% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
-                                                            {% csrf_token %}
-                                                            {% include 'orders/order_form_fields.html' %}
-                                                            {% if advertising_form %}
-                                                                {% include 'orders/advertising_form_fields.html' %}
-                                                            {% endif %}
-                                                            {% if program_form %}
-                                                                {% include 'orders/program_form_fields.html' %}
-                                                            {% endif %}
-                                                            {% if indie_form %}
-                                                                {% include 'orders/indie_form_fields.html' %}
-                                                            {% endif %}
-                                                            {% if web or ext or tv %}
-                                                                {% include 'orders/distribution_form_fields.html' %}
-                                                            {% endif %}
-                                                            {% if details_form %}
-                                                                {% include 'orders/details_form_fields.html' %}
-                                                            {% endif %}
-                                                            {% if wedding_form %}
-                                                                {% include 'orders/wedding_form_fields.html' %}
-                                                            {% endif %}
-                                                            {% if personal_form %}
-                                                                {% include 'orders/personal_form_fields.html' %}
-                                                            {% endif %}
-                                                            <div class="form-footer">
-                                                                <button type="submit" class="btn btn-success">resubmit
-                                                                    changes
-                                                                </button>
-                                                                <button type="reset" class="btn btn-warning">reset
-                                                                </button>
-                                                            </div>
-                                                        </form>
+
+                                                                          {% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
+                                                                {% csrf_token %}
+                                                                {% include 'orders/order_form_fields.html' %}
+                                                                {% if advertising_form %}
+                                                                    {% include 'orders/advertising_form_fields.html' %}
+                                                                {% endif %}
+                                                                {% if program_form %}
+                                                                    {% include 'orders/program_form_fields.html' %}
+                                                                {% endif %}
+                                                                {% if indie_form %}
+                                                                    {% include 'orders/indie_form_fields.html' %}
+                                                                {% endif %}
+                                                                {% if web or ext or tv %}
+                                                                    {% include 'orders/distribution_form_fields.html' %}
+                                                                {% endif %}
+                                                                {% if details_form %}
+                                                                    {% include 'orders/details_form_fields.html' %}
+                                                                {% endif %}
+                                                                {% if wedding_form %}
+                                                                    {% include 'orders/wedding_form_fields.html' %}
+                                                                {% endif %}
+                                                                {% if personal_form %}
+                                                                    {% include 'orders/personal_form_fields.html' %}
+                                                                {% endif %}
+                                                                <div class="form-footer">
+                                                                    <button type="submit" class="btn btn-success">
+                                                                        resubmit
+                                                                        changes
+                                                                    </button>
+                                                                    <button type="reset" class="btn btn-warning">reset
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="row" id="license-data" style="width:500px;">
-                                                    <div class="col-md-12 col-md-offset-1 table table-striped">
-                                                        <div class="row">
+                                                    <div class="row" id="license-data" style="width:500px;">
+                                                        <div class="col-md-12 col-md-offset-1 table table-striped">
+                                                            <div class="row">
                                                             <span class="col-md-5">
                                                                 song title
                                                             </span>
-                                                            <span class="col-md-7">
+                                                                <span class="col-md-7">
                                                                 <kbd>  {{ order_data.song_title }}</kbd>
                                                             </span>
-                                                        </div>
-                                                        <div class="row">
+                                                            </div>
+                                                            <div class="row">
                                                             <span class="col-md-5">
                                                                 performer name
                                                             </span>
-                                                            <span class="col-md-7">
+                                                                <span class="col-md-7">
                                                                 <kbd>   {{ order_data.performer_name }}</kbd>
                                                             </span>
-                                                        </div>
-                                                        <div class="row">
+                                                            </div>
+                                                            <div class="row">
                                                             <span class="col-md-5">
                                                                 project type
                                                             </span>
-                                                            <span class="col-md-7">
+                                                                <span class="col-md-7">
                                                                 <kbd>   {{ order_data.project_type }}</kbd>
                                                             </span>
-                                                        </div>
-                                                        {% if advertising %}
-                                                            <div class="row">
+                                                            </div>
+                                                            {% if advertising %}
+                                                                <div class="row">
                                                                 <span class="col-md-5">
                                                                     production name
                                                                 </span>
-                                                                <span class="col-md-7">
+                                                                    <span class="col-md-7">
                                                                     <kbd>   {{ advertising.production_name }}</kbd>
                                                                 </span>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">distribution</span>
-                                                                {% for dist in advertising.distribution.all %}
-                                                                <span><kbd>{{ dist.name }}</kbd></span>
-                                                                {% endfor %}
-                                                            </div>
-                                                        {% endif %}
-                                                        {% if programming %}
-                                                            <div class="row">
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">distribution</span>
+                                                                    {% for dist in advertising.distribution.all %}
+                                                                        <span><kbd>{{ dist.name }}</kbd></span>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if programming %}
+                                                                <div class="row">
                                                                 <span class="col-md-5">
                                                                     production name
                                                                 </span>
-                                                                <span class="col-md-7">
+                                                                    <span class="col-md-7">
                                                                     <kbd>   {{ programming.production_name }}</kbd>
                                                                 </span>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">distribution</span>
-                                                                {% for dist in programming.distribution.all %}
-                                                                <span><kbd>{{ dist.name }}</kbd></span>
-                                                                {% endfor %}
-                                                            </div>
-                                                        {% endif %}
-                                                        {% if film_making %}
-                                                            <div class="row">
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">distribution</span>
+                                                                    {% for dist in programming.distribution.all %}
+                                                                        <span><kbd>{{ dist.name }}</kbd></span>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if film_making %}
+                                                                <div class="row">
                                                                 <span class="col-md-5">
                                                                     production name
                                                                 </span>
-                                                                <span class="col-md-7">
+                                                                    <span class="col-md-7">
                                                                     <kbd> {{ film_making.production_name }}</kbd>
                                                                 </span>
-                                                            </div>
-                                                            <div class="row">
+                                                                </div>
+                                                                <div class="row">
                                                             <span class="col-md-5">
                                                                 film length
                                                             </span>
-                                                                <span><kbd>{{ film_making.film_length }}</kbd></span>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">film programming</span>
-                                                                <span><kbd>{{ film_making.film_programming }}</kbd></span>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">film trailer</span>
-                                                                <span><kbd>{{ film_making.film_trailer }}</kbd></span>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">distribution</span>
-                                                            {% if film_making %}
-                                                                {% for dist in film_making.distribution.all %}
-                                                                <span><kbd>{{ dist.name }}</kbd></span>
-                                                                {% endfor %}
-                                                                {% endif %}
-                                                            {% if programming %}
-                                                                {% for dist in programming.distribution.all %}
-                                                                <span><kbd>{{ dist.name }}</kbd></span>
-                                                                {% endfor %}
-                                                                {% endif %}
-                                                            {% if advertising %}
-                                                                {% for dist in advertising.distribution.all %}
-                                                                <span><kbd>{{ dist.name }}</kbd></span>
-                                                                {% endfor %}
-                                                                {% endif %}
-                                                            </div>
-                                                        {% endif %}
-                                                        {% if web_dist %}
-                                                            <div class="row">
-                                                                <span class="col-md-5">on the web</span>
-                                                                <kbd> {{ web_dist }}</kbd>
-                                                            </div>
-                                                        {% endif %}
-                                                        {% if ext_dist %}
-                                                            <div class="row">
-                                                                <span class="col-md-5">externally</span>
-                                                                <kbd>   {{ ext_dist }}</kbd>
-                                                            </div>
-                                                        {% endif %}
-                                                        {% if tv_dist %}
-                                                            <div class="row">
-                                                                <span class="col-md-5">tv</span>
-                                                                <kbd>  {{ tv_dist }}</kbd>
-                                                            </div>
-                                                        {% endif %}
-                                                        {% if details %}
-                                                            <div class="row">
-                                                                <span class="col-md-5">number of uses</span>
-                                                                <kbd>  {{ details.number_uses }}</kbd>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">opening/closing</span>
-                                                                <kbd>    {{ details.opening_closing }}</kbd>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">featured/background?</span>
-                                                                {% for fb in details.featured_background.all %}
-                                                                <span><kbd>{{ fb.name }}</kbd></span>
-                                                                {% endfor %}
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">song version</span>
-                                                                <kbd>   {{ details.song_version }}</kbd>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">start duration</span>
-                                                                <kbd>   {{ details.start_duration }}</kbd>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">end duration</span>
-                                                                <kbd> {{ details.end_duration }}</kbd>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">territory</span>
-                                                                <kbd> {{ details.territory }}</kbd>
-                                                            </div>
-                                                            {% if details.territory_usa %}
+                                                                    <span><kbd>{{ film_making.film_length }}</kbd></span>
+                                                                </div>
                                                                 <div class="row">
-                                                                    <span class="col-md-5">territory usa</span>
-                                                                    <kbd>  {{ details.territory_usa }}</kbd>
+                                                                    <span class="col-md-5">film programming</span>
+                                                                    <span><kbd>{{ film_making.film_programming }}</kbd></span>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">film trailer</span>
+                                                                    <span><kbd>{{ film_making.film_trailer }}</kbd></span>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">distribution</span>
+                                                                    {% if film_making %}
+                                                                        {% for dist in film_making.distribution.all %}
+                                                                            <span><kbd>{{ dist.name }}</kbd></span>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                    {% if programming %}
+                                                                        {% for dist in programming.distribution.all %}
+                                                                            <span><kbd>{{ dist.name }}</kbd></span>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                    {% if advertising %}
+                                                                        {% for dist in advertising.distribution.all %}
+                                                                            <span><kbd>{{ dist.name }}</kbd></span>
+                                                                        {% endfor %}
+                                                                    {% endif %}
                                                                 </div>
                                                             {% endif %}
-                                                            <div class="row">
-                                                                <span class="col-md-5">term</span>
-                                                                <kbd>  {{ details.term }}</kbd>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">release date</span>
-                                                                <kbd>  {{ details.release_date }}</kbd>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">budget</span>
-                                                                <kbd>  {{ details.budget }}</kbd>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">synopsis</span>
-                                                                <kbd>   {{ details.synopsis }}</kbd>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">description</span>
-                                                                <kbd>  {{ details.description }}</kbd>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">is non profit?</span>
-                                                                <kbd> {{ details.is_non_profit }}</kbd>
-                                                            </div>
-                                                            {% if details.non_profit %}
+                                                            {% if web_dist %}
                                                                 <div class="row">
-                                                                    <span class="col-md-5">non profit</span>
-                                                                    <kbd> {{ details.non_profit }}</kbd>
+                                                                    <span class="col-md-5">on the web</span>
+                                                                    <kbd> {{ web_dist }}</kbd>
                                                                 </div>
                                                             {% endif %}
-                                                            <div class="row">
-                                                                <span class="col-md-5">comments</span>
-                                                                <kbd>  {{ details.comments }}</kbd>
-                                                            </div>
-                                                        {% endif %}
-                                                        {% if wedding_form %}
-                                                            <div class="row">
+                                                            {% if ext_dist %}
+                                                                <div class="row">
+                                                                    <span class="col-md-5">externally</span>
+                                                                    <kbd>   {{ ext_dist }}</kbd>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if tv_dist %}
+                                                                <div class="row">
+                                                                    <span class="col-md-5">tv</span>
+                                                                    <kbd>  {{ tv_dist }}</kbd>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if details %}
+                                                                <div class="row">
+                                                                    <span class="col-md-5">number of uses</span>
+                                                                    <kbd>  {{ details.number_uses }}</kbd>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">opening/closing</span>
+                                                                    <kbd>    {{ details.opening_closing }}</kbd>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">featured/background?</span>
+                                                                    {% for fb in details.featured_background.all %}
+                                                                        <span><kbd>{{ fb.name }}</kbd></span>
+                                                                    {% endfor %}
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">song version</span>
+                                                                    <kbd>   {{ details.song_version }}</kbd>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">start duration</span>
+                                                                    <kbd>   {{ details.start_duration }}</kbd>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">end duration</span>
+                                                                    <kbd> {{ details.end_duration }}</kbd>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">territory</span>
+                                                                    <kbd> {{ details.territory }}</kbd>
+                                                                </div>
+                                                                {% if details.territory_usa %}
+                                                                    <div class="row">
+                                                                        <span class="col-md-5">territory usa</span>
+                                                                        <kbd>  {{ details.territory_usa }}</kbd>
+                                                                    </div>
+                                                                {% endif %}
+                                                                <div class="row">
+                                                                    <span class="col-md-5">term</span>
+                                                                    <kbd>  {{ details.term }}</kbd>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">release date</span>
+                                                                    <kbd>  {{ details.release_date }}</kbd>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">budget</span>
+                                                                    <kbd>  {{ details.budget }}</kbd>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">synopsis</span>
+                                                                    <kbd>   {{ details.synopsis }}</kbd>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">description</span>
+                                                                    <kbd>  {{ details.description }}</kbd>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">is non profit?</span>
+                                                                    <kbd> {{ details.is_non_profit }}</kbd>
+                                                                </div>
+                                                                {% if details.non_profit %}
+                                                                    <div class="row">
+                                                                        <span class="col-md-5">non profit</span>
+                                                                        <kbd> {{ details.non_profit }}</kbd>
+                                                                    </div>
+                                                                {% endif %}
+                                                                <div class="row">
+                                                                    <span class="col-md-5">comments</span>
+                                                                    <kbd>  {{ details.comments }}</kbd>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if wedding_form %}
+                                                                <div class="row">
                                                                 <span class="col-md-5">
                                                                     platform
                                                                 </span>
-                                                                <span class="col-md-7">
+                                                                    <span class="col-md-7">
                                                                     <kbd>   {{ wedding_form.platform.value }}</kbd>
                                                                 </span>
-                                                            </div>
-                                                            <div class="row">
+                                                                </div>
+                                                                <div class="row">
                                                                 <span class="col-md-5">
                                                                     number of uses
                                                                 </span>
-                                                                <span class="col-md-7">
+                                                                    <span class="col-md-7">
                                                                     <kbd>   {{ wedding_form.num_uses.value }}</kbd>
                                                                 </span>
-                                                            </div>
-                                                            <div class="row">
+                                                                </div>
+                                                                <div class="row">
                                                                 <span class="col-md-5">
                                                                     platform
                                                                 </span>
-                                                                <span class="col-md-7"><kbd>{{ wedding_form.platform.value }}</kbd></span>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">territory</span>
-                                                                <span class="col-md-7">
+                                                                    <span class="col-md-7"><kbd>{{ wedding_form.platform.value }}</kbd></span>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">territory</span>
+                                                                    <span class="col-md-7">
                                                                     <kbd>  {{ wedding_form.territory.value }}</kbd>
                                                                 </span>
-                                                            </div>
-                                                            {% if wedding_form.territory_states %}
-                                                                <div class="row">
+                                                                </div>
+                                                                {% if wedding_form.territory_states %}
+                                                                    <div class="row">
                                                                 <span class="col-md-5">
                                                                     USA states
                                                                 </span>
-                                                                    <span class="col-md-7">
+                                                                        <span class="col-md-7">
                                                                         <kbd> {{ wedding_form.territory_states.value }}</kbd>
                                                                 </span>
-                                                                </div>
+                                                                    </div>
+                                                                {% endif %}
                                                             {% endif %}
-                                                        {% endif %}
-                                                        {% if personal_form %}
-                                                            <div class="row">
-                                                                <span class="col-md-5">platform</span>
-                                                                <span class="col-md-7"><kbd>{{ personal_form.platform.value }}</kbd></span>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">purpose</span>
-                                                                <span class="col-md-7"><kbd>{{ personal_form.purpose.value }}</kbd></span>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span class="col-md-5">territory</span>
-                                                                <span class="col-md-7"><kbd>{{ personal_form.territory.value }}</kbd></span>
-                                                            </div>
-                                                            {% if personal_form.territory_states %}
+                                                            {% if personal_form %}
                                                                 <div class="row">
-                                                                    <span class="col-md-5">states</span>
-                                                                    <span class="col-md-7"><kbd>{{ personal_form.territory_states.value }}</kbd></span>
+                                                                    <span class="col-md-5">platform</span>
+                                                                    <span class="col-md-7"><kbd>{{ personal_form.platform.value }}</kbd></span>
                                                                 </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">purpose</span>
+                                                                    <span class="col-md-7"><kbd>{{ personal_form.purpose.value }}</kbd></span>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <span class="col-md-5">territory</span>
+                                                                    <span class="col-md-7"><kbd>{{ personal_form.territory.value }}</kbd></span>
+                                                                </div>
+                                                                {% if personal_form.territory_states %}
+                                                                    <div class="row">
+                                                                        <span class="col-md-5">states</span>
+                                                                        <span class="col-md-7"><kbd>{{ personal_form.territory_states.value }}</kbd></span>
+                                                                    </div>
+                                                                {% endif %}
                                                             {% endif %}
-                                                        {% endif %}
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 </div>
                                                 <p>
                                                     <button class="button button-xs button-square button-success">
                                                         Status:
-                                                        Completed
+                                                        Completed2
                                                     </button>
                                                 </p>
                                             {% endif %}
@@ -498,25 +505,29 @@
                                         </div>
                                         <div id="pilljustified2" style="text-align: center;" class="tab-pane fade p20">
                                             <div class="price price-four" style="border-style:none;">
-                                            <div class="price-body" style="border-style:none;">
-                                            <h4 class="text-uppercase color-info">Owner Identification</h4>
-                                            <small>Synchronization license was requested from:</small> <br>
-                                            <div class="row">
-                                                <ul>
-                                                {% for owner in owners %}
-                                                    <li class="col-md-12"><i class="fa fa-check-circle color-pasific"></i>
-                                                        {{ owner.right_type }} - owned by <kbd>{{ owner.owner }}</kbd>
-                                                    </li>
-                                                {% endfor %}
-                                                </ul>
+                                                <div class="price-body" style="border-style:none;">
+                                                    <h4 class="text-uppercase color-info">Owner Identification</h4>
+                                                    <small>Synchronization license was requested from:</small>
+                                                    <br>
+                                                    <div class="row">
+                                                        <ul>
+                                                            {% for owner in owners %}
+                                                                <li class="col-md-12"><i
+                                                                        class="fa fa-check-circle color-pasific"></i>
+                                                                    {{ owner.right_type }} - owned by
+                                                                    <kbd>{{ owner.owner }}</kbd>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            </div>
-                                            </div> <br>
+                                            <br>
 
                                             <p>
                                                 <button class="button button-xs button-square button-success">
                                                     Status:
-                                                    Completed
+                                                    Completed3
                                                 </button>
                                             </p>
 
@@ -531,40 +542,46 @@
                                             {% for question in ask_user %}
                                                 {% if not question.answer %}
                                                     <div>
-                                                    <form action="{% url 'ask_user' order_data.id %}" method="post">
-                                                        {% csrf_token %}
-                                                        <div class="form-group">
-                                                            <label class="control-label"
-                                                                   for="question{{ question.id }}">
-                                                                {{ question.question }} asked by {{ question.owner }}
-                                                            </label>
-                                                            <textarea id="question{{ question.id }}"
-                                                                      name="question{{ question.id }}"
-                                                                      value=""
-                                                                      class="form-control"></textarea>
-                                                        </div>
-                                                        <button>submit your answer here for us</button>
-                                                    </form>
+                                                        <form action="{% url 'ask_user' order_data.id %}" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="form-group">
+                                                                <label class="control-label"
+                                                                       for="question{{ question.id }}">
+                                                                    {{ question.question }} asked
+                                                                    by {{ question.owner }}
+                                                                </label>
+                                                                <textarea id="question{{ question.id }}"
+                                                                          name="question{{ question.id }}"
+                                                                          value=""
+                                                                          class="form-control"></textarea>
+                                                            </div>
+                                                            <button>submit your answer here for us</button>
+                                                        </form>
                                                     </div>
                                                 {% endif %}
                                             {% endfor %}
-                                        {% if order_data %}
-                                            <form action="{% url 'user_question' order_data.id %}" method="post" class="form-inline">
-                                                {% csrf_token %}
-                                                   <div class="form-group">
-                                                <input  type="hidden" name="order" value="{{ order_data.id }}" placeholder="your question">
-                                                <label for="user_question" class="font-pacifico color-primary">Your question</label>
-                                                   </div>
-                                              {{ user_question_form.question }}
+                                            {% if order_data %}
+                                                <form action="{% url 'user_question' order_data.id %}" method="post"
+                                                      class="form-inline">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <input type="hidden" name="order" value="{{ order_data.id }}"
+                                                               placeholder="your question">
+                                                        <label for="user_question" class="font-pacifico color-primary">Your
+                                                            question</label>
+                                                    </div>
+                                                    {{ user_question_form.question }}
 
 
-                                                <button class="button-3d button-xs button-rounded button-blue">submit question</button>
-                                            </form>
-                                        {% endif %}
+                                                    <button class="button-3d button-xs button-rounded button-blue">
+                                                        submit question
+                                                    </button>
+                                                </form>
+                                            {% endif %}
 
-<br>
+                                            <br>
                                             <div class="center" style="margin:auto;">
-                                               <h5 class="col-sm-2 color-dark">User questions and answers</h5>
+                                                <h5 class="col-sm-2 color-dark">User questions and answers</h5>
                                                 <div class="col-sm-10 frameuser m20">
 
                                                     <ul class="whatsapp-style">
@@ -614,7 +631,8 @@
                                                                 <div class="msj macro">
                                                                     <div class="avatar"><img class="img-circle"
                                                                                              style="width:100%;"
-                                                                                             src="{% if question.owner.image %}{{ question.owner.image.url }}{% else %}{{ image }}{% endif %}"
+                                                                                             src="
+                                                                                                     {% if question.owner.image %}{{ question.owner.image.url }}{% else %}{{ image }}{% endif %}"
                                                                                              alt="avatar"></div>
                                                                     <div class="text text-left">
                                                                         <p>
@@ -654,14 +672,14 @@
                                             </div>
 
                                         </div>
-                                         <p class="p20">
-                                                <button class="button button-xs button-square button-yellow">Status:
-                                                    pending
-                                                </button>
-                                            </p>
-                                            {% for question in ask_user %}
-                                                {% if not question.answer %}
-                                                    <div>
+                                        <p class="p20">
+                                            <button class="button button-xs button-square button-yellow">Status:
+                                                pending4
+                                            </button>
+                                        </p>
+                                        {% for question in ask_user %}
+                                            {% if not question.answer %}
+                                                <div>
                                                     <form action="{% url 'ask_user' order_data.id %}" method="post">
                                                         {% csrf_token %}
                                                         <div class="form-group">
@@ -676,55 +694,46 @@
                                                         </div>
                                                         <button>submit your answer here for us</button>
                                                     </form>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
                                         {% if order_data %}
-                                            <form action="{% url 'user_question' order_data.id %}" method="post" class="form-inline">
+                                            <form action="{% url 'user_question' order_data.id %}" method="post"
+                                                  class="form-inline">
                                                 {% csrf_token %}
-                                                   <div class="form-group">
-                                                <input  type="hidden" name="order" value="{{ order_data.id }}" placeholder="your question">
-                                                <label for="user_question" class="font-pacifico color-primary">Your question</label>
-                                                   </div>
-                                              {{ user_question_form.question }}
+                                                <div class="form-group">
+                                                    <input type="hidden" name="order" value="{{ order_data.id }}"
+                                                           placeholder="your question">
+                                                    <label for="user_question" class="font-pacifico color-primary">Your
+                                                        question</label>
+                                                </div>
+                                                {{ user_question_form.question }}
 
 
-                                                <button class="button-3d button-xs button-rounded button-blue">submit question</button>
+                                                <button class="button-3d button-xs button-rounded button-blue">submit
+                                                    question
+                                                </button>
                                             </form>
                                         {% endif %}
 
                                         <div id="pilljustified4" style="text-align: center;"
                                              class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %} p20">
+
+                                            <h4 class="text-uppercase color-info">Payment</h4>
+                                        <h5>licenseit has negotiated the best prices as stipulated below</h5>
+                                            {% for owner in counter_owners %}
+                                                <h5></h5>
+                                                <div class="row">
+                                                    <div class="col-md-4">{{ owner.owner }}</div>
+                                                    <div class="col-md-2">price: {{ owner.price }}</div>
+                                                    {% if owner.owner_pdf %}
+                                                        <div class="col-md-3">pdf: <a href="{{ owner.owner_pdf.url }}">pdf</a></div>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
                                             {% if order_data and order_data.price %}
                                                 <div id="paypal-button"></div>
                                             {% endif %}
-
-                                            <h4 class="text-uppercase color-info">Payment</h4>
-                                        {% for owner in counter_owners %}
-                                            <h5>counter offer for {{ owner.owner }}</h5>
-                                            <form action="
-
-                                                    {% if order_data %}{% url 'counter_offer' order_data.id %}{% else %}{% url 'counter_offer' %}{% endif %}"
-                                                  method="post">
-                                                <div>{% csrf_token %}
-                                                    <p>price: {{ owner.price }}</p>
-                                                    {% if owner.owner_pdf %}
-                                                    <p>pdf: <a href="{{ owner.owner_pdf.url }}">pdf</a></p>
-                                                    {% endif %}
-                                                    <label for="id_title">title</label>
-                                                    {{ counter_offer_form.title }}
-                                                </div>
-                                                <div>
-                                                    <label for="id_offer">your offer</label>
-                                                    {{ counter_offer_form.offer }}
-                                                </div>
-                                                <input type="hidden" name="order" value="{{ order_data.id }}">
-                                                <input type="hidden" name="owner" value="{{ owner.owner }}">
-                                                <div>
-                                                    <button class="btn btn-primary">Submit</button>
-                                                </div>
-                                            </form>
-                                        {% endfor %}
 
                                         </div>
                                         <div id="pilljustified5" style="text-align: center;"
@@ -785,10 +794,14 @@
                                            class="color-blue" style="font-size: 14px">{{ order.song_title }}</a></h6>
                                     <span class="sidebar-cart-price color-light">{{ order.performer_name }}</span>
                                     <a href="{% url 'my_account_order' order.id %}">
-                                                                        <button class="button button-xs button-circle button-info hover-icon-pulse-grow" style="padding:5px; margin:4px;"><i class="fa fa-cart-plus" style="margin:4px;"></i></button>
+                                        <button class="button button-xs button-circle button-info hover-icon-pulse-grow"
+                                                style="padding:5px; margin:4px;"><i class="fa fa-cart-plus"
+                                                                                    style="margin:4px;"></i></button>
                                     </a>
-                                    <span class="sidebar-cart-remove" style="color: #efefef;"><a href="{% url 'delete_order' order_data.id %}"><i
-                                            class="fa fa-times-circle fa-fw" style="color: #efefef;"></i>Remove</a></span>
+                                    <span class="sidebar-cart-remove" style="color: #efefef;"><a
+                                            href="{% url 'delete_order' order_data.id %}"><i
+                                            class="fa fa-times-circle fa-fw"
+                                            style="color: #efefef;"></i>Remove</a></span>
                                 </div>
                             {% endfor %}
                         </div>
