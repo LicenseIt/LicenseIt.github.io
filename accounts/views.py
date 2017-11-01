@@ -525,7 +525,7 @@ class Account(ConnectBase):
                     web.save()
             ext_distribution = order_data.order_project_orderfilmmaking.filter(distribution__name='externally')
             if ext_distribution.exists():
-                ext = IndieExtDistribution(request.POST, instance=ext_distribution)
+                ext = IndieExtDistribution(request.POST, instance=ext_distribution.first())
                 context['ext'] = ext
                 if ext.is_valid():
                     ext.save()
@@ -556,13 +556,13 @@ class Account(ConnectBase):
                     web.save()
             ext_dist = order_data.order_project_orderprogramming.filter(distribution__name='externally')
             if ext_dist.exists():
-                ext = IndieExtDistribution(request.POST)
+                ext = IndieExtDistribution(request.POST, instance=ext_dist.first())
                 context['ext'] = ext
                 if ext.is_valid():
                     ext.save()
             tv_dist = order_data.order_project_orderprogramming.filter(distribution__name='tv')
             if tv_dist.exists():
-                tv = TvDistributionForm(request.POST)
+                tv = TvDistributionForm(request.POST, tv_dist.first())
                 context['tv'] = tv
                 if tv.is_valid():
                     tv.save()
@@ -586,7 +586,7 @@ class Account(ConnectBase):
             # need to check which distribution was selected to make sure on the right model
             web_distrib = order_data.order_project_orderadvertising.filter(distribution__name='web/streaming')
             if web_distrib.exists():
-                web = IndieWebDistribution(request.POST, instance=web_distrib)
+                web = IndieWebDistribution(request.POST, instance=web_distrib.first())
                 context['web'] = web
                 if web.is_valid():
                     web.save()
