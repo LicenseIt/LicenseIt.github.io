@@ -126,7 +126,11 @@ class OrderIndieView(View):
         :param order_id: the order id
         :return:
         '''
-        form = OrderIndieForm(request.POST.copy())
+        order = OrderFilmMaking.objects.filter(order=order_id)
+        if order.exists():
+            form = OrderIndieForm(request.POST.copy(), instance=order[0])
+        else:
+            form = OrderIndieForm(request.POST.copy())
         form.data['order'] = order_id
         if form.is_valid():
             form.save()
@@ -167,7 +171,11 @@ class OrderProgramView(View):
         :param order_id: the order id
         :return:
         '''
-        form = OrderProgramForm(request.POST.copy())
+        order = OrderProgramming.objects.filter(order=order_id)
+        if order.exists():
+            form = OrderProgramForm(request.POST.copy(), instance=order[0])
+        else:
+            form = OrderProgramForm(request.POST.copy())
         form.data['order'] = order_id
         if form.is_valid():
             form.save()
@@ -208,7 +216,11 @@ class OrderAdvertisingView(View):
         :param order_id: the order id
         :return:
         '''
-        form = OrderAdvertisingForm(request.POST.copy())
+        order = OrderAdvertising.objects.filter(order=order_id)
+        if order.exists():
+            form = OrderAdvertisingForm(request.POST.copy(), order[0])
+        else:
+            form = OrderAdvertisingForm(request.POST.copy())
         form.data['order'] = order_id
         if form.is_valid():
             form.save()
@@ -268,11 +280,19 @@ class IndieDistribution(View):
         ext_form = None
 
         if 'distribute_on' in request.POST:
-            web_form = IndieWebDistribution(request.POST.copy())
+            order = WebDistribution.objects.filter(order=order_id)
+            if order.exists():
+                web_form = IndieWebDistribution(request.POST.copy(), order[0])
+            else:
+                web_form = IndieWebDistribution(request.POST.copy())
             web_form.data['order'] = order_id
 
         if 'name' in request.POST:
-            ext_form = IndieExtDistribution(request.POST.copy())
+            order = ExternalDistribution.objects.filter(order=order_id)
+            if order.exists():
+                ext_form = IndieExtDistribution(request.POST.copy(), instance=order[0])
+            else:
+                ext_form = IndieExtDistribution(request.POST.copy())
             ext_form.data['order'] = order_id
 
         if web_form and not web_form.is_valid() or ext_form and not ext_form.is_valid():
@@ -348,13 +368,27 @@ class ProgramDistribution(View):
         tv_form = None
 
         if 'distribute_on' in request.POST:
-            web_form = IndieWebDistribution(request.POST.copy())
+            order = WebDistribution.objects.filter(order=order_id)
+            if order.exists():
+                web_form = IndieWebDistribution(request.POST.copy(), instance=order[0])
+            else:
+                web_form = IndieWebDistribution(request.POST.copy())
             web_form.data['order'] = order_id
+
         if 'name' in request.POST:
-            ext_form = IndieExtDistribution(request.POST.copy())
+            order = ExternalDistribution.objects.filter(order=order_id)
+            if order.exists():
+                ext_form = IndieExtDistribution(request.POST.copy(), instance=order[0])
+            else:
+                ext_form = IndieExtDistribution(request.POST.copy())
             ext_form.data['order'] = order_id
+
         if 'tv_trailer' in request.POST or 'tv_program' in request.POST:
-            tv_form = TvDistributionForm(request.POST.copy())
+            order = TvDistribution.objects.filter(order=order_id)
+            if order.exists():
+                tv_form = TvDistributionForm(request.POST.copy(), instance=order[0])
+            else:
+                tv_form = TvDistributionForm(request.POST.copy())
             tv_form.data['order'] = order_id
 
         if web_form and not web_form.is_valid() or ext_form and not ext_form.is_valid() or tv_form and not tv_form.is_valid():
@@ -431,26 +465,29 @@ class AdvertisingDistribution(View):
         '''
         web_form = None
         ext_form = None
-        # tv_form = None
-        order = Order.objects.get(pk=order_id)
 
         if 'distribute_on' in request.POST:
-            web_form = IndieWebDistribution(request.POST.copy())
+            order = WebDistribution.objects.filter(order=order_id)
+            if order.exists():
+                web_form = IndieWebDistribution(request.POST.copy(), instance=order[0])
+            else:
+                web_form = IndieWebDistribution(request.POST.copy())
             web_form.data['order'] = order_id
-        if 'name' in request.POST:
-            ext_form = IndieExtDistribution(request.POST.copy())
-            ext_form.data['order'] = order_id
-        # if 'tv_trailer' or 'tv_program' in request.POST:
-        #     tv_form = TvDistributionForm(request.POST.copy())
-        #     tv_form.data['order'] = order_id
 
-        if web_form and not web_form.is_valid() or ext_form and not ext_form.is_valid(): # or tv_form and not tv_form.is_valid():
+        if 'name' in request.POST:
+            order = ExternalDistribution.objects.filter(order=order_id)
+            if order.exists():
+                ext_form = IndieExtDistribution(request.POST.copy(), instance=order[0])
+            else:
+                ext_form = IndieExtDistribution(request.POST.copy())
+            ext_form.data['order'] = order_id
+
+        if web_form and not web_form.is_valid() or ext_form and not ext_form.is_valid():
             return render(request,
                           self.template_name,
                           context={
                               'web': web_form,
                               'ext': ext_form,
-                              # 'tv': tv_form,
                               'order': order_id,
                               'url': 'distribution',
                               'is_form': True,
@@ -461,9 +498,6 @@ class AdvertisingDistribution(View):
 
         if ext_form:
             ext_form.save()
-
-        # if tv_form:
-        #     tv_form.save()
 
         return HttpResponseRedirect(reverse('advertising_details', args=[order_id]))
 
@@ -487,10 +521,13 @@ class DetailBase(View):
             order_owner_right.owner = owner
             order_owner_right.save()
 
-    def func(self, request, order_id, detail_form):
+    def func(self, request, order_id, detail_form, details):
         data = request.POST.copy()
         data['order'] = order_id
-        form = detail_form(data)
+        if details.exists():
+            form = detail_form(data, instance=details[0])
+        else:
+            form = detail_form(data)
 
         context = {
             'details_form': form,
@@ -600,6 +637,7 @@ class IndieDetail(DetailBase):
         :return:
         '''
         self.add_onwners(order_id)
+        details_object = OrderIndieProjectDetail.objects.filter(order=order_id)
         return self.func(request, order_id, IndieDetailForm)
 
 
@@ -646,7 +684,8 @@ class ProgramDetail(DetailBase):
         :return:
         '''
         self.add_onwners(order_id)
-        return self.func(request, order_id, ProgramDetailForm)
+        details = OrderProgrammingDetail.objects.filter(order=order_id)
+        return self.func(request, order_id, ProgramDetailForm, details)
 
 
 class AdvertisingDetail(DetailBase):
@@ -692,7 +731,8 @@ class AdvertisingDetail(DetailBase):
         :return:
         '''
         self.add_onwners(order_id)
-        return self.func(request, order_id, AdvertisingDetailForm)
+        details = OrderAdvertisingDetail.objects.filter(order=order_id)
+        return self.func(request, order_id, AdvertisingDetailForm, details)
 
 
 class RateUsView(View):
