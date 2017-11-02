@@ -472,7 +472,7 @@ class DetailBase(View):
     def add_onwners(self, order_id=None):
         order_rights = {
             'composition': 'composition owner',
-            'lirics': 'lirics owner',
+            'lirics': 'lyrics owner',
             'performance': 'performance owner'
         }
 
