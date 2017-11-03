@@ -205,6 +205,7 @@
 
 
 
+
                                                                           {% if order_data %}{% url 'my_account_order' order_data.id %}{% endif %}">
                                                                 {% csrf_token %}
                                                                 {% include 'orders/order_form_fields.html' %}
@@ -537,7 +538,11 @@
 
                                             <h4 class="text-uppercase color-info">Clrearance Request</h4> <br>
 
-
+                                                <p class="p20">
+                                                    <button class="button button-xs button-square button-yellow">Status:
+                                                        pending4
+                                                    </button>
+                                                </p>
 
                                             {% for question in ask_user %}
                                                 {% if not question.answer %}
@@ -565,8 +570,7 @@
                                                       class="form-inline">
                                                     {% csrf_token %}
                                                     <div class="form-group">
-                                                        <input type="hidden" name="order" value="{{ order_data.id }}"
-                                                               placeholder="your question">
+                                                        <input type="hidden" name="order" value="{{ order_data.id }}">
                                                         <label for="user_question" class="font-pacifico color-primary">Your
                                                             question</label>
                                                     </div>
@@ -622,7 +626,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div>
+                                            <div class="row">
 
                                                 <div class="col-sm-10 frameowner m20">
                                                     <ul class="whatsapp-style">
@@ -632,6 +636,7 @@
                                                                     <div class="avatar"><img class="img-circle"
                                                                                              style="width:100%;"
                                                                                              src="
+
                                                                                                      {% if question.owner.image %}{{ question.owner.image.url }}{% else %}{{ image }}{% endif %}"
                                                                                              alt="avatar"></div>
                                                                     <div class="text text-left">
@@ -669,70 +674,71 @@
                                                     </ul>
                                                 </div>
                                                 <h5 class="col-sm-2 color-dark">owners questions and answers</h5>
-                                            </div>
 
-                                        </div>
-                                        <p class="p20">
-                                            <button class="button button-xs button-square button-yellow">Status:
-                                                pending4
-                                            </button>
-                                        </p>
-                                        {% for question in ask_user %}
-                                            {% if not question.answer %}
-                                                <div>
-                                                    <form action="{% url 'ask_user' order_data.id %}" method="post">
+                                                {% for question in ask_user %}
+                                                    {% if not question.answer %}
+                                                            <form action="{% url 'ask_user' order_data.id %}"
+                                                                  method="post">
+                                                                {% csrf_token %}
+                                                                <div class="form-group">
+                                                                    <label class="control-label"
+                                                                           for="question{{ question.id }}">
+                                                                        {{ question.question }} asked
+                                                                        by {{ question.owner }}
+                                                                    </label>
+                                                                    <textarea id="question{{ question.id }}"
+                                                                              name="question{{ question.id }}"
+                                                                              value=""
+                                                                              class="form-control"></textarea>
+                                                                </div>
+                                                                <button>submit your answer here for us</button>
+                                                            </form>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                                {% if order_data %}
+                                                    <div class="row">
+                                                    <form action="{% url 'user_question' order_data.id %}" method="post"
+                                                          class="form-inline">
                                                         {% csrf_token %}
                                                         <div class="form-group">
-                                                            <label class="control-label"
-                                                                   for="question{{ question.id }}">
-                                                                {{ question.question }} asked by {{ question.owner }}
-                                                            </label>
-                                                            <textarea id="question{{ question.id }}"
-                                                                      name="question{{ question.id }}"
-                                                                      value=""
-                                                                      class="form-control"></textarea>
+                                                            <input type="hidden" name="order"
+                                                                   value="{{ order_data.id }}">
+                                                            <label for="user_question"
+                                                                   class="font-pacifico color-primary">Your
+                                                                question</label>
                                                         </div>
-                                                        <button>submit your answer here for us</button>
+                                                        {{ user_question_form.question }}
+
+
+                                                        <button class="button-3d button-xs button-rounded button-blue">
+                                                            submit
+                                                            question
+                                                        </button>
                                                     </form>
-                                                </div>
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% if order_data %}
-                                            <form action="{% url 'user_question' order_data.id %}" method="post"
-                                                  class="form-inline">
-                                                {% csrf_token %}
-                                                <div class="form-group">
-                                                    <input type="hidden" name="order" value="{{ order_data.id }}"
-                                                           placeholder="your question">
-                                                    <label for="user_question" class="font-pacifico color-primary">Your
-                                                        question</label>
-                                                </div>
-                                                {{ user_question_form.question }}
-
-
-                                                <button class="button-3d button-xs button-rounded button-blue">submit
-                                                    question
-                                                </button>
-                                            </form>
-                                        {% endif %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
 
                                         <div id="pilljustified4" style="text-align: center;"
                                              class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %} p20">
 
                                             <h4 class="text-uppercase color-info">Payment</h4>
-                                        <h5>licenseit has negotiated the best prices as stipulated below</h5>
-                                        <div class="row">
-                                            <div class="col-md-4">owner</div>
-                                            <div class="col-md-2">price</div>
-                                            <div class="col-md-3">pdf</div>
-                                        </div>
+                                            <h5>licenseit has negotiated the best prices as stipulated below</h5>
+                                            <div class="row">
+                                                <div class="col-md-4">owner</div>
+                                                <div class="col-md-2">price</div>
+                                                <div class="col-md-3">pdf</div>
+                                            </div>
                                             {% for owner in counter_owners %}
                                                 <h5></h5>
                                                 <div class="row">
                                                     <div class="col-md-4">{{ owner.owner }}</div>
                                                     <div class="col-md-2">{{ owner.price }}</div>
                                                     {% if owner.owner_pdf %}
-                                                        <div class="col-md-3"><a href="{{ owner.owner_pdf.url }}">{{ owner.file_name }}</a></div>
+                                                        <div class="col-md-3"><a
+                                                                href="{{ owner.owner_pdf.url }}">{{ owner.file_name }}</a>
+                                                        </div>
                                                     {% endif %}
                                                 </div>
                                             {% endfor %}
@@ -750,13 +756,13 @@
                                                 </p>
                                             {% endif %}
                                         </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div>
 
 
                 <!-- Item 1 END
@@ -819,8 +825,6 @@
                     </div>
 
 
-                </div>
-            </div>
         </div>
         <div class="row pt50 pb30"></div><!-- sidebar end -->
 
