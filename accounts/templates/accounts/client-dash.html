@@ -539,16 +539,16 @@
 
                                             <h4 class="text-uppercase color-info">Clrearance Request</h4> <br>
                                             {% if order_data.state == 'sent' or order_data.state == 'attention' %}
+                                                <p class="p20">
+                                                    <button class="button button-xs button-square button-yellow">Status:
+                                                        pending
+                                                    </button>
+                                                </p>
+                                            {% else %}
                                                 <p>
                                                     <button class="button button-xs button-square button-success">
                                                         Status:
                                                         Completed
-                                                    </button>
-                                                </p>
-                                            {% else %}
-                                                <p class="p20">
-                                                    <button class="button button-xs button-square button-yellow">Status:
-                                                        pending
                                                     </button>
                                                 </p>
                                             {% endif %}
