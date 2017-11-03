@@ -183,7 +183,7 @@
                                                     <p>
                                                         <button class="button button-xs button-square button-success">
                                                             Status:
-                                                            Completed1
+                                                            Completed
                                                         </button>
                                                     </p>
                                                 </div>
@@ -199,6 +199,7 @@
                                                         <div class="smart-forms smart-container wrap-4">
                                                             <form method="post"
                                                                   action="
+
 
 
 
@@ -498,7 +499,7 @@
                                                 <p>
                                                     <button class="button button-xs button-square button-success">
                                                         Status:
-                                                        Completed2
+                                                        Completed
                                                     </button>
                                                 </p>
                                             {% endif %}
@@ -528,7 +529,7 @@
                                             <p>
                                                 <button class="button button-xs button-square button-success">
                                                     Status:
-                                                    Completed3
+                                                    Completed
                                                 </button>
                                             </p>
 
@@ -537,12 +538,20 @@
                                              class="tab-pane fade in{% if order_data.state == 'sent' or order_data.state == 'attention' %} active{% endif %} p20">
 
                                             <h4 class="text-uppercase color-info">Clrearance Request</h4> <br>
-
-                                                <p class="p20">
-                                                    <button class="button button-xs button-square button-yellow">Status:
-                                                        pending4
+                                            {% if order_data.state == 'sent' or order_data.state == 'attention' %}
+                                                <p>
+                                                    <button class="button button-xs button-square button-success">
+                                                        Status:
+                                                        Completed
                                                     </button>
                                                 </p>
+                                            {% else %}
+                                                <p class="p20">
+                                                    <button class="button button-xs button-square button-yellow">Status:
+                                                        pending
+                                                    </button>
+                                                </p>
+                                            {% endif %}
 
                                             {% for question in ask_user %}
                                                 {% if not question.answer %}
@@ -637,6 +646,7 @@
                                                                                              style="width:100%;"
                                                                                              src="
 
+
                                                                                                      {% if question.owner.image %}{{ question.owner.image.url }}{% else %}{{ image }}{% endif %}"
                                                                                              alt="avatar"></div>
                                                                     <div class="text text-left">
@@ -677,27 +687,27 @@
 
                                                 {% for question in ask_user %}
                                                     {% if not question.answer %}
-                                                            <form action="{% url 'ask_user' order_data.id %}"
-                                                                  method="post">
-                                                                {% csrf_token %}
-                                                                <div class="form-group">
-                                                                    <label class="control-label"
-                                                                           for="question{{ question.id }}">
-                                                                        {{ question.question }} asked
-                                                                        by {{ question.owner }}
-                                                                    </label>
-                                                                    <textarea id="question{{ question.id }}"
-                                                                              name="question{{ question.id }}"
-                                                                              value=""
-                                                                              class="form-control"></textarea>
-                                                                </div>
-                                                                <button>submit your answer here for us</button>
-                                                            </form>
+                                                        <form action="{% url 'ask_user' order_data.id %}"
+                                                              method="post">
+                                                            {% csrf_token %}
+                                                            <div class="form-group">
+                                                                <label class="control-label"
+                                                                       for="question{{ question.id }}">
+                                                                    {{ question.question }} asked
+                                                                    by {{ question.owner }}
+                                                                </label>
+                                                                <textarea id="question{{ question.id }}"
+                                                                          name="question{{ question.id }}"
+                                                                          value=""
+                                                                          class="form-control"></textarea>
+                                                            </div>
+                                                            <button>submit your answer here for us</button>
+                                                        </form>
                                                     {% endif %}
                                                 {% endfor %}
                                             </div>
-                                                {% if order_data %}
-                                                    <div class="row">
+                                            {% if order_data %}
+                                                <div class="row">
                                                     <form action="{% url 'user_question' order_data.id %}" method="post"
                                                           class="form-inline">
                                                         {% csrf_token %}
@@ -716,14 +726,28 @@
                                                             question
                                                         </button>
                                                     </form>
-                                                    </div>
-                                                {% endif %}
-                                            </div>
+                                                </div>
+                                            {% endif %}
+                                        </div>
 
                                         <div id="pilljustified4" style="text-align: center;"
                                              class="tab-pane fade{% if order_data.state == 'payment' %} in active{% endif %} p20">
 
                                             <h4 class="text-uppercase color-info">Payment</h4>
+                                            {% if order_data.state == 'done' %}
+                                                <p>
+                                                    <button class="button button-xs button-square button-success">
+                                                        Status:
+                                                        Completed
+                                                    </button>
+                                                </p>
+                                            {% else %}
+                                                <p class="p20">
+                                                    <button class="button button-xs button-square button-yellow">Status:
+                                                        pending
+                                                    </button>
+                                                </p>
+                                            {% endif %}
                                             <h5>licenseit has negotiated the best prices as stipulated below</h5>
                                             <div class="row">
                                                 <div class="col-md-4">owner</div>
@@ -756,13 +780,12 @@
                                                 </p>
                                             {% endif %}
                                         </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                </div>
 
 
                 <!-- Item 1 END
@@ -825,11 +848,11 @@
                     </div>
 
 
-        </div>
-        <div class="row pt50 pb30"></div><!-- sidebar end -->
+                </div>
+                <div class="row pt50 pb30"></div><!-- sidebar end -->
 
-    </div><!-- row end -->
-    </div><!-- container end -->
+            </div><!-- row end -->
+        </div><!-- container end -->
     </div><!-- shop section end -->
 
 
