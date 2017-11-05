@@ -506,7 +506,7 @@ class DetailBase(View):
     def add_onwners(self, order_id=None):
         order_rights = {
             'composition': 'composition owner',
-            'lirics': 'lyrics owner',
+            'lyrics': 'lyrics owner',
             'performance': 'performance owner'
         }
 
@@ -789,7 +789,7 @@ class WeddingDetails(View):
     def add_onwners(self, order=None):
         order_rights = {
             'composition': 'composition owner',
-            'lirics': 'lirics owner',
+            'lyrics': 'lyrics owner',
             'performance': 'performance owner'
         }
 
@@ -868,7 +868,7 @@ class PersonalDetails(View):
     def add_onwners(self, order=None):
         order_rights = {
             'composition': 'composition owner',
-            'lirics': 'lirics owner',
+            'lyrics': 'lyrics owner',
             'performance': 'performance owner'
         }
 
