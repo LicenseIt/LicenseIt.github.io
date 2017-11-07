@@ -9,14 +9,14 @@
 <div class="frm-row align-center">
 
 <div class="section colm colm6 pad-r40 bdr">
-    <label class="field-label" for="id_number_uses" style="color:#ff7363">number of uses</label>
+    <label class="field-label" for="id_number_uses" style="color:#ff7363">Number of uses  <i class="fa fa fa-question-circle"></i></label>
     <label class="field">{{ details_form.number_uses }}</label>
     <span>{{ details_form.errors.number_uses }}</span>
 </div>
 
 
 <div class="section colm colm6 pad-140">
-    <label class="field-label" style="color:#ff7363">opening closing?</label>
+    <label class="field-label" style="color:#ff7363">Opening or Closing theme?  <i class="fa fa fa-question-circle"></i></label>
 </div>
 <span>{{ details_form.errors.opening_closing }}</span>
 <div class="section colm colm6 pad-r40 bdr">
@@ -36,7 +36,7 @@
      class="section colm colm6 pad-140 bdr">
     <div class="option-group field">
         <div class="group-vertical">
-            <label class="field-label align-center" style="color:#ff7363">featured or background?</label>
+            <label class="field-label align-center" style="color:#ff7363">Featured or Background?  <i class="fa fa fa-question-circle"></i></label>
         <span>{{ details_form.errors.featured_background }}</span>
             {% for check in details_form.featured_background %}
                 <label class="option" for="{{ check.id_for_label }}">
@@ -50,7 +50,7 @@
 <div class="section colm colm6 pad-140">
     <div class="option-group field">
         <div class="group-vertical">
-            <label class="field-label align-center" style="uppercase; color:#ff7363">song version</label>
+            <label class="field-label align-center" style="uppercase; color:#ff7363">Song version  <i class="fa fa fa-question-circle"></i></label>
 <!--
         <span>details_form.errors.song_version</span>
 -->
@@ -71,16 +71,16 @@
 </div>
 
   <div class="spacer-t40 spacer-b40">
-                        <div class="tagline"><span>DURATION TERM & TERRITORY </span></div><!-- .tagline -->
+                        <div class="tagline"><span>DURATION, TERM & TERRITORY </span></div><!-- .tagline -->
 </div><!-- end section -->
 
- <h5 style="text-transform: uppercase; color:#ff4530"> DUration</h5>
+ <h5 style="text-transform: uppercase; color:#ff4530"> Duration</h5>
  <div class="section">
-                        <p class="small-text fine-grey">State where you would like the rights to use music in your project</p>
+                        <p class="small-text fine-grey">  State the length of the music use in your project. For example, if you would like to use a 17 second clip of the song in the middle of your project and a 1 minute clip later on in th eproject, you would state the following duration starts at 0:17, duration ends at 1:00</p>
 </div><!-- end section -->
 <div class="frm-row align-center">
 <div class="section section colm colm3 pad-140">
-    <label for="id_start_minutes" class="field-label">duration start at </label>
+    <label for="id_start_minutes" class="field-label">Duration start at </label>
     <input class="gui-input" name="min_start" type="number" required
            value="{% if min_start %}{{ min_start }}{% endif %}"
            id="id_start_minutes" min="00" max="59" placeholder="MM">
@@ -95,7 +95,7 @@
 <span>details_form.errors.end_duration</span>
 -->
 <div class="section section colm colm3 pad-140">
-    <label for="id_end_minutes" class="field-label">duration end at </label>
+    <label for="id_end_minutes" class="field-label">Duration end at </label>
     <input class="gui-input" name="min_end" type="number" required
            value="{% if min_end %}{{ min_end }}{% endif %}"
            id="id_end_minutes" min="00" max="59" placeholder="MM">
@@ -139,7 +139,7 @@
 <div class="section">
     <label class="field-label spacer-t20" style="text-transform: uppercase; color:#ff4530">release date</label>
     <div class="section">
-                        <p class="small-text fine-grey"> Pure CSS3 Button Radios + Checkboxes </p>
+                        <p class="small-text fine-grey"> State the date your project will be released or first aired. If you do not know the exact date, please estimate to the best of your ability. </p>
     </div><!-- end section -->
 
     <span>{{ details_form.errors.release_date }}</span>
@@ -169,23 +169,27 @@
 
    <div class="spacer-t40 spacer-b40">
                         <div class="tagline"><span>Synopsis & Scene Description </span></div><!-- .tagline -->
+
 </div><!-- end section -->
+
+                               <p class="small-text fine-grey"> Describe the scene in which you would like to use the song you are requesting. A brief synopsis of the entire project and a description of the particular scene with the music is a good place to start, but please be as specific as possible. </p>
+
 
 
 <div class="section">
-    <label class="field-label">synopsis</label><br>
+    <label class="field-label">Synopsis</label><br>
     <span>{{ details_form.errors.synopsis }}</span>
     {{ details_form.synopsis }}
 </div><br>
 <div class="section">
-    <label class="field-label">description</label><br>
+    <label class="field-label">Description</label><br>
     <span>{{ details_form.errors.description }}</span>
     {{ details_form.description }}
 </div>
 
     <div class="spacer-t40 spacer-b40">
-                        <div class="tagline spacer-t10 spacer-b10"><span>non profit organization</span></div><!-- .tagline -->
-         <p class="small-text fine-grey align-center"> Pure CSS3 Button Radios + Checkboxes </p>
+                        <div class="tagline spacer-t10 spacer-b10"><span>Is this for a non-profit organization?</span></div><!-- .tagline -->
+         <p class="small-text fine-grey align-center"> As a non-profit organization / Church / University you receive a special discount in pricing.  </p>
 </div><!-- end section -->
 
  <div class="frm-row align-center">
@@ -206,7 +210,7 @@
 </div>
 
 <div id="non-profit" class="section colm colm6">
-    <label class="field-label">non profit</label>
+    <label class="field-label">Non profit</label>
 
 
     <div class="option-group field">
@@ -222,7 +226,7 @@
 </div>
 </div>
      <div class="spacer-t40 spacer-b40">
-                        <div class="tagline"><span>comments? (Optional)</span></div><!-- .tagline -->
+                        <div class="tagline"><span>comments?(Optional)</span></div><!-- .tagline -->
 </div><!-- end section -->
 <div class="section">
     <label class="field-label"></label>
