@@ -742,7 +742,7 @@
                                                     </button>
                                                 </p>
                                             {% else %}
-                                                <p>
+                                                <p class="p20">
                                                     <button class="button button-xs button-square button-yellow">Status:
                                                         pending
                                                     </button>
@@ -761,7 +761,7 @@
                                                     <div class="col-md-2"><kbd>{{ owner.price }}</kbd></div>
                                                     {% if owner.owner_pdf %}
                                                         <div class="col-md-3"><a
-                                                                href="{{ owner.owner_pdf.url }}" class="button button-xs button-circle button-pasific">{{ owner.file_name }}</a>
+                                                                href="{{ owner.owner_pdf.url }}">{{ owner.file_name }}</a>
                                                         </div>
                                                     {% endif %}
                                                 </div>
