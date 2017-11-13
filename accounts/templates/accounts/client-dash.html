@@ -594,7 +594,7 @@
 
                                             <br>
                                             <div class="center" style="margin:auto;">
-                                                <h5 class="col-sm-2 color-dark">Owners questions and answers</h5>
+                                                <h5 class="col-sm-2 color-dark">User questions and answers</h5>
                                                 <div class="col-sm-10 frameuser m20">
 
                                                     <ul class="whatsapp-style">
@@ -683,7 +683,26 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
+                                                <h5 class="col-sm-2 color-dark"> questions and answers</h5>
 
+                                                {% for question in ask_user %}
+                                                    {% if not question.answer %}
+                                                        <form action="{% url 'ask_user' order_data.id %}"
+                                                              method="post">
+                                                            {% csrf_token %}
+                                                            <div class="form-group">
+                                                                <label class="control-label"
+                                                                       for="question{{ question.id }}">
+                                                                    {{ question.question }} asked
+                                                                    by {{ question.owner }}
+                                                                </label>
+                                                                <textarea id="question{{ question.id }}"
+                                                                          name="question{{ question.id }}"
+                                                                          value=""
+                                                                          class="form-control"></textarea>
+                                                            </div>
+                                                            <button>submit your answer here for us</button>
+                                                        </form>
                                                     {% endif %}
                                                 {% endfor %}
                                             </div>
