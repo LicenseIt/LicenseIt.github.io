@@ -748,11 +748,11 @@
                                                     </button>
                                                 </p>
                                             {% endif %}
-                                            <h5>licenseit has negotiated the best prices as stipulated below</h5>
+                                            <h5>licenseit has negotiated the best prices as stipulated below</h5> <br>
                                             <div class="row">
-                                                <div class="col-md-4">owner</div>
-                                                <div class="col-md-2">price</div>
-                                                <div class="col-md-3">pdf</div>
+                                                <div class="col-md-4 text-uppercase color-blue">owner</div>
+                                                <div class="col-md-2 text-uppercase color-blue">price</div>
+                                                <div class="col-md-3 text-uppercase color-blue">pdf</div>
                                             </div>
                                             {% for owner in counter_owners %}
                                                 <h5></h5>
@@ -776,7 +776,7 @@
                                             <h4 class="text-uppercase color-info">Completed</h4>
                                             {% if order_data.license_pdf %}
                                                 <p>
-                                                    <a href="{{ order_data.license_pdf.url }}">your license</a>
+                                                    <a href="{{ order_data.license_pdf.url }}" class="button button-md button-rounded button-success hover-icon-hang">your license</a>
                                                 </p>
                                             {% endif %}
                                         </div>
