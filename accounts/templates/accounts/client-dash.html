@@ -636,28 +636,6 @@
                                                 </div>
                                             </div>
                              
-                                            {% if order_data %}
-                                                <div class="row">
-                                                    <form action="{% url 'user_question' order_data.id %}" method="post"
-                                                          class="form-inline">
-                                                        {% csrf_token %}
-                                                        <div class="form-group">
-                                                            <input type="hidden" name="order"
-                                                                   value="{{ order_data.id }}">
-                                                            <label for="user_question"
-                                                                   class="font-pacifico color-primary">Your
-                                                                question</label>
-                                                        </div>
-                                                        {{ user_question_form.question }}
-
-
-                                                        <button class="button-3d button-xs button-rounded button-blue">
-                                                            submit
-                                                            question
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            {% endif %}
                                         </div>
 
                                         <div id="pilljustified4" style="text-align: center;"
