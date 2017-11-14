@@ -580,14 +580,13 @@
                                                     {% csrf_token %}
                                                     <div class="form-group">
                                                         <input type="hidden" name="order" value="{{ order_data.id }}">
-                                                        <label for="user_question" class="font-pacifico color-primary">Your
-                                                            question</label>
+                                                        <label for="user_question" class="font-pacifico color-primary">Type</label>
                                                     </div>
                                                     {{ user_question_form.question }}
 
 
                                                     <button class="button-3d button-xs button-rounded button-blue">
-                                                        submit question
+                                                        submit
                                                     </button>
                                                 </form>
                                             {% endif %}
