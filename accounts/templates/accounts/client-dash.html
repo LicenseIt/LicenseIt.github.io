@@ -576,7 +576,7 @@
                                             {% endfor %}
                                             {% if order_data %}
                                                 <form action="{% url 'user_question' order_data.id %}" method="post"
-                                                      class="form-inline">
+                                                      class="form-inline" style="width:100%">
                                                     {% csrf_token %}
                                                     <div class="form-group">
                                                         <input type="hidden" name="order" value="{{ order_data.id }}">
