@@ -386,7 +386,8 @@ class Account(ConnectBase):
                     context['web'] = IndieWebDistribution()
                     # context['web_dist'] = web
             if order_data.order_project_orderfilmmaking\
-                    .filter(distribution__name__iexact='Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.')\
+                    .filter(distribution__name__iexact='Externally  |  Intended for non-broadcast media or a broad '
+                                                       'media audience')\
                     .exists():
                 ext = order_data.order_dist_ext.filter(order=order_data.id)
                 if ext:

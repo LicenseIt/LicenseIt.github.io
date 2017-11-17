@@ -620,7 +620,7 @@ class IndieDetail(DetailBase):
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
 
         if 'Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.'.lower() in dist_list or \
-                        'Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.'.lower() in \
+                        'Externally  |  Intended for non-broadcast media or a broad media audience'.lower() in \
                         dist_list:
             context['rate_form'] = RateUsForm()
             context['page_num'] = 4
