@@ -375,11 +375,15 @@ class Account(ConnectBase):
 
             context['order_details'] = details
             # check which type of distribution and act accordingly
-            if order_data.order_project_orderfilmmaking.filter(distribution__name__iexact='web/streaming').exists():
+            if order_data.order_project_orderfilmmaking\
+                    .filter(distribution__name__iexact='Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.')\
+                    .exists():
                 web = order_data.order_dist_web.get(order=order_data.id)
                 context['web'] = IndieWebDistribution(instance=web)
                 context['web_dist'] = web
-            if order_data.order_project_orderfilmmaking.filter(distribution__name__iexact='externally').exists():
+            if order_data.order_project_orderfilmmaking\
+                    .filter(distribution__name__iexact='Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.')\
+                    .exists():
                 ext = order_data.order_dist_ext.get(order=order_data.id)
                 context['ext'] = IndieExtDistribution(instance=ext)
                 context['ext_dist'] = ext
