@@ -619,7 +619,9 @@ class IndieDetail(DetailBase):
         order_dist = OrderFilmMaking.objects.filter(order=order_id)[0]
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
 
-        if 'web/streaming' in dist_list or 'external' in dist_list:
+        if 'Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.'.lower() in dist_list or \
+                        'Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.'.lower() in \
+                        dist_list:
             context['rate_form'] = RateUsForm()
             context['page_num'] = 4
         else:
