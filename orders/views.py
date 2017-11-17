@@ -257,9 +257,9 @@ class IndieDistribution(View):
 
         dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
 
-        if 'web/streaming' in dist_list:
+        if 'Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.' in dist_list:
             context['web'] = web_form
-        if 'externally' in dist_list:
+        if 'Externally  |  Intended for non-broadcast media or a broad media audience' in dist_list:
             context['ext'] = ext_form
 
         if 'web' in context or 'ext' in context.keys():
