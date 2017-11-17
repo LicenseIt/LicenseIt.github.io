@@ -22,10 +22,10 @@
                     </label>
                 {% endfor %}
                 <label class="option" for="other">
-                    <input id="other" name="web_other" type="checkbox">
+                    <input id="other" name="distribute_new" type="checkbox">
                     <span class="checkbox"></span>other
                     <label id="other_web" class="field">
-                        <input class="gui-input inline" style="display: inline-flex; vertical-align:baseline;" type="text" name="distribute_new" value="{% if web.web_other.value %}{{ web.web_other.value }}{% endif %}">
+                        <input class="gui-input inline" style="display: inline-flex; vertical-align:baseline;" type="text" name="web_other" value="{% if web.web_other.value %}{{ web.web_other.value }}{% endif %}">
                     </label>
 
                 </label>
