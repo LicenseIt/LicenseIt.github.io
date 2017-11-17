@@ -279,15 +279,17 @@ class IndieDistribution(View):
         web_form = None
         ext_form = None
 
-        if 'distribute_on' in request.POST:
+        order_dist = OrderFilmMaking.objects.filter(order=order_id)[0]
+        dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
+
+        if 'Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.'.lower() in dist_list:
             order = WebDistribution.objects.filter(order=order_id)
             if order.exists():
                 web_form = IndieWebDistribution(request.POST.copy(), order[0])
             else:
                 web_form = IndieWebDistribution(request.POST.copy())
             web_form.data['order'] = order_id
-
-        if 'name' in request.POST:
+        if 'Externally  |  Intended for non-broadcast media or a broad media audience'.lower() in dist_list:
             order = ExternalDistribution.objects.filter(order=order_id)
             if order.exists():
                 ext_form = IndieExtDistribution(request.POST.copy(), instance=order[0])
@@ -367,7 +369,10 @@ class ProgramDistribution(View):
         ext_form = None
         tv_form = None
 
-        if 'distribute_on' in request.POST:
+        order_dist = OrderProgramming.objects.filter(order=order_id)[0]
+        dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
+
+        if 'web/streaming' in dist_list:
             order = WebDistribution.objects.filter(order=order_id)
             if order.exists():
                 web_form = IndieWebDistribution(request.POST.copy(), instance=order[0])
@@ -375,7 +380,7 @@ class ProgramDistribution(View):
                 web_form = IndieWebDistribution(request.POST.copy())
             web_form.data['order'] = order_id
 
-        if 'name' in request.POST:
+        if 'externally' in dist_list:
             order = ExternalDistribution.objects.filter(order=order_id)
             if order.exists():
                 ext_form = IndieExtDistribution(request.POST.copy(), instance=order[0])
@@ -383,7 +388,7 @@ class ProgramDistribution(View):
                 ext_form = IndieExtDistribution(request.POST.copy())
             ext_form.data['order'] = order_id
 
-        if 'tv_trailer' in request.POST or 'tv_program' in request.POST:
+        if 'tv' in dist_list:
             order = TvDistribution.objects.filter(order=order_id)
             if order.exists():
                 tv_form = TvDistributionForm(request.POST.copy(), instance=order[0])
@@ -466,21 +471,25 @@ class AdvertisingDistribution(View):
         web_form = None
         ext_form = None
 
-        if 'distribute_on' in request.POST:
+        order_dist = OrderAdvertising.objects.filter(order=order_id)[0]
+        dist_list = [dist.__str__().lower() for dist in order_dist.distribution.all()]
+
+        if 'web/streaming' in dist_list:
             order = WebDistribution.objects.filter(order=order_id)
             if order.exists():
                 web_form = IndieWebDistribution(request.POST.copy(), instance=order[0])
             else:
                 web_form = IndieWebDistribution(request.POST.copy())
             web_form.data['order'] = order_id
-
-        if 'name' in request.POST:
+        if 'externally' in dist_list:
             order = ExternalDistribution.objects.filter(order=order_id)
             if order.exists():
                 ext_form = IndieExtDistribution(request.POST.copy(), instance=order[0])
             else:
                 ext_form = IndieExtDistribution(request.POST.copy())
             ext_form.data['order'] = order_id
+        # if 'tv' in dist_list:
+        #     context['tv'] = tv_form
 
         if web_form and not web_form.is_valid() or ext_form and not ext_form.is_valid():
             return render(request,
