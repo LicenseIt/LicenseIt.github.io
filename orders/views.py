@@ -638,7 +638,7 @@ class IndieDetail(DetailBase):
         '''
         self.add_onwners(order_id)
         details_object = OrderIndieProjectDetail.objects.filter(order=order_id)
-        return self.func(request, order_id, IndieDetailForm)
+        return self.func(request, order_id, IndieDetailForm, details_object)
 
 
 class ProgramDetail(DetailBase):
