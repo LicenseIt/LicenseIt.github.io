@@ -388,9 +388,13 @@ class Account(ConnectBase):
             if order_data.order_project_orderfilmmaking\
                     .filter(distribution__name__iexact='Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.')\
                     .exists():
-                ext = order_data.order_dist_ext.get(order=order_data.id)
-                context['ext'] = IndieExtDistribution(instance=ext)
-                context['ext_dist'] = ext
+                ext = order_data.order_dist_ext.filter(order=order_data.id)
+                if ext:
+                    context['ext'] = IndieExtDistribution(instance=ext)
+                    context['ext_dist'] = ext
+                else:
+                    context['ext'] = IndieExtDistribution()
+                    # context['ext_dist'] = ext
 
         if order_data and order_data.project_type.name.lower() == 'programming':
             prog_data = order_data.order_project_orderprogramming.get(order=order_data.id)
