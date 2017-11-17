@@ -537,9 +537,9 @@
                                         <div id="pilljustified3" style="text-align: center;"
                                              class="tab-pane fade in{% if order_data.state == 'sent' or order_data.state == 'attention' %} active{% endif %} p20">
 
-                                            <h4 class="text-uppercase color-info">Clrearance Request</h4> <br>
+                                            <h4 class="text-uppercase color-info">Clrearance Request</h4>
                                             {% if order_data.state == 'sent' or order_data.state == 'attention' %}
-                                                <p class="p20">
+                                                <p>
                                                     <button class="button button-xs button-square button-yellow">Status:
                                                         pending
                                                     </button>
@@ -552,7 +552,7 @@
                                                     </button>
                                                 </p>
                                             {% endif %}
-
+                                            <div class="childclearance">
                                             {% for question in ask_user %}
                                                 {% if not question.answer %}
                                                     <div>
@@ -576,26 +576,27 @@
                                             {% endfor %}
                                             {% if order_data %}
                                                 <form action="{% url 'user_question' order_data.id %}" method="post"
-                                                      class="form-inline">
+                                                      class="form-inline" style="width:100%">
                                                     {% csrf_token %}
                                                     <div class="form-group">
                                                         <input type="hidden" name="order" value="{{ order_data.id }}">
-                                                        <label for="user_question" class="font-pacifico color-primary">Your
-                                                            question</label>
+                                                        <label for="user_question" class="font-pacifico color-primary">Type</label>
                                                     </div>
                                                     {{ user_question_form.question }}
 
 
                                                     <button class="button-3d button-xs button-rounded button-blue">
-                                                        submit question
+                                                        submit
                                                     </button>
                                                 </form>
                                             {% endif %}
 
+                                                </div>
+
                                             <br>
-                                            <div class="center" style="margin:auto;">
-                                                <h5 class="col-sm-2 color-dark">User questions and answers</h5>
-                                                <div class="col-sm-10 frameuser m20">
+                                            <div class="center parentclearance" style="margin:auto;">
+                                                <h5 class="col-sm-6 color-dark text-uppercase color-blue">Owners questions and answers (Discussion box)</h5>
+                                                <div class="col-sm-10 frameuser">
 
                                                     <ul class="whatsapp-style">
                                                         {% for question in user_question_history %}
@@ -635,99 +636,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="row">
 
-                                                <div class="col-sm-10 frameowner m20">
-                                                    <ul class="whatsapp-style">
-                                                        {% for question in owner_questions %}
-                                                            <li style="width:100%;">
-                                                                <div class="msj macro">
-                                                                    <div class="avatar"><img class="img-circle"
-                                                                                             style="width:100%;"
-                                                                                             src="
-
-
-                                                                                                     {% if question.owner.image %}{{ question.owner.image.url }}{% else %}{{ image }}{% endif %}"
-                                                                                             alt="avatar"></div>
-                                                                    <div class="text text-left">
-                                                                        <p>
-                                                                            {{ question.owner }}-
-                                                                            {{ question.question }}
-                                                                        </p>
-                                                                        <p>
-                                                                            <small>{{ question.created }}</small>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            {% if question.answer %}
-                                                                <li style="width: 100%;">
-                                                                    <div class="msj-rta macro">
-                                                                        <div class="text text-right">
-                                                                            <p>
-                                                                                {{ question.answer }}
-                                                                            </p>
-                                                                            <p>
-                                                                                <small>{{ question.updated }}</small>
-                                                                            </p>
-                                                                        </div>
-                                                                        {% user_image user as image %}
-                                                                        <div class="avatar"
-                                                                             style="padding:0 0 0 10px !important"><img
-                                                                                class="img-circle" style="width:100%;"
-                                                                                src="{{ image }}"
-                                                                                alt="avatar"/></div>
-                                                                    </div>
-                                                                </li>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </ul>
-                                                </div>
-                                                <h5 class="col-sm-2 color-dark">owners questions and answers</h5>
-
-                                                {% for question in ask_user %}
-                                                    {% if not question.answer %}
-                                                        <form action="{% url 'ask_user' order_data.id %}"
-                                                              method="post">
-                                                            {% csrf_token %}
-                                                            <div class="form-group">
-                                                                <label class="control-label"
-                                                                       for="question{{ question.id }}">
-                                                                    {{ question.question }} asked
-                                                                    by {{ question.owner }}
-                                                                </label>
-                                                                <textarea id="question{{ question.id }}"
-                                                                          name="question{{ question.id }}"
-                                                                          value=""
-                                                                          class="form-control"></textarea>
-                                                            </div>
-                                                            <button>submit your answer here for us</button>
-                                                        </form>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </div>
-                                            {% if order_data %}
-                                                <div class="row">
-                                                    <form action="{% url 'user_question' order_data.id %}" method="post"
-                                                          class="form-inline">
-                                                        {% csrf_token %}
-                                                        <div class="form-group">
-                                                            <input type="hidden" name="order"
-                                                                   value="{{ order_data.id }}">
-                                                            <label for="user_question"
-                                                                   class="font-pacifico color-primary">Your
-                                                                question</label>
-                                                        </div>
-                                                        {{ user_question_form.question }}
-
-
-                                                        <button class="button-3d button-xs button-rounded button-blue">
-                                                            submit
-                                                            question
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            {% endif %}
                                         </div>
 
                                         <div id="pilljustified4" style="text-align: center;"
@@ -742,26 +651,26 @@
                                                     </button>
                                                 </p>
                                             {% else %}
-                                                <p class="p20">
+                                                <p>
                                                     <button class="button button-xs button-square button-yellow">Status:
                                                         pending
                                                     </button>
                                                 </p>
                                             {% endif %}
-                                            <h5>licenseit has negotiated the best prices as stipulated below</h5>
-                                            <div class="row">
-                                                <div class="col-md-4">owner</div>
-                                                <div class="col-md-2">price</div>
-                                                <div class="col-md-3">pdf</div>
+                                            <code>licenseit has negotiated the best prices as stipulated below</code> <br><br>
+                                            <div class="row mt5">
+                                                <div class="col-md-4 text-uppercase color-blue">owner</div>
+                                                <div class="col-md-2 text-uppercase color-blue">price</div>
+                                                <div class="col-md-3 text-uppercase color-blue">pdf</div>
                                             </div>
                                             {% for owner in counter_owners %}
                                                 <h5></h5>
                                                 <div class="row">
                                                     <div class="col-md-4">{{ owner.owner }}</div>
-                                                    <div class="col-md-2">{{ owner.price }}</div>
+                                                    <div class="col-md-2"><kbd>{{ owner.price }}</kbd></div>
                                                     {% if owner.owner_pdf %}
                                                         <div class="col-md-3"><a
-                                                                href="{{ owner.owner_pdf.url }}">{{ owner.file_name }}</a>
+                                                                href="{{ owner.owner_pdf.url }}" class="button button-xs button-circle button-pasific">{{ owner.file_name }}</a>
                                                         </div>
                                                     {% endif %}
                                                 </div>
@@ -776,7 +685,7 @@
                                             <h4 class="text-uppercase color-info">Completed</h4>
                                             {% if order_data.license_pdf %}
                                                 <p>
-                                                    <a href="{{ order_data.license_pdf.url }}">your license</a>
+                                                    <a href="{{ order_data.license_pdf.url }}" class="button button-md button-rounded button-success hover-icon-hang">your license</a>
                                                 </p>
                                             {% endif %}
                                         </div>
