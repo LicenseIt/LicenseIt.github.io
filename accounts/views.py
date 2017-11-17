@@ -378,9 +378,13 @@ class Account(ConnectBase):
             if order_data.order_project_orderfilmmaking\
                     .filter(distribution__name__iexact='Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.')\
                     .exists():
-                web = order_data.order_dist_web.get(order=order_data.id)
-                context['web'] = IndieWebDistribution(instance=web)
-                context['web_dist'] = web
+                web = order_data.order_dist_web.filter(order=order_data.id)
+                if web:
+                    context['web'] = IndieWebDistribution(instance=web)
+                    context['web_dist'] = web
+                else:
+                    context['web'] = IndieWebDistribution()
+                    # context['web_dist'] = web
             if order_data.order_project_orderfilmmaking\
                     .filter(distribution__name__iexact='Web / Streaming  |  YouTube, Vimeo, Facebook, Vine, etc.')\
                     .exists():
