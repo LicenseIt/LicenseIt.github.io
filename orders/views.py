@@ -595,7 +595,7 @@ class DetailBase(View):
             order.user = request.user
             order.save()
             if 'rate' in request.POST:
-                return HttpResponseRedirect(reverse('my_account'))
+                return HttpResponseRedirect(reverse('loader'))
 
         if 'rate' in request.POST:
             request.session['order_id'] = order_id
@@ -785,7 +785,7 @@ class RateUsView(View):
             order = Order.objects.get(pk=order_id)
             order.user = request.user
             order.save()
-            return HttpResponseRedirect(reverse('my_account'))
+            return HttpResponseRedirect(reverse('loader'))
         else:
             request.session['order_id'] = order_id
             return HttpResponseRedirect(reverse('login'))
@@ -864,7 +864,7 @@ class WeddingDetails(View):
         if request.user.is_authenticated():
             order.user = request.user
             order.save()
-            return HttpResponseRedirect(reverse('my_account'))
+            return HttpResponseRedirect(reverse('loader'))
 
         request.session['order_id'] = order_id
         return HttpResponseRedirect(reverse('login'))
@@ -945,7 +945,7 @@ class PersonalDetails(View):
         if request.user.is_authenticated():
             order.user = request.user
             order.save()
-            return HttpResponseRedirect(reverse('my_account'))
+            return HttpResponseRedirect(reverse('loader'))
 
         request.session['order_id'] = order_id
         return HttpResponseRedirect(reverse('login'))
@@ -967,3 +967,13 @@ class DeleteOrder(View):
             return Http404()
         order.delete()
         return HttpResponseRedirect(reverse('my_account'))
+
+
+class Loader(View):
+    def get(self, request):
+        return render(request, 'orders/loader2.html')
+
+
+class MyOrders(View):
+    def get(self, request):
+        return render(request, 'orders/item_ava.html')

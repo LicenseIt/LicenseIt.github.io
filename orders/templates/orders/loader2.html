@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>LicenseIt | Verification</title>
+
+  <link rel="stylesheet" href="{% static 'common/assets/css/main/main.css' %}">
+
+
+ <style type="text/css">
+
+ @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+body {
+  background-color: #f3f3f3;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: url(https://www.licenseit.net/uploads/files/bg.jpg) 50% 50% no-repeat;
+  background-size: cover;
+
+}
+
+.loader {
+  width: 3em;
+  height: 3em;
+  animation: loaderAnim 1.25s infinite;
+  outline: 1px solid transparent;
+  margin-top: -300px;
+}
+.loader #largeBox {
+  height: 3em;
+  width: 3em;
+  background-color: #ff4530;
+  outline: 1px solid transparent;
+  position: fixed;
+}
+.loader #smallBox {
+  height: 3em;
+  width: 3em;
+  background-color: #f3f3f3;
+  position: fixed;
+  z-index: 1;
+  outline: 1px solid transparent;
+  animation: smallBoxAnim 1.25s alternate infinite ease-in-out;
+}
+
+@keyframes smallBoxAnim {
+  0% {
+    transform: scale(0.2);
+  }
+  100% {
+    transform: scale(0.75);
+  }
+}
+@keyframes loaderAnim {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+
+*{list-style:none;border:0;text-decoration:none;margin:0;padding:0;outline:0}@-moz-keyframes fade-it{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fade-it{0%{opacity:0}100%{opacity:1}}@keyframes fade-it{0%{opacity:0}100%{opacity:1}}.js-fade-in-verb{animation-name:fade-it;animation-duration:1s;animation-fill-mode:forwards;-webkit-animation-name:fade-it;-webkit-animation-duration:1s;-webkit-animation-fill-mode:forwards}
+
+.shell {
+
+  position: fixed;
+  width:70%;
+  margin:-50px auto
+  }
+
+  h1
+  {
+
+    position:relative;
+    width:100%;
+    margin:0 auto 50px auto;
+    text-align:center;
+    line-height:1.25
+
+    }
+    .verb.js-block{display:inline-block}.verb.js-hide{display:none;opacity:0}.verb{display:inline-block;visibility:visible;border-bottom:1px solid}
+
+
+ </style>
+
+
+</head>
+
+<body>
+
+<div class="loader">
+  <div id="largeBox"></div>
+  <div id="smallBox"></div>
+</div>
+
+<div class="shell">
+			<h3> <span class="font-pacifico">LicenseIt it</span> is verifiying with rights holders of: <br>
+			<span class="verb">Composition</span></h3>
+</div>
+
+
+<!-- SCRIPTS -->
+		<script src="{% static 'common/assets/js/classListShim.js' %}"></script>
+		<script src="{% static 'common/assets/js/app.js' %}"></script>
+
+</body>
+</html>

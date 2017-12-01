@@ -121,10 +121,10 @@ class LoginView(ConnectBase):
                           'thanks for ordering, here is a link for your order {0}'
                           .format(request.META['HTTP_HOST'] + reverse('my_account_order',
                                                                       args=[order])),
-                      'support@licenseit.net',
-                      [user.email],
-                      html_message='')
-            return HttpResponseRedirect(reverse('my_account'))
+                          'support@licenseit.net',
+                          [user.email],
+                          html_message='')
+            return HttpResponseRedirect(reverse('loader'))
         else:
             return render(request,
                           'accounts/login.html',

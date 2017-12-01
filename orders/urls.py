@@ -14,6 +14,8 @@ from .views import (
     PersonalDetails,
     RateUsView,
     DeleteOrder,
+    Loader,
+    MyOrders,
 )
 from django.contrib.auth.decorators import login_required
 
@@ -32,5 +34,7 @@ urlpatterns = [
     url('now/(?P<order_id>[0-9]+)/rate-us/$', RateUsView.as_view(), name='rate_us'),
     url('now/(?P<song_id>[0-9]+)/$', OrderView.as_view(), name='order'),
     url('now/manual/$', OrderView.as_view(), name='manual_order'),
+    url('loading/$', Loader.as_view(), name='loader'),
+    url('my_orders/$', MyOrders.as_view(), name='my_orders'),
     url('delete/(?P<order_id>[0-9]+)/$', login_required(DeleteOrder.as_view()), name='delete_order'),
 ]
