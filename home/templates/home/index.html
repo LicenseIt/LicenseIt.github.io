@@ -11,17 +11,17 @@
 
 
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2  mt-100">
-                        <h1 class="text-uppercase font-montserrat mt-100 color-light animated" data-animation="fadeInUp"
-                            data-animation-delay="300">
-                            Frictionless <span class="text-uppercase color-pasific"> music licensing</span> solution
+                    <div class="col-md-8 col-md-offset-2  mt-100  ">
+                        <h1 class="text-uppercase font-montserrat mt-90 color-light animated" data-animation="fadeInUp"
+                            data-animation-delay="300" style="text-shadow: 1px 1px 2px #7f7f7f; font-weight: bold;">
+                            Great ads need <span class="text-uppercase color-pasific"> Great Music</span>
                         </h1>
 
                         <div class="col-md-8 col-md-offset-2">
                             <form action="{% url 'search' %}" method="post" class="form-horizontal" style="display: flex;">{% csrf_token %}
                                 <label class="sr-only" for="inputHelpBlock">Input with help text</label>
                                 <input type="text" class="form-control input-sqaure input-lg text-center" name="search"
-                                       aria-describedby="helpBlock" placeholder="search by artist, band etc."> <span>&nbsp&nbsp</span>
+                                       aria-describedby="helpBlock" placeholder="More the 40M songs, artists and more..."> <span>&nbsp&nbsp</span>
                                 <button class="button button-pasific button-lg hover-ripple-out animated"
                                    data-animation="fadeInUp" data-animation-delay="1200"
                                    style="float:right; display: inline-flex;">Search</button>
@@ -35,6 +35,8 @@
                     </div>
                 </div>
             </div>
+                                                <p class="color-light"> Music license is now simple<br> Do it yourself </p>
+
 
             <div class="intro-direction">
                 <a href="#welcome">
@@ -94,12 +96,10 @@
             <div class="row">
                 <div class="col-md-4 text-left">
 
-                    <h3 class="text-center color-light">
-                        Better Solution for Better music
-                        <small class="heading-desc text-lowercase color-light">
-                            There are numerous services acting in the micro licensing world, providing pre-cleared
-                            music, but the problem is that the catalogue is poor. License It offers a new approach for
-                            licensing music: one platform to search, identify music owners and negotiate directly.
+                    <h3 class=" text-uppercase font-montserrattext-left color-light">
+                        Better Solution, <br>Better music
+                        <small class="heading-desc color-light" style="text-shadow: 1px 1px 2px black;">
+                            By taking all of the tedious work out of filing paperwork and by using their friendly licensing tool, Licenseit allows you to choose and listen to over 40 million tracks including all the A-List hits, check their availability to be used in your sync based production and obtain a sync license as fast as a few moments.
                         </small>
                     </h3>
 
@@ -114,7 +114,7 @@
                 <div class="col-sm-8 col-sm-push-2 text-center">
 
 
-                    <a class="typeform-share button button-md button-gray hover-ripple-out"
+                    <a class="typeform-share button button-md button-pasific hover-ripple-out"
                        href="{% url 'search' %}" data-mode="popup" target="_blank">Start
                         Licensing </a>
                     <script> (function () {
