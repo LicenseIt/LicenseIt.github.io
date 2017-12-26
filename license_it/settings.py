@@ -34,9 +34,6 @@ ADMINS = [('moshe', 'moshegrey@gmail.com')]
 LOGOUT_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
-    'material',
-    'material.frontend',
-    'material.admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
