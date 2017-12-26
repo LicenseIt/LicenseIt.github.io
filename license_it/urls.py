@@ -30,7 +30,9 @@ from team.views import Team
 from terms.views import Terms
 
 urlpatterns = [
-    url('^admin/', admin.site.urls),
+    url(r'^jet/', include('jet.urls', 'jet')),
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
+    url(r'^admin/', include(admin.site.urls)),
     url('^search/', include('search.urls')),
     url('^accounts/', include('accounts.urls')),
     url('^order/', include('orders.urls')),
