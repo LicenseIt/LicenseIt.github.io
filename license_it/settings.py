@@ -34,7 +34,7 @@ ADMINS = [('moshe', 'moshegrey@gmail.com')]
 LOGOUT_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
-    'jet.dashboard',
+    #'jet.dashboard',
     'jet',
     'django.contrib.admin',
     'django.contrib.auth',

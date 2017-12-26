@@ -31,7 +31,7 @@ from terms.views import Terms
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
-    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
+    #url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', include(admin.site.urls)),
     url('^search/', include('search.urls')),
     url('^accounts/', include('accounts.urls')),
