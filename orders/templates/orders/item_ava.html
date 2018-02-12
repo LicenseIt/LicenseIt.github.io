@@ -214,7 +214,7 @@
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="shop-item-detail-photo center-block mb25">
 
-                            <img id="zoom_01" class="shop-item-detail-photo-active img-responsive" alt="photo item active" src="{% static 'common/assets/img/shop/search-item.png' %}"/>
+                            <img id="zoom_01" class="shop-item-detail-photo-active img-responsive" alt="photo item active" src="{{ image }}"/>
 
 
 
@@ -225,7 +225,7 @@
                     ===================================== -->
                     <div class="col-md-8 col-sm-6 col-xs-12">
                         <div class="shop-item-detail-description">
-                            <h3>Time and cost estimation in selected musical composition  </h3>
+                            <h3>Time and cost estimation for {{ order.song_title }}  </h3>
                                         <br>
 
                             <div class="shop-item-available mt5">
