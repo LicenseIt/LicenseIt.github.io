@@ -976,7 +976,7 @@ class Loader(View):
 
 class MyOrders(View):
     def get(self, request):
-        order = Order.objects.select_related().all().reverse()[0]
+        order = Order.objects.select_related().order_by('id').all().reverse()[0]
         image = order.song.artwork_100 if order.song.artwork_100 else order.song.artwork_60
         return render(request, 'orders/item_ava.html', context={
             'order': order,
